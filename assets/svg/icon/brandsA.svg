@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="39" height="46" viewBox="0 0 39 46">
+  <g id="Group_1473" data-name="Group 1473" transform="translate(-246 -751)">
+    <text id="Sign_Up" data-name="Sign Up" transform="translate(246 790)" fill="#daa095" font-size="12" font-family="Cairo-Regular, Cairo"><tspan x="0" y="0">Brands </tspan></text>
+    <g id="loyalty-24px" transform="translate(253 751)">
+      <path id="Path_2590" data-name="Path 2590" d="M0,0H24V24H0Z" fill="none"/>
+      <path id="Path_2591" data-name="Path 2591" d="M19.573,10.673,11.425,2.525A1.8,1.8,0,0,0,10.148,2H3.811A1.816,1.816,0,0,0,2,3.811v6.337a1.807,1.807,0,0,0,.534,1.286l8.148,8.148a1.8,1.8,0,0,0,1.277.525,1.77,1.77,0,0,0,1.277-.534l6.337-6.337a1.77,1.77,0,0,0,.534-1.277A1.829,1.829,0,0,0,19.573,10.673Zm-7.614,7.632L3.811,10.148V3.811h6.337V3.8L18.3,11.95Z" transform="translate(0 1.893)" fill="#daa095"/>
+      <circle id="Ellipse_33" data-name="Ellipse 33" cx="1" cy="1" r="1" transform="translate(5 7)" fill="#daa095"/>
+    </g>
+  </g>
+</svg>

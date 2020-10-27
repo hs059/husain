@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="35" height="40.75" viewBox="0 0 31 40.75">
+  <g id="Group_1476" data-name="Group 1476" transform="translate(-16 -756.25)">
+    <g id="Group_1454" data-name="Group 1454" transform="translate(-207.27 690.736)">
+      <path id="Path_159" data-name="Path 159" d="M247.5,79.93v6.752a2.031,2.031,0,0,1-2.031,2.031H234.626a2.031,2.031,0,0,1-2.031-2.031V82.4" transform="translate(-1.636 -6.726)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_160" data-name="Path 160" d="M232.043,66.264a1.524,1.524,0,0,0-1.44,1.026l-1.211,3.5a1.751,1.751,0,0,0,1.8,2.415,3.266,3.266,0,0,0,2.656-1.483,2.172,2.172,0,0,0,2.155,1.483,2.668,2.668,0,0,0,2.405-1.483,2.668,2.668,0,0,0,2.405,1.483h0a2.172,2.172,0,0,0,2.155-1.483,3.266,3.266,0,0,0,2.656,1.483h0a1.751,1.751,0,0,0,1.8-2.415l-1.211-3.5a1.523,1.523,0,0,0-1.44-1.026Z" transform="translate(0 0)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+      <path id="Path_161" data-name="Path 161" d="M247.38,91.4h-4.344V87.465A2.066,2.066,0,0,1,245.1,85.4h.211a2.066,2.066,0,0,1,2.066,2.066Z" transform="translate(-6.775 -9.417)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    </g>
+    <text id="Sign_Up" data-name="Sign Up" transform="translate(16 790)" fill="#c9c9c9" font-size="12" font-family="Cairo-Regular, Cairo"><tspan x="0" y="0">Home</tspan></text>
+  </g>
+</svg>
