@@ -17,7 +17,7 @@ class ShowProduct extends StatelessWidget {
       appBar: appBarCart(title: title),
       body: Padding(
         padding:  EdgeInsets.only(
-          top: ScreenUtil().setHeight(20),
+          top: ScreenUtil().setHeight(5),
           left: ScreenUtil().setWidth(10),
           right: ScreenUtil().setWidth(10),),
         child: Container(
@@ -29,7 +29,7 @@ class ShowProduct extends StatelessWidget {
 
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 0.85,
+                      childAspectRatio: 0.80,
                   ),
             itemCount: 20,
                   itemBuilder: (BuildContext context, int index) {

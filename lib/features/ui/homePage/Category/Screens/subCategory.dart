@@ -147,8 +147,8 @@ class _SubCategoryState extends State<SubCategory>
                           fav: false),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
-                        // crossAxisSpacing: 15.0,
-                        childAspectRatio: 0.85,
+                        crossAxisSpacing: 0,
+                        childAspectRatio: 0.80,
                         // mainAxisSpacing: 15.0,
                       ),
                     ),

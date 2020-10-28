@@ -24,6 +24,7 @@ class ProductItemGrid extends StatelessWidget {
     return    Row(
       children: [
         Container(
+
           margin: EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),

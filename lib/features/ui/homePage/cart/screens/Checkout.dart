@@ -27,374 +27,372 @@ class CheckOut extends StatelessWidget {
 
     return Scaffold(
       appBar: appBarCart(title: 'Check Out'),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom),
+      body: ListView(
+        physics: const BouncingScrollPhysics(),
 
-        child: Column(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtil().setHeight(20),
-                left: ScreenUtil().setWidth(15),
-                right: ScreenUtil().setWidth(15),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Order ID',
-                    style: kSectionText,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: ScreenUtil().setHeight(20),
+              left: ScreenUtil().setWidth(15),
+              right: ScreenUtil().setWidth(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Order ID',
+                  style: kSectionText,
+                ),
+                GestureDetector(
+                  onTap: () => null,
+                  child: Text(
+                    'ID5439',
+                    style: kSeeAll,
                   ),
-                  GestureDetector(
-                    onTap: () => null,
-                    child: Text(
-                      'ID5439',
-                      style: kSeeAll,
+                )
+              ],
+            ),
+          ),
+          CartAddressWidget(
+            address: '147 Al Riyadh, Saudi Arabia',
+            name: 'Mahmoud Thari',
+            phone: '+970592724106',
+            typeAddress: 1,
+            changeBtn: true,
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ChangeDeliveryAddress(),
+                )),
+          ),
+          ContainerCart(
+            height: 210,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    SizedBox(
+                      width: ScreenUtil().setWidth(4),
                     ),
-                  )
-                ],
-              ),
-            ),
-            CartAddressWidget(
-              address: '147 Al Riyadh, Saudi Arabia',
-              name: 'Mahmoud Thari',
-              phone: '+970592724106',
-              typeAddress: 1,
-              changeBtn: true,
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ChangeDeliveryAddress(),
-                  )),
-            ),
-            ContainerCart(
-              height: 210,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: ScreenUtil().setWidth(4),
-                      ),
-                      Text(
-                        'Delivery Time Settings',
-                        style: kSectionText,
-                      ),
-                    ],
+                    Text(
+                      'Delivery Time Settings',
+                      style: kSectionText,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(10),
+                ),
+                Card(
+                  color: Color(0xffF5F8FD),
+                  child: ListTile(
+                    title: Text(
+                      "${uiProvider.selectedDate.toLocal()}".split(' ')[0],
+                      style: kGrayText33,
+                    ),
+                    trailing: GestureDetector(
+                        onTap: () =>
+                            Provider.of<UiProvider>(context, listen: false)
+                                .selectDate(context),
+                        child: Icon(Icons.calendar_today_outlined)),
                   ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(10),
-                  ),
-                  Card(
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(10),
+                ),
+                Card(
                     color: Color(0xffF5F8FD),
-                    child: ListTile(
+                    child: ExpansionTile(
                       title: Text(
-                        "${uiProvider.selectedDate.toLocal()}".split(' ')[0],
+                        'Time Slot',
                         style: kGrayText33,
                       ),
-                      trailing: GestureDetector(
-                          onTap: () =>
-                              Provider.of<UiProvider>(context, listen: false)
-                                  .selectDate(context),
-                          child: Icon(Icons.calendar_today_outlined)),
-                    ),
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(10),
-                  ),
-                  Card(
-                      color: Color(0xffF5F8FD),
-                      child: ExpansionTile(
-                        title: Text(
-                          'Time Slot',
-                          style: kGrayText33,
-                        ),
-                      )),
-                ],
-              ),
+                    )),
+              ],
             ),
-            Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(15)),
-              child: Container(
-                width: ScreenUtil().setWidth(343),
-                height: ScreenUtil().setHeight(355),
-                margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-                padding: EdgeInsets.symmetric(
-                  vertical: ScreenUtil().setHeight(15),
-                ),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: sCardShadow,
-                    borderRadius: BorderRadius.circular(15)),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: ScreenUtil().setHeight(10),
-                        horizontal: ScreenUtil().setWidth(15),
-                      ),
-                      child: Row(
-                        children: [
-                          Text(
-                            'Order Bill',
-                            style: kSectionText,
-                          ),
-                        ],
-                      ),
+          ),
+          Padding(
+            padding:
+                EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(15)),
+            child: Container(
+              width: ScreenUtil().setWidth(343),
+              height: ScreenUtil().setHeight(355),
+              margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+              padding: EdgeInsets.symmetric(
+                vertical: ScreenUtil().setHeight(15),
+              ),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: sCardShadow,
+                  borderRadius: BorderRadius.circular(15)),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: ScreenUtil().setHeight(10),
+                      horizontal: ScreenUtil().setWidth(15),
                     ),
-                    MyDivider(),
-                    Column(
+                    child: Row(
                       children: [
-                        Column(
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: ScreenUtil().setWidth(15),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    'Order List',
-                                    style: kGrayText33,
-                                  ),
-                                ),
-                                Padding(
-                                  padding:  EdgeInsets.symmetric(
-                                      horizontal: ScreenUtil().setHeight(15)
-                                  ),
-                                  child: DropdownButtonHideUnderline(
-                                    child: DropdownButton(
-                                      value: '12 Items',
-
-                                      items: [
-                                        DropdownMenuItem(
-                                          child: Text(
-                                            '12 Items',
-                                            style: kGrayText33,
-                                          ),
-                                          value: '12 Items',
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text(
-                                            '15 Items',
-                                            style: kGrayText33,
-                                          ),
-                                          value: '15 Items',
-                                        ),
-                                      ],
-                                      onChanged: (String value) {
-
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: ScreenUtil().setWidth(15),
-                              ),
-                              child: MyDivider(),
-                            ),
-                          ],
+                        Text(
+                          'Order Bill',
+                          style: kSectionText,
                         ),
-
-                        ListTile(
-                          leading: Text(
-                            'Total Price',
-                            style: kGrayText33,
-                          ),
-                          trailing: Text(
-                            '637.00 S.R',
-                            style: kGrayText33,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: ScreenUtil().setWidth(15),
-                          ),
-                          child: MyDivider(),
-                        ),
-                        ListTile(
-                          leading: Text(
-                            'Order Bill',
-                            style: kGrayText33,
-                          ),
-                          trailing: Text(
-                            '\$10.05',
-                            style: kGrayText33,
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: ScreenUtil().setWidth(15),
-                          ),
-                          child: MyDivider(),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(20),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: ScreenUtil().setWidth(15),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      ],
+                    ),
+                  ),
+                  MyDivider(),
+                  Column(
+                    children: [
+                      Column(
+                        children: [
+                          Row(
                             children: [
-                              Text(
-                                'Total Bill',
-                                style: kSeeAll,
+                              SizedBox(
+                                width: ScreenUtil().setWidth(15),
                               ),
-                              Text(
-                                '\$66.73',
-                                style: kSeeAll,
+                              Expanded(
+                                child: Text(
+                                  'Order List',
+                                  style: kGrayText33,
+                                ),
+                              ),
+                              Padding(
+                                padding:  EdgeInsets.symmetric(
+                                    horizontal: ScreenUtil().setHeight(15)
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    value: '12 Items',
+
+                                    items: [
+                                      DropdownMenuItem(
+                                        child: Text(
+                                          '12 Items',
+                                          style: kGrayText33,
+                                        ),
+                                        value: '12 Items',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text(
+                                          '15 Items',
+                                          style: kGrayText33,
+                                        ),
+                                        value: '15 Items',
+                                      ),
+                                    ],
+                                    onChanged: (String value) {
+
+                                    },
+                                  ),
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ContainerCart(
-              height: 260,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Payment Method',
-                        style: kSectionText,
-                      ),
-                      GestureDetector(
-                        onTap: null,
-                        child: Text(
-                          'Add new Method',
-                          style: kSeeAll,
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(15),
-                  ),
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: RadioListTile(
-                      activeColor: kPinkLight,
-                      value:paymentList[0],
-                      groupValue: uiProvider.paymentGroup,
-                      onChanged: (value) {
-                        uiProviderFalse.setPaymentGroup(value);
-                      },
-                      title: Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: CustomTextFormField(
-                          hintText: '**** ****  *368',
-                          password: true,
-                          type:SvgPicture.asset(
-                            'assets/svg/cashCart.svg',
-                            fit: BoxFit.contain,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: RadioListTile(
-                      activeColor: kPinkLight,
-                      value:paymentList[1],
-                      groupValue: uiProvider.paymentGroup,
-                      onChanged: (value) {
-                        uiProviderFalse.setPaymentGroup(value);
-                      },
-                      title: Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: CustomTextFormField(
-                          password: true,
-                          hintText: '**** ****  *368',
-                          type: Container(
-                            height: ScreenUtil().setHeight(50),
-                            width: ScreenUtil().setWidth(60),
-                            child: SvgPicture.asset(
-                              'assets/svg/visa.svg',
-                              fit: BoxFit.contain,
-
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: ScreenUtil().setWidth(15),
                             ),
+                            child: MyDivider(),
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                  ),
-                  Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: RadioListTile(
-                      activeColor: kPinkLight,
-                      value:paymentList[2],
-                      groupValue: uiProvider.paymentGroup,
-                      onChanged: (value) {
 
-                      },
-                      title: Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Text(
-                          'Cash to Driver',
-                          style: kSectionText,
+                      ListTile(
+                        leading: Text(
+                          'Total Price',
+                          style: kGrayText33,
+                        ),
+                        trailing: Text(
+                          '637.00 S.R',
+                          style: kGrayText33,
                         ),
                       ),
-                    ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ScreenUtil().setWidth(15),
+                        ),
+                        child: MyDivider(),
+                      ),
+                      ListTile(
+                        leading: Text(
+                          'Order Bill',
+                          style: kGrayText33,
+                        ),
+                        trailing: Text(
+                          '\$10.05',
+                          style: kGrayText33,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ScreenUtil().setWidth(15),
+                        ),
+                        child: MyDivider(),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(20),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ScreenUtil().setWidth(15),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Total Bill',
+                              style: kSeeAll,
+                            ),
+                            Text(
+                              '\$66.73',
+                              style: kSeeAll,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            SingleChildScrollView(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: ContainerCart(
-                height: 130,
-                child: Column(
+          ),
+          ContainerCart(
+            height: 260,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        Text(
-                          'Note',
-                          style: kSectionText,
-                        ),
-                      ],
+                    Text(
+                      'Payment Method',
+                      style: kSectionText,
                     ),
-                    TextField(
-                      maxLines: null,
-                      onChanged: (String txt) {},
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF313A44),
+                    GestureDetector(
+                      onTap: null,
+                      child: Text(
+                        'Add new Method',
+                        style: kSeeAll,
                       ),
-                      cursorColor: Colors.blue,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Type something you want here...'),
-                    ),
-
-                    // Note
+                    )
                   ],
                 ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(15),
+                ),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: RadioListTile(
+                    activeColor: kPinkLight,
+                    value:paymentList[0],
+                    groupValue: uiProvider.paymentGroup,
+                    onChanged: (value) {
+                      uiProviderFalse.setPaymentGroup(value);
+                    },
+                    title: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: CustomTextFormField(
+                        hintText: '**** ****  *368',
+                        password: true,
+                        type:SvgPicture.asset(
+                          'assets/svg/cashCart.svg',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: RadioListTile(
+                    activeColor: kPinkLight,
+                    value:paymentList[1],
+                    groupValue: uiProvider.paymentGroup,
+                    onChanged: (value) {
+                      uiProviderFalse.setPaymentGroup(value);
+                    },
+                    title: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: CustomTextFormField(
+                        password: true,
+                        hintText: '**** ****  *368',
+                        type: Container(
+                          height: ScreenUtil().setHeight(50),
+                          width: ScreenUtil().setWidth(60),
+                          child: SvgPicture.asset(
+                            'assets/svg/visa.svg',
+                            fit: BoxFit.contain,
+
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: RadioListTile(
+                    activeColor: kPinkLight,
+                    value:paymentList[2],
+                    groupValue: uiProvider.paymentGroup,
+                    onChanged: (value) {
+
+                    },
+                    title: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Text(
+                        'Cash to Driver',
+                        style: kSectionText,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: ContainerCart(
+              height: 130,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        'Note',
+                        style: kSectionText,
+                      ),
+                    ],
+                  ),
+                  TextField(
+                    maxLines: null,
+                    onChanged: (String txt) {},
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Color(0xFF313A44),
+                    ),
+                    cursorColor: Colors.blue,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Type something you want here...'),
+                  ),
+
+                  // Note
+                ],
               ),
             ),
-            SizedBox(
-              height: ScreenUtil().setHeight(15),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).viewInsets.bottom,
-            ),
-          ],
-        ),
+          ),
+          // SizedBox(
+          //   height: MediaQuery.of(context).viewInsets.bottom,
+          // ),
+          SizedBox(
+            height: ScreenUtil().setHeight(15),
+          ),
+
+        ],
       ),
       bottomNavigationBar: bottomNavigationBarCart(
         onTap: () {

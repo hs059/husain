@@ -19,6 +19,7 @@ class AddNewAddress extends StatelessWidget {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
     UiProvider uiProviderFalse = Provider.of<UiProvider>(context,listen: false);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: appBarCart(title: 'Add new Address'),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),

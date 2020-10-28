@@ -74,8 +74,6 @@ class _SortByState extends State<SortBy> {
             onChanged: (value) {
               setState(() {
                 _character = value;
-
-                print(_character);
               });
             },
           ),

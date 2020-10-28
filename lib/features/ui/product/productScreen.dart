@@ -56,6 +56,7 @@ class ProductScreen extends StatelessWidget {
         ],
       ),
       body: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           ProductSliderWidget(),
           Padding(

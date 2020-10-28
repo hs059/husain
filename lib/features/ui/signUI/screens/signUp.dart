@@ -32,7 +32,10 @@ class SignUp extends StatelessWidget {
         appBar: appBarAuth(context),
         body: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
+
           child: SingleChildScrollView(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
