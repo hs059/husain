@@ -10,11 +10,10 @@ List<String> tabIconA = [
   'assets/svg/icon/profileA.svg',
 ];
 List<String> image = [
-  'assets/images/product2.png',
-  'assets/images/product1.png',
   'assets/images/Mask Group 1.png',
   'assets/images/Mask Group 2.png',
-
+  'assets/images/3beauty.png',
+  'assets/images/Lipsticks.png',
 ];
 List<String> image2 = [
   'assets/images/product2.png',

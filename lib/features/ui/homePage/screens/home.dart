@@ -5,6 +5,7 @@ import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 import 'package:beauty/features/ui/homePage/widgets/section.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -43,18 +44,28 @@ class Home extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
 
                 scrollDirection: Axis.horizontal,
-                children: [0, 1, 2, 3, 4, 5, 6, 7]
-                    .map(
-                      (e) => ProductItemList(
-                        title: 'perfume',
-                        fav: true,
-                        imagePath: 'assets/images/product2.png',
-                        prize: 55.22,
-                        rating: 4.5,
+                children:[
+                  ProductItemList(
+                    title: 'perfume',
+                    fav: false,
+                    imagePath: 'assets/images/product1.png',
+                    prize: 55.22,
+                    rating: 4.5,
+                    onCart: true,
+                  ),
+                  ... [0, 1, 2, 3, 4, 5, 6, 7]
+                      .map(
+                        (e) => ProductItemList(
+                      title: 'perfume',
+                      fav: true,
+                      imagePath: 'assets/images/product2.png',
+                      prize: 55.22,
+                      rating: 4.5,
 
-                      ),
-                    )
-                    .toList(),
+                    ),
+                  )
+                      .toList(),
+                ]
               ),
             ),
             SizedBox(
@@ -63,7 +74,10 @@ class Home extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('latest international brands',style: kSectionText,),
+                Text('latest international brands',style: kSectionText.copyWith(
+                  fontSize: ScreenUtil().setSp(18),
+
+                ),),
                 GestureDetector(
                   onTap: () {
                     tabController.animateTo(3);
@@ -73,10 +87,10 @@ class Home extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: ScreenUtil().setHeight(30),
+              height: ScreenUtil().setHeight(20),
             ),
             Container(
-              height: ScreenUtil().setHeight(35),
+              height: ScreenUtil().setHeight(45),
               child: ListView.builder(
                 shrinkWrap: true,
                 primary: false,
@@ -86,6 +100,12 @@ class Home extends StatelessWidget {
                 itemBuilder: (context, index) =>    InkWell(
                   onTap: () => kNavigatorPush(context, ShowProduct('Paradoxx')),
                   child: Container(
+                    margin: EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: sCardShadow2,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
                     width: ScreenUtil().setWidth(125),
                     child: Image.asset('assets/images/brand1.png'),
                   ),

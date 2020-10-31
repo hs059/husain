@@ -20,83 +20,99 @@ class AboutUs extends StatelessWidget {
         appBar: appBarCart(title:'3beauty' ),
         body:Padding(
           padding:  EdgeInsets.only(top: ScreenUtil().setHeight(25)),
-          child: ContainerCart(
-            height: 400,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: SvgPicture.asset(
-                    'assets/svg/privacyBtn.svg',
-                    fit: BoxFit.contain,
-                  ),
-                  title: Text(
-                    'Privacy Policy',
-                    style: kProfile,
-                  ),
-                  trailing: Icon(Icons.arrow_forward_ios),
+          child: Column(
+            children: [
+              ContainerCart(
+                // height: 400,
+                child: Column(
+                  children: [
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        'assets/svg/privacyBtn.svg',
+                        fit: BoxFit.contain,
+                      ),
+                      title: Text(
+                        'Privacy Policy',
+                        style: kProfile,
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios),
 
+                    ),
+                    MyDivider(),
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        'assets/svg/termsBtn.svg',
+                        fit: BoxFit.contain,
+                      ),
+                      title: Text(
+                        'Terms and Conditions',
+                        style: kProfile,
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios),
+
+                    ),
+                    MyDivider(),
+                    ListTile(
+                      onTap: () {
+                        _launchSocial('fb://profile/100009400440404', 'https://www.facebook.com/dorockxl');
+                      },
+                      leading:  Image.asset(
+                        'assets/images/faceBookBtn.png',
+                        fit: BoxFit.contain,
+                        height: ScreenUtil().setHeight(35),
+                        width: ScreenUtil().setWidth(35),
+                      ),
+                      title: Text(
+                        'Facebook ',
+                        style: kProfile,
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios),
+
+                    ),
+                    MyDivider(),
+                    ListTile(
+                      onTap: () async{
+                        var url = 'https://www.instagram.com/mohammed.alabadlah/';
+
+                        if (await canLaunch(url)) {
+                        await launch(
+                        url,
+                        universalLinksOnly: true,
+                        );
+                        } else {
+                        throw 'There was a problem to open the url: $url';
+                        }
+                      },
+
+                      leading: SvgPicture.asset(
+                        'assets/svg/instgramBtn.svg',
+                        fit: BoxFit.contain,
+                      ),
+                      title: Text(
+                        'Instagram ',
+                        style: kProfile,
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios),
+
+                    ),
+                    MyDivider(),
+                    ListTile(
+                      onTap: () =>_launchSocial('https://twitter.com/7seen1997', ''),
+                      leading: SvgPicture.asset(
+                        'assets/svg/twitter.svg',
+                        fit: BoxFit.contain,
+                      ),
+                      title: Text(
+                        'Twitter',
+                        style: kProfile,
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios),
+
+                    ),
+                  ],
                 ),
-                MyDivider(),
-                ListTile(
-                  leading: SvgPicture.asset(
-                    'assets/svg/termsBtn.svg',
-                    fit: BoxFit.contain,
-                  ),
-                  title: Text(
-                    'Terms and Conditions',
-                    style: kProfile,
-                  ),
-                  trailing: Icon(Icons.arrow_forward_ios),
-
-                ),
-                MyDivider(),
-                ListTile(
-                  onTap: () => kNavigatorPush(context, WebSite(1)),
-                  leading:  Image.asset(
-                    'assets/images/faceBookBtn.png',
-                    fit: BoxFit.contain,
-                    height: ScreenUtil().setHeight(35),
-                    width: ScreenUtil().setWidth(35),
-                  ),
-                  title: Text(
-                    'Facebook ',
-                    style: kProfile,
-                  ),
-                  trailing: Icon(Icons.arrow_forward_ios),
-
-                ),
-                MyDivider(),
-                ListTile(
-                  onTap: () => kNavigatorPush(context, WebSite(2)),
-
-                  leading: SvgPicture.asset(
-                    'assets/svg/instgramBtn.svg',
-                    fit: BoxFit.contain,
-                  ),
-                  title: Text(
-                    'Instagram ',
-                    style: kProfile,
-                  ),
-                  trailing: Icon(Icons.arrow_forward_ios),
-
-                ),
-                MyDivider(),
-                ListTile(
-                  onTap: () => kNavigatorPush(context, WebSite(3)),
-
-                  leading: SvgPicture.asset(
-                    'assets/svg/twitter.svg',
-                    fit: BoxFit.contain,
-                  ),
-                  title: Text(
-                    'Twitter',
-                    style: kProfile,
-                  ),
-                  trailing: Icon(Icons.arrow_forward_ios),
-
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         )
 

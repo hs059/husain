@@ -18,9 +18,9 @@ class ChangeDeliveryAddress extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            CartAddressWidget(address:'147 Al Riyadh, Saudi Arabia', name:'Mahmoud Thari', phone:'+970592724106', typeAddress:1,),
-            CartAddressWidget(address:'147 Al Riyadh, Saudi Arabia', name:'Mahmoud Thari', phone:'+970592724106', typeAddress:2,),
-            CartAddressWidget(address:'147 Al Riyadh, Saudi Arabia', name:'Mahmoud Thari', phone:'+970592724106', typeAddress:3,),
+            CartAddressWidget(address:'147 Al Riyadh, Saudi Arabia', name:'Wonderful customer', phone:'+970592724106', typeAddress:1,),
+            CartAddressWidget(address:'147 Al Riyadh, Saudi Arabia', name:'Wonderful customer', phone:'+970592724106', typeAddress:2,),
+            CartAddressWidget(address:'147 Al Riyadh, Saudi Arabia', name:'Wonderful customer', phone:'+970592724106', typeAddress:3,),
             SizedBox(
               height: ScreenUtil().setHeight(50),
             ),

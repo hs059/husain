@@ -1,7 +1,7 @@
 
 
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/serchTextFormField.dart';
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/features/ui/homePage/Category/widgets/categoryItem.dart';
+import 'package:beauty/components/widgets/serchTextFormField.dart';
+import 'package:beauty/features/ui/homePage/Category/widgets/categoryItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 
@@ -21,7 +21,6 @@ class Category extends StatelessWidget {
             child: GridView.builder(
               itemBuilder: (context, index) =>  CategoryItem(),
               physics: const BouncingScrollPhysics(),
-
               primary: false,
               shrinkWrap: true,
               itemCount: 12,

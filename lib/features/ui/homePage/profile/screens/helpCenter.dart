@@ -17,8 +17,8 @@ class HelpCenter extends StatelessWidget {
         body: Padding(
           padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
           child: ContainerCart(
-            height: 160,
-            child: Column(
+            // height: 160,
+            child: Wrap(
               children: [
                 ListTile(
                   onTap: () =>  UrlLauncher.launch('mailto:$email'),

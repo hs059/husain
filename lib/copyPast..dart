@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+// UiProvider uiProvider = Provider.of<UiProvider>(context);
+// UiProvider uiProviderFalse = Provider.of<UiProvider>(context,listen: false);
 SvgPicture svgPicture = SvgPicture.asset(
   'assets/svg/icon/categoryA.svg',
   fit: BoxFit.contain,

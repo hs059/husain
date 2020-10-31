@@ -1,8 +1,5 @@
 
-
-import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/ui/homePage/Category/Screens/subCategory.dart';
-import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';

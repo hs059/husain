@@ -5,7 +5,6 @@ import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/ui/signUI/widgets/appBarAuth.dart';
 import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
 import 'package:beauty/value/navigator.dart';
-import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +38,10 @@ class ForgetPassword extends StatelessWidget {
               Form(
                 key: formKeyForgetPassword,
                 child: CustomTextFormField(
-                  hintText: 'Email or Phone Number',
+                  hintText: 'Email',
                   validator: authProvider.validateEmail,
                   onSaved:authProvider.saveEmailForget,
+
                 ),
               ),
               SizedBox(

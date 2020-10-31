@@ -27,9 +27,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
   Animation animation1,
       animation2,
       animation3,
-      animation4,
-      animation5,
-      animation6;
+      animationImage;
 
   @override
   void initState() {
@@ -37,6 +35,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
 
     controller =
         AnimationController(vsync: this, duration: Duration(seconds: 2));
+    animationImage = Tween(begin: 0.0, end: 1.0).animate(
+        CurvedAnimation(parent: controller, curve: Curves.easeOutQuart));
 
     animation1 = Tween(begin: -1.0, end: 0.0).animate(
         CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn));
@@ -46,16 +46,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
         curve: Interval(0.2, 1.0, curve: Curves.fastOutSlowIn)));
     animation3 = Tween(begin: -1.0, end: 0.0).animate(CurvedAnimation(
         parent: controller,
-        curve: Interval(0.4, 1.0, curve: Curves.fastOutSlowIn)));
-    animation4 = Tween(begin: -1.0, end: 0.0).animate(CurvedAnimation(
-        parent: controller,
-        curve: Interval(0.6, 1.0, curve: Curves.fastOutSlowIn)));
-    animation5 = Tween(begin: -1.0, end: 0.0).animate(CurvedAnimation(
-        parent: controller,
-        curve: Interval(0.75, 1.0, curve: Curves.fastOutSlowIn)));
-    animation6 = Tween(begin: -1.0, end: 0.0).animate(CurvedAnimation(
-        parent: controller,
-        curve: Interval(0.9, 1.0, curve: Curves.fastOutSlowIn)));
+        curve: Interval(0.5, 1.0, curve: Curves.fastOutSlowIn)));
 
     controller.forward();
   }
@@ -82,18 +73,16 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+
                   SizedBox(
-                    height: ScreenUtil().setHeight(15),
+                    height: ScreenUtil().setHeight(25) ,
                   ),
-                  Transform(
-                    transform: Matrix4.translationValues(
-                        animation1.value * width, 0.0, 0.0),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: ScreenUtil().setHeight(117),
-                      child: SvgPicture.asset(
-                        'assets/svg/beauty0.svg',
-                      ),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 117,
+                    child: SvgPicture.asset(
+                      'assets/svg/beauty0.svg',
+                      height: animationImage.value*117,
                     ),
                   ),
                   SizedBox(
@@ -101,7 +90,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                   ),
                   Transform(
                     transform: Matrix4.translationValues(
-                        animation2.value * width, 0.0, 0.0),
+                        animation1.value * width, 0.0, 0.0),
                     child: Text(
                       'Welcome back',
                       style: kTitleSign,
@@ -112,7 +101,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                   ),
                   Transform(
                     transform: Matrix4.translationValues(
-                        animation3.value * width, 0.0, 0.0),
+                        animation1.value * width, 0.0, 0.0),
                     child: Text(
                       'Sign in to continue',
                       style: kSubTitleOnboarding.copyWith(fontSize: 16),
@@ -127,9 +116,9 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                       children: <Widget>[
                         Transform(
                           transform: Matrix4.translationValues(
-                              animation4.value * width, 0.0, 0.0),
+                              animation2.value * width, 0.0, 0.0),
                           child: CustomTextFormField(
-                            hintText: 'Email or Phone Number',
+                            hintText: 'Email',
                             validator: authProvider.validateEmail,
                             onSaved: authProvider.saveEmailIn,
                             textInputType: TextInputType.emailAddress,
@@ -140,7 +129,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                         ),
                         Transform(
                           transform: Matrix4.translationValues(
-                              animation5.value * width, 0.0, 0.0),
+                              animation2.value * width, 0.0, 0.0),
                           child: CustomTextFormField(
                             iconData: uiProvider.iconData,
                             hintText: 'Password',
@@ -164,7 +153,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                         child: Text(
                           'Forgot password',
                           style: kSubTitleSign.copyWith(
-                            color: kPinkDark,
+                            color: kPinkLight,
                           ),
                         ),
                       ),
@@ -175,7 +164,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                   ),
                   Transform(
                     transform: Matrix4.translationValues(
-                        animation6.value * width, 0.0, 0.0),
+                        animation3.value * width, 0.0, 0.0),
                     child: Button(text: 'Sign In', onTap:() {
                       authProvider.submit(formKeySignIn);
 
@@ -279,7 +268,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             TextSpan(
                               text: '   Sign Up',
                               style: TextStyle(
-                                color: kPinkDark,
+                                color: kPinkLight,
                                 fontSize: ScreenUtil().setSp(16),
                               ),
                               recognizer: TapGestureRecognizer()..onTap = () {

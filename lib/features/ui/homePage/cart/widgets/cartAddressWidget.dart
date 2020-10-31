@@ -17,7 +17,7 @@ class CartAddressWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ContainerCart(
-      height: 152,
+      // height: 152,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -79,7 +79,7 @@ class CartAddressWidget extends StatelessWidget {
                           width: ScreenUtil().setWidth(10),
                         ),
                         Text(
-                          'Mahmoud Thari',
+                          'Wonderful customer',
                           style: kTitleSign.copyWith(
                             fontSize: ScreenUtil().setSp(13),
                           ),

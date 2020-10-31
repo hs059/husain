@@ -4,6 +4,7 @@ import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 
 class Section extends StatelessWidget {
   //ToDO:Delete defult name
@@ -15,7 +16,10 @@ class Section extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title,style: kSectionText,),
+        Text(title,style: kSectionText.copyWith(
+          fontSize: ScreenUtil().setSp(18),
+
+        ),),
         GestureDetector(
           onTap: () => kNavigatorPush(context, ShowProduct(title)),
           child:Text('SeeAll',style: kSeeAll,),

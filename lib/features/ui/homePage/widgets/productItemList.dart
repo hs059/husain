@@ -4,6 +4,7 @@ import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/ui/product/productScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -15,8 +16,9 @@ class ProductItemList extends StatelessWidget {
   final  double rating;
   final  double prize;
   final  bool fav ;
+  final bool onCart ;
 
-  ProductItemList({this.title, this.imagePath, this.rating, this.prize, this.fav,});
+  ProductItemList({this.title, this.imagePath, this.rating, this.prize, this.fav, this.onCart = false,});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -28,9 +30,8 @@ class ProductItemList extends StatelessWidget {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
                 color: Colors.white,
-                boxShadow: [
-                  BoxShadow(blurRadius: 2, offset: Offset(2, 2), color: Colors.grey[200])
-                ]),
+                boxShadow:sCardShadow
+            ),
             height: ScreenUtil().setHeight(185),
             width: ScreenUtil().setWidth(163),
             child: Column(
@@ -39,9 +40,15 @@ class ProductItemList extends StatelessWidget {
                   child: Stack(
                     children: [
                       //ToDO:Hero
-                      Image.asset(imagePath,
-                          fit: BoxFit.contain,
-                        height: ScreenUtil().setHeight(101),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () => kNavigatorPush(context, ProductScreen()),
+
+                          child: Image.asset(imagePath,
+                              fit: BoxFit.contain,
+                            height: ScreenUtil().setHeight(101),
+                          ),
+                        ),
                       ),
                       Align(
                         alignment: Alignment.topRight,
@@ -76,6 +83,7 @@ class ProductItemList extends StatelessWidget {
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
+
                                 children: [
                                   SmoothStarRating(
                                     rating: rating,
@@ -104,18 +112,24 @@ class ProductItemList extends StatelessWidget {
                                 ],
                               ),
                               GestureDetector(
-                                //Todo:push with product ID
-                                    onTap: () => kNavigatorPush(context, ProductScreen()),
+                                //Todo: ID
+                                onTap: () {
+
+                                },
                                child: Container(
                                   height:  ScreenUtil().setHeight(30),
                                   width:  ScreenUtil().setWidth(30),
+                               padding:EdgeInsets.all(onCart?5:0),
+                                    decoration: BoxDecoration(
+                                      color:onCart? kPinkLight:Colors.white,
+                                      borderRadius: BorderRadius.circular(8)
+                                    ),
+                                  child:SvgPicture.asset(
+                                    'assets/svg/cardIcon2.svg',
 
-                                  child: SvgPicture.asset(
-                                    'assets/svg/cardIcon.svg',
-                                    height:  ScreenUtil().setHeight(30),
-                                    width:  ScreenUtil().setWidth(30),
-
-                                  ),
+                                    color:onCart? Colors.white:kPinkLight,
+                                  )
+                                 ,
                                 ),
                               ),
                             ],

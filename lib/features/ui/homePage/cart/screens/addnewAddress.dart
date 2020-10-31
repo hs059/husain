@@ -10,14 +10,64 @@ import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 
-class AddNewAddress extends StatelessWidget {
+class AddNewAddress extends StatefulWidget {
+  @override
+  _AddNewAddressState createState() => _AddNewAddressState();
+}
+
+class _AddNewAddressState extends State<AddNewAddress> {
+  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+  Position _currentPosition;
+  String _currentAddress;
+
+  @override
+  void initState() {
+    super.initState();
+    _getCurrentLocation();
+  }
+
+  _getCurrentLocation() {
+    geolocator
+        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+
+      _getAddressFromLatLng();
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
+  _getAddressFromLatLng() async {
+    try {
+      List<Placemark> p =
+          await geolocator.placemarkFromCoordinates(21.324220, 39.114267);
+
+      Placemark place = p[0];
+
+      setState(() {
+        _currentAddress =
+            "${place.locality}, ${place.postalCode}, ${place.country}";
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
-    UiProvider uiProviderFalse = Provider.of<UiProvider>(context,listen: false);
+    UiProvider uiProviderFalse =
+        Provider.of<UiProvider>(context, listen: false);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: appBarCart(title: 'Add new Address'),
@@ -30,7 +80,7 @@ class AddNewAddress extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: Container(
-                    height: ScreenUtil().setHeight(64),
+                    height: ScreenUtil().setHeight(58),
                     margin: EdgeInsets.only(
                       top: ScreenUtil().setHeight(20),
                     ),
@@ -44,25 +94,28 @@ class AddNewAddress extends StatelessWidget {
                         value: uiProvider.addressDropDown,
                         isExpanded: true,
                         items: <DropdownMenuItem>[
-                     ...  addressIcon.map((e) => DropdownMenuItem(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                  left: ScreenUtil().setWidth(30)
-                              ),
-                              child: SvgPicture.asset(
-                                'assets/svg/$e.svg',
-                                fit: BoxFit.contain,color: Color(0xff121924),
-                                width: ScreenUtil().setWidth(18),
-                                height: ScreenUtil().setHeight(18),
-                              ),
-                            ),
-                            value: e,
-                          ),).toList()
-
+                          ...addressIcon
+                              .map(
+                                (e) => DropdownMenuItem(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        left: ScreenUtil().setWidth(30)),
+                                    child: SvgPicture.asset(
+                                      'assets/svg/$e.svg',
+                                      fit: BoxFit.contain,
+                                      color: Color(0xff121924),
+                                      width: ScreenUtil().setWidth(18),
+                                      height: ScreenUtil().setHeight(18),
+                                    ),
+                                  ),
+                                  value: e,
+                                ),
+                              )
+                              .toList()
                         ],
-                        onChanged: (value)  {
+                        onChanged: (value) {
                           uiProviderFalse.setAddressDropDown(value);
-                         },
+                        },
                       ),
                     ),
                   ),
@@ -76,28 +129,34 @@ class AddNewAddress extends StatelessWidget {
                     margin: EdgeInsets.only(
                       top: ScreenUtil().setHeight(20),
                     ),
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                     decoration: BoxDecoration(
                       color: Color(0xffF5F8FD),
                       borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(width: 1.0, color: kBorder),
+                      border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
                     ),
-                    child: IntlPhoneField(
+                    child: TextFormField(
+                      cursorColor: Colors.grey,
                       decoration: InputDecoration(
-                        hintText: 'Phone Number',
+                        hintText: 'Name',
                         hintStyle:
                             TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kBorder, width: 1.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: kBorder, width: 1.0),
-                        ),
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Color(0xffF5F8FD),
+                          width: ScreenUtil().setWidth(2),
+                        )),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Color(0xffF5F8FD),
+                          width: ScreenUtil().setWidth(2),
+                        )),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: Color(0xffF5F8FD),
+                          width: ScreenUtil().setWidth(0.5),
+                        )),
                       ),
-                      initialCountryCode: 'SA',
-                      showDropdownIcon: false,
-                      onChanged: (phone) {
-                        print(phone.completeNumber);
-                      },
                     ),
                   ),
                 )
@@ -113,35 +172,25 @@ class AddNewAddress extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
               ),
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                  suffixIcon: SvgPicture.asset(
+              child: ListTile(
+                title:Text(
+                  _currentAddress ?? '',
+                  style: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                ) ,
+                trailing: GestureDetector(
+                  onTap: () async {
+                    await _getAddressFromLatLng();
+                    print(_currentAddress);
+                  },
+                  child: SvgPicture.asset(
                     'assets/svg/locationBtn.svg',
                     height: ScreenUtil().setHeight(32),
                     width: ScreenUtil().setWidth(32),
                     fit: BoxFit.contain,
                   ),
-                  hintText: 'Your Address',
-                  hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                  border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(2),
-                  )),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(2),
-                  )),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(0.5),
-                  )),
-                ),
-              ),
+                ),              ),
             ),
+
             Container(
               margin: EdgeInsets.only(
                 top: ScreenUtil().setHeight(20),
@@ -235,7 +284,6 @@ class AddNewAddress extends StatelessWidget {
                 },
               ),
             ),
-
             GestureDetector(
               onTap: () {
                 uiProviderFalse.toggleGroupValueNewAddress();
@@ -243,11 +291,10 @@ class AddNewAddress extends StatelessWidget {
               },
               child: RadioListTile(
                 activeColor: kPinkLight,
-                value:'Default',
-                groupValue: uiProvider.toggle?'Default':'0',
+                value: 'Default',
+                groupValue: uiProvider.toggle ? 'Default' : '0',
                 onChanged: (value) {
                   uiProviderFalse.toggleGroupValueNewAddress();
-
                 },
                 title: Text(
                   'Default Delivery Address',
@@ -255,7 +302,6 @@ class AddNewAddress extends StatelessWidget {
                 ),
               ),
             ),
-
             Button(text: 'Save', onTap: null),
           ],
         ),

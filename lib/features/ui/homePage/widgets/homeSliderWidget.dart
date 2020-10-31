@@ -3,6 +3,7 @@ import 'package:beauty/components/btn.dart';
 import 'package:beauty/features/ui/product/productScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -26,10 +27,12 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
     // widget.slides == null || widget.slides.isEmpty
         ? HomeSliderLoaderWidget()
         : Container(
-      height: ScreenUtil().setHeight(185),
+      height: ScreenUtil().setHeight(176),
+      margin: EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
-        color: kBorder,
+        color: Colors.white,
+        boxShadow: sCardShadow
       ),
       child: Stack(
         // alignment: _alignmentDirectional ?? Helper.getAlignmentDirectional(widget.slides.elementAt(0).textPosition),
@@ -57,7 +60,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                   //toDo:color
                   borderRadius: BorderRadius.circular(7),
                   image: DecorationImage(
-                      image: AssetImage(image[index]), fit: BoxFit.cover),
+                      image: AssetImage(image[index]), fit: BoxFit.contain),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

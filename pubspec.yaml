@@ -50,6 +50,13 @@ dependencies:
   modal_bottom_sheet: ^0.2.2
   url_launcher: ^5.7.8
   webview_flutter: ^1.0.5
+  share: ^0.6.5+4
+  geolocator: ^5.3.1
+  geocoder: ^0.2.1
+  flutter_datetime_picker: ^1.4.0
+
+
+
 
 
 
@@ -78,9 +85,10 @@ flutter_icons:
   flutter_test:
     sdk: flutter
 flutter_native_splash:
-      image: assets/images/3beauty.png
+      image: assets/images/3beautyLarge2.png
       color: "ffffff"
       fill: true
+
 
 
 # For information on the generic Dart part of this file, see the

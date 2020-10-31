@@ -48,7 +48,7 @@ class ProfileScreen extends StatelessWidget {
                   height: ScreenUtil().setHeight(10),
                 ),
                 Text(
-                  'Mahmoud Thari',
+                  'Wonderful customer',
                   style: kName,
                   textAlign: TextAlign.center,
                 ),
@@ -56,7 +56,7 @@ class ProfileScreen extends StatelessWidget {
                   height: ScreenUtil().setHeight(5),
                 ),
                 Text(
-                  'ma7moud198thari@gmail.com',
+                  'Wonderful customer@gmail.com',
                   style: kSubTitleSign.copyWith(
                     fontSize: ScreenUtil().setSp(13),
                   ),
@@ -72,7 +72,7 @@ class ProfileScreen extends StatelessWidget {
         ),
         MyDivider(),
         ContainerCart(
-          height: 250,
+          // height: 250,
           child: Column(
             children: [
               ListTileProfile(
@@ -98,7 +98,7 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
         ContainerCart(
-          height: 320,
+          // height: 320,
           child: Column(
             children: [
               ListTileProfile(
@@ -141,7 +141,7 @@ class ProfileScreen extends StatelessWidget {
           height: ScreenUtil().setHeight(25),
         ),
         ContainerCart(
-          height: 85,
+          // height: 85,
           child: GestureDetector(
             onTap: () => kNavigatorPushAndRemoveUntil(context, SignIn()),
             child: ListTile(

@@ -1,6 +1,7 @@
 import 'package:beauty/components/btn.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/ui/homePage/cart/screens/Checkout.dart';
+import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/features/ui/homePage/widgets/homeSliderWidget.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
@@ -15,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:share/share.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ProductScreen extends StatelessWidget {
@@ -34,7 +36,9 @@ class ProductScreen extends StatelessWidget {
         ),
         actions: [
           GestureDetector(
-            onTap: () => null,
+            onTap: () => Share.share(
+                'check out my website https://3beauty.net/product/ميك-اب-فور-ايفر-كريم-الأساس-ألتر-hd-365/',
+                subject: 'Look what I made!'),
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Icon(
@@ -60,7 +64,8 @@ class ProductScreen extends StatelessWidget {
         children: [
           ProductSliderWidget(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+            padding:
+                EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
             child: Column(
               children: [
                 Row(
@@ -244,10 +249,12 @@ class ProductScreen extends StatelessWidget {
                           Column(
                             children: [
                               Padding(
-                                padding:  EdgeInsets.symmetric(
+                                padding: EdgeInsets.symmetric(
                                     horizontal: ScreenUtil().setWidth(15),
                                     vertical: ScreenUtil().setHeight(5)),
-                                child: Section(title: 'You may also like',),
+                                child: Section(
+                                  title: 'You may also like',
+                                ),
                               ),
                               SizedBox(
                                 height: ScreenUtil().setHeight(10),
@@ -258,9 +265,9 @@ class ProductScreen extends StatelessWidget {
                                   child: ListView.builder(
                                     physics: const BouncingScrollPhysics(),
                                     shrinkWrap: true,
-                                    padding:
-                                        EdgeInsets.symmetric(  horizontal: ScreenUtil().setWidth(5),
-                                           ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: ScreenUtil().setWidth(5),
+                                    ),
                                     scrollDirection: Axis.horizontal,
                                     itemCount: 20,
                                     itemBuilder: (context, index) =>
@@ -275,13 +282,15 @@ class ProductScreen extends StatelessWidget {
                             ],
                           ),
                           Padding(
-                            padding:  EdgeInsets.symmetric(  horizontal: ScreenUtil().setWidth(15),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: ScreenUtil().setWidth(15),
                                 vertical: ScreenUtil().setHeight(50)),
                             child: Row(
                               children: [
                                 Expanded(
-                                    child:
-                                        Button(text: 'Checkout', onTap: (){
+                                    child: Button(
+                                        text: 'Checkout',
+                                        onTap: () {
                                           kNavigatorPush(context, CheckOut());
                                         })),
                                 SizedBox(width: ScreenUtil().setWidth(5)),
@@ -324,8 +333,8 @@ class ProductScreen extends StatelessWidget {
             ),
             children: [
               Padding(
-                padding:  EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(15),
+                padding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(15),
                 ),
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -411,8 +420,8 @@ Suitable for aging skin''',
             ),
             children: [
               Padding(
-                padding:  EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(15),
+                padding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(15),
                 ),
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -467,32 +476,116 @@ I highly recommend it''',
                 ),
               ),
               ListTile(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(10.0))),
+                      content: Container(
+                        child: Wrap(
+                          children: [
+                             Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                TitleSubTitle(
+                                  title: 'Rating and add reviews',
+                                  subTitle:
+                                  'our orders have nice reviews',
+                                ),
+                                SizedBox(
+                                  height: ScreenUtil().setHeight(10),
+                                ),
+
+                                SmoothStarRating(
+                                  rating: 2,
+                                  color: kStar,
+                                  borderColor: kStar,
+                                  isReadOnly: false,
+                                  size: 30,
+                                  filledIconData: Icons.star,
+                                  halfFilledIconData: Icons.star_half,
+                                  defaultIconData: Icons.star_border,
+                                  starCount: 5,
+                                  allowHalfRating: true,
+                                  spacing: 1.0,
+                                  onRated: (value) {
+                                    print("rating value -> $value");
+                                  },
+                                ),
+                                ContainerCart(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            'Review',
+                                            style: kSectionText,
+                                          ),
+                                        ],
+                                      ),
+                                      TextField(
+                                        maxLines: null,
+                                        onChanged: (String txt) {},
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Color(0xFF313A44),
+                                        ),
+                                        cursorColor: Colors.blue,
+                                        decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            hintText: 'Add Review...'),
+                                      ),
+
+                                      // Note
+                                    ],
+                                  ),
+                                ), 
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: ScreenUtil().setWidth(50),
+                                    vertical: ScreenUtil().setHeight(10)
+                                  ),
+                                    child: Button(text: 'Done',
+                                      onTap: (){
+                                      Navigator.pop(context);
+                                      },
+                                    ),),
+
+                              ],
+                            ),
+                          ],
+
+                        ),
+                      ),
+                    ),
+                  );
+                },
                 title: Text(
-                  'Add review... ',
-                  style: kReviews.copyWith(
+                  'All reviews ',
+                  style: kSeeAll.copyWith(
                     fontSize: ScreenUtil().setSp(16),
                   ),
                 ),
                 trailing: Text(
-                  'Show all',
+                  'Add rating',
                   style: kSeeAll.copyWith(
-                    fontSize: ScreenUtil().setSp(12),
+                    fontSize: ScreenUtil().setSp(16),
                   ),
                 ),
               ),
               SizedBox(
-                height: ScreenUtil().setHeight(60),
+                height: ScreenUtil().setHeight(10),
               ),
             ],
           ),
           Column(
             children: [
               Padding(
-                padding:
-                     EdgeInsets.symmetric(
-                         horizontal: ScreenUtil().setWidth(15),
-                         vertical: ScreenUtil().setHeight(5)
-                    ),
+                padding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(15),
+                    vertical: ScreenUtil().setHeight(5)),
                 child: Section(),
               ),
               SizedBox(

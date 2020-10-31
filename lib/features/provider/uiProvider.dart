@@ -6,7 +6,7 @@ import 'package:beauty/value/string.dart';
 class UiProvider extends ChangeNotifier {
   IconData iconData = FontAwesomeIcons.eyeSlash;
   bool toggleEye = true;
-
+  bool edit = false ;
   fmToggleEye() {
     toggleEye = !toggleEye;
     iconData = toggleEye ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye;
@@ -58,5 +58,14 @@ class UiProvider extends ChangeNotifier {
     this.addressDropDown = value;
     notifyListeners();
   }
-
+  String timeSlot=' - - ' ;
+  setTimeSlot(String value){
+    timeSlot = value ;
+    notifyListeners();
+  }
+  String dateSlot=' - - ' ;
+  setDateSlot(String value){
+    dateSlot = value ;
+    notifyListeners();
+  }
 }

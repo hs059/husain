@@ -1,8 +1,5 @@
 import 'dart:async';
-
 import 'package:beauty/components/btn.dart';
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/customTextField.dart';
-import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
 import 'package:beauty/features/ui/signUI/widgets/appBarAuth.dart';

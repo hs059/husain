@@ -54,10 +54,9 @@ class AccountInformations extends StatelessWidget {
             height: ScreenUtil().setHeight(25),
           ),
           ContainerCart(
-            height: 60,
+            // height: 60,
             child: Row(
               children: [
-
                 Text(
                   'USER NAME'  ,
                   style: kSubTitleSign.copyWith(
@@ -68,14 +67,14 @@ class AccountInformations extends StatelessWidget {
                   width: ScreenUtil().setWidth(15),
                 ),
                 Text(
-                  'Mahmoud Thari',
+                  'Wonderful customer',
                   style: kProfile,
                 ),
               ],
             ),
           ),
           ContainerCart(
-            height: 60,
+            // height: 60,
             child: Row(
               children: [
 
@@ -89,14 +88,14 @@ class AccountInformations extends StatelessWidget {
                   width: ScreenUtil().setWidth(15),
                 ),
                 Text(
-                  'ma7moud198thari@gmail.com',
+                  'Wonderful customer@gmail.com',
                   style: kProfile,
                 ),
               ],
             ),
           ),
           ContainerCart(
-            height: 60,
+            // height: 60,
             child: Row(
               children: [
 
@@ -117,7 +116,7 @@ class AccountInformations extends StatelessWidget {
             ),
           ),
           ContainerCart(
-            height: 60,
+            // height: 60,
             child: Row(
               children: [
 
@@ -138,7 +137,7 @@ class AccountInformations extends StatelessWidget {
             ),
           ),
           ContainerCart(
-            height: 60,
+            // height: 60,
             child: Row(
               children: [
 

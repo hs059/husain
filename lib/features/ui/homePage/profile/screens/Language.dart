@@ -20,8 +20,7 @@ class Language extends StatelessWidget {
           top: ScreenUtil().setHeight(50),
         ),
         child: ContainerCart(
-          height: 135,
-          child: Column(
+          child: Wrap(
             children: [
               Row(
                 children: [

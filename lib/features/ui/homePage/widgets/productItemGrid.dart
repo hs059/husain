@@ -39,13 +39,17 @@ class ProductItemGrid extends StatelessWidget {
                   Container(
                     child: Stack(
                       children: [
-                        Container(
-                          height: ScreenUtil().setHeight(127),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7),
-                              image: DecorationImage(
-                                  image: AssetImage(imagePath),
-                                  fit: BoxFit.contain)),
+                        GestureDetector(
+                          onTap: () => kNavigatorPush(context, ProductScreen()),
+
+                          child: Container(
+                            height: ScreenUtil().setHeight(127),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(7),
+                                image: DecorationImage(
+                                    image: AssetImage(imagePath),
+                                    fit: BoxFit.contain)),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.topRight,
@@ -130,8 +134,7 @@ class ProductItemGrid extends StatelessWidget {
                   ),
 
                   child: GestureDetector(
-                    //Todo:push with product ID
-                    onTap: () => kNavigatorPush(context, ProductScreen()),
+                    //Todo: ID
                     child: Container(
                       height:  ScreenUtil().setHeight(30),
                       width:  ScreenUtil().setWidth(30),

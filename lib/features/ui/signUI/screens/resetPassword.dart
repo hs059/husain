@@ -1,23 +1,26 @@
 import 'package:beauty/components/btn.dart';
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/customTextField.dart';
+import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
+import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/features/ui/signUI/widgets/appBarAuth.dart';
 import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
-import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
 
 class ResetPassword extends StatelessWidget {
   GlobalKey<FormState> formKeyResetPassword = GlobalKey();
-
+  GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    UiProvider uiProvider = Provider.of<UiProvider>(context);
 
     return Scaffold(
+      key: scaffoldKey,
       appBar: appBarAuth(context),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 15),
@@ -41,7 +44,8 @@ class ResetPassword extends StatelessWidget {
                 children: [
                   CustomTextFormField(
                     hintText: 'New Password',
-                    password: true,
+                    password: uiProvider.toggleEye,
+                    iconData: uiProvider.iconData,
                     validator: authProvider.validatePassword,
                     onSaved: authProvider.saveNewPassword,
                   ),
@@ -50,7 +54,8 @@ class ResetPassword extends StatelessWidget {
                   ),
                   CustomTextFormField(
                     hintText: 'Confirm New Password',
-                    password: true,
+                    password: uiProvider.toggleEye,
+                    iconData: uiProvider.iconData,
                     validator: authProvider.validatePassword,
                     onSaved: authProvider.saveConfirmPassword,
                   ),
@@ -67,7 +72,17 @@ class ResetPassword extends StatelessWidget {
               if(authProvider.newPassword ==authProvider.confirmPassword){
                 authProvider.submit(formKeyResetPassword)?  kNavigatorPushAndRemoveUntil(context, SignIn()):null;
               }else{
+                scaffoldKey.currentState.showSnackBar(
+                  SnackBar(
+                    backgroundColor: Colors.white,
+                    content: Text(
 
+                      'Password is different from confirm password',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color:kBlack , fontSize: ScreenUtil().setSp(18)),
+                    ),
+                  ),
+                );
               }
 
             }),
