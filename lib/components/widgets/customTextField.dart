@@ -34,6 +34,7 @@ class CustomTextFormField extends StatelessWidget {
         border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
       ),
       child: TextFormField(
+
         validator: (value) => validator(value),
         onSaved: (newValue) => onSaved(newValue),
         obscureText: password,

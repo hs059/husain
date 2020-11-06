@@ -2,6 +2,7 @@ import 'package:beauty/components/btn.dart';
 import 'package:beauty/features/ui/onboardingUI/widgets/detailsOnboarding.dart';
 import 'package:beauty/features/ui/onboardingUI/widgets/indicatorOnboarding.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/sp_helper.dart';
 
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
@@ -71,12 +72,15 @@ class _OnboardingState extends State<Onboarding> {
               Button(
                 text:  _currentPage != _numPages - 1 ? 'Next' : 'Get Started ',
                 onTap: () {
-                  _currentPage != _numPages - 1
-                      ? _pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
-                          curve: Curves.ease,
-                        )
-                      : kNavigatorPushReplacement(context,SignIn());
+                  if(_currentPage != _numPages - 1){
+                    _pageController.nextPage(
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.ease,
+                    );
+                  }else{
+                    kNavigatorPushReplacement(context,SignIn());
+                    SPHelper.spHelper.isSeenOnBoardingSet(true);
+                  }
                 },
               ),
               SizedBox(height: ScreenUtil().setHeight(55)),
@@ -126,17 +130,4 @@ class _OnboardingState extends State<Onboarding> {
   }
 }
 
-// final kTitleStyle = TextStyle(
-//   fontFamily: 'CM Sans Serif',
-//   fontSize: ScreenUtil().setSp(26),
-//   height: 1.5,
-// );
-//
-// final kSubtitleStyle = TextStyle(
-//   fontSize: ScreenUtil().setSp(18),
-//   height: 1.2,
-// );
 
-// ScreenUtil().setWidth(540)
-// ScreenUtil().setHeight(200)
-// ScreenUtil().setSp(24)

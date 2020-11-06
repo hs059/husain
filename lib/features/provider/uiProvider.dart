@@ -68,4 +68,20 @@ class UiProvider extends ChangeNotifier {
     dateSlot = value ;
     notifyListeners();
   }
+
+
+  bool spinner = false;
+  toggleSpinner() {
+    spinner = !spinner;
+    notifyListeners();
+  }
+
+
+  TimeOfDay timeCheckOut = TimeOfDay.now();
+
+  setTimeCheckOut(TimeOfDay timeOfDay){
+    this.timeCheckOut  = timeOfDay ;
+    notifyListeners();
+  }
+
 }

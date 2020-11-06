@@ -2,22 +2,26 @@ import 'package:beauty/components/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
+import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/sp_helper.dart';
+import 'package:beauty/value/navigator.dart';
+import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/bottomNavigationBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartAddressWidget.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
-import 'package:beauty/features/ui/homePage/homePage.dart';
-import 'package:beauty/features/ui/signUI/screens/signIn.dart';
-import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
-import 'package:beauty/value/navigator.dart';
+import 'package:beauty/features/ui/homePage/cart/widgets/dialogConfirmOrder.dart';
+
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
+import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:beauty/value/colors.dart';
 
@@ -48,12 +52,9 @@ class CheckOut extends StatelessWidget {
                     'Order ID',
                     style: kSectionText,
                   ),
-                  GestureDetector(
-                    onTap: () => null,
-                    child: Text(
-                      'ID5439',
-                      style: kSeeAll,
-                    ),
+                  Text(
+                    'ID5439',
+                    style: kSeeAll,
                   )
                 ],
               ),
@@ -92,15 +93,14 @@ class CheckOut extends StatelessWidget {
                   Card(
                     color: Color(0xffF5F8FD),
                     child: ListTile(
+                      onTap: () =>
+                          Provider.of<UiProvider>(context, listen: false)
+                              .selectDate(context),
                       title: Text(
-                        uiProvider.dateSlot,
+                        '${uiProvider.selectedDate.year}/${uiProvider.selectedDate.month}/${uiProvider.selectedDate.day}',
                         style: kGrayText33,
                       ),
-                      trailing: GestureDetector(
-                          onTap: () =>
-                              Provider.of<UiProvider>(context, listen: false)
-                                  .selectDate(context),
-                          child: Icon(Icons.calendar_today_outlined)),
+                      trailing: Icon(Icons.calendar_today_outlined),
                     ),
                   ),
                   SizedBox(
@@ -109,41 +109,46 @@ class CheckOut extends StatelessWidget {
                   Card(
                     color: Color(0xffF5F8FD),
                     child: ListTile(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          showPicker(
+                            context: context,
+                            value: uiProvider.timeCheckOut,
+                            onChange: uiProviderFalse.setTimeCheckOut,
+                          ),
+                        );
+                      },
                       title: Text(
-                        uiProvider.timeSlot,
+                        uiProvider.timeCheckOut.format(context),
                         style: kGrayText33,
                       ),
-                      trailing: GestureDetector(
-                          onTap: () =>
-                              Provider.of<UiProvider>(context, listen: false)
-                                  .selectDate(context),
-                          child: Icon(Icons.access_time_outlined)),
+                      trailing: Icon(Icons.access_time_outlined),
                     ),
                   ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(10),
-                  ),
-                  GestureDetector(
-                      onTap: () {
-                        DatePicker.showDateTimePicker(context,
-                            showTitleActions: true,
-                            minTime: DateTime(2020, 3, 5),
-                            maxTime: DateTime(2030, 6, 7), onChanged: (date) {
-                          print('change $date');
-                        }, onConfirm: (date) {
-                          print('confirm $date');
-                          print('${date.year}-${date.month}-${date.day}');
-                          print('${date.hour}:${date.minute}');
-                          uiProviderFalse.setDateSlot(
-                              '${date.year}-${date.month}-${date.day}');
-                          uiProviderFalse
-                              .setTimeSlot('${date.hour}:${date.minute}');
-                        }, currentTime: DateTime.now(), locale: LocaleType.ar);
-                      },
-                      child: Text(
-                        "Set Time & Date",
-                        style: kSeeAll,
-                      )),
+                  // SizedBox(
+                  //   height: ScreenUtil().setHeight(10),
+                  // ),
+                  // GestureDetector(
+                  //     onTap: () {
+                  //       DatePicker.showDateTimePicker(context,
+                  //           showTitleActions: true,
+                  //           minTime: DateTime(2020, 3, 5),
+                  //           maxTime: DateTime(2030, 6, 7), onChanged: (date) {
+                  //         print('change $date');
+                  //       }, onConfirm: (date) {
+                  //         print('confirm $date');
+                  //         print('${date.year}-${date.month}-${date.day}');
+                  //         print('${date.hour}:${date.minute}');
+                  //         uiProviderFalse.setDateSlot(
+                  //             '${date.year}-${date.month}-${date.day}');
+                  //         uiProviderFalse
+                  //             .setTimeSlot('${date.hour}:${date.minute}');
+                  //       }, currentTime: DateTime.now(), locale: LocaleType.ar);
+                  //     },
+                  //     child: Text(
+                  //       "Set Time & Date",
+                  //       style: kSeeAll,
+                  //     )),
                 ],
               ),
             ),
@@ -408,9 +413,6 @@ class CheckOut extends StatelessWidget {
                 ],
               ),
             ),
-            // SizedBox(
-            //   height: MediaQuery.of(context).viewInsets.bottom,
-            // ),
             SizedBox(
               height: ScreenUtil().setHeight(15),
             ),
@@ -419,41 +421,24 @@ class CheckOut extends StatelessWidget {
                 'Confirm Order',
                 style: kBtnText,
               ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
+              onTap: () async{
+                String token =await SPHelper.spHelper.getToken();
+                if(token==''||token == null){
+                  Fluttertoast.showToast(
+                      msg: 'يجب عليك تسجيل الدخول',
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      textColor: Color(0xffDAA095),
+                      fontSize: 16.0
+                  );
+                  kNavigatorPush(context, SignIn());
+                }else{
+                  showDialog(
+                    context: context,
+                    builder: (context) => DialogConfirmOrder(),
+                  );
+                }
 
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                    content: Container(
-                      child: Wrap(
-                        children: [
-                          TitleSubTitle(
-                            title: 'Order Success',
-                            subTitle:
-                                'Your order is being processed by the system, you can see the progress at',
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(10),
-                          ),
-                          SvgPicture.asset(
-                            'assets/svg/endOrder.svg',
-                            fit: BoxFit.contain,
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(10),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),                            child: Button(text: 'Done', onTap: (){
-                              kNavigatorPushAndRemoveUntil(context, HomePage());
-                            }),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
               },
 
             ),

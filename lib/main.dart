@@ -1,3 +1,4 @@
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/string.dart';
 import 'package:flutter/services.dart';
 
@@ -42,21 +43,25 @@ void main() async {
       null);
 
 
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //   statusBarColor: Colors.transparent,
-  //   statusBarIconBrightness: Brightness.dark,
-  //   statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
-  //   systemNavigationBarColor: Colors.white,
-  //   systemNavigationBarDividerColor: Colors.grey,
-  //   systemNavigationBarIconBrightness: Brightness.dark,
-  // ));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
+    systemNavigationBarColor: Colors.white,
+    systemNavigationBarDividerColor: Colors.grey,
+    systemNavigationBarIconBrightness: Brightness.dark,
+  ));
+  bool isSeen = await SPHelper.spHelper.isSeenOnBoardingGet()??false ;
+  print(isSeen);
+  Widget screen = isSeen?HomePage():Onboarding() ;
 
-  runApp(MyApp());
+  runApp(MyApp(screen));
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
+ Widget screen ;
+ MyApp(this.screen);
+   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -76,7 +81,7 @@ class MyApp extends StatelessWidget {
         home: Builder(builder: (context) {
           ScreenUtil.init(context,
               designSize: Size(375, 812), allowFontScaling: true);
-          return Onboarding();
+          return screen;
         }),
 
       ),

@@ -9,7 +9,7 @@
         android:usesCleartextTraffic="true"
 
         android:name="io.flutter.app.FlutterApplication"
-        android:label="beauty"
+        android:label="3beauty"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
