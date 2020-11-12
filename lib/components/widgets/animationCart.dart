@@ -30,7 +30,8 @@ class AnimationCart extends StatefulWidget {
   final int index ;
   final Widget child ;
   final bool Grid ;
-  AnimationCart({this.count, this.index, this.child, this.Grid = false});
+  final int duration ;
+  AnimationCart({this.count, this.index, this.child, this.Grid = false, this.duration});
 
   @override
   _AnimationCartState createState() => _AnimationCartState();
@@ -43,7 +44,7 @@ class _AnimationCartState extends State<AnimationCart>with SingleTickerProviderS
   @override
   void initState() {
 
-    _controller = AnimationController(duration: Duration(milliseconds: 1500,),vsync: this);
+    _controller = AnimationController(duration: Duration(milliseconds: widget.duration,),vsync: this);
     _animation =
         Tween<double>(begin: 0, end: 1.0).animate(
             CurvedAnimation(
@@ -69,7 +70,7 @@ class _AnimationCartState extends State<AnimationCart>with SingleTickerProviderS
         opacity: _animation,
         child: Transform(
           transform: Matrix4.translationValues(
-              widget.Grid?0.0:  100 * (1.0 - _animation.value),widget.Grid? 100 * (1.0 - _animation.value): 0.0, 0.0),
+              widget.Grid?0.0:  100 * (-1.0 + _animation.value),widget.Grid? 100 * (1.0 - _animation.value): 0.0, 0.0),
           child: widget.child,
         ),
       ),

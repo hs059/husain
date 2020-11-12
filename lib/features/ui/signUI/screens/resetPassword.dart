@@ -1,4 +1,4 @@
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
@@ -16,6 +16,8 @@ class ResetPassword extends StatelessWidget {
   GlobalKey<FormState> formKeyResetPassword = GlobalKey();
 
   // GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+
+
 
   @override
   Widget build(BuildContext context) {

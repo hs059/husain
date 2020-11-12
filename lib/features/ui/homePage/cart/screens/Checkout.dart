@@ -1,4 +1,4 @@
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
@@ -422,8 +422,8 @@ class CheckOut extends StatelessWidget {
                 style: kBtnText,
               ),
               onTap: () async{
-                String token =await SPHelper.spHelper.getToken();
-                if(token==''||token == null){
+                bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
+                if(!isLogin){
                   Fluttertoast.showToast(
                       msg: 'يجب عليك تسجيل الدخول',
                       toastLength: Toast.LENGTH_SHORT,

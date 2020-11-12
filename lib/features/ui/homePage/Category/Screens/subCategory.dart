@@ -1,37 +1,46 @@
-import 'package:beauty/components/btn.dart';
+import 'package:beauty/components/model/subCategoryModel.dart';
+import 'package:beauty/components/model/subProductModel.dart';
+import 'package:beauty/components/widgets/LoaderGif.dart';
+import 'package:beauty/components/widgets/animationCart.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/Category/widgets/sortBy.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:provider/provider.dart';
 
 class SubCategory extends StatefulWidget {
+  final int id;
+  final int countSub;
+  final String title;
+
+  SubCategory({this.id, this.countSub, this.title});
+
   @override
   _SubCategoryState createState() => _SubCategoryState();
 }
 
 class _SubCategoryState extends State<SubCategory>
     with SingleTickerProviderStateMixin {
-  TabController tabController;
+  TabController tabControllerSub;
 
-  int index;
+  int index = 0;
   String _character;
-
+  SubProductModel subProductModel;
   @override
   void initState() {
-    tabController = TabController(initialIndex: 0, vsync: this, length: 8);
+    tabControllerSub =
+        TabController(initialIndex: 0, vsync: this, length: widget.countSub);
     super.initState();
   }
 
-  List sort = [
-    'Default sort',
-    'Popularity',
-    'Rating',
-    'Latest',
-    'Low to high',
-    'High to low',
-  ];
+  @override
+  void dispose() {
+    tabControllerSub.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +56,7 @@ class _SubCategoryState extends State<SubCategory>
           ),
         ),
         title: Text(
-          'Care',
+          widget.title,
           style: kSubCategoryText,
         ),
         actions: [
@@ -86,158 +95,182 @@ class _SubCategoryState extends State<SubCategory>
           ),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              height: ScreenUtil().setHeight(55),
-              child: TabBar(
-                controller: tabController,
-                indicatorColor: kPinkDark,
-                indicatorSize: TabBarIndicatorSize.label,
-                isScrollable: true,
-                indicatorWeight: 4.0,
-                labelColor: kPinkDark,
-                unselectedLabelColor: kGray,
-                tabs: [
-                  Tab(
-                    text: 'ALL',
+      body: Consumer<ApiProvider>(
+        builder: (context, value, child) {
+          SubCategoryModel subCategory = value.subCategory;
+          if (subCategory.date.isEmpty) {
+            return Center(
+              child: Text(
+                'سيتم اضافتها قريبا',
+                style:
+                    kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+              ),
+            );
+          } else {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                children: [
+                  Container(
+                    alignment: Alignment.center,
+                    height: ScreenUtil().setHeight(55),
+                    child: TabBar(
+                      onTap: (value) async{
+                        index = value;
+
+                       // await Provider.of<ApiProvider>(context,listen: false)
+                       //      .getSubProduct(subCategory.date[value].id);
+
+                      },
+                      controller: tabControllerSub,
+                      indicatorColor: kPinkDark,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      isScrollable: true,
+                      indicatorWeight: 4.0,
+                      labelColor: kPinkDark,
+                      unselectedLabelColor: kGray,
+                      tabs: [
+                        ...subCategory.date
+                            .map(
+                              (e) => Tab(
+                                text: e.name,
+                              ),
+                            )
+                            .toList(),
+                      ],
+                    ),
                   ),
-                  Tab(
-                    text: 'Hair Care',
-                  ),
-                  Tab(
-                    text: 'Skin Care',
-                  ),
-                  Tab(
-                    text: 'Face Care',
-                  ),
-                  Tab(
-                    text: 'Hair Care',
-                  ),
-                  Tab(
-                    text: 'Skin Care',
-                  ),
-                  Tab(
-                    text: 'Face Care',
-                  ),
-                  Tab(
-                    text: 'Hair Care',
+//                   Consumer<ApiProvider>(
+//                       builder:(context, value, child) {
+//                         SubProductModel subProduct=value.subProduct ;
+//                         print(subProduct.data.length);
+//                                     if(subProduct.data.isEmpty){
+//                                       return Center(
+//                                         child: Text(
+//                                           'سيتم اضافتها قريبا',
+//                                           style:
+//                                           kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+//                                         ),
+//                                       );
+//                                     }else{
+//                                       return Expanded(
+//                                         child: GridView.builder(
+//                                           primary: false,
+//                                           shrinkWrap: true,
+//                                           itemCount: subProduct.data.length,
+//                                           itemBuilder: (context, index) =>
+//                                               ProductItemGrid(
+//                                                   imagePath: subProduct
+//                                                       .data[index].image,
+//                                                   title: subProduct
+//                                                       .data[index].name,
+//                                                   rating: 4.2,
+//                                                   prize: subProduct
+//                                                       .data[index].price,
+//                                                   fav: subProduct.data[index]
+//                                                       .isFavourited),
+//                                           gridDelegate:
+//                                           SliverGridDelegateWithFixedCrossAxisCount(
+//                                             crossAxisCount: 2,
+//                                             crossAxisSpacing: 0,
+//                                             childAspectRatio: 0.7,
+// // mainAxisSpacing: 15.0,
+//                                           ),
+//                                         ),
+//                                       );
+//
+//                                     }
+//                       },
+//                   ),
+                  Container(
+                    child: Expanded(
+                      child: TabBarView(
+                        controller: tabControllerSub,
+                        children: [
+                          ...subCategory.date
+                              .map(
+                                (e) => FutureBuilder<SubProductModel>(
+                                  future: Provider.of<ApiProvider>(context)
+                                      .getSubProduct(e.id),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      SubProductModel subProduct =
+                                          snapshot.data;
+                                      if (subProduct.data.isNotEmpty) {
+                                        print(subCategory.date.length);
+                                        return GridView.builder(
+                                          primary: false,
+                                          shrinkWrap: true,
+                                          itemCount: subProduct.data.length,
+                                          itemBuilder: (context, index) =>
+                                              AnimationCart(
+                                                Grid: true,
+                                                index: index,
+                                                count:subProduct.data.length ,
+                                                duration: 1500,
+                                                child: ProductItemGrid(
+                                                    imagePath: subProduct
+                                                        .data[index].image,
+                                                    title: subProduct
+                                                        .data[index].name,
+                                                    rating: 4.2,
+                                                    prize: subProduct
+                                                        .data[index].price,
+                                                    fav: subProduct.data[index]
+                                                        .isFavourited,
+                                                  product:subProduct
+                                                      .data[index] ,
+
+                                                ),
+                                              ),
+                                          gridDelegate:
+                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            crossAxisSpacing: 0,
+                                            childAspectRatio: 0.6,
+                                          ),
+                                        );
+                                      } else {
+                                        return Center(
+                                          child: Text(
+                                            'سيتم اضافتها قريبا',
+                                            style: kSeeAll.copyWith(
+                                                fontFamily: 'Cairo-Regular',
+                                                fontSize: 18),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      return GridView.builder(
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        itemCount: 10,
+                                        itemBuilder: (context, index) =>
+                                            LoaderGif2(),
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                crossAxisCount: 2,
+                                                crossAxisSpacing: 10,
+                                                childAspectRatio: 0.80,
+                                                mainAxisSpacing: 10
+// mainAxisSpacing: 15.0,
+                                                ),
+                                      );
+                                    }
+                                  },
+                                ),
+                              )
+                              .toList(),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
-            ),
-            Container(
-              child: Expanded(
-                child: TabBarView(
-                  controller: tabController,
-                  children: [
-                    GridView.builder(
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: 20,
-                      itemBuilder: (context, index) => ProductItemGrid(
-                          imagePath: 'assets/images/3beauty.png',
-                          title: 'perfoume',
-                          rating: 4.2,
-                          prize: 10,
-                          fav: false),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 0,
-                        childAspectRatio: 0.80,
-                        // mainAxisSpacing: 15.0,
-                      ),
-                    ),
-                    Container(
-                      color: Colors.blueAccent,
-                    ),
-                    Container(
-                      color: Colors.yellow,
-                    ),
-                    Container(
-                      color: Colors.red,
-                    ),
-                    Container(
-                      color: Colors.redAccent,
-                    ),
-                    Container(
-                      color: Colors.blue,
-                    ),
-                    Container(
-                      color: Colors.lime,
-                    ),
-                    Container(
-                      color: Colors.blueAccent,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+            );
+          }
+        },
       ),
     );
   }
-
-  List<Widget> radio() {
-    List<Widget> radios = [];
-    for (int i = 1; i <= 5; i++) {
-      radios.add(Row(
-        children: [
-          Radio(
-            value: sort[i],
-            groupValue: _character,
-            onChanged: (value) {
-              setState(() {
-                print(_character);
-                _character = value;
-              });
-            },
-          ),
-          Text(sort[i]),
-        ],
-      ));
-    }
-    return radios;
-  }
 }
-// Widget widget = Column(
-//   children: <Widget>[
-//     Container(
-//       padding: EdgeInsets.symmetric(horizontal: 20),
-//       height: ScreenUtil().setHeight(50),
-//       child: Row(
-//         children: [
-//           GestureDetector(
-//             child: Icon(Icons.close),
-//             onTap: () => Navigator.pop(context),
-//           ),
-//           SizedBox(
-//             width: ScreenUtil().setWidth(125),
-//           ),
-//           Container(
-//             height: ScreenUtil().setHeight(56),
-//             alignment: Alignment.center,
-//             child: Text(
-//               'Sort by',
-//               style: kSectionText.copyWith(
-//                   fontSize: ScreenUtil().setSp(18)),
-//             ),
-//           ),
-//         ],
-//       ),
-//     ),
-//     Divider(
-//       thickness: 1,
-//       color: kBorder,
-//     ),
-//     ... radio(),
-//     Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 15),
-//       child: Button(text: 'Save', onTap: null),
-//     ),
-//   ],
-// );

@@ -1,62 +1,80 @@
-
-
+import 'package:beauty/components/model/sectionModel.dart';
+import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/ui/product/productScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
-class ProductItemList extends StatelessWidget {
-  final  String title;
-  final  String imagePath;
-  final  double rating;
-  final  double prize;
-  final  bool fav ;
-  final bool onCart ;
 
-  ProductItemList({this.title, this.imagePath, this.rating, this.prize, this.fav, this.onCart = false,});
+class ProductItemList extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final double rating;
+  final String prize;
+  final bool fav;
+  final Products product ;
+  final bool onCart;
+  final int index ;
+
+  ProductItemList(
+      {this.title,
+      this.imagePath,
+      this.rating,
+      this.prize,
+      this.fav,
+      this.onCart = false,
+        this.product, this.index});
+
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
-          // margin: EdgeInsets.symmetric(vertical: 5),
+          margin: EdgeInsets.symmetric(vertical: 5),
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(6),
                 color: Colors.white,
-                boxShadow:sCardShadow
-            ),
-            height: ScreenUtil().setHeight(185),
+                boxShadow: sCardShadow),
             width: ScreenUtil().setWidth(163),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
+                  height: ScreenUtil().setHeight(101),
                   child: Stack(
                     children: [
                       //ToDO:Hero
                       Center(
                         child: GestureDetector(
-                          onTap: () => kNavigatorPush(context, ProductScreen()),
-
-                          child: Image.asset(imagePath,
-                              fit: BoxFit.contain,
-                            height: ScreenUtil().setHeight(101),
-                          ),
+                          onTap: () {
+                            print(product.id);
+                            kNavigatorPush(context, ProductScreen(product: product,));
+                          },
+                          child: CachedNetworkImage(
+                              imageUrl: imagePath,
+                              placeholder: (context, url) => LoaderGif1(),
+                              errorWidget: (context, url, error) =>
+                                  Icon(Icons.error),
+                              height: ScreenUtil().setHeight(101),
+                              fit: BoxFit.contain),
                         ),
                       ),
                       Align(
                         alignment: Alignment.topRight,
                         child: Padding(
                           padding: EdgeInsets.all(8),
+                          //ToDo:Check Token
                           child: Icon(
-                            fav ? Icons.favorite :Icons.favorite_border,
-                            color:fav ?kRed: Colors.black45,
+                            fav ? Icons.favorite : Icons.favorite_border,
+                            color: fav ? kRed : Colors.black45,
                             size: 30,
                           ),
                         ),
@@ -83,7 +101,6 @@ class ProductItemList extends StatelessWidget {
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-
                                 children: [
                                   SmoothStarRating(
                                     rating: rating,
@@ -100,7 +117,6 @@ class ProductItemList extends StatelessWidget {
                                       print("rating value -> $value");
                                     },
                                   ),
-
                                   SizedBox(
                                     height: ScreenUtil().setHeight(10),
                                   ),
@@ -113,28 +129,22 @@ class ProductItemList extends StatelessWidget {
                               ),
                               GestureDetector(
                                 //Todo: ID
-                                onTap: () {
-
-                                },
-                               child: Container(
-                                  height:  ScreenUtil().setHeight(30),
-                                  width:  ScreenUtil().setWidth(30),
-                               padding:EdgeInsets.all(onCart?5:0),
-                                    decoration: BoxDecoration(
-                                      color:onCart? kPinkLight:Colors.white,
-                                      borderRadius: BorderRadius.circular(8)
-                                    ),
-                                  child:SvgPicture.asset(
+                                onTap: () {},
+                                child: Container(
+                                  height: ScreenUtil().setHeight(30),
+                                  width: ScreenUtil().setWidth(30),
+                                  padding: EdgeInsets.all(onCart ? 5 : 0),
+                                  decoration: BoxDecoration(
+                                      color: onCart ? kPinkLight : Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: SvgPicture.asset(
                                     'assets/svg/cardIcon2.svg',
-
-                                    color:onCart? Colors.white:kPinkLight,
-                                  )
-                                 ,
+                                    color: onCart ? Colors.white : kPinkLight,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-
                         ],
                       ),
                     ],
@@ -148,7 +158,3 @@ class ProductItemList extends StatelessWidget {
     );
   }
 }
-
-
-
-

@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:beauty/value/string.dart';
 
 
-import 'components/btn.dart';
+import 'components/widgets/btn.dart';
 import 'features/provider/uiProvider.dart';
 
 class Hammam extends StatefulWidget {

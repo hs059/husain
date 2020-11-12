@@ -1,6 +1,8 @@
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
+import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/homePage/screens/home.dart';
+import 'package:beauty/features/ui/signUI/screens/Verification.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/sp_helper.dart';
@@ -20,6 +22,7 @@ class AuthProvider extends ChangeNotifier {
       newPassword,
       confirmPassword,
       emailPassword ,
+      verificationCode,
       fullName;
 
 
@@ -29,16 +32,21 @@ class AuthProvider extends ChangeNotifier {
   }
 
   savePassword(String value) {
+    print('//////////////////////////// $value');
     this.password = value;
     notifyListeners();
   }
 
 
   saveNewPassword(String value) {
+    print('/////////////saveNewPassword/////////////// $value');
+
     this.newPassword = value;
     notifyListeners();
   }
   saveConfirmPassword(String value) {
+    print('/////////////saveConfirmPassword/////////////// $value');
+
     this.confirmPassword = value;
     notifyListeners();
   }
@@ -48,6 +56,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
   saveFullName(String value) {
+    print('/////////////saveFullName/////////////// $value');
+
     this.fullName = value;
     notifyListeners();
   }
@@ -72,6 +82,17 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  validateConfirmPassword(String value) {
+    print('password = $password');
+    if (value == null || value == '') {
+      return ' this field is required ';
+    } else if (!isAlphanumeric(value)) {
+      return 'invalid Password ';
+    } else if (password!=value) {
+      return 'not matched';
+    }
+  }
+
 
 
   validateName(String value) {
@@ -93,21 +114,19 @@ class AuthProvider extends ChangeNotifier {
       return 'phone number must be equal 9 numbers';
     }
   }
-
+  bool isLogin ;
+  getLogin()async{
+    isLogin = await SPHelper.spHelper.getIsLogin();
+    notifyListeners() ;
+  }
 //////////////////////submit////////////////////////////////
-  bool submitRegister(GlobalKey<FormState> globalKey, BuildContext context) {
-    bool auth = false;
+   submitRegister(GlobalKey<FormState> globalKey, BuildContext context) {
     if (globalKey.currentState.validate()) {
       globalKey.currentState.save();
-
       registerUser(context);
-      auth = true;
       notifyListeners();
-      return auth;
     } else {
-      auth = false;
       notifyListeners();
-      return auth;
     }
   }
 
@@ -116,16 +135,25 @@ class AuthProvider extends ChangeNotifier {
     Map map = await ApiClient.apiClient.registerUser(
         this.fullName, this.mobile, this.password, this.email);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-
+  print(map);
     if (map['code']) {
 
-      // kNavigatorPush(
-      //   context,
-      //   SignIn(),
-      // );
+      kNavigatorPush(
+        context,
+        Verification(),
+      );
     } else {
-      print('message :' + map['message']);
-
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: kBlack,
+          content: Text(
+            map['message'],
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.white, fontSize: ScreenUtil().setSp(18)),
+          ),
+        ),
+      );
     }
   }
 
@@ -146,10 +174,12 @@ class AuthProvider extends ChangeNotifier {
     await ApiClient.apiClient.loginUser(this.email, this.password);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
-      SPHelper.spHelper.setToken(map['data']['token']);
+      isLogin = true ;
+      await SPHelper.spHelper.setToken(map['data']['token']);
+      await SPHelper.spHelper.setIsLogin(true);
       kNavigatorPush(
         context,
-        Home(),
+        HomePage(),
       );
     } else {
       print(map['message']);
@@ -185,8 +215,8 @@ class AuthProvider extends ChangeNotifier {
     print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
-      SPHelper.spHelper.setToken(map['data']['token']);
-      SPHelper.spHelper.setUser(map['data']['user_id']);
+    await  SPHelper.spHelper.setToken(map['data']['token']);
+    await  SPHelper.spHelper.setUser(map['data']['user_id']);
       Fluttertoast.showToast(
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
@@ -197,6 +227,17 @@ class AuthProvider extends ChangeNotifier {
       kNavigatorPush(
         context,
         ResetPassword(),
+      );
+    }else{
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          backgroundColor: kBlack,
+          content: Text(
+            'الايميل غير صالح',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(18)),
+          ),
+        ),
       );
     }
   }
@@ -219,9 +260,7 @@ class AuthProvider extends ChangeNotifier {
         id, token, emailPassword, newPassword);
     print(map);
     Provider.of<UiProvider>(context,listen: false).toggleSpinner();
-    if(map['code'] &&
-        this.newPassword ==
-        this.confirmPassword){
+    if(map['code']){
       Fluttertoast.showToast(
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
@@ -238,5 +277,46 @@ class AuthProvider extends ChangeNotifier {
 
 
 //ToDo:Verification
+////////////////////////////////////////////////////////////////////////////////
+  submitVerification(GlobalKey<FormState> globalKey,BuildContext context){
+    if(globalKey.currentState.validate()){
+      globalKey.currentState.save();
+      verification(context);
+    }
+  }
+verification(BuildContext context)async{
+  Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+  int id =await SPHelper.spHelper.getUser();
+  Map map =  await ApiClient.apiClient.verification(id.toString(), verificationCode);
+  Provider.of<UiProvider>(context,listen: false).toggleSpinner();
+  if(map['code']){
+    Fluttertoast.showToast(
+        msg: map['message'],
+        toastLength: Toast.LENGTH_SHORT,
+        timeInSecForIosWeb: 1,
+        textColor: Color(0xffDAA095),
+        fontSize: 16.0
+    );
+    kNavigatorPushAndRemoveUntil(context, HomePage());
+  }else{
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: kBlack,
+        content: Text(
+          map['message'],
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(18)),
+        ),
+      ),
+    );
+  }
+}
+  // signOut() async {
+  //   sharedPreferences = await initSp();
+  //   sharedPreferences.setBool('isLogin', false);
+  //   sharedPreferences.setString('userId', '');
+  //   firebaseAuth.signOut();
+  // }
+
 
 }

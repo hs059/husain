@@ -1,6 +1,8 @@
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/profileScreen.dart';
 import 'package:beauty/features/ui/homePage/screens/brands.dart';
+import 'package:provider/provider.dart';
 import 'Category/Screens/category.dart';
 import 'package:beauty/features/ui/homePage/screens/home.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
@@ -32,6 +34,7 @@ class _HomePageState extends State<HomePage>
       bottomIndex = tabController.index;
       setState(() {});
     });
+    Provider.of<ApiProvider>(context,listen: false).getCategory();
     super.initState();
   }
   @override
@@ -39,40 +42,43 @@ class _HomePageState extends State<HomePage>
     return SafeArea(
       child: WillPopScope(
         onWillPop: onWillPop,
-        child: Scaffold(
-          body: TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: tabController,
-            children: <Widget>[
-              Home(),
-              Category(),
-              Cart(),
-              Brands(),
-              ProfileScreen(),
-            ],
-          ),
-          bottomNavigationBar: Container(
-            height: ScreenUtil().setHeight(83),
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(
-                  blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
-            ]),
-            //ToDo:svg icon
-            child: TabBar(
-                controller: tabController,
-                indicatorColor: Colors.transparent,
-                tabs: tabIconA.map((e) {
-                  return Tab(
-                    child: SvgPicture.asset(
-                      bottomIndex == tabIconA.indexOf(e)
-                          ? e
-                          : tabIconI[tabIconA.indexOf(e)],
-                      height: ScreenUtil().setHeight(45),
-                      width: ScreenUtil().setWidth(45),
-                    ),
-                  );
-                }).toList()
-             ),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Scaffold(
+            body: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: tabController,
+              children: <Widget>[
+                Home(),
+                Category(),
+                Cart(),
+                Brands(),
+                ProfileScreen(),
+              ],
+            ),
+            bottomNavigationBar: Container(
+              height: ScreenUtil().setHeight(83),
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                    blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
+              ]),
+              //ToDo:svg icon
+              child: TabBar(
+                  controller: tabController,
+                  indicatorColor: Colors.transparent,
+                  tabs: tabIconA.map((e) {
+                    return Tab(
+                      child: SvgPicture.asset(
+                        bottomIndex == tabIconA.indexOf(e)
+                            ? e
+                            : tabIconI[tabIconA.indexOf(e)],
+                        height: ScreenUtil().setHeight(45),
+                        width: ScreenUtil().setWidth(45),
+                      ),
+                    );
+                  }).toList()
+               ),
+            ),
           ),
         ),
       ),

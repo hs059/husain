@@ -64,7 +64,7 @@ class ResultSearch extends StatelessWidget {
                     imagePath: 'assets/images/3beauty.png',
                     title: 'perfoume',
                     rating: 4,
-                    prize: 122,
+                    prize: '122',
                     fav: false,),
               );
             },

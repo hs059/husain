@@ -1,25 +1,27 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
 
-TextStyle  kPrize = TextStyle(
-  fontFamily: 'Cairo-SemiBold',
+TextStyle  kPrize = GoogleFonts.cairo(
   fontSize: ScreenUtil().setSp(13),
   color: Color(0xff707070),
   fontWeight: FontWeight.bold,
 );
-TextStyle  kBannerTitle = TextStyle(
-  fontFamily: 'Cairo-SemiBold',
+TextStyle  kBannerTitle = GoogleFonts.cairo(
+  // fontFamily: 'Cairo-SemiBold',
   fontSize: ScreenUtil().setSp(18),
   color: kPinkDark,
+  fontWeight: FontWeight.bold,
 );
-TextStyle  kBannerSubTitle = TextStyle(
-    fontFamily: 'Cairo-SemiBold',
+TextStyle  kBannerSubTitle = GoogleFonts.cairo(
+    // fontFamily: 'Cairo-SemiBold',
     fontSize: ScreenUtil().setSp(12),
     color: kBlack,
+    fontWeight: FontWeight.bold,
     height: 1
 );
 

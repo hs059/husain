@@ -1,4 +1,4 @@
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
@@ -119,6 +119,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             validator: authProvider.validateEmail,
                             onSaved: authProvider.saveEmail,
                             textInputType: TextInputType.emailAddress,
+                            password: false,
                           ),
                         ),
                         SizedBox(
@@ -133,6 +134,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             password: uiProvider.toggleEye,
                             validator: authProvider.validatePassword,
                             onSaved: authProvider.savePassword,
+
                           ),
                         ),
                       ],

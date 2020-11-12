@@ -1,4 +1,4 @@
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
@@ -14,9 +14,13 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
-class SignUp extends StatelessWidget {
-  GlobalKey<FormState> formKeySignUp = GlobalKey<FormState>();
+class SignUp extends StatefulWidget {
+  @override
+  _SignUpState createState() => _SignUpState();
+}
 
+class _SignUpState extends State<SignUp> {
+  GlobalKey<FormState> formKeySignUp = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -76,8 +80,7 @@ class SignUp extends StatelessWidget {
                       ),
                       CustomTextFormField(
                         hintText: 'Password',
-                        password: uiProvider.toggleEye,
-                        iconData: uiProvider.iconData,
+                        password: true,
                         validator: authProvider.validatePassword,
                         onSaved: authProvider.savePassword,
                       ),
@@ -86,9 +89,8 @@ class SignUp extends StatelessWidget {
                       ),
                       CustomTextFormField(
                         hintText: 'Confirm Password',
-                        password: uiProvider.toggleEye,
-                        iconData: uiProvider.iconData,
-                        validator: authProvider.validatePassword,
+                        password: true,
+                        validator: authProvider.validateConfirmPassword,
                         onSaved: authProvider.saveConfirmPassword,
                       ),
                       SizedBox(
@@ -119,18 +121,21 @@ class SignUp extends StatelessWidget {
                             print(phone.completeNumber);
                           },
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(
                   height: ScreenUtil().setHeight(70),
                 ),
-                Button(
-                    text: 'Sign Up',
-                    onTap: () {
-                      authProvider.submitRegister(formKeySignUp, context);
-                    }),
+                Builder(
+                  builder: (context) =>  Button(
+                      text: 'Sign Up',
+                      onTap: () {
+                        Provider.of<AuthProvider>(context,listen: false).submitRegister(formKeySignUp, context);
+                       // saveForm();
+                      }),
+                ),
                 SizedBox(
                   height: ScreenUtil().setHeight(90),
                 ),

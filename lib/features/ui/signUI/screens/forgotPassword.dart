@@ -1,4 +1,4 @@
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -54,28 +54,16 @@ class ForgetPassword extends StatelessWidget {
                 SizedBox(
                   height: ScreenUtil().setHeight(70),
                 ),
-                Button(
-                    text: 'Send',
-                    onTap: () {
-                      //ToDo: check email is found in api
-                      authProvider.submitForgetPassword(
-                          formKeyForgetPassword, context);
-                      var duration = Duration(seconds: 5);
-                      Future.delayed(duration,
-                          (){
-                            scaffoldKey.currentState.showSnackBar(
-                              SnackBar(
-                                backgroundColor: kBlack,
-                                content: Text(
-                                  'الايميل غير صالح',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(18)),
-                                ),
-                              ),
-                            );
-                          }
-                      );
-                    }),
+                Builder(
+                  builder: (context) =>
+                  Button(
+                      text: 'Send',
+                      onTap: () {
+                        //ToDo: check email is found in api
+                        authProvider.submitForgetPassword(
+                            formKeyForgetPassword, context);
+                      }),
+                ),
               ],
             ),
           ),

@@ -1,4 +1,5 @@
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
+import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/onboardingUI/widgets/detailsOnboarding.dart';
 import 'package:beauty/features/ui/onboardingUI/widgets/indicatorOnboarding.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
@@ -78,7 +79,7 @@ class _OnboardingState extends State<Onboarding> {
                       curve: Curves.ease,
                     );
                   }else{
-                    kNavigatorPushReplacement(context,SignIn());
+                    kNavigatorPushReplacement(context,HomePage());
                     SPHelper.spHelper.isSeenOnBoardingSet(true);
                   }
                 },

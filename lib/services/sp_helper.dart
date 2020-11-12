@@ -37,6 +37,15 @@ class SPHelper {
     return x;
   }
 
+  setIsLogin(bool value)async{
+    sharedPreferences = await initSharedPrefrences() ;
+    sharedPreferences.setBool('isLogin', value);
+  }
+  Future<bool> getIsLogin()async{
+    sharedPreferences = await initSharedPrefrences();
+  bool x=  sharedPreferences.getBool('isLogin');
+  return x ;
+  }
   isSeenOnBoardingSet(bool value) async {
     sharedPreferences = await initSharedPrefrences();
     sharedPreferences.setBool('isSeen', value);

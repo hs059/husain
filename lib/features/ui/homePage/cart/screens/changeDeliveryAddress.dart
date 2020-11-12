@@ -1,7 +1,7 @@
 
 
 
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/features/ui/homePage/cart/screens/addnewAddress.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartAddressWidget.dart';

@@ -1,3 +1,5 @@
+import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/ui/splash.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/string.dart';
 import 'package:flutter/services.dart';
@@ -7,11 +9,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 import 'features/provider/uiProvider.dart';
 
-
+import 'features/ui/homePage/cart/screens/addnewAddress.dart';
 import 'features/ui/homePage/homePage.dart';
 import 'features/ui/onboardingUI/screens/onboarding.dart';
 import 'features/ui/product/productScreen.dart';
@@ -38,30 +41,30 @@ void main() async {
           SvgPicture.svgStringDecoder, 'assets/svg/on_boading3.svg'),
       null);
   await precachePicture(
-      ExactAssetPicture(
-          SvgPicture.svgStringDecoder, endOrder),
-      null);
-
+      ExactAssetPicture(SvgPicture.svgStringDecoder, endOrder), null);
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness: Platform.isAndroid ? Brightness.dark : Brightness.light,
+    statusBarBrightness:
+        Platform.isAndroid ? Brightness.dark : Brightness.light,
     systemNavigationBarColor: Colors.white,
     systemNavigationBarDividerColor: Colors.grey,
     systemNavigationBarIconBrightness: Brightness.dark,
   ));
-  bool isSeen = await SPHelper.spHelper.isSeenOnBoardingGet()??false ;
+  bool isSeen = await SPHelper.spHelper.isSeenOnBoardingGet() ?? false;
   print(isSeen);
-  Widget screen = isSeen?HomePage():Onboarding() ;
+  Widget screen = isSeen ? HomePage() : Onboarding();
 
   runApp(MyApp(screen));
 }
 
 class MyApp extends StatelessWidget {
- Widget screen ;
- MyApp(this.screen);
-   @override
+  Widget screen;
+
+  MyApp(this.screen);
+
+  @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
@@ -71,17 +74,24 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider(),
         ),
+        ChangeNotifierProvider<ApiProvider>(
+          create: (context) => ApiProvider(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           scaffoldBackgroundColor: Colors.white,
+          textTheme: GoogleFonts.cairoTextTheme(
+            Theme.of(context).textTheme,
+          ),
         ),
         home: Builder(builder: (context) {
           ScreenUtil.init(context,
               designSize: Size(375, 812), allowFontScaling: true);
-          return screen;
+
+          return Splash(screen);
         }),
 
       ),

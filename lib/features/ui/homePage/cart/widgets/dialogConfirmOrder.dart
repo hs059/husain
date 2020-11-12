@@ -1,6 +1,6 @@
 
 
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
 import 'package:beauty/value/navigator.dart';

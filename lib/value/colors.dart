@@ -1,6 +1,5 @@
 
 
-import 'package:beauty/components/hexColor.dart';
 import 'package:flutter/material.dart';
 
 Color kPinkLight = Color(0xffDAA095);

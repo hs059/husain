@@ -1,11 +1,13 @@
 
 
-import 'package:beauty/components/widgets/animationCart.dart';
-import 'package:beauty/features/ui/product/productScreen.dart';
+import 'package:beauty/components/model/subProductModel.dart' as subProduct;
+import 'package:beauty/components/widgets/LoaderGif.dart';
+import 'package:beauty/features/ui/homePage/Category/widgets/productSubScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,40 +17,50 @@ class ProductItemGrid extends StatelessWidget {
   final  String title;
   final  String imagePath;
   final  double rating;
-  final  double prize;
+  final  String prize;
   final  bool fav ;
+  final subProduct.Data product ;
 
-  ProductItemGrid({@required this.imagePath,@required this.title,@required this.rating,@required this.prize,@required this.fav,});
+
+  ProductItemGrid({@required this.imagePath,@required this.title,@required this.rating,@required this.prize,@required this.fav, this.product,});
   @override
   Widget build(BuildContext context) {
     return    Row(
       children: [
         Container(
-
           margin: EdgeInsets.all(5),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(6),
             color: Colors.white,
             boxShadow: sCardShadow,),
-          height: ScreenUtil().setHeight(225),
+          height: ScreenUtil().setHeight(400),
           width: ScreenUtil().setWidth(165),
           child: Stack(
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     child: Stack(
                       children: [
                         GestureDetector(
-                          onTap: () => kNavigatorPush(context, ProductScreen()),
-
-                          child: Container(
-                            height: ScreenUtil().setHeight(127),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7),
-                                image: DecorationImage(
-                                    image: AssetImage(imagePath),
-                                    fit: BoxFit.contain)),
+                          onTap: () => kNavigatorPush(context, ProductSubScreen(product: product,)),
+                          child: Center(
+                            child: Container(
+                              height: ScreenUtil().setHeight(127),
+                              width: ScreenUtil().setWidth(162),
+                              child: imagePath!=''?CachedNetworkImage(
+                                  imageUrl:imagePath,
+                                  placeholder: (context, url) => LoaderGif1(),
+                                  errorWidget: (context, url, error) =>
+                                      Icon(Icons.error),
+                                  height: ScreenUtil().setHeight(50),
+                                  fit: BoxFit.contain
+                              ):Image.asset(
+                                  'assets/images/3beauty.png',
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                           ),
                         ),
                         Align(

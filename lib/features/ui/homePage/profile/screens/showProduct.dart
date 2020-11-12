@@ -1,7 +1,7 @@
 
 
 
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 
 import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
@@ -26,7 +26,6 @@ class ShowProduct extends StatelessWidget {
           child: GridView.builder(
             shrinkWrap: true,
             primary: false,
-
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.80,
@@ -39,7 +38,7 @@ class ShowProduct extends StatelessWidget {
                           imagePath: 'assets/images/3beauty.png',
                           title: 'perfoume',
                           rating: 4,
-                          prize: 122,
+                          prize: '122',
                           fav: false),
                     );
                   },

@@ -1,4 +1,4 @@
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 
@@ -284,26 +284,52 @@ class _AddNewAddressState extends State<AddNewAddress> {
                 },
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                uiProviderFalse.toggleGroupValueNewAddress();
-                print('uiProvider.toggle');
-              },
-              child: RadioListTile(
-                activeColor: kPinkLight,
-                value: 'Default',
-                groupValue: uiProvider.toggle ? 'Default' : '0',
-                onChanged: (value) {
-                  uiProviderFalse.toggleGroupValueNewAddress();
-                },
-                title: Text(
-                  'Default Delivery Address',
-                  style: kSectionText,
-                ),
+            ListTile(
+              leading: Check(),
+              title: Text(
+                'Default Delivery Address',
+                style: kSectionText,
               ),
             ),
             Button(text: 'Save', onTap: null),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class Check extends StatefulWidget {
+  @override
+  _CheckState createState() => _CheckState();
+}
+
+class _CheckState extends State<Check> {
+  bool _value = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _value = !_value;
+        });
+      },
+      child: Container(
+        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: _value
+              ? Icon(
+            Icons.check,
+            size: 20.0,
+            color: Colors.white,
+          )
+              : Icon(
+            Icons.check_box_outline_blank,
+            size: 20.0,
+            color: Colors.blue,
+          ),
         ),
       ),
     );

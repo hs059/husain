@@ -4,19 +4,10 @@ import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField(
-      {Key key,
-      this.hintText,
-      this.password = false,
-      this.validator,
-      this.onSaved,
-      this.iconData,
-      this.type, this.textInputType = TextInputType.text,
-      });
-
+class CustomTextFormField extends StatefulWidget {
   final String hintText;
   final Function validator;
   final Function onSaved;
@@ -24,6 +15,31 @@ class CustomTextFormField extends StatelessWidget {
   final TextInputType textInputType;
   final bool password;
   Widget type;
+  CustomTextFormField({
+    Key key,
+    this.hintText,
+    this.password = false,
+    this.validator,
+    this.onSaved,
+    this.iconData,
+    this.type,
+    this.textInputType = TextInputType.text,
+  });
+
+
+  @override
+  _CustomTextFormFieldState createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  IconData iconData = FontAwesomeIcons.eyeSlash;
+  bool toggleEye = true;
+
+  fmToggleEye() {
+    toggleEye = !toggleEye;
+    iconData = toggleEye ? FontAwesomeIcons.eyeSlash : FontAwesomeIcons.eye;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,22 +50,24 @@ class CustomTextFormField extends StatelessWidget {
         border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
       ),
       child: TextFormField(
-
-        validator: (value) => validator(value),
-        onSaved: (newValue) => onSaved(newValue),
-        obscureText: password,
+        validator: (value) => widget.validator(value),
+        onSaved: (newValue) => widget.onSaved(newValue),
+       onChanged: (value){widget.onSaved(value);},
+        obscureText:widget.password?toggleEye:false,
         cursorColor: Colors.grey,
-        keyboardType:textInputType ,
+        keyboardType: widget.textInputType,
         decoration: InputDecoration(
-          icon: type,
-          suffix: GestureDetector(
-            child: Icon(iconData,color: Color(0xffEDF1F7),),
-
+          icon: widget.type,
+          suffix: widget.password?GestureDetector(
+            child: Icon(
+              iconData,
+              color: Color(0xffEDF1F7),
+            ),
             onTap: () {
-              Provider.of<UiProvider>(context, listen: false).fmToggleEye();
+             fmToggleEye();
             },
-          ),
-          hintText: hintText,
+          ):null,
+          hintText: widget.hintText,
           hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
           border: UnderlineInputBorder(
               borderSide: BorderSide(

@@ -1,59 +1,82 @@
+import 'package:beauty/components/model/brandModel.dart';
+import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:provider/provider.dart';
 
 class Brands extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: appBarCart(title: 'Brands'),
-        body:ListView.separated(
-          physics: const BouncingScrollPhysics(),
-
-          separatorBuilder: (context, index) => MyDivider(),
-          itemCount: 20,
-          scrollDirection: Axis.vertical,
-          itemBuilder: (context, index) => ListTile(
-            onTap: () => kNavigatorPush(context, ShowProduct('VOREED')),
-            leading: Image.asset('assets/images/brand1.png'),
-            title: Text(
-              'VOREED',
-              style: kReviews.copyWith(
-                fontSize: ScreenUtil().setSp(16),
-              ),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: PreferredSize(
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: kBorder,
+                offset: Offset(0, 2.0),
+                blurRadius: 4.0,
+              )
+            ]),
+            child: AppBar(iconTheme: IconThemeData(color: Color(0xff121924)),
+              backgroundColor: Colors.white,
+              title:Text("أحدث الماركات العالمية", style: kSectionText.copyWith(
+                fontSize: ScreenUtil().setSp(18),
+                fontFamily: 'Cairo-Regular',
+              ),),
+              elevation: 0.0,
             ),
+
           ),
-        )
-        // Column(
-        //   children: [
-        //
-        //     ListTile(
-        //       leading: Image.asset('assets/images/brand1.png'),
-        //       title: Text('VOREED',style: kReviews.copyWith(
-        //         fontSize: ScreenUtil().setSp(16),
-        //       ),),
-        //     ),
-        //     MyDivider(),
-        //   ],
-        // ),
-        );
-  }
-  Widget widget = ListView.separated(
-    separatorBuilder: (context, index) => MyDivider(),
-    itemCount: 20,
-    scrollDirection: Axis.horizontal,
-    itemBuilder: (context, index) => ListTile(
-      leading: Image.asset('assets/images/brand1.png'),
-      title: Text(
-        'VOREED',
-        style: kReviews.copyWith(
-          fontSize: ScreenUtil().setSp(16),
+          preferredSize: Size.fromHeight(kToolbarHeight),
+        ),
+        body: Consumer<ApiProvider>(
+          builder: (context, value, child) {
+            BrandModel brand = value.brand;
+            return brand!=null? ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              separatorBuilder: (context, index) => MyDivider(),
+              itemCount: brand.data.brands.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) => ListTile(
+                onTap: () => kNavigatorPush(context, ShowProduct('VOREED')),
+                leading: CachedNetworkImage(
+                    imageUrl: brand.data.brands[index].image,
+                    placeholder: (context, url) => LoaderGif1(),
+                    errorWidget: (context, url, error) =>
+                        Icon(Icons.error),
+                    height: ScreenUtil().setHeight(50),
+                    fit: BoxFit.contain
+                ),
+                title: Text(
+                  brand.data.brands[index].name,
+                  style: kReviews.copyWith(
+                    fontSize: ScreenUtil().setSp(16),
+                  ),
+                ),
+              ),
+            ):ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              separatorBuilder: (context, index) => MyDivider(),
+              itemCount:7,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) => SizedBox(
+                height: 80,
+                  child: LoaderGif1(),
+              ),
+            );
+          },
         ),
       ),
-    ),
-  );
+    );
+  }
 }

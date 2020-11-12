@@ -1,4 +1,5 @@
 
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +7,15 @@ import 'package:flutter_screenutil/screenutil.dart';
 
 
 class SearchTextFormField extends StatelessWidget {
-  const SearchTextFormField({
+   SearchTextFormField({
     Key key,
-    this.validator, this.onSaved,
+    this.validator, this.onSaved
   }) ;
+
 
   final Function validator;
   final Function onSaved;
+
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +28,13 @@ class SearchTextFormField extends StatelessWidget {
         border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
       ),
       child: TextFormField(
+
         validator: (value) => validator(value),
         onSaved: (newValue) => onSaved(newValue),
         cursorColor: Colors.grey,
         decoration: InputDecoration(
           icon: GestureDetector(child: Icon( Icons.search,color: kGrayText,),
-            onTap: () {
+            onTap: () async{
             },
           )  ,
           hintText: 'Search in 3beauty',

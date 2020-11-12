@@ -1,18 +1,36 @@
 
+import 'package:beauty/components/model/subCategoryModel.dart';
+import 'package:beauty/components/widgets/LoaderGif.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/Category/Screens/subCategory.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:provider/provider.dart';
 
 class CategoryItem extends StatelessWidget {
-
+ final String image ;
+ final String name ;
+ final int id ;
+ CategoryItem({this.image, this.name, this.id});
   @override
   Widget build(BuildContext context) {
 
     return GestureDetector(
-      onTap: () => kNavigatorPush(context, SubCategory()),
+      onTap: ()async {
+      await Provider.of<ApiProvider>(context, listen: false)
+            .getSubCategory(id,context);
+        kNavigatorPush(context, SubCategory(id: id,
+          countSub:Provider.of<ApiProvider>(context,listen: false ).subCategory.date.length,
+        title: name,
+        ),
+        );
+      },
+
+
       child: Row(
         children: [
           Container(
@@ -27,17 +45,17 @@ class CategoryItem extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                    height: ScreenUtil().setHeight(50),
-                    decoration:BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage('assets/images/Lipsticks.png'), fit: BoxFit.contain),
-                    )
+                CachedNetworkImage(
+                  imageUrl: image,
+                  placeholder: (context, url) => LoaderGif1(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  height: ScreenUtil().setHeight(50),
+                    fit: BoxFit.contain
                 ),
                 SizedBox(
                   height: ScreenUtil().setHeight(10),
                 ),
-                Text('Lipsticks',style: kSectionText,),
+                Text(name,style: kSectionText,),
               ],
             ),
           ),

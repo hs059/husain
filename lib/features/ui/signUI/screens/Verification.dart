@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'package:beauty/components/btn.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
 import 'package:beauty/features/ui/signUI/widgets/appBarAuth.dart';
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
@@ -62,6 +63,7 @@ class _VerificationState extends State<Verification>
     UiProvider uiProvider = Provider.of<UiProvider>(context);
 
     return Scaffold(
+
       backgroundColor: Colors.white,
       appBar: appBarAuth(context),
       body: Container(

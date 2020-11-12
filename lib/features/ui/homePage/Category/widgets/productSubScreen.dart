@@ -1,25 +1,20 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
-import 'package:beauty/components/model/sectionModel.dart';
+import 'package:beauty/components/model/subProductModel.dart' as subProduct;
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
-import 'package:beauty/features/ui/homePage/cart/screens/Checkout.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
-import 'package:beauty/features/ui/homePage/widgets/homeSliderWidget.dart';
-import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
-import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
+
 import 'package:beauty/features/ui/homePage/widgets/section.dart';
 import 'package:beauty/features/ui/product/widgets/addCartSheet.dart';
 import 'package:beauty/features/ui/product/widgets/brandProduct.dart';
 import 'package:beauty/features/ui/product/widgets/productDescription.dart';
 import 'package:beauty/features/ui/product/widgets/productName.dart';
 import 'package:beauty/features/ui/product/widgets/productPrize.dart';
-import 'package:beauty/features/ui/product/widgets/productSliderWidget.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
-import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -30,10 +25,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:share/share.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
-class ProductScreen extends StatelessWidget {
-  final Products product ;
-  final int index ;
-  ProductScreen({this.product, this.index});
+class ProductSubScreen extends StatelessWidget {
+  final subProduct.Data product ;
+  ProductSubScreen({this.product,});
 
   @override
   Widget build(BuildContext context) {
@@ -79,27 +73,24 @@ class ProductScreen extends StatelessWidget {
         body: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            Hero(
-               tag: "ramzy"+index.toString(),
-              child: Container(
-                height: ScreenUtil().setHeight(330),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                  color: Colors.white,
-                ),
-                child:CachedNetworkImage(
-                    imageUrl: product.image,
-                    placeholder: (context, url) => LoaderGif1(),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error),
-                    height: ScreenUtil().setHeight(50),
-                    fit: BoxFit.contain
-                ),
+            Container(
+              height: ScreenUtil().setHeight(330),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                color: Colors.white,
+              ),
+              child:CachedNetworkImage(
+                  imageUrl: product.image,
+                  placeholder: (context, url) => LoaderGif1(),
+                  errorWidget: (context, url, error) =>
+                      Icon(Icons.error),
+                  height: ScreenUtil().setHeight(50),
+                  fit: BoxFit.contain
               ),
             ),
             Padding(
               padding:
-                  EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+              EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
               child: Column(
                 children: [
                   BrandProduct(),
