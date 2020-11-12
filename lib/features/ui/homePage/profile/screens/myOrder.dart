@@ -12,132 +12,135 @@ import 'package:flutter_screenutil/screenutil.dart';
 class MyOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarCart(title: 'My Order'),
-      body: ListView.builder(
-        physics: const BouncingScrollPhysics(),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: appBarCart(title: 'My Order'),
+        body: ListView.builder(
+          physics: const BouncingScrollPhysics(),
 
-        itemCount: 20,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (context, index) => ContainerCart(
-          // height: 320,
-          child: Column(
-            children: [
-              ListTile(
-                leading: Text(
-                  'Order Bill',
-                  style: kGrayText33,
-                ),
-                trailing: Text(
-                  '#OD2204s',
-                  style: kSeeAll.copyWith(
-                    fontSize: ScreenUtil().setSp(15),
+          itemCount: 20,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) => ContainerCart(
+            // height: 320,
+            child: Column(
+              children: [
+                ListTile(
+                  leading: Text(
+                    'Order Bill',
+                    style: kGrayText33,
+                  ),
+                  trailing: Text(
+                    '#OD2204s',
+                    style: kSeeAll.copyWith(
+                      fontSize: ScreenUtil().setSp(15),
+                    ),
                   ),
                 ),
-              ),
-              Column(
-                children: [
-                  MyDivider(),
-                  Row(
+                Column(
+                  children: [
+                    MyDivider(),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: ScreenUtil().setWidth(15),
+                        ),
+                        Text(
+                          'Order List',
+                          style: kGrayText33,
+                        ),
+                        SizedBox(
+                          width: ScreenUtil().setWidth(150),
+                        ),
+                        Expanded(
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton(
+                              value: '12 Items',
+                              items: [
+                                DropdownMenuItem(
+                                  child: Text(
+                                    '12 Items',
+                                    style: kGrayText33,
+                                  ),
+                                  value: '12 Items',
+                                ),
+                                DropdownMenuItem(
+                                  child: Text(
+                                    '15 Items',
+                                    style: kGrayText33,
+                                  ),
+                                  value: '15 Items',
+                                ),
+                              ],
+                              onChanged: (String value) {
+
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+
+                MyDivider(),
+                ListTile(
+                  leading: Text(
+                    'Total Bill',
+                    style: kGrayText33,
+                  ),
+                  trailing: Text(
+                    '637.00 S.R',
+                    style: kGrayText33,
+                  ),
+                ),
+                MyDivider(),
+                SizedBox(
+                  height: ScreenUtil().setHeight(20),
+                ),
+
+                Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SizedBox(
-                        width: ScreenUtil().setWidth(15),
-                      ),
                       Text(
-                        'Order List',
+                        'Status',
                         style: kGrayText33,
                       ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(150),
-                      ),
-                      Expanded(
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            value: '12 Items',
-                            items: [
-                              DropdownMenuItem(
-                                child: Text(
-                                  '12 Items',
-                                  style: kGrayText33,
-                                ),
-                                value: '12 Items',
-                              ),
-                              DropdownMenuItem(
-                                child: Text(
-                                  '15 Items',
-                                  style: kGrayText33,
-                                ),
-                                value: '15 Items',
-                              ),
-                            ],
-                            onChanged: (String value) {
 
-                            },
+                      SizedBox(
+                        height: ScreenUtil().setHeight(34),
+                        width: ScreenUtil().setWidth(102),
+                        child: Container(
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            color: Color(0xff0095FF),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            'Shipping',
+                            style: kBtnText,
                           ),
                         ),
                       )
                     ],
                   ),
-                ],
-              ),
-
-              MyDivider(),
-              ListTile(
-                leading: Text(
-                  'Total Bill',
-                  style: kGrayText33,
                 ),
-                trailing: Text(
-                  '637.00 S.R',
-                  style: kGrayText33,
-                ),
-              ),
-              MyDivider(),
-              SizedBox(
-                height: ScreenUtil().setHeight(20),
-              ),
-
-              Padding(
-                padding:  EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Status',
-                      style: kGrayText33,
-                    ),
-
-                    SizedBox(
-                      height: ScreenUtil().setHeight(34),
-                      width: ScreenUtil().setWidth(102),
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Color(0xff0095FF),
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Text(
-                          'Shipping',
-                          style: kBtnText,
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
 
-      ),
-      bottomNavigationBar: bottomNavigationBarCart(
-        onTap: (){
-          Navigator.pop(context);
-          tabController.animateTo(0);
-        },
-        widget: Text(
-          'Go to Shopping',
-          style: kBtnText,
+        ),
+        bottomNavigationBar: bottomNavigationBarCart(
+          onTap: (){
+            Navigator.pop(context);
+            tabController.animateTo(0);
+          },
+          widget: Text(
+            'Go to Shopping',
+            style: kBtnText,
+          ),
         ),
       ),
     );

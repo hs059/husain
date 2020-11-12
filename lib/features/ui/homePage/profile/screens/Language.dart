@@ -13,56 +13,59 @@ class Language extends StatelessWidget {
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
     UiProvider uiProviderFalse = Provider.of<UiProvider>(context,listen: false);
-    return Scaffold(
-      appBar: appBarCart(title: 'Language'),
-      body: Padding(
-        padding: EdgeInsets.only(
-          top: ScreenUtil().setHeight(50),
-        ),
-        child: ContainerCart(
-          child: Wrap(
-            children: [
-              Row(
-                children: [
-                  Radio(
-                    activeColor: kPinkLight,
-                    focusColor:kPinkLight ,
-                    hoverColor: kPinkLight,
-                    value: 'en',
-                    groupValue: uiProvider.language,
-                    onChanged: (value) {
-                      uiProviderFalse.setLanguage(value);
-                    },
-                  ),
-                  Text(
-                    'English',
-                    style: kTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(18),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar: appBarCart(title: 'Language'),
+        body: Padding(
+          padding: EdgeInsets.only(
+            top: ScreenUtil().setHeight(50),
+          ),
+          child: ContainerCart(
+            child: Wrap(
+              children: [
+                Row(
+                  children: [
+                    Radio(
+                      activeColor: kPinkLight,
+                      focusColor:kPinkLight ,
+                      hoverColor: kPinkLight,
+                      value: 'en',
+                      groupValue: uiProvider.language,
+                      onChanged: (value) {
+                        uiProviderFalse.setLanguage(value);
+                      },
                     ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Radio(
-                    activeColor: kPinkLight,
-                    focusColor:kPinkLight ,
-                    hoverColor: kPinkLight,
-                    value: 'ar',
-                    groupValue: uiProvider.language,
-                    onChanged: (value) {
-                      uiProviderFalse.setLanguage(value);
-                    },
-                  ),
-                  Text(
-                    'Arabic',
-                    style: kTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(18),
+                    Text(
+                      'English',
+                      style: kTitleSign.copyWith(
+                        fontSize: ScreenUtil().setSp(18),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+                Row(
+                  children: [
+                    Radio(
+                      activeColor: kPinkLight,
+                      focusColor:kPinkLight ,
+                      hoverColor: kPinkLight,
+                      value: 'ar',
+                      groupValue: uiProvider.language,
+                      onChanged: (value) {
+                        uiProviderFalse.setLanguage(value);
+                      },
+                    ),
+                    Text(
+                      'Arabic',
+                      style: kTitleSign.copyWith(
+                        fontSize: ScreenUtil().setSp(18),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

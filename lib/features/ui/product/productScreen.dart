@@ -91,7 +91,7 @@ class ProductScreen extends StatelessWidget {
                     imageUrl: product.image,
                     placeholder: (context, url) => LoaderGif1(),
                     errorWidget: (context, url, error) =>
-                        Icon(Icons.error),
+                        Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
                     height: ScreenUtil().setHeight(50),
                     fit: BoxFit.contain
                 ),

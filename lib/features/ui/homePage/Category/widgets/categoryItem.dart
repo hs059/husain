@@ -48,7 +48,8 @@ class CategoryItem extends StatelessWidget {
                 CachedNetworkImage(
                   imageUrl: image,
                   placeholder: (context, url) => LoaderGif1(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) =>
+                      Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
                   height: ScreenUtil().setHeight(50),
                     fit: BoxFit.contain
                 ),

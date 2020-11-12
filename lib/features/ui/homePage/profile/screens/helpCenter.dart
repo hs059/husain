@@ -12,43 +12,46 @@ class HelpCenter extends StatelessWidget {
   String email = 'info@3beauty.net';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: appBarCart(title: 'Help Center'),
-        body: Padding(
-          padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
-          child: ContainerCart(
-            // height: 160,
-            child: Wrap(
-              children: [
-                ListTile(
-                  onTap: () =>  UrlLauncher.launch('mailto:$email'),
-                  leading: SvgPicture.asset(
-                    'assets/svg/emailBtn.svg',
-                    fit: BoxFit.contain,
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+          appBar: appBarCart(title: 'Help Center'),
+          body: Padding(
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
+            child: ContainerCart(
+              // height: 160,
+              child: Wrap(
+                children: [
+                  ListTile(
+                    onTap: () =>  UrlLauncher.launch('mailto:$email'),
+                    leading: SvgPicture.asset(
+                      'assets/svg/emailBtn.svg',
+                      fit: BoxFit.contain,
+                    ),
+                    title: Text(
+                      'Email Us',
+                      style: kProfile,
+                    ),
                   ),
-                  title: Text(
-                    'Email Us',
-                    style: kProfile,
-                  ),
-                ),
-                MyDivider(),
-                ListTile(
-                  onTap:() => UrlLauncher.launch('tel:+${phone.toString()}'),
+                  MyDivider(),
+                  ListTile(
+                    onTap:() => UrlLauncher.launch('tel:+${phone.toString()}'),
 
-                  leading: Image.asset(
-                    'assets/images/phoneBtn.png',
-                    fit: BoxFit.contain,
-                    height: ScreenUtil().setHeight(35),
-                    width: ScreenUtil().setWidth(35),
+                    leading: Image.asset(
+                      'assets/images/phoneBtn.png',
+                      fit: BoxFit.contain,
+                      height: ScreenUtil().setHeight(35),
+                      width: ScreenUtil().setWidth(35),
+                    ),
+                    title: Text(
+                      'Call Us',
+                      style: kProfile,
+                    ),
                   ),
-                  title: Text(
-                    'Call Us',
-                    style: kProfile,
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ));
+          )),
+    );
   }
 }
