@@ -30,7 +30,7 @@ class Section extends StatelessWidget {
                         fontFamily: 'Cairo-Regular'
                 ),),
                 GestureDetector(
-                  onTap: () => kNavigatorPush(context, ShowProduct(section.data.sectionTitle)),
+                  onTap: () => kNavigatorPush(context, ShowProduct(title: section.data.sectionTitle)),
                   child:Text('رؤية الكل',style: kSeeAll.copyWith(
                     fontFamily: 'Cairo-Regular'
                   ),),
@@ -66,7 +66,6 @@ class Section extends StatelessWidget {
                       rating: 4.5,
                       onCart: true,
                       product: product,
-                      index: index,
                     ),
                   );
                 },

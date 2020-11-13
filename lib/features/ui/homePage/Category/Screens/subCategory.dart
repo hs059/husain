@@ -1,5 +1,5 @@
+import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
-import 'package:beauty/components/model/subProductModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
@@ -28,7 +28,7 @@ class _SubCategoryState extends State<SubCategory>
 
   int index = 0;
   String _character;
-  SubProductModel subProductModel;
+  ProductModel subProductModel;
   @override
   void initState() {
     tabControllerSub =
@@ -191,12 +191,12 @@ class _SubCategoryState extends State<SubCategory>
                           children: [
                             ...subCategory.date
                                 .map(
-                                  (e) => FutureBuilder<SubProductModel>(
+                                  (e) => FutureBuilder<ProductModel>(
                                     future: Provider.of<ApiProvider>(context)
                                         .getSubProduct(e.id),
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData) {
-                                        SubProductModel subProduct =
+                                        ProductModel subProduct =
                                             snapshot.data;
                                         if (subProduct.data.isNotEmpty) {
                                           print(subCategory.date.length);

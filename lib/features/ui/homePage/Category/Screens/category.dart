@@ -25,7 +25,7 @@ class Category extends StatelessWidget {
           color: Colors.white,
           child: Column(
             children: [
-              SearchTextFormField(),
+              SearchText(),
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),

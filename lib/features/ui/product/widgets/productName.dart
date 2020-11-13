@@ -49,7 +49,7 @@ class ProductName extends StatelessWidget {
                   width: ScreenUtil().setWidth(18),
                 ),
                 Text(
-                  '$reviews reviews',
+                  '$reviews تعليقات ',
                   style: kReviews,
                 ),
               ],

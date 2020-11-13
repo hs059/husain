@@ -13,665 +13,671 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search>with SingleTickerProviderStateMixin {
-
+  final TextEditingController _controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:PreferredSize(
-        child: Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              color: kBorder,
-              offset: Offset(0, 2.0),
-              blurRadius: 4.0,
-            )
-          ]),
-          child: AppBar(iconTheme: IconThemeData(color: Color(0xff121924)),
-            backgroundColor: Colors.white,
-            title: TextField(
-              cursorColor: kPinkLight,
-              decoration: InputDecoration(
-                suffix: GestureDetector(child: Icon( Icons.close),
+    return Directionality(
+     textDirection: TextDirection.rtl,
+      child: Scaffold(
+        appBar:PreferredSize(
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: kBorder,
+                offset: Offset(0, 2.0),
+                blurRadius: 4.0,
+              )
+            ]),
+            child: AppBar(iconTheme: IconThemeData(color: Color(0xff121924)),
+              backgroundColor: Colors.white,
+              title: TextField(
+onChanged: (value) {
 
-                )  ,
-                hintText: 'search',
-                hintStyle: TextStyle(color: Color(0xff8F9BB3),fontSize: 15),
-                border: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: kGrayLight,
-                      width: ScreenUtil().setWidth(2),
-                    )),
-                focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: kPinkDark,
-                      width: ScreenUtil().setWidth(2),
-                    )),
-                enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: kGrayLight,
-                      width: ScreenUtil().setWidth(0.5),
-                    )),
+},
+                controller: _controller,
+                cursorColor: kPinkLight,
+                decoration: InputDecoration(
+                    // contentPadding: const EdgeInsets.all(20.0),
+                  suffix: IconButton(onPressed: () => _controller.clear(),icon:Icon( Icons.close,size: 28,))  ,
+                  hintText: 'بحث',
+                  hintStyle: TextStyle(color: Color(0xff8F9BB3),fontSize: 15),
+                  border: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: kGrayLight,
+                        width: ScreenUtil().setWidth(2),
+                      )),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: kPinkDark,
+                        width: ScreenUtil().setWidth(2),
+                      )),
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: kGrayLight,
+                        width: ScreenUtil().setWidth(0.5),
+                      )),
+                ),
               ),
+              elevation: 0.0,
             ),
-            elevation: 0.0,
+
           ),
-
+          preferredSize: Size.fromHeight(kToolbarHeight),
         ),
-        preferredSize: Size.fromHeight(kToolbarHeight),
-      ),
-      body: Padding(
-        padding:  EdgeInsets.only(
-          top: ScreenUtil().setHeight(10),
-          left: ScreenUtil().setWidth(15),
-          right: ScreenUtil().setWidth(15),),
-        child:ListView(
-          physics: const BouncingScrollPhysics(),
+        body: Padding(
+          padding:  EdgeInsets.only(
+            top: ScreenUtil().setHeight(10),
+            left: ScreenUtil().setWidth(15),
+            right: ScreenUtil().setWidth(15),),
+          child:ListView(
+            physics: const BouncingScrollPhysics(),
 
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                  vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
                     vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
 
                           ),
-                          textAlign: TextAlign.center,
-                        ),
 
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
 
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
 
                           ),
-                          textAlign: TextAlign.center,
-                        ),
 
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
 
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
 
                           ),
-                          textAlign: TextAlign.center,
-                        ),
 
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
 
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
 
                           ),
-                          textAlign: TextAlign.center,
-                        ),
 
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
 
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
 
                           ),
-                          textAlign: TextAlign.center,
-                        ),
 
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
 
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
 
                           ),
-                          textAlign: TextAlign.center,
-                        ),
 
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
 
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
-
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
-              child: Container(
-                width: ScreenUtil().setWidth(300),
-                height: ScreenUtil().setHeight(65),
-                margin: EdgeInsets.symmetric(
-                    vertical:ScreenUtil().setHeight(10)
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: ScreenUtil().setWidth(125),
-                      child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
 
-                        Text(
-                          'OZ Natural ',
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(15),
-                          ),
-                          textAlign: TextAlign.center,
-
-                        ),
-
-                        Text(
-                          'care',
-                          style: kSubTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(12),
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
 
                           ),
-                          textAlign: TextAlign.center,
-                        ),
 
-                      ],
-                    ),
-                  ],
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        )
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
+
+                          ),
+
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
+
+                          ),
+
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
+
+                          ),
+
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
+
+                          ),
+
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
+
+                          ),
+
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
+
+                          ),
+
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical:ScreenUtil().setHeight(15) ),
+                child: Container(
+                  width: ScreenUtil().setWidth(300),
+                  height: ScreenUtil().setHeight(65),
+                  margin: EdgeInsets.symmetric(
+                      vertical:ScreenUtil().setHeight(10)
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: ScreenUtil().setWidth(125),
+                        child: Image.asset('assets/images/product2.png',fit: BoxFit.contain,),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+
+                          Text(
+                            'OZ Natural ',
+                            style: kTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(15),
+                            ),
+                            textAlign: TextAlign.center,
+
+                          ),
+
+                          Text(
+                            'care',
+                            style: kSubTitleSign.copyWith(
+                              fontSize: ScreenUtil().setSp(12),
+
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          )
+        ),
       ),
     );
   }

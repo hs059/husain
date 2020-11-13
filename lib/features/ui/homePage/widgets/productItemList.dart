@@ -1,7 +1,8 @@
 import 'package:beauty/components/model/sectionModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
-import 'package:beauty/features/ui/product/productScreen.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/ui/product/productSubScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
@@ -10,6 +11,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ProductItemList extends StatelessWidget {
@@ -20,7 +22,6 @@ class ProductItemList extends StatelessWidget {
   final bool fav;
   final Products product ;
   final bool onCart;
-  final int index ;
 
   ProductItemList(
       {this.title,
@@ -29,7 +30,7 @@ class ProductItemList extends StatelessWidget {
       this.prize,
       this.fav,
       this.onCart = false,
-        this.product, this.index});
+        this.product, });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,8 @@ class ProductItemList extends StatelessWidget {
                         child: GestureDetector(
                           onTap: () {
                             print(product.id);
-                            kNavigatorPush(context, ProductScreen(product: product,));
+                            Provider.of<ApiProvider>(context,listen: false).getProductDetails(product.id);
+                            kNavigatorPush(context, ProductSubScreen(productS: product,section: true,));
                           },
                           child: CachedNetworkImage(
                               imageUrl: imagePath,

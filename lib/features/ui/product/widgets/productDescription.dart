@@ -15,7 +15,7 @@ class ProductDescription extends StatelessWidget {
         horizontal: ScreenUtil().setWidth(15),
       ),
       child: Align(
-        alignment: Alignment.topLeft,
+        alignment: Alignment.topRight,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

@@ -25,6 +25,7 @@ showToast(String title){
 TabController tabController;
 
 
+String currency ='رس' ;
 
 String baseUrl = 'https://3beauty.net/wp-json/beauty/v1/';
 String regiserUrl = 'register';

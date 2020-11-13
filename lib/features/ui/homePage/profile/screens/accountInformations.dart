@@ -1,9 +1,12 @@
 
+import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
+import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/value/colors.dart';
+import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
@@ -243,7 +246,6 @@ class AccountInformations extends StatelessWidget {
               // height: 60,
               child: Row(
                 children: [
-
                   Text(
                     'Phone Number'  ,
                     style: kSubTitleSign.copyWith(
@@ -260,33 +262,22 @@ class AccountInformations extends StatelessWidget {
                 ],
               ),
             ),
-            ContainerCart(
-              // height: 60,
-              child: Row(
-                children: [
-
-                  Text(
-                    'Date of Birth'  ,
-                    style: kSubTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(14),
-                    ),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(15),
-                  ),
-                  Text(
-                    'Jun 25, 1998',
-                    style: kProfile,
-                  ),
-                ],
-              ),
-            ),
           ],
         ): Center(
-          child: Text(
-            'يرجى منك تسجيل الدخول',
-            style:
-            kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'يرجى منك ',
+                style:
+                kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+              ),
+              Button(
+                text: 'تسجيل الدخول',
+                onTap: ()=>kNavigatorPush(context, SignIn()),
+              ),
+            ],
           ),
         ),
       ),

@@ -18,9 +18,12 @@ class Button extends StatelessWidget {
           color: Color(0xffDAA095),
           borderRadius: BorderRadius.circular(6),
         ),
-        child: Text(
-          text,
-          style: kBtnText,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Text(
+            text,
+            style: kBtnText,
+          ),
         ),
       ),
     );

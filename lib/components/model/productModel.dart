@@ -1,11 +1,11 @@
-class SubProductModel {
+class ProductModel {
   bool code;
   String message;
   List<Data> data;
 
-  SubProductModel({this.code, this.message, this.data});
+  ProductModel({this.code, this.message, this.data});
 
-  SubProductModel.fromJson(Map<String, dynamic> json) {
+  ProductModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
     if (json['data'] != null) {
@@ -67,7 +67,7 @@ class Data {
     regularPrice = json['regular_price'];
     description = json['description'];
     sizePerUnit = json['size_per_unit'];
-    image = json['image'];
+    image = json['image'].toString();
     isFavourited = json['is_favourited'];
     stockCode = json['stock_code'];
     if (json['reviews'] != null) {

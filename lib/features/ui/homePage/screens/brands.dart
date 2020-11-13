@@ -13,8 +13,10 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
 
 class Brands extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    ApiProvider apiProviderFalse =    Provider.of<ApiProvider>(context,listen: false);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -29,7 +31,8 @@ class Brands extends StatelessWidget {
             ]),
             child: AppBar(iconTheme: IconThemeData(color: Color(0xff121924)),
               backgroundColor: Colors.white,
-              title:Text("أحدث الماركات العالمية", style: kSectionText.copyWith(
+              title: Text(
+                "أحدث الماركات العالمية", style: kSectionText.copyWith(
                 fontSize: ScreenUtil().setSp(18),
                 fontFamily: 'Cairo-Regular',
               ),),
@@ -42,37 +45,43 @@ class Brands extends StatelessWidget {
         body: Consumer<ApiProvider>(
           builder: (context, value, child) {
             BrandModel brand = value.brand;
-            return brand!=null? ListView.separated(
+            return brand != null ? ListView.separated(
               physics: const BouncingScrollPhysics(),
               separatorBuilder: (context, index) => MyDivider(),
               itemCount: brand.data.brands.length,
               scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) => ListTile(
-                onTap: () => kNavigatorPush(context, ShowProduct('VOREED')),
-                leading: CachedNetworkImage(
-                    imageUrl: brand.data.brands[index].image,
-                    placeholder: (context, url) => LoaderGif1(),
-                    errorWidget: (context, url, error) =>
-                        Icon(Icons.error),
-                    height: ScreenUtil().setHeight(50),
-                    fit: BoxFit.contain
-                ),
-                title: Text(
-                  brand.data.brands[index].name,
-                  style: kReviews.copyWith(
-                    fontSize: ScreenUtil().setSp(16),
+              itemBuilder: (context, index) =>
+                  ListTile(
+                    onTap: () {
+                      apiProviderFalse.getProductByBrand(brand.data.brands[index].id);
+                      kNavigatorPush(context, ShowProduct(title: brand.data.brands[index].name,));
+
+                    },
+                    leading: CachedNetworkImage(
+                        imageUrl: brand.data.brands[index].image,
+                        placeholder: (context, url) => LoaderGif1(),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.error),
+                        height: ScreenUtil().setHeight(50),
+                        fit: BoxFit.contain
+                    ),
+                    title: Text(
+                      brand.data.brands[index].name,
+                      style: kReviews.copyWith(
+                        fontSize: ScreenUtil().setSp(16),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ):ListView.separated(
+            ) : ListView.separated(
               physics: const BouncingScrollPhysics(),
               separatorBuilder: (context, index) => MyDivider(),
-              itemCount:7,
+              itemCount: 7,
               scrollDirection: Axis.vertical,
-              itemBuilder: (context, index) => SizedBox(
-                height: 80,
-                  child: LoaderGif1(),
-              ),
+              itemBuilder: (context, index) =>
+                  SizedBox(
+                    height: 80,
+                    child: LoaderGif1(),
+                  ),
             );
           },
         ),

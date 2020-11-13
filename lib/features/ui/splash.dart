@@ -40,6 +40,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: JelloIn(
+        duration : Duration(milliseconds: 1500),
         animate: true,
         child: Center(
           child: SvgPicture.asset(

@@ -115,6 +115,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
   bool isLogin ;
+
   getLogin()async{
     isLogin = await SPHelper.spHelper.getIsLogin();
     notifyListeners() ;
@@ -311,12 +312,12 @@ verification(BuildContext context)async{
     );
   }
 }
-  // signOut() async {
-  //   sharedPreferences = await initSp();
-  //   sharedPreferences.setBool('isLogin', false);
-  //   sharedPreferences.setString('userId', '');
-  //   firebaseAuth.signOut();
-  // }
+  signOut() async {
+    isLogin = false ;
+    SPHelper.spHelper.setIsLogin(false);
+    SPHelper.spHelper.setToken('');
+    SPHelper.spHelper.setToken('');
+  }
 
 
 }

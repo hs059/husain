@@ -17,7 +17,6 @@ import 'features/provider/uiProvider.dart';
 import 'features/ui/homePage/cart/screens/addnewAddress.dart';
 import 'features/ui/homePage/homePage.dart';
 import 'features/ui/onboardingUI/screens/onboarding.dart';
-import 'features/ui/product/productScreen.dart';
 
 import 'features/ui/signUI/screens/Verification.dart';
 import 'features/ui/signUI/screens/resetPassword.dart';

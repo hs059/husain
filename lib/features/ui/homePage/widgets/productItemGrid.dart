@@ -1,9 +1,10 @@
 
-
-import 'package:beauty/components/model/subProductModel.dart' as subProduct;
+import 'package:beauty/components/model/productModel.dart' as subProduct;
 import 'package:beauty/components/widgets/LoaderGif.dart';
-import 'package:beauty/features/ui/homePage/Category/widgets/productSubScreen.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
+import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/features/ui/product/productSubScreen.dart';
 import 'package:beauty/value/colors.dart';
+import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
@@ -11,6 +12,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ProductItemGrid extends StatelessWidget {
@@ -21,11 +23,10 @@ class ProductItemGrid extends StatelessWidget {
   final  bool fav ;
   final subProduct.Data product ;
 
-
   ProductItemGrid({@required this.imagePath,@required this.title,@required this.rating,@required this.prize,@required this.fav, this.product,});
   @override
   Widget build(BuildContext context) {
-    return    Row(
+    return Row(
       children: [
         Container(
           margin: EdgeInsets.all(5),
@@ -44,7 +45,15 @@ class ProductItemGrid extends StatelessWidget {
                     child: Stack(
                       children: [
                         GestureDetector(
-                          onTap: () => kNavigatorPush(context, ProductSubScreen(product: product,)),
+                          onTap: ()  {
+                            Provider.of<ApiProvider>(context,listen: false).getProductDetails(product.id);
+                            kNavigatorPush(
+                                context,
+                                ProductSubScreen(
+                                  product: product,
+                                  section: false,
+                                ));
+                          },
                           child: Center(
                             child: Container(
                               height: ScreenUtil().setHeight(127),
@@ -118,7 +127,7 @@ class ProductItemGrid extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      prize.toString(),
+                                      prize.toString() + ' ' + currency,
                                       style: kPrize,
                                       textAlign: TextAlign.center,
                                     ),
@@ -137,7 +146,7 @@ class ProductItemGrid extends StatelessWidget {
                 ],
               ),
               Align(
-                alignment: Alignment.bottomRight,
+                alignment: Alignment.bottomLeft,
                 child:
                 Padding(
                   padding:

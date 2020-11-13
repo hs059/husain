@@ -2,10 +2,11 @@
 
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/categoryModel.dart';
+import 'package:beauty/components/model/productM.dart';
+import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/model/sectionModel.dart';
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
-import 'package:beauty/components/model/subProductModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_repo.dart';
 import 'package:beauty/value/constant.dart';
@@ -13,7 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ApiProvider extends ChangeNotifier{
-  SubProductModel subProductModel ;
+  ProductModel subProductModel ;
   CategoryModel category;
 SubCategoryModel subCategory;
 SliderModel slider1;
@@ -22,8 +23,10 @@ SliderModel slider3;
 SectionModel latestProducts ;
 SectionModel mostRated ;
 SectionModel customCategory ;
-SubProductModel subProduct;
+ProductModel subProduct;
 BrandModel brand ;
+ProductModel productByBrand ;
+ProductM productM ;
   getCategory()async{
     category = await ApiRepository.apiRepository.getCategory();
     notifyListeners();
@@ -53,11 +56,21 @@ BrandModel brand ;
       notifyListeners();
       return brand ;
     }
-    Future<SubProductModel> getSubProduct(int id)async{
+    Future<ProductModel> getSubProduct(int id)async{
       subProduct = await ApiRepository.apiRepository.getSubProduct(id);
       if(subProduct.code){
         return subProduct;
       }
     }
-
+  getProductByBrand(int id)async{
+    productByBrand = null ;
+    productByBrand = await ApiRepository.apiRepository.getProductByBrand(id);
+    notifyListeners();
+  }
+  getProductDetails(int id)async{
+    productM = null ;
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+    notifyListeners();
+  }
 }
+

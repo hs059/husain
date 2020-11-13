@@ -65,7 +65,7 @@ TextStyle  kSubTitleSign = TextStyle(
 );
 
 TextStyle  kBtnText = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(16),
       color: Colors.white,
 );
@@ -81,28 +81,28 @@ TextStyle  kSectionText = TextStyle(
       color: kBlack2,
 );
 TextStyle  kSubTitleProduct = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(16),
       color: kBlack,
   fontWeight: FontWeight.bold
 );
 TextStyle  kReviews = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(12),
       color: kBlack,
 );
 TextStyle  kSearchHint = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(14),
       color: kGrayText,
 );
 TextStyle  kSeeAll = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(14),
       color: kPinkLight,
 );
 TextStyle  kSubCategoryText = TextStyle(
-  fontFamily: 'SFUIText-Medium',
+  // fontFamily: 'SFUIText-Medium',
       fontSize: ScreenUtil().setSp(18),
       color: Colors.black,
 );

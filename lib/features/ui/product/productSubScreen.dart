@@ -1,8 +1,11 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
-import 'package:beauty/components/model/subProductModel.dart' as subProduct;
+import 'package:beauty/components/model/productModel.dart' as subProduct;
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
+import 'package:beauty/components/model/sectionModel.dart' as sectionP ;
 
 import 'package:beauty/features/ui/homePage/widgets/section.dart';
 import 'package:beauty/features/ui/product/widgets/addCartSheet.dart';
@@ -22,15 +25,55 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ProductSubScreen extends StatelessWidget {
   final subProduct.Data product ;
-  ProductSubScreen({this.product,});
+  final sectionP.Products productS ;
+  final  bool section  ;
+
+  ProductSubScreen({this.product, this.productS, this.section = false,});
+  String name;
+  String permalink;
+  String price;
+  String regularPrice;
+  String salePrice;
+  String description;
+  String sizePerUnit;
+  bool isFavourited;
+  String image ;
+  List<subProduct.Reviews > reviews;
+  List<sectionP.Reviews> reviewsS;
+  List<Map> rev ;
+
 
   @override
   Widget build(BuildContext context) {
+    if(section){
+      name = productS.name ;
+      permalink = productS.permalink ;
+      regularPrice = productS.regularPrice ;
+      salePrice = productS.salePrice ;
+      price = productS.price ;
+      description = productS.description ;
+      image = productS.image ;
+      isFavourited = productS.isFavourited ;
+      reviewsS = productS.reviews ;
+      rev = reviewsS.map((e) => e.toJson()).toList();
+    }else{
+      name = product.name ;
+      permalink = product.permalink ;
+      regularPrice = product.regularPrice ;
+      salePrice = product.salePrice ;
+      price = product.price ;
+      description = product.description ;
+      image = product.image ;
+      isFavourited = product.isFavourited ;
+      reviews = product.reviews ;
+      rev = reviews.map((e) => e.toJson()).toList();
+    }
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -48,7 +91,7 @@ class ProductSubScreen extends StatelessWidget {
           actions: [
             GestureDetector(
               onTap: () => Share.share(
-                  'check out my website https://3beauty.net/product/ميك-اب-فور-ايفر-كريم-الأساس-ألتر-hd-365/',
+                  permalink,
                   subject: 'Look what I made!'),
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
@@ -64,7 +107,7 @@ class ProductSubScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
                   Icons.favorite_border,
-                  color:product.isFavourited? kPinkLight:Colors.black,
+                  color:isFavourited? kPinkLight:Colors.black,
                 ),
               ),
             ),
@@ -79,15 +122,16 @@ class ProductSubScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 color: Colors.white,
               ),
-              child:CachedNetworkImage(
-                  imageUrl: product.image,
+              child: image!= ''?CachedNetworkImage(
+                  imageUrl: image,
                   placeholder: (context, url) => LoaderGif1(),
                   errorWidget: (context, url, error) =>
-                      Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+                    Icon(Icons.image),
                   height: ScreenUtil().setHeight(50),
                   fit: BoxFit.contain
-              ),
+              ):Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
             ),
+            MyDivider(),
             Padding(
               padding:
               EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
@@ -96,16 +140,16 @@ class ProductSubScreen extends StatelessWidget {
                   BrandProduct(),
                   MyDivider(),
                   ProductName(
-                    name: product.name,
-                    reviews: product.reviews.length,
+                    name: name,
+                    reviews:section?productS.reviews.length: product.reviews.length,
                   ),
                   MyDivider(),
-                  ProductPrize(prize: product.price,oldPrize: product.regularPrice,),
+                  ProductPrize(prize: price,oldPrize: regularPrice,),
                   SizedBox(
                     height: ScreenUtil().setHeight(24),
                   ),
                   Button(
-                    text: 'Add to cart',
+                    text: 'إضافة إلى العربة',
                     onTap: () {
                       showMaterialModalBottomSheet(
                         shape: RoundedRectangleBorder(
@@ -115,7 +159,7 @@ class ProductSubScreen extends StatelessWidget {
                           ),
                         ),
                         context: context,
-                        builder: (context, scrollController) => AddCartSheet(prize: product.price,),
+                        builder: (context, scrollController) => AddCartSheet(prize:price,),
                       );
                     },
                   ),
@@ -124,29 +168,30 @@ class ProductSubScreen extends StatelessWidget {
             ),
             ExpansionTile(
               title: Text(
-                'Description',
+                'الوصف',
                 style: kReviews.copyWith(
                   fontSize: ScreenUtil().setSp(16),
+                  fontFamily: 'Cairo-Regular',
                 ),
               ),
               children: [
                 ProductDescription(
-                  name: product.name,
-                  description: product.description,
+                  name:name,
+                  description: description,
                 ),
               ],
             ),
             ExpansionTile(
               backgroundColor: kGray2,
               title: Text(
-                'Categories',
+                'الأصناف',
                 style: kReviews.copyWith(
                   fontSize: ScreenUtil().setSp(16),
                 ),
               ),
               children: [
                 ListTile(
-                  title: Text('Care'),
+                  title: Text('الصنف الرئيسي'),
                   trailing: Container(
                     constraints: BoxConstraints(
                       maxWidth: ScreenUtil().setWidth(150),
@@ -161,7 +206,7 @@ class ProductSubScreen extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  title: Text('Formulation'),
+                  title: Text('الصنف الفرعي'),
                   trailing: Container(
                     constraints: BoxConstraints(
                       maxWidth: ScreenUtil().setWidth(150),
@@ -179,13 +224,13 @@ class ProductSubScreen extends StatelessWidget {
             ),
             ExpansionTile(
               title: Text(
-                'Reviews',
+                'التعليقات',
                 style: kReviews.copyWith(
                   fontSize: ScreenUtil().setSp(14),
                 ),
               ),
               children: [
-                Padding(
+                rev.isNotEmpty? Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: ScreenUtil().setWidth(15),
                   ),
@@ -240,23 +285,36 @@ I highly recommend it''',
                       ],
                     ),
                   ),
+                ):Center(
+                  child: Text(
+                    '',
+                    style:
+                    kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+                  ),
                 ),
                 ListTile(
-
-                  title: Text(
-                    'All reviews ',
-                    style: kSeeAll.copyWith(
-                      fontSize: ScreenUtil().setSp(16),
+                  title: Visibility(
+                    visible:  rev.isNotEmpty,
+                    child: GestureDetector(
+                      onTap: () => print(rev),
+                      child: Text(
+                        'جميع التعليقات',
+                        style: kSeeAll.copyWith(
+                          fontSize: ScreenUtil().setSp(16),
+                        ),
+                      ),
                     ),
                   ),
                   trailing: GestureDetector(
                     onTap: () async{
-                      bool isLogen =await SPHelper.spHelper.getIsLogin();
+                   bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
+
                       print(isLogen);
-                      if(isLogen == false){
+                      if(false){
                         Fluttertoast.showToast(
                             msg: 'يجب عليك تسجيل الدخول',
                             toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.SNACKBAR,
                             timeInSecForIosWeb: 1,
                             textColor: Color(0xffDAA095),
                             fontSize: 16.0
@@ -276,9 +334,9 @@ I highly recommend it''',
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       TitleSubTitle(
-                                        title: 'Rating and add reviews',
+                                        title: 'قيم و أضف تعليقك',
                                         subTitle:
-                                        'our orders have nice reviews',
+                                        'يسرنا الاخذ بتقييمك و تعليقك',
                                       ),
                                       SizedBox(
                                         height: ScreenUtil().setHeight(10),
@@ -301,31 +359,37 @@ I highly recommend it''',
                                         },
                                       ),
                                       ContainerCart(
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  'Review',
-                                                  style: kSectionText,
-                                                ),
-                                              ],
-                                            ),
-                                            TextField(
-                                              maxLines: null,
-                                              onChanged: (String txt) {},
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(0xFF313A44),
+                                        child: Directionality(
+                                          textDirection: TextDirection.rtl,
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    'التعليق',
+                                                    style: kSectionText,
+                                                  ),
+                                                ],
                                               ),
-                                              cursorColor: Colors.blue,
-                                              decoration: InputDecoration(
-                                                  border: InputBorder.none,
-                                                  hintText: 'Add Review...'),
-                                            ),
+                                              Directionality(
+                                                textDirection: TextDirection.rtl,
+                                                child: TextField(
+                                                  maxLines: null,
+                                                  onChanged: (String txt) {},
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Color(0xFF313A44),
+                                                  ),
+                                                  cursorColor: Colors.blue,
+                                                  decoration: InputDecoration(
+                                                      border: InputBorder.none,
+                                                      hintText: 'أضف تعليق ...'),
+                                                ),
+                                              ),
 
-                                            // Note
-                                          ],
+                                              // Note
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -333,7 +397,7 @@ I highly recommend it''',
                                             horizontal: ScreenUtil().setWidth(50),
                                             vertical: ScreenUtil().setHeight(10)
                                         ),
-                                        child: Button(text: 'Done',
+                                        child: Button(text: 'تم',
                                           onTap: (){
                                             Navigator.pop(context);
                                           },
@@ -350,7 +414,7 @@ I highly recommend it''',
                       }
                     },
                     child: Text(
-                      'Add rating',
+                      'أضف تعليقك و تقييمك',
                       style: kSeeAll.copyWith(
                         fontSize: ScreenUtil().setSp(16),
                       ),
