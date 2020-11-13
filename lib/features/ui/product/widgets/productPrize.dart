@@ -49,5 +49,5 @@ class ProductPrize extends StatelessWidget {
   }
 }
 // git add .
-// git commit -m 'neww'
+// git commit -m 'neaww'
 // git push origin master
