@@ -43,6 +43,8 @@ String get_latest_brands = 'get_latest_brands';
 String get_product_like = 'get_product_like';
 String show_profile = 'show_profile';
 String edit_profile = 'edit_profile';
+String get_front_page_slides = 'get_front_page_slides';
+String get_privacy_policy = 'get_privacy_policy';
 
 List<String> getSliderIndex = [
   'get_first_slider',

@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 class BrandSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    ApiProvider apiProviderFalse =    Provider.of<ApiProvider>(context,listen: false);
+
     return Column(
       children: [
         Row(
@@ -36,66 +38,6 @@ class BrandSection extends StatelessWidget {
         SizedBox(
           height: ScreenUtil().setHeight(20),
         ),
-        // FutureBuilder<BrandModel>(
-        //   future: Provider.of<ApiProvider>(context).getBrand(),
-        //   builder: (context, snapshot) {
-        //     BrandModel brand = snapshot.data;
-        //     return snapshot.hasData?Container(
-        //       height: ScreenUtil().setHeight(45),
-        //       child: ListView.builder(
-        //         shrinkWrap: true,
-        //         primary: false,
-        //         itemCount: brand.data.products.length,
-        //         scrollDirection: Axis.horizontal,
-        //         physics: const BouncingScrollPhysics(),
-        //         itemBuilder: (context, index) =>
-        //             InkWell(
-        //               // onTap: () =>
-        //               //     kNavigatorPush(context, ShowProduct('Paradoxx'),
-        //               //     ),
-        //               child: Container(
-        //                 margin: EdgeInsets.all(4),
-        //                 decoration: BoxDecoration(
-        //                   color: Colors.white,
-        //                   boxShadow: sCardShadow2,
-        //                   borderRadius: BorderRadius.circular(6),
-        //                 ),
-        //                 width: ScreenUtil().setWidth(125),
-        //                 child: CachedNetworkImage(
-        //                     imageUrl: brand.data.products[index].imageUrl,
-        //                     placeholder: (context, url) => LoaderGif1(),
-        //                     errorWidget: (context, url, error) =>
-        //                         Icon(Icons.error),
-        //                     height: ScreenUtil().setHeight(50),
-        //                     fit: BoxFit.contain
-        //                 ),
-        //               ),
-        //             ),
-        //         //ToDO:this to model and class and section
-        //
-        //       ),
-        //     ):
-        //     Container(
-        //       height: ScreenUtil().setHeight(45),
-        //
-        //       child: ListView.builder(
-        //         shrinkWrap: true,
-        //         primary: false,
-        //         itemCount: brand.data.products.length,
-        //         scrollDirection: Axis.horizontal,
-        //         physics: const BouncingScrollPhysics(),
-        //         itemBuilder: (context, index) =>
-        //             Container(
-        //                 width: ScreenUtil().setWidth(100),
-        //                 padding: EdgeInsets.symmetric(horizontal: 10),
-        //                 child: LoaderGif1()
-        //             ),
-        //         //ToDO:this to model and class and section
-        //
-        //       ),
-        //     );
-        //   },
-        // ),
         Consumer<ApiProvider>(
           builder: (context, value, child) {
             BrandModel brand = value.brand;
@@ -109,9 +51,10 @@ class BrandSection extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) =>
                     InkWell(
-                      // onTap: () =>
-                      //     kNavigatorPush(context, ShowProduct('Paradoxx'),
-                      //     ),
+                      onTap: () {
+                        apiProviderFalse.getProductByBrand(brand.data.brands[index].id);
+                        kNavigatorPush(context, ShowProduct(title: brand.data.brands[index].name,));
+                      },
                       child: Container(
                           margin: EdgeInsets.all(4),
                           decoration: BoxDecoration(
@@ -149,8 +92,6 @@ class BrandSection extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: LoaderGif1()
                     ),
-                //ToDO:this to model and class and section
-
               ),
             );
           },

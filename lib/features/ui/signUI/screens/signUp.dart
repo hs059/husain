@@ -26,142 +26,145 @@ class _SignUpState extends State<SignUp> {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UiProvider uiProvider = Provider.of<UiProvider>(context);
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: appBarAuth(context),
-      body: ModalProgressHUD(
-        inAsyncCall:uiProvider.spinner,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: SingleChildScrollView(
-            padding:
-                EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'Sign Up',
-                  style: kTitleSign,
-                  textAlign: TextAlign.start,
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(20),
-                ),
-                Text(
-                  'Please type your information below',
-                  style: kSubTitleSign,
-                  textAlign: TextAlign.start,
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(40),
-                ),
-                Form(
-                  key: formKeySignUp,
-                  child: Column(
-                    children: [
-                      CustomTextFormField(
-                        hintText: 'Full Name',
-                        password: false,
-                        validator: authProvider.validateName,
-                        onSaved: authProvider.saveFullName,
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(15),
-                      ),
-                      CustomTextFormField(
-                        hintText: 'Email',
-                        password: false,
-                        validator: authProvider.validateEmail,
-                        onSaved: authProvider.saveEmail,
-                        textInputType: TextInputType.emailAddress,
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(15),
-                      ),
-                      CustomTextFormField(
-                        hintText: 'Password',
-                        password: true,
-                        validator: authProvider.validatePassword,
-                        onSaved: authProvider.savePassword,
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(15),
-                      ),
-                      CustomTextFormField(
-                        hintText: 'Confirm Password',
-                        password: true,
-                        validator: authProvider.validateConfirmPassword,
-                        onSaved: authProvider.saveConfirmPassword,
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(15),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: Border.all(width: 1.0, color: kBorder),
-                        ),
-                        child: IntlPhoneField(
-                          validator: authProvider.validatePhone,
-                          autoValidate: false,
-                          decoration: InputDecoration(
-                            hintText: 'Phone Number',
-                            hintStyle:
-                                TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: kBorder, width: 1.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: kBorder, width: 1.0),
-                            ),
-                          ),
-                          initialCountryCode: 'SA',
-                          showDropdownIcon: false,
-                          onChanged: (phone) {
-                            print(phone.completeNumber);
-                          },
-                        ),
-                      ),
-                    ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: appBarAuth(context),
+        body: ModalProgressHUD(
+          inAsyncCall:uiProvider.spinner,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: SingleChildScrollView(
+              padding:
+                  EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'إنشاء حساب جديد',
+                    style: kTitleSign,
+                    textAlign: TextAlign.start,
                   ),
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(70),
-                ),
-                Builder(
-                  builder: (context) =>  Button(
-                      text: 'Sign Up',
-                      onTap: () {
-                        Provider.of<AuthProvider>(context,listen: false).submitRegister(formKeySignUp, context);
-                       // saveForm();
-                      }),
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(90),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  child: RichText(
-                    text: TextSpan(
+                  SizedBox(
+                    height: ScreenUtil().setHeight(20),
+                  ),
+                  Text(
+                    'الرجاء كتابة المعلومات الخاصة بك أدناه',
+                    style: kSubTitleSign,
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(40),
+                  ),
+                  Form(
+                    key: formKeySignUp,
+                    child: Column(
                       children: [
-                        TextSpan(
-                            text: 'You have an account? ', style: kSubTitleSign),
-                        TextSpan(
-                          text: '   Sign In',
-                          style: TextStyle(
-                            color: kPinkLight,
-                            fontSize: ScreenUtil().setSp(16),
+                        CustomTextFormField(
+                          hintText: 'الاسم كامل ',
+                          password: false,
+                          validator: authProvider.validateName,
+                          onSaved: authProvider.saveFullName,
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(15),
+                        ),
+                        CustomTextFormField(
+                          hintText: 'الايميل',
+                          password: false,
+                          validator: authProvider.validateEmail,
+                          onSaved: authProvider.saveEmail,
+                          textInputType: TextInputType.emailAddress,
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(15),
+                        ),
+                        CustomTextFormField(
+                          hintText: 'كلمة السر',
+                          password: true,
+                          validator: authProvider.validatePassword,
+                          onSaved: authProvider.savePassword,
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(15),
+                        ),
+                        CustomTextFormField(
+                          hintText: 'تأكيد كلمة السر',
+                          password: true,
+                          validator: authProvider.validateConfirmPassword,
+                          onSaved: authProvider.saveConfirmPassword,
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(15),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(width: 1.0, color: kBorder),
                           ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              kNavigatorPushAndRemoveUntil(context, SignIn());
+                          child: IntlPhoneField(
+                            validator: authProvider.validatePhone,
+                            autoValidate: false,
+                            decoration: InputDecoration(
+                              hintText: 'رقم الموبايل',
+                              hintStyle:
+                                  TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: kBorder, width: 1.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: kBorder, width: 1.0),
+                              ),
+                            ),
+                            initialCountryCode: 'SA',
+                            showDropdownIcon: false,
+                            onChanged: (phone) {
+                              print(phone.completeNumber);
                             },
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: ScreenUtil().setHeight(70),
+                  ),
+                  Builder(
+                    builder: (context) =>  Button(
+                        text: 'تسجيل ',
+                        onTap: () {
+                          Provider.of<AuthProvider>(context,listen: false).submitRegister(formKeySignUp, context);
+                         // saveForm();
+                        }),
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(50),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                              text: 'لديك حساب؟', style: kSubTitleSign),
+                          TextSpan(
+                            text: '   تسجيل الدخول',
+                            style: TextStyle(
+                              color: kPinkLight,
+                              fontSize: ScreenUtil().setSp(16),
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                kNavigatorPushAndRemoveUntil(context, SignIn());
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

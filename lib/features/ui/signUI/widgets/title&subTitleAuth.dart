@@ -14,7 +14,6 @@ class TitleSubTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-
         Text(
           title,
           style: kTitleSign,

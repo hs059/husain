@@ -53,13 +53,13 @@ TextStyle  kSubProductTitle = TextStyle(
 
 
 TextStyle  kTitleSign = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(30),
       color: kBlack2,
 );
 
 TextStyle  kSubTitleSign = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(15),
       color: Color(0xff8F9BB3),
 );

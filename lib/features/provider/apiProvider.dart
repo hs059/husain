@@ -9,9 +9,11 @@ import 'package:beauty/components/model/showProfileModel.dart';
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
+import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/api_repo.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class ApiProvider extends ChangeNotifier{
@@ -97,6 +99,14 @@ notifyListeners();
 nullSearch(){
     productSearch = null ;
 }
+
+onBoarding()async{
+Map map =  await ApiClient.apiClient.onBoarding();
+if(!map['code']){
+  Get.defaultDialog(title:'error',);
+}
+print(map);
+  }
 
 }
 

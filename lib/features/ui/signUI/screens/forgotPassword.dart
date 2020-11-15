@@ -22,49 +22,51 @@ class ForgetPassword extends StatelessWidget {
 
     return ModalProgressHUD(
       inAsyncCall:Provider.of<UiProvider>(context).spinner,
-      child: Scaffold(
-        key: scaffoldKey,
-        appBar: appBarAuth(context),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  height: ScreenUtil().setHeight(50),
-                ),
-                TitleSubTitle(
-                  title: 'Forgot Password',
-                  subTitle:
-                      'Please type your email or phone number below and we can help you reset password',
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(60),
-                ),
-                Form(
-                  key: formKeyForgetPassword,
-                  child: CustomTextFormField(
-                    hintText: 'Email',
-                    validator: authProvider.validateEmail,
-                    onSaved: authProvider.saveEmail,
-                    textInputType: TextInputType.emailAddress,
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+          key: scaffoldKey,
+          appBar: appBarAuth(context),
+          body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: ScreenUtil().setHeight(50),
                   ),
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(70),
-                ),
-                Builder(
-                  builder: (context) =>
-                  Button(
-                      text: 'Send',
-                      onTap: () {
-                        //ToDo: check email is found in api
-                        authProvider.submitForgetPassword(
-                            formKeyForgetPassword, context);
-                      }),
-                ),
-              ],
+                  TitleSubTitle(
+                    title: 'إعادة تعيين كلمة المرور',
+                    subTitle:
+                        'يرجى كتابة بريدك الإلكتروني أدناه ويمكننا مساعدتك في إعادة تعيين كلمة المرور',
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(60),
+                  ),
+                  Form(
+                    key: formKeyForgetPassword,
+                    child: CustomTextFormField(
+                      hintText: 'الايميل',
+                      validator: authProvider.validateEmail,
+                      onSaved: authProvider.saveEmail,
+                      textInputType: TextInputType.emailAddress,
+                    ),
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(70),
+                  ),
+                  Builder(
+                    builder: (context) =>
+                    Button(
+                        text: 'أرسل',
+                        onTap: () {
+                          authProvider.submitForgetPassword(
+                              formKeyForgetPassword, context);
+                        }),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

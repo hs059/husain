@@ -25,69 +25,72 @@ class ResetPassword extends StatelessWidget {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
     return ModalProgressHUD(
       inAsyncCall: Provider.of<UiProvider>(context).spinner,
-      child: Scaffold(
-        appBar: appBarAuth(context),
-        body: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(
-                height: ScreenUtil().setHeight(50),
-              ),
-              TitleSubTitle(
-                title: 'Reset Password',
-                subTitle:
-                    '''And now, you can type your new password and confirm it below''',
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(60),
-              ),
-              Form(
-                key: formKeyResetPassword,
-                child: Column(
-                  children: [
-                    CustomTextFormField(
-                      hintText: 'أدخل الكود المرسلة لك ',
-                      password: uiProvider.toggleEye,
-                      iconData: uiProvider.iconData,
-                      validator: authProvider.validatePassword,
-                      onSaved: authProvider.saveEmailPassword,
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(15),
-                    ),
-                    CustomTextFormField(
-                      hintText: 'New Password',
-                      password: uiProvider.toggleEye,
-                      iconData: uiProvider.iconData,
-                      validator: authProvider.validatePassword,
-                      onSaved: authProvider.saveNewPassword,
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(15),
-                    ),
-                    CustomTextFormField(
-                      hintText: 'Confirm New Password',
-                      password: uiProvider.toggleEye,
-                      iconData: uiProvider.iconData,
-                      validator: authProvider.validatePassword,
-                      onSaved: authProvider.saveConfirmPassword,
-                    ),
-                  ],
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Scaffold(
+          appBar: appBarAuth(context),
+          body: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: ScreenUtil().setHeight(50),
                 ),
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(70),
-              ),
-              Button(
-                text: 'Reset Password',
-                onTap: () {
-                  authProvider.submitResetPassword(
-                      formKeyResetPassword, context);
-                },
-              ),
-            ],
+                TitleSubTitle(
+                  title: 'انشاء كلمة سر جديدة',
+                  subTitle:
+                      '''والآن ، يمكنك كتابة كلمة المرور الجديدة وتأكيدها أدناه''',
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(60),
+                ),
+                Form(
+                  key: formKeyResetPassword,
+                  child: Column(
+                    children: [
+                      CustomTextFormField(
+                        hintText: 'أدخل الكود المرسلة لك ',
+                        password: uiProvider.toggleEye,
+                        iconData: uiProvider.iconData,
+                        validator: authProvider.validatePassword,
+                        onSaved: authProvider.saveEmailPassword,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(15),
+                      ),
+                      CustomTextFormField(
+                        hintText: 'كلمة السر الجديدة',
+                        password: uiProvider.toggleEye,
+                        iconData: uiProvider.iconData,
+                        validator: authProvider.validatePassword,
+                        onSaved: authProvider.saveNewPassword,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(15),
+                      ),
+                      CustomTextFormField(
+                        hintText: 'تأكيد كلمة السر',
+                        password: uiProvider.toggleEye,
+                        iconData: uiProvider.iconData,
+                        validator: authProvider.validatePassword,
+                        onSaved: authProvider.saveConfirmPassword,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(70),
+                ),
+                Button(
+                  text: 'تحديث كلمة السر',
+                  onTap: () {
+                    authProvider.submitResetPassword(
+                        formKeyResetPassword, context);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

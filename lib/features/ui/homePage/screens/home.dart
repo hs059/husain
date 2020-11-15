@@ -27,14 +27,15 @@ class Home extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: ()async {
-              // await SPHelper.spHelper.setUser(17);
-              // await SPHelper.spHelper.setToken('f198eb2be8f031d739e6d083b259b536');
-              // Provider.of<AuthProvider>(context,listen: false).showProfile();
-            ApiClient.apiClient.loginUser('h.yazji2019@gmail.com', '123456789');
-          },
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: ()async {
+        //     String token = await SPHelper.spHelper.getToken();
+        //     int idUser = await SPHelper.spHelper.getUser();
+        //     String id = idUser.toString();
+        //     print('token : $token id : $id');
+        //    await Provider.of<AuthProvider>(context,listen: false).showProfile();
+        //   },
+        // ),
         body: Container(
           padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
           color: Colors.white,
@@ -100,7 +101,7 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),
-              Section(num: 3,),
+              // Section(num: 3,),
 
               SizedBox(
                 height: ScreenUtil().setHeight(20),

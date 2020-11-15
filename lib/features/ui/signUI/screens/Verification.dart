@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
+import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
 import 'package:beauty/features/ui/signUI/widgets/appBarAuth.dart';
@@ -61,6 +62,7 @@ class _VerificationState extends State<Verification>
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     UiProvider uiProvider = Provider.of<UiProvider>(context);
+    AuthProvider authProviderFalse = Provider.of<AuthProvider>(context,listen: false);
 
     return Scaffold(
 
@@ -94,7 +96,6 @@ class _VerificationState extends State<Verification>
               Center(
                 child: PinCodeTextField(
                   autofocus: true,
-
                   controller: controllerPin,
                   highlight: true,
                   highlightColor: kBorder,
@@ -105,13 +106,14 @@ class _VerificationState extends State<Verification>
                   onTextChanged: (text) {
                     setState(() {
                       hasError = false;
-                      print("DO $text");
+                      // print("DO $text");
                     });
                   },
                   onDone: (text) {
                     doneText = text;
                     print("DONE $text");
-                    print("DONE CONTROLLER ${controllerPin.text}");
+                    authProviderFalse.saveVerificationCode(text);
+                    // print("DONE CONTROLLER ${controllerPin.text}");
                   },
                   pinBoxWidth: ScreenUtil().setWidth(50),
                   pinBoxHeight: ScreenUtil().setHeight(60),
@@ -145,10 +147,7 @@ class _VerificationState extends State<Verification>
               Button(
                   text: 'Send',
                   onTap: () {
-                    if (controllerPin.text.length == 4) {
-                      print("DONE CONTROLLER $doneText");
-                      kNavigatorPush(context, ResetPassword());
-                    }
+                    authProviderFalse.submitVerification(context);
                   }),
             ],
           ),

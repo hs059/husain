@@ -13,25 +13,29 @@ import 'package:beauty/value/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
 
 class AuthProvider extends ChangeNotifier {
-
   String email,
       password,
       mobile,
       newPassword,
       confirmPassword,
-      emailPassword ,
+      emailPassword,
       verificationCode,
       fullName;
-
 
   saveEmail(String value) {
     this.email = value;
     notifyListeners();
   }
+  saveVerificationCode(String value) {
+    this.verificationCode = value;
+    notifyListeners();
+  }
+
   saveMobile(String value) {
     this.mobile = value;
     notifyListeners();
@@ -43,19 +47,20 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-
   saveNewPassword(String value) {
     print('/////////////saveNewPassword/////////////// $value');
 
     this.newPassword = value;
     notifyListeners();
   }
+
   saveConfirmPassword(String value) {
     print('/////////////saveConfirmPassword/////////////// $value');
 
     this.confirmPassword = value;
     notifyListeners();
   }
+
   saveEmailPassword(String value) {
     this.emailPassword = value;
     notifyListeners();
@@ -67,9 +72,6 @@ class AuthProvider extends ChangeNotifier {
     this.fullName = value;
     notifyListeners();
   }
-
-
-
 
   ///////////////////validate/////////////////////////////////////////
   validateEmail(String value) {
@@ -94,17 +96,15 @@ class AuthProvider extends ChangeNotifier {
       return ' this field is required ';
     } else if (!isAlphanumeric(value)) {
       return 'invalid Password ';
-    } else if (password!=value) {
+    } else if (password != value) {
       return 'not matched';
     }
   }
 
-
-
   validateName(String value) {
     if (value == null || value == '') {
       return ' this field is required ';
-    }  else if (value.length < 4) {
+    } else if (value.length < 4) {
       return 'name at least 4 Letters';
     }
   }
@@ -118,17 +118,19 @@ class AuthProvider extends ChangeNotifier {
       return 'phone number must be equal 9 numbers';
     }
   }
-  bool isLogin ;
 
-  getLogin()async{
+  bool isLogin;
+
+  getLogin() async {
     isLogin = await SPHelper.spHelper.getIsLogin();
-    if(isLogin){
-      showProfile() ;
+    if (isLogin) {
+      showProfile();
     }
-    notifyListeners() ;
+    notifyListeners();
   }
+
 //////////////////////submit////////////////////////////////
-   submitRegister(GlobalKey<FormState> globalKey, BuildContext context) {
+  submitRegister(GlobalKey<FormState> globalKey, BuildContext context) {
     if (globalKey.currentState.validate()) {
       globalKey.currentState.save();
       registerUser(context);
@@ -140,28 +142,27 @@ class AuthProvider extends ChangeNotifier {
 
   registerUser(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    Map map = await ApiClient.apiClient.registerUser(
-        this.fullName, this.mobile, this.password, this.email);
+    Map map = await ApiClient.apiClient
+        .registerUser(this.fullName, this.mobile, this.password, this.email);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-  print(map);
+    print(map);
     if (map['code']) {
-
+      await SPHelper.spHelper.setUser(map['data']['id']);
       kNavigatorPush(
         context,
         Verification(),
       );
     } else {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: kBlack,
-          content: Text(
-            map['message'],
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white, fontSize: ScreenUtil().setSp(18)),
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'رسالة تحذير',
+            textAlign: TextAlign.right,
           ),
-        ),
-      );
+          messageText: Text(
+            map['message'],
+            textAlign: TextAlign.right,
+          ));
     }
   }
 
@@ -178,13 +179,13 @@ class AuthProvider extends ChangeNotifier {
 
   loginUser(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    Map map =
-    await ApiClient.apiClient.loginUser(this.email, this.password);
+    Map map = await ApiClient.apiClient.loginUser(this.email, this.password);
     print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
-      isLogin = true ;
+      isLogin = true;
       await SPHelper.spHelper.setToken(map['data']['token']);
+      await SPHelper.spHelper.setUser(map['data']['id']);
       await SPHelper.spHelper.setIsLogin(true);
       showProfile();
       kNavigatorPush(
@@ -193,17 +194,16 @@ class AuthProvider extends ChangeNotifier {
       );
     } else {
       print(map['message']);
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: kBlack,
-          content: Text(
-            'البريد الالكتروني أو كلمة المرور غير صحيحة',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white, fontSize: ScreenUtil().setSp(18)),
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'رسالة تحذير',
+            textAlign: TextAlign.right,
           ),
-        ),
-      );
+          messageText: Text(
+            map['message'],
+            textAlign: TextAlign.right,
+          ));
     }
   }
 
@@ -225,27 +225,26 @@ class AuthProvider extends ChangeNotifier {
     print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
-    await  SPHelper.spHelper.setToken(map['data']['token']);
-    await  SPHelper.spHelper.setUser(map['data']['user_id']);
+
       Fluttertoast.showToast(
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
           textColor: Color(0xffDAA095),
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
       kNavigatorPush(
         context,
         ResetPassword(),
       );
-    }else{
+    } else {
       Scaffold.of(context).showSnackBar(
         SnackBar(
           backgroundColor: kBlack,
           content: Text(
             'الايميل غير صالح',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(18)),
+            style: TextStyle(
+                color: Colors.white, fontSize: ScreenUtil().setSp(18)),
           ),
         ),
       );
@@ -253,8 +252,8 @@ class AuthProvider extends ChangeNotifier {
   }
 
 /////////////////////////////////////////////////////////////////////////////
-  submitResetPassword(GlobalKey<FormState> globalKey,BuildContext context ){
-    if(globalKey.currentState.validate()){
+  submitResetPassword(GlobalKey<FormState> globalKey, BuildContext context) {
+    if (globalKey.currentState.validate()) {
       globalKey.currentState.save();
       resetPassword(context);
       notifyListeners();
@@ -262,111 +261,116 @@ class AuthProvider extends ChangeNotifier {
   }
 
   resetPassword(BuildContext context) async {
-    Provider.of<UiProvider>(context,listen: false).toggleSpinner();
-    int id =await SPHelper.spHelper.getUser();
-    String token =await SPHelper.spHelper.getToken();
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    int id = await SPHelper.spHelper.getUser();
+    String token = await SPHelper.spHelper.getToken();
     print(token);
-    Map map = await ApiClient.apiClient.resetPassword(
-        id, token, emailPassword, newPassword);
+    Map map = await ApiClient.apiClient
+        .resetPassword(id, token, emailPassword, newPassword);
     print(map);
-    Provider.of<UiProvider>(context,listen: false).toggleSpinner();
-    if(map['code']){
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    if (map['code']) {
       Fluttertoast.showToast(
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
           textColor: Color(0xffDAA095),
-          fontSize: 16.0
-      );
+          fontSize: 16.0);
       kNavigatorPushAndRemoveUntil(context, SignIn());
     }
   }
 
-
-
-
-
 //ToDo:Verification
 ////////////////////////////////////////////////////////////////////////////////
-  submitVerification(GlobalKey<FormState> globalKey,BuildContext context){
-    if(globalKey.currentState.validate()){
-      globalKey.currentState.save();
-      verification(context);
+
+  submitVerification(BuildContext context) async {
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    int id = await SPHelper.spHelper.getUser();
+    Map map =
+        await ApiClient.apiClient.verification(id.toString(), verificationCode);
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    if (map['code']) {
+      isLogin = true;
+      await SPHelper.spHelper.setToken(map['data']['token']);
+      await SPHelper.spHelper.setIsLogin(true);
+      Fluttertoast.showToast(
+          msg: map['message'],
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          textColor: Color(0xffDAA095),
+          fontSize: 16.0);
+      kNavigatorPushAndRemoveUntil(context, HomePage());
+    } else {
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'رسالة تحذير',
+            textAlign: TextAlign.right,
+          ),
+          messageText: Text(
+            map['message'],
+            textAlign: TextAlign.right,
+          ));
     }
   }
-verification(BuildContext context)async{
-  Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-  int id =await SPHelper.spHelper.getUser();
-  Map map =  await ApiClient.apiClient.verification(id.toString(), verificationCode);
-  Provider.of<UiProvider>(context,listen: false).toggleSpinner();
-  if(map['code']){
-    Fluttertoast.showToast(
-        msg: map['message'],
-        toastLength: Toast.LENGTH_SHORT,
-        timeInSecForIosWeb: 1,
-        textColor: Color(0xffDAA095),
-        fontSize: 16.0
-    );
-    kNavigatorPushAndRemoveUntil(context, HomePage());
-  }else{
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        backgroundColor: kBlack,
-        content: Text(
-          map['message'],
-          textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.white, fontSize: ScreenUtil().setSp(18)),
-        ),
-      ),
-    );
-  }
-}
+
   signOut() async {
-    isLogin = false ;
+    isLogin = false;
     SPHelper.spHelper.setIsLogin(false);
     SPHelper.spHelper.setToken('');
     SPHelper.spHelper.setToken('');
-    showProfileModel = null ;
+    showProfileModel = null;
   }
 
-  ShowProfileModel showProfileModel ;
+  ShowProfileModel showProfileModel;
 
-  showProfile()async{
-    if(isLogin){
+  showProfile() async {
+    if (isLogin) {
       showProfileModel = await ApiRepository.apiRepository.showProfile();
       notifyListeners();
-    }else{
-
-    }
+    } else {}
   }
-  submitEditProfile(BuildContext context,GlobalKey<FormState> globalKey){
-    if(globalKey.currentState.validate()){
+
+  submitEditProfile(BuildContext context, GlobalKey<FormState> globalKey) {
+    if (globalKey.currentState.validate()) {
       globalKey.currentState.save();
       editProfile(context);
     }
   }
-  editProfile(BuildContext context)async{
+
+  editProfile(BuildContext context) async {
     String token = await SPHelper.spHelper.getToken();
     int idUser = await SPHelper.spHelper.getUser();
     String id = idUser.toString();
-    print('token = $token id = $id name = $fullName email = $email mobile = $mobile');
-    Map map =await ApiClient.apiClient.editProfile(token, id, this.fullName, this.email, this.mobile);
-    showProfileModel = await ApiRepository.apiRepository.showProfile();
-    Navigator.pop(context);
-    // if( !map['code']){
-    //   Scaffold.of(context).showSnackBar(
-    //     SnackBar(
-    //       backgroundColor: kBlack,
-    //       content: Text(
-    //         map['message'],
-    //         textAlign: TextAlign.center,
-    //         style: TextStyle(
-    //             color: Colors.white, fontSize: ScreenUtil().setSp(18)),
-    //       ),
-    //     ),
-    //   );
-    // }
+    print(
+        'token = $token id = $id name = $fullName email = $email mobile = $mobile password = $password newPassword = $newPassword');
+    Map map1 = await ApiClient.apiClient
+        .editProfile(token, id, this.fullName, this.email, this.mobile);
+    Map map2 = await ApiClient.apiClient
+        .changePassword(token, id, password, newPassword);
+    print(map2);
+    if (map1['code'] && map2['code']) {
+      showProfileModel = await ApiRepository.apiRepository.showProfile();
+      Navigator.pop(context);
+      Fluttertoast.showToast(
+          msg: 'تم تعديل بيناتك بنجاح',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          textColor: Color(0xffDAA095),
+          fontSize: 16.0);
+    } else {
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'رسالة تحذير',
+            textAlign: TextAlign.right,
+          ),
+          messageText: Text(
+            'يرجى منك اتمام كل المعلومات بشكل صحيح',
+            textAlign: TextAlign.right,
+          ));
+    }
+
     notifyListeners();
   }
-
 }

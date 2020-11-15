@@ -1,4 +1,5 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
+import 'package:beauty/components/model/productCart.dart';
 import 'package:beauty/components/model/productModel.dart' as subProduct;
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
@@ -152,6 +153,9 @@ class ProductSubScreen extends StatelessWidget {
                   Button(
                     text: 'إضافة إلى العربة',
                     onTap: () {
+                      ProductCartModel productCartModel = ProductCartModel(image: image,id:id);
+                      ProductCartModelList.productCart.productCartList.add( productCartModel);
+                      print(ProductCartModelList.productCart.productCartList[0].image);
                       showMaterialModalBottomSheet(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(

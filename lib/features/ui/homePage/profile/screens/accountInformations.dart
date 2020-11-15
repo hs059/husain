@@ -23,31 +23,29 @@ class AccountInformations extends StatelessWidget {
   final myController3 = TextEditingController();
   final myController4 = TextEditingController();
   final myController5 = TextEditingController();
-
   GlobalKey<FormState> formAccountInformations = GlobalKey<FormState>();
   String phone ='00';
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UiProvider uiProvider = Provider.of<UiProvider>(context);
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child: ModalProgressHUD(
         inAsyncCall:uiProvider.spinner,
         child: Scaffold(
-          floatingActionButton: FloatingActionButton(
-            onPressed: () async{
-              print('hay');
-              String token = await SPHelper.spHelper.getToken();
-              int idUser = await SPHelper.spHelper.getUser();
-              String id = idUser.toString();
-              print(token);
-              print(id);
-             await ApiClient.apiClient.editProfile(token,
-                 id, 'hussein', 'i.7sseen1997@gmail.com', '+966123456789');
-            },
-          ),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () async{
+          //     print('hay');
+          //     String token = await SPHelper.spHelper.getToken();
+          //     int idUser = await SPHelper.spHelper.getUser();
+          //     String id = idUser.toString();
+          //     print(token);
+          //     print(id);
+          //    await ApiClient.apiClient.editProfile(token,
+          //        id, 'hussein', 'i.7sseen1997@gmail.com', '+966123456789');
+          //   },
+          // ),
           appBar: PreferredSize(
             child: Container(
               decoration: BoxDecoration(boxShadow: [
@@ -115,8 +113,7 @@ class AccountInformations extends StatelessWidget {
                                           ),
                                           CustomTextFormField(
                                             textEditingController: myController3,
-
-                                            hintText: 'كلمة السر',
+                                            hintText: 'كلمة السر القديمة',
                                             password: true,
                                             validator: authProvider.validatePassword,
                                             onSaved: authProvider.savePassword,
@@ -126,11 +123,10 @@ class AccountInformations extends StatelessWidget {
                                           ),
                                           CustomTextFormField(
                                             textEditingController: myController4,
-
-                                            hintText: 'تأكيد كلمة المرور',
+                                            hintText: 'كلمة المرور الجديدة',
                                             password: true,
-                                            validator: authProvider.validateConfirmPassword,
-                                            onSaved: authProvider.saveConfirmPassword,
+                                            validator: authProvider.validatePassword,
+                                            onSaved: authProvider.saveNewPassword,
                                           ),
                                           SizedBox(
                                             height: ScreenUtil().setHeight(15),
@@ -176,19 +172,23 @@ class AccountInformations extends StatelessWidget {
                                   ),
                                   SizedBox(height: 20),
                                   Row(
+
                                     children: <Widget>[
                                       MaterialButton(
                                         onPressed: () {
                                           Navigator.pop(context);
                                         },
-                                        child: Text('cancel'),
+                                        child: Text('الغاء'),
                                       ),
                                       Builder(
                                         builder: (context) => GestureDetector(
 
                                           child: Text(
-                                            'save',
-                                            style: TextStyle(color: Theme.of(context).accentColor),
+                                            'حفظ',
+                                            style: TextStyle(
+                                                color: kPinkLight,
+                                              fontSize: 18
+                                            ),
                                           ),
                                           onTap: () {
                                             Provider.of<AuthProvider>(context,listen: false).submitEditProfile(context, formAccountInformations);
@@ -196,7 +196,7 @@ class AccountInformations extends StatelessWidget {
                                         ),
                                       ),
                                     ],
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   ),
                                   SizedBox(height: 10),
                                 ],

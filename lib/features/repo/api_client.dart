@@ -20,8 +20,8 @@ class ApiClient {
     }
   }
 
-  Future<Map> registerUser(
-      String fullName, String mobile, String password, String email) async {
+  Future<Map> registerUser(String fullName, String mobile, String password,
+      String email) async {
     await initApi();
 
     FormData data = FormData.fromMap(
@@ -75,8 +75,8 @@ class ApiClient {
   }
 
 //////////////////////////////////////////////////////////////////////////////////
-  Future<Map> resetPassword(
-      int id, String token, String emailPassword, String newPassword) async {
+  Future<Map> resetPassword(int id, String token, String emailPassword,
+      String newPassword) async {
     await initApi();
     FormData data = FormData.fromMap({
       'user_id': id,
@@ -99,19 +99,21 @@ class ApiClient {
       data: data,
     );
 
-    print("signOut :" + response.data);
+    print( response.data);
 
     return response.data;
   }
 
   /////////////////////////////////////////////////////////////////////////////////
-  Future<Map> changePassword(
-      String token, String id, String oldPassword, String newPassword) async {
+  Future<Map> changePassword(String token, String id, String oldPassword,
+      String newPassword) async {
     await initApi();
-
+    String token = await SPHelper.spHelper.getToken();
+    int idUser = await SPHelper.spHelper.getUser();
+    String id = idUser.toString();
     FormData data = FormData.fromMap({
-      'token': token,
       'user_id': id,
+      'token': token,
       'oldPassword': oldPassword,
       'newPassword': newPassword,
     });
@@ -121,7 +123,7 @@ class ApiClient {
       data: data,
     );
 
-    print("change_password :" + response.data);
+    print(response.data);
 
     return response.data;
   }
@@ -142,29 +144,6 @@ class ApiClient {
         baseUrl + edit_profile,
         data: data,
       );
-        print(response.data);
-      return response.data;
-
-    } catch (e) {
-      print(e);
-    }
-  }
-////////////////////////////////////////////////////////////
-  Future<Map>  showProfile()async{
-    try {
-      await initApi();
-      String token = await SPHelper.spHelper.getToken();
-      int idUser = await SPHelper.spHelper.getUser();
-      String id = idUser.toString();
-      FormData data = FormData.fromMap({
-        'token': token,
-        'user_id': id,
-      }
-      );
-      Response response = await dio.post(
-        baseUrl + show_profile,
-        data: data
-      );
       print(response.data);
       return response.data;
     } catch (e) {
@@ -172,7 +151,30 @@ class ApiClient {
     }
   }
 
+////////////////////////////////////////////////////////////
+  Future<Map> showProfile() async {
+    try {
+      await initApi();
+      String token = await SPHelper.spHelper.getToken();
+      int idUser = await SPHelper.spHelper.getUser();
+      String id = idUser.toString();
+      FormData data = FormData.fromMap({
+        'user_id': id,
+        'token': token,
+      }
+      );
+      print( ' token : $token user_id : $id');
 
+      Response response = await dio.post(
+          baseUrl + show_profile,
+          data: data
+      );
+      print(response.data);
+      return response.data;
+    } catch (e) {
+      print(e);
+    }
+  }
 
 
 //ToDo:Verification
@@ -185,9 +187,10 @@ class ApiClient {
     });
 
     Response response = await dio.post(
-      baseUrl + verificationCode,
+      baseUrl + verify_registration,
       data: data,
     );
+    print(response.data);
     return response.data;
   }
 
@@ -208,7 +211,7 @@ class ApiClient {
     try {
       await initApi();
       Response response =
-          await dio.get(baseUrl + get_sub_categories + id.toString());
+      await dio.get(baseUrl + get_sub_categories + id.toString());
       return response.data;
     } catch (e) {
       print(e);
@@ -218,22 +221,21 @@ class ApiClient {
   Future getSlider(int sliderNum) async {
     try {
       await initApi();
-     // if(ConnectivityService.connectivityStatus == ConnectivityHStatus.online){
-     //   Response response = await dio.get(baseUrl + getSliderIndex[sliderNum]);
-     //   print(response.statusCode);
-     //   return response.data;
-     // }else{
-     //   print('offline');
-     // }
+      // if(ConnectivityService.connectivityStatus == ConnectivityHStatus.online){
+      //   Response response = await dio.get(baseUrl + getSliderIndex[sliderNum]);
+      //   print(response.statusCode);
+      //   return response.data;
+      // }else{
+      //   print('offline');
+      // }
       Response response = await dio.get(baseUrl + getSliderIndex[sliderNum]);
       print(response.statusCode);
       return response.data;
-
-    }  catch (e) {
-      if(e is DioError){
+    } catch (e) {
+      if (e is DioError) {
 
       }
-     }
+    }
   }
 
   Future getSection(String title) async {
@@ -268,40 +270,39 @@ class ApiClient {
       Response response = await dio.get(
         'https://3beauty.net/wp-json/beauty/v1/get_product_by_category?cat_id=$id&user_id=25',
       );
-        if(response.statusCode == 200){
-          return response.data;
-        }else{
-          print('statusCode aaaaaaaaaaaaaaaaaa') ;
-        }
-    }on DioError catch ( e ) {
-      if(e.response.statusCode == 404){
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        print('statusCode aaaaaaaaaaaaaaaaaa');
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode == 404) {
         print(e.response.statusCode);
-      }else{
+      } else {
         print(e.message);
         print(e.request);
       }
-
     }
   }
+
   Future getProductByCategory(int id) async {
     try {
       await initApi();
       Response response = await dio.get(
         'https://3beauty.net/wp-json/beauty/v1/get_recommended_products?product_id=$id',
       );
-        if(response.statusCode == 200){
-          return response.data;
-        }else{
-          print('statusCode aaaaaaaaaaaaaaaaaa') ;
-        }
-    }on DioError catch ( e ) {
-      if(e.response.statusCode == 404){
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        print('statusCode aaaaaaaaaaaaaaaaaa');
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode == 404) {
         print(e.response.statusCode);
-      }else{
+      } else {
         print(e.message);
         print(e.request);
       }
-
     }
   }
 
@@ -312,56 +313,84 @@ class ApiClient {
       Response response = await dio.get(
         'https://3beauty.net/wp-json/beauty/v1/get_product_like?search_txt=$search',
       );
-      if(response.statusCode==200){
+      if (response.statusCode == 200) {
         print(response.data);
-      return response.data;}
-      else{
+        return response.data;
+      }
+      else {
         throw Exception('error');
       }
-
-    } on DioError catch ( e ) {
-
-        print(e.response.statusCode);
-
-
+    } on DioError catch (e) {
+      print(e.response.statusCode);
     }
   }
 
 
-
-
-  getProductByBrand(int id)async{
+  Future getProductByBrand(int id) async {
     try {
       await initApi();
-      Response response =await dio.get(
-        baseUrl + 'get_products_by_brand?brand_id=$id&user_id='
+      Response response = await dio.get(
+          baseUrl + 'get_products_by_brand?brand_id=$id&user_id='
       );
-      return response.data ;
-    }on DioError catch ( e ) {
-      if(e.response.statusCode != 200){
+      return response.data;
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
         print(e.response.statusCode);
-      }else{
+      } else {
         print(e.message);
         print(e.request);
       }
-
     }
   }
-  getProductDetails(int id)async{
+
+  Future getProductDetails(int id) async {
     try {
       await initApi();
-      Response response =await dio.get(
-      baseUrl + 'get_product?id=$id&user_id'
+      Response response = await dio.get(
+          baseUrl + 'get_product?id=$id&user_id'
       );
-      return response.data ;
-    }on DioError catch ( e ) {
-      if(e.response.statusCode != 200){
+      return response.data;
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
         print(e.response.statusCode);
-      }else{
+      } else {
         print(e.message);
         print(e.request);
       }
+    }
+  }
 
+  Future onBoarding() async {
+    try {
+      await initApi();
+      Response response = await dio.get(
+          baseUrl + get_front_page_slides
+      );
+      return response.data;
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
+    }
+  }
+  Future getPrivacyPolicy() async {
+    try {
+      await initApi();
+      Response response = await dio.get(
+          baseUrl + get_privacy_policy
+      );
+      print(response.data);
+      return response.data;
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
     }
   }
 }
