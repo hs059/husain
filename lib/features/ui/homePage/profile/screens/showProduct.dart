@@ -57,7 +57,7 @@ class ShowProduct extends StatelessWidget {
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                           child:  ProductItemGrid(
-                              imagePath: 'assets/images/3beauty.png',
+                              imagePath: product.data[index].image ,
                               title: product.data[index].name,
                               rating: 4,
                               prize: product.data[index].price,

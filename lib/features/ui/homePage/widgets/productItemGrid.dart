@@ -1,7 +1,9 @@
 
+import 'package:beauty/components/model/productM.dart';
 import 'package:beauty/components/model/productModel.dart' as subProduct;
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/features/ui/product/productSubScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
@@ -23,7 +25,8 @@ class ProductItemGrid extends StatelessWidget {
   final  bool fav ;
   final subProduct.Data product ;
 
-  ProductItemGrid({@required this.imagePath,@required this.title,@required this.rating,@required this.prize,@required this.fav, this.product,});
+  ProductItemGrid({@required this.imagePath
+    ,@required this.title,@required this.rating,@required this.prize,@required this.fav, this.product,});
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -46,10 +49,10 @@ class ProductItemGrid extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: ()  {
-                            Provider.of<ApiProvider>(context,listen: false).getProductDetails(product.id);
+                            // Provider.of<ApiProvider>(context,listen: false).getProductDetails(product.id);
                             kNavigatorPush(
                                 context,
-                                ProductSubScreen(
+                            ProductSubScreen(
                                   product: product,
                                   section: false,
                                 ));

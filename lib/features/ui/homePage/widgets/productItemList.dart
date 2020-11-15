@@ -56,8 +56,8 @@ class ProductItemList extends StatelessWidget {
                       Center(
                         child: GestureDetector(
                           onTap: () {
-                            print(product.id);
-                            Provider.of<ApiProvider>(context,listen: false).getProductDetails(product.id);
+                            // print(product.id);
+                            // Provider.of<ApiProvider>(context,listen: false).getProductDetails(product.id);
                             kNavigatorPush(context, ProductSubScreen(productS: product,section: true,));
                           },
                           child: CachedNetworkImage(

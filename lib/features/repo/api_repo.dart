@@ -3,9 +3,11 @@ import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/sectionModel.dart';
+import 'package:beauty/components/model/showProfileModel.dart';
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/repo/api_client.dart';
+import 'package:beauty/services/sp_helper.dart';
 
 class ApiRepository {
   ApiRepository._();
@@ -61,4 +63,25 @@ class ApiRepository {
     return productM;
   }
 
+  Future<ProductModel> getSearch(String search)async{
+    Map map = await ApiClient.apiClient.getSearch(search);
+    ProductModel  productModel = ProductModel.fromJson(map);
+    return productModel;
+  }
+
+  Future<ProductModel> getProductByCategory(int id)async{
+    Map map = await ApiClient.apiClient.getProductByCategory(id);
+    ProductModel  productModel = ProductModel.fromJson(map);
+    return productModel ;
+  }
+
+  Future<ShowProfileModel> showProfile()async{
+    Map map =await ApiClient.apiClient.showProfile();
+    if(map['code']){
+      ShowProfileModel showProfileModel = ShowProfileModel.fromJson(map);
+      return showProfileModel ;
+    }else{
+      return null ;
+      }
+  }
 }

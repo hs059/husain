@@ -1,5 +1,7 @@
+import 'package:beauty/components/model/showProfileModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
+import 'package:beauty/features/repo/api_repo.dart';
 import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/homePage/screens/home.dart';
 import 'package:beauty/features/ui/signUI/screens/Verification.dart';
@@ -28,6 +30,10 @@ class AuthProvider extends ChangeNotifier {
 
   saveEmail(String value) {
     this.email = value;
+    notifyListeners();
+  }
+  saveMobile(String value) {
+    this.mobile = value;
     notifyListeners();
   }
 
@@ -98,9 +104,7 @@ class AuthProvider extends ChangeNotifier {
   validateName(String value) {
     if (value == null || value == '') {
       return ' this field is required ';
-    } else if (!isAlphanumeric(value)) {
-      return 'invalid name ';
-    } else if (value.length < 4) {
+    }  else if (value.length < 4) {
       return 'name at least 4 Letters';
     }
   }
@@ -118,6 +122,9 @@ class AuthProvider extends ChangeNotifier {
 
   getLogin()async{
     isLogin = await SPHelper.spHelper.getIsLogin();
+    if(isLogin){
+      showProfile() ;
+    }
     notifyListeners() ;
   }
 //////////////////////submit////////////////////////////////
@@ -173,11 +180,13 @@ class AuthProvider extends ChangeNotifier {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     Map map =
     await ApiClient.apiClient.loginUser(this.email, this.password);
+    print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
       isLogin = true ;
       await SPHelper.spHelper.setToken(map['data']['token']);
       await SPHelper.spHelper.setIsLogin(true);
+      showProfile();
       kNavigatorPush(
         context,
         HomePage(),
@@ -317,7 +326,47 @@ verification(BuildContext context)async{
     SPHelper.spHelper.setIsLogin(false);
     SPHelper.spHelper.setToken('');
     SPHelper.spHelper.setToken('');
+    showProfileModel = null ;
   }
 
+  ShowProfileModel showProfileModel ;
+
+  showProfile()async{
+    if(isLogin){
+      showProfileModel = await ApiRepository.apiRepository.showProfile();
+      notifyListeners();
+    }else{
+
+    }
+  }
+  submitEditProfile(BuildContext context,GlobalKey<FormState> globalKey){
+    if(globalKey.currentState.validate()){
+      globalKey.currentState.save();
+      editProfile(context);
+    }
+  }
+  editProfile(BuildContext context)async{
+    String token = await SPHelper.spHelper.getToken();
+    int idUser = await SPHelper.spHelper.getUser();
+    String id = idUser.toString();
+    print('token = $token id = $id name = $fullName email = $email mobile = $mobile');
+    Map map =await ApiClient.apiClient.editProfile(token, id, this.fullName, this.email, this.mobile);
+    showProfileModel = await ApiRepository.apiRepository.showProfile();
+    Navigator.pop(context);
+    // if( !map['code']){
+    //   Scaffold.of(context).showSnackBar(
+    //     SnackBar(
+    //       backgroundColor: kBlack,
+    //       content: Text(
+    //         map['message'],
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(
+    //             color: Colors.white, fontSize: ScreenUtil().setSp(18)),
+    //       ),
+    //     ),
+    //   );
+    // }
+    notifyListeners();
+  }
 
 }

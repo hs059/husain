@@ -6,6 +6,7 @@ import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
+import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
@@ -55,9 +56,8 @@ class Section extends StatelessWidget {
                   return  AnimationCart(
                     index:index ,
                     Grid: false,
-                    count:10 ,
-                    duration: 1200,
-
+                    count:section.data.products.length ,
+                    duration: 1500,
                     child: ProductItemList(
                       title: product.name,
                       fav: product.isFavourited,

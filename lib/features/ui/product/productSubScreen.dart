@@ -6,8 +6,7 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/components/model/sectionModel.dart' as sectionP ;
-
-import 'package:beauty/features/ui/homePage/widgets/section.dart';
+import 'package:beauty/features/ui/product/productRecomended.dart';
 import 'package:beauty/features/ui/product/widgets/addCartSheet.dart';
 import 'package:beauty/features/ui/product/widgets/brandProduct.dart';
 import 'package:beauty/features/ui/product/widgets/productDescription.dart';
@@ -15,14 +14,12 @@ import 'package:beauty/features/ui/product/widgets/productName.dart';
 import 'package:beauty/features/ui/product/widgets/productPrize.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
-import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -47,6 +44,7 @@ class ProductSubScreen extends StatelessWidget {
   List<subProduct.Reviews > reviews;
   List<sectionP.Reviews> reviewsS;
   List<Map> rev ;
+  int id ;
 
 
   @override
@@ -62,6 +60,7 @@ class ProductSubScreen extends StatelessWidget {
       isFavourited = productS.isFavourited ;
       reviewsS = productS.reviews ;
       rev = reviewsS.map((e) => e.toJson()).toList();
+      id = productS.id ;
     }else{
       name = product.name ;
       permalink = product.permalink ;
@@ -73,6 +72,8 @@ class ProductSubScreen extends StatelessWidget {
       isFavourited = product.isFavourited ;
       reviews = product.reviews ;
       rev = reviews.map((e) => e.toJson()).toList();
+      id = product.id ;
+
     }
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -126,7 +127,7 @@ class ProductSubScreen extends StatelessWidget {
                   imageUrl: image,
                   placeholder: (context, url) => LoaderGif1(),
                   errorWidget: (context, url, error) =>
-                    Icon(Icons.image),
+                      Icon(Icons.image),
                   height: ScreenUtil().setHeight(50),
                   fit: BoxFit.contain
               ):Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
@@ -307,10 +308,10 @@ I highly recommend it''',
                   ),
                   trailing: GestureDetector(
                     onTap: () async{
-                   bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
+                      bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
 
                       print(isLogen);
-                      if(false){
+                      if(isLogen ==false){
                         Fluttertoast.showToast(
                             msg: 'يجب عليك تسجيل الدخول',
                             toastLength: Toast.LENGTH_SHORT,
@@ -428,12 +429,7 @@ I highly recommend it''',
             ),
             Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: ScreenUtil().setWidth(15),
-                      vertical: ScreenUtil().setHeight(5)),
-                  child: Section(num: 2,),
-                ),
+                ProductRecommended(id: id,onCart: false,),
                 SizedBox(
                   height: ScreenUtil().setHeight(10),
                 ),

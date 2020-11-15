@@ -168,7 +168,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                         text: 'Sign In',
                         onTap: () {
                           authProvider.submitlogin(formKeySignIn, context);
-
+                          tabControllerConstant.animateTo(0);
                         }),
                   ),
                   SizedBox(

@@ -5,6 +5,7 @@ import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/productM.dart';
 import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/model/sectionModel.dart';
+import 'package:beauty/components/model/showProfileModel.dart';
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
@@ -26,6 +27,8 @@ SectionModel customCategory ;
 ProductModel subProduct;
 BrandModel brand ;
 ProductModel productByBrand ;
+ProductModel productSearch ;
+ProductModel productByCategory ;
 ProductM productM ;
   getCategory()async{
     category = await ApiRepository.apiRepository.getCategory();
@@ -67,10 +70,33 @@ ProductM productM ;
     productByBrand = await ApiRepository.apiRepository.getProductByBrand(id);
     notifyListeners();
   }
+    Future<ProductModel> getProductByCategory(int id)async{
+      productByCategory = await ApiRepository.apiRepository.getProductByCategory(id);
+      return productByCategory ;
+  }
+
   getProductDetails(int id)async{
-    productM = null ;
+    productM = null;
     productM = await ApiRepository.apiRepository.getProductDetails(id);
+    print(productM.toJson());
     notifyListeners();
   }
+  Future<ProductM> getProductDetailsSearch(int id,BuildContext context)async{
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    notifyListeners();
+    return productM ;
+  }
+
+   getProductSearch(String search)async{
+    productSearch = await ApiRepository.apiRepository.getSearch(search);
+notifyListeners();
+  }
+
+nullSearch(){
+    productSearch = null ;
+}
+
 }
 

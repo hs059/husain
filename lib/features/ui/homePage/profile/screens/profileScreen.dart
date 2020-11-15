@@ -55,7 +55,7 @@ class ProfileScreen extends StatelessWidget {
                           height: ScreenUtil().setHeight(10),
                         ),
                         Text(
-                          'Wonderful customer',
+                          '3Beauty',
                           style: kName,
                           textAlign: TextAlign.center,
                         ),
@@ -63,7 +63,7 @@ class ProfileScreen extends StatelessWidget {
                           height: ScreenUtil().setHeight(5),
                         ),
                         Text(
-                          'Wonderful customer@gmail.com',
+                          'https://3beauty.net',
                           style: kSubTitleSign.copyWith(
                             fontSize: ScreenUtil().setSp(13),
                           ),

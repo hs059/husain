@@ -58,7 +58,7 @@ class Data {
         this.reviews});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id =int.parse( json['id'].toString());
     name = json['name'];
     currency = json['currency'];
     permalink = json['permalink'];

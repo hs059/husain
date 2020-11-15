@@ -135,7 +135,7 @@ class MyOrder extends StatelessWidget {
         bottomNavigationBar: bottomNavigationBarCart(
           onTap: (){
             Navigator.pop(context);
-            tabController.animateTo(0);
+            tabControllerConstant.animateTo(0);
           },
           widget: Text(
             'Go to Shopping',

@@ -1,4 +1,5 @@
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/profileScreen.dart';
 import 'package:beauty/features/ui/homePage/screens/brands.dart';
@@ -29,16 +30,18 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    tabController = TabController(length: 5, vsync: this, initialIndex: 0);
-    tabController.addListener(() {
-      bottomIndex = tabController.index;
+    tabControllerConstant = TabController(length: 5, vsync: this, initialIndex: 0);
+    tabControllerConstant.addListener(() {
+      bottomIndex = tabControllerConstant.index;
       setState(() {});
     });
     Provider.of<ApiProvider>(context,listen: false).getCategory();
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+
     return SafeArea(
       child: WillPopScope(
         onWillPop: onWillPop,
@@ -47,7 +50,7 @@ class _HomePageState extends State<HomePage>
           child: Scaffold(
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
-              controller: tabController,
+              controller: tabControllerConstant,
               children: <Widget>[
                 Home(),
                 Category(),
@@ -63,8 +66,13 @@ class _HomePageState extends State<HomePage>
                     blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
               ]),
               //ToDo:svg icon
-              child: TabBar(
-                  controller: tabController,
+              child: TabBar(onTap: (value) {
+                if(value == 4){
+                  print('bababab');
+                  Provider.of<AuthProvider>(context,listen: false).showProfile();
+                }
+              },
+                  controller: tabControllerConstant,
                   indicatorColor: Colors.transparent,
                   tabs: tabIconA.map((e) {
                     return Tab(

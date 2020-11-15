@@ -1,58 +1,42 @@
 
 
-import 'package:day_night_time_picker/day_night_time_picker.dart';
-import 'package:day_night_time_picker/lib/constants.dart';
-import 'package:flutter/material.dart';
 
-class Ho extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:popup_menu/popup_menu.dart';
+
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
   @override
-  _HoState createState() => _HoState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _HoState extends State<Ho> {
-  TimeOfDay _time = TimeOfDay.now();
-
-  void onTimeChanged(TimeOfDay newTime) {
-    setState(() {
-      _time = newTime;
-    });
-  }
+class _MyHomePageState extends State<MyHomePage> {
+  final GlobalKey _menuKey = new GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              _time.format(context),
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline1,
-            ),
-            SizedBox(height: 10),
-            FlatButton(
-              color: Theme.of(context).accentColor,
-              onPressed: () {
-                Navigator.of(context).push(
-                  showPicker(
-                    context: context,
-                    value: _time,
-                    onChange: onTimeChanged,
-                    // Optional onChange to receive value as DateTime
-                    onChangeDateTime: (DateTime dateTime) {
-                      print(dateTime);
-                    },
-                  ),
-                );
-              },
-              child: Text(
-                "Open time picker",
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        ),
+    final button = new PopupMenuButton(icon: Icon(Icons.category,color: Colors.white,),
+        key: _menuKey,
+        itemBuilder: (_) => <PopupMenuItem<String>>[
+          new PopupMenuItem<String>(
+              child: const Text('Doge'), value: 'Doge'),
+          new PopupMenuItem<String>(
+              child: const Text('Lion'), value: 'Lion'),
+        ],
+        onSelected: (_) {});
+
+    final tile =
+    new ListTile(title: new Text('Doge or lion?'), trailing: button, onTap: () {
+      // This is a hack because _PopupMenuButtonState is private.
+      dynamic state = _menuKey.currentState;
+      state.showButtonMenu();
+    });
+    return new Scaffold(
+      body: new Center(
+        child: tile,
       ),
     );
   }

@@ -1,4 +1,7 @@
+import 'package:beauty/services/connectivity.dart';
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/constant.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 
 class ApiClient {
@@ -129,8 +132,8 @@ class ApiClient {
     try {
       await initApi();
       FormData data = FormData.fromMap({
+        'id': id,
         'token': token,
-        'user_id': id,
         'new_name': newName,
         'new_email': newEmail,
         'mobile_number': mobileNumber,
@@ -139,12 +142,38 @@ class ApiClient {
         baseUrl + edit_profile,
         data: data,
       );
+        print(response.data);
+      return response.data;
+
+    } catch (e) {
+      print(e);
+    }
+  }
+////////////////////////////////////////////////////////////
+  Future<Map>  showProfile()async{
+    try {
+      await initApi();
+      String token = await SPHelper.spHelper.getToken();
+      int idUser = await SPHelper.spHelper.getUser();
+      String id = idUser.toString();
+      FormData data = FormData.fromMap({
+        'token': token,
+        'user_id': id,
+      }
+      );
+      Response response = await dio.post(
+        baseUrl + show_profile,
+        data: data
+      );
       print(response.data);
       return response.data;
     } catch (e) {
       print(e);
     }
   }
+
+
+
 
 //ToDo:Verification
 
@@ -189,9 +218,17 @@ class ApiClient {
   Future getSlider(int sliderNum) async {
     try {
       await initApi();
+     // if(ConnectivityService.connectivityStatus == ConnectivityHStatus.online){
+     //   Response response = await dio.get(baseUrl + getSliderIndex[sliderNum]);
+     //   print(response.statusCode);
+     //   return response.data;
+     // }else{
+     //   print('offline');
+     // }
       Response response = await dio.get(baseUrl + getSliderIndex[sliderNum]);
       print(response.statusCode);
       return response.data;
+
     }  catch (e) {
       if(e is DioError){
 
@@ -246,23 +283,52 @@ class ApiClient {
 
     }
   }
+  Future getProductByCategory(int id) async {
+    try {
+      await initApi();
+      Response response = await dio.get(
+        'https://3beauty.net/wp-json/beauty/v1/get_recommended_products?product_id=$id',
+      );
+        if(response.statusCode == 200){
+          return response.data;
+        }else{
+          print('statusCode aaaaaaaaaaaaaaaaaa') ;
+        }
+    }on DioError catch ( e ) {
+      if(e.response.statusCode == 404){
+        print(e.response.statusCode);
+      }else{
+        print(e.message);
+        print(e.request);
+      }
+
+    }
+  }
 
   Future getSearch(String search) async {
     try {
       await initApi();
+
       Response response = await dio.get(
-        ' https://3beauty.net/wp-json/beauty/v1/get_product_like?search_txt=$search',
+        'https://3beauty.net/wp-json/beauty/v1/get_product_like?search_txt=$search',
       );
-      return response.data;
-    } catch (e) {
-      print(e);
+      if(response.statusCode==200){
+        print(response.data);
+      return response.data;}
+      else{
+        throw Exception('error');
+      }
+
+    } on DioError catch ( e ) {
+
+        print(e.response.statusCode);
+
+
     }
   }
 
-  showProfile()async{
-     await initApi();
 
-  }
+
 
   getProductByBrand(int id)async{
     try {

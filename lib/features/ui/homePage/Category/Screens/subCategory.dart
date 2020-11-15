@@ -4,8 +4,10 @@ import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/Category/widgets/sortBy.dart';
+import 'package:beauty/features/ui/homePage/screens/search.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
 import 'package:beauty/value/colors.dart';
+import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -63,7 +65,7 @@ class _SubCategoryState extends State<SubCategory>
           ),
           actions: [
             GestureDetector(
-              onTap: () => null,
+              onTap: () => kNavigatorPush(context, Search()),
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
@@ -142,48 +144,7 @@ class _SubCategoryState extends State<SubCategory>
                         ],
                       ),
                     ),
-//                   Consumer<ApiProvider>(
-//                       builder:(context, value, child) {
-//                         SubProductModel subProduct=value.subProduct ;
-//                         print(subProduct.data.length);
-//                                     if(subProduct.data.isEmpty){
-//                                       return Center(
-//                                         child: Text(
-//                                           'سيتم اضافتها قريبا',
-//                                           style:
-//                                           kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
-//                                         ),
-//                                       );
-//                                     }else{
-//                                       return Expanded(
-//                                         child: GridView.builder(
-//                                           primary: false,
-//                                           shrinkWrap: true,
-//                                           itemCount: subProduct.data.length,
-//                                           itemBuilder: (context, index) =>
-//                                               ProductItemGrid(
-//                                                   imagePath: subProduct
-//                                                       .data[index].image,
-//                                                   title: subProduct
-//                                                       .data[index].name,
-//                                                   rating: 4.2,
-//                                                   prize: subProduct
-//                                                       .data[index].price,
-//                                                   fav: subProduct.data[index]
-//                                                       .isFavourited),
-//                                           gridDelegate:
-//                                           SliverGridDelegateWithFixedCrossAxisCount(
-//                                             crossAxisCount: 2,
-//                                             crossAxisSpacing: 0,
-//                                             childAspectRatio: 0.7,
-// // mainAxisSpacing: 15.0,
-//                                           ),
-//                                         ),
-//                                       );
-//
-//                                     }
-//                       },
-//                   ),
+
                     Container(
                       child: Expanded(
                         child: TabBarView(

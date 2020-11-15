@@ -11,6 +11,7 @@ import 'package:beauty/features/ui/homePage/widgets/brandSection.dart';
 import 'package:beauty/features/ui/homePage/widgets/homeSliderWidget.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 import 'package:beauty/features/ui/homePage/widgets/section.dart';
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
@@ -26,12 +27,14 @@ class Home extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        // floatingActionButton: FloatingActionButton(
-        //   onPressed: ()async {
-        //     await Provider.of<ApiProvider>(context,listen: false).getProductByBrand(194);
-        //     print(Provider.of<ApiProvider>(context,listen: false).productByBrand.toJson());
-        //   },
-        // ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: ()async {
+              // await SPHelper.spHelper.setUser(17);
+              // await SPHelper.spHelper.setToken('f198eb2be8f031d739e6d083b259b536');
+              // Provider.of<AuthProvider>(context,listen: false).showProfile();
+            ApiClient.apiClient.loginUser('h.yazji2019@gmail.com', '123456789');
+          },
+        ),
         body: Container(
           padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
           color: Colors.white,
@@ -43,7 +46,9 @@ class Home extends StatelessWidget {
               Container(
                 height: ScreenUtil().setHeight(44),
                 child: GestureDetector(
-                  onTap: () => kNavigatorPush(context, Search()),
+                  onTap: ()  {
+                    kNavigatorPush(context, Search());
+                  },
                   child: Column(
                     children: [
                       Container(

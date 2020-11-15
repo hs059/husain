@@ -1,8 +1,7 @@
 import 'package:beauty/components/animate_do.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
-import 'package:beauty/features/provider/uiProvider.dart';
-import 'package:beauty/services/connectivity.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';

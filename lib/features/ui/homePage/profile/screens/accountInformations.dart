@@ -3,8 +3,10 @@ import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
+import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
@@ -12,11 +14,18 @@ import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 class AccountInformations extends StatelessWidget {
-  GlobalKey<FormState> formAccountInformations = GlobalKey<FormState>();
+  final myController1 = TextEditingController();
+  final myController2 = TextEditingController();
+  final myController3 = TextEditingController();
+  final myController4 = TextEditingController();
+  final myController5 = TextEditingController();
 
+  GlobalKey<FormState> formAccountInformations = GlobalKey<FormState>();
+  String phone ='00';
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
@@ -24,258 +33,285 @@ class AccountInformations extends StatelessWidget {
 
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: PreferredSize(
-          child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: kBorder,
-                offset: Offset(0, 2.0),
-                blurRadius: 4.0,
-              )
-            ]),
-            child: AppBar(
-              iconTheme: IconThemeData(color: Color(0xff121924)),
-              backgroundColor: Colors.white,
-              title: Text(
-                'Account Informations',
-                style: kSubCategoryText.copyWith(
-                  color: kBlack,
+      child: ModalProgressHUD(
+        inAsyncCall:uiProvider.spinner,
+        child: Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () async{
+              print('hay');
+              String token = await SPHelper.spHelper.getToken();
+              int idUser = await SPHelper.spHelper.getUser();
+              String id = idUser.toString();
+              print(token);
+              print(id);
+             await ApiClient.apiClient.editProfile(token,
+                 id, 'hussein', 'i.7sseen1997@gmail.com', '+966123456789');
+            },
+          ),
+          appBar: PreferredSize(
+            child: Container(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: kBorder,
+                  offset: Offset(0, 2.0),
+                  blurRadius: 4.0,
+                )
+              ]),
+              child: AppBar(
+                iconTheme: IconThemeData(color: Color(0xff121924)),
+                backgroundColor: Colors.white,
+                title: Text(
+                  'Account Informations',
+                  style: kSubCategoryText.copyWith(
+                    color: kBlack,
+                  ),
                 ),
-              ),
-              elevation: 0.0,
-              actions: [
-                GestureDetector(
-                  onTap:  () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return SimpleDialog(
-                              contentPadding: EdgeInsets.symmetric(horizontal: 20),
-                              titlePadding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-                              title: Row(
-                                children: <Widget>[
-                                  Icon(Icons.person),
-                                  SizedBox(width: 10),
-                                  Text(
-                                    'تعديل بيانات المستخدم',
-                                  )
-                                ],
-                              ),
-                              children: <Widget>[
-                                Form(
-                                  key: formAccountInformations,
-                                  child: Directionality(
-                                    child: Column(
-                                      children: [
-                                        CustomTextFormField(
-                                          hintText: 'الاسم كامل',
-                                          password: false,
-                                          validator: authProvider.validateName,
-                                          onSaved: authProvider.saveFullName,
-                                        ),
-                                        SizedBox(
-                                          height: ScreenUtil().setHeight(15),
-                                        ),
-                                        CustomTextFormField(
-                                          hintText: 'الايميل',
-                                          password: false,
-                                          validator: authProvider.validateEmail,
-                                          onSaved: authProvider.saveEmail,
-                                          textInputType: TextInputType.emailAddress,
-                                        ),
-                                        SizedBox(
-                                          height: ScreenUtil().setHeight(15),
-                                        ),
-                                        CustomTextFormField(
-                                          hintText: 'كلمة السر',
-                                          password: true,
-                                          validator: authProvider.validatePassword,
-                                          onSaved: authProvider.savePassword,
-                                        ),
-                                        SizedBox(
-                                          height: ScreenUtil().setHeight(15),
-                                        ),
-                                        CustomTextFormField(
-                                          hintText: 'تأكيد كلمة المرور',
-                                          password: true,
-                                          validator: authProvider.validateConfirmPassword,
-                                          onSaved: authProvider.saveConfirmPassword,
-                                        ),
-                                        SizedBox(
-                                          height: ScreenUtil().setHeight(15),
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(8.0),
-                                            border: Border.all(width: 1.0, color: kBorder),
-                                          ),
-                                          child: IntlPhoneField(
-                                            validator: authProvider.validatePhone,
-                                            autoValidate: false,
-                                            decoration: InputDecoration(
-                                              hintText: 'رقم الهاتف',
-                                              hintStyle:
-                                              TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: kBorder, width: 1.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(color: kBorder, width: 1.0),
-                                              ),
-                                            ),
-                                            initialCountryCode: 'SA',
-                                            showDropdownIcon: false,
-                                            onChanged: (phone) {
-                                              print(phone.completeNumber);
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    textDirection: TextDirection.rtl,
-                                  ),
-                                ),
-                                SizedBox(height: 20),
-                                Row(
+                elevation: 0.0,
+                actions: [
+                  GestureDetector(
+                    onTap:  () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return SimpleDialog(
+                                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                                titlePadding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                                title: Row(
                                   children: <Widget>[
-                                    MaterialButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('cancel'),
-                                    ),
+                                    Icon(Icons.person),
+                                    SizedBox(width: 10),
                                     Text(
-                                      'save',
-                                      style: TextStyle(color: Theme.of(context).accentColor),
-                                    ),
+                                      'تعديل بيانات المستخدم',
+                                    )
                                   ],
-                                  mainAxisAlignment: MainAxisAlignment.end,
                                 ),
-                                SizedBox(height: 10),
-                              ],
-                            );
-                          });
-                    },
+                                children: <Widget>[
+                                  Form(
+                                    key: formAccountInformations,
+                                    child: Directionality(
+                                      child: Column(
+                                        children: [
+                                          CustomTextFormField(
+                                            textEditingController: myController1,
+                                            hintText: 'الاسم كامل',
+                                            password: false,
+                                            validator: authProvider.validateName,
+                                            onSaved: authProvider.saveFullName,
+                                          ),
+                                          SizedBox(
+                                            height: ScreenUtil().setHeight(15),
+                                          ),
+                                          CustomTextFormField(
+                                            textEditingController: myController2,
 
-                  child: Padding(
-                    padding: const EdgeInsets.all(17),
-                    child: Text(
-                      'edit',
-                      style: kSeeAll.copyWith(
-                        fontSize: ScreenUtil().setSp(18),
+                                            hintText: 'الايميل',
+                                            password: false,
+                                            validator: authProvider.validateEmail,
+                                            onSaved: authProvider.saveEmail,
+                                            textInputType: TextInputType.emailAddress,
+                                          ),
+                                          SizedBox(
+                                            height: ScreenUtil().setHeight(15),
+                                          ),
+                                          CustomTextFormField(
+                                            textEditingController: myController3,
 
+                                            hintText: 'كلمة السر',
+                                            password: true,
+                                            validator: authProvider.validatePassword,
+                                            onSaved: authProvider.savePassword,
+                                          ),
+                                          SizedBox(
+                                            height: ScreenUtil().setHeight(15),
+                                          ),
+                                          CustomTextFormField(
+                                            textEditingController: myController4,
+
+                                            hintText: 'تأكيد كلمة المرور',
+                                            password: true,
+                                            validator: authProvider.validateConfirmPassword,
+                                            onSaved: authProvider.saveConfirmPassword,
+                                          ),
+                                          SizedBox(
+                                            height: ScreenUtil().setHeight(15),
+                                          ),
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(8.0),
+                                              border: Border.all(width: 1.0, color: kBorder),
+                                            ),
+                                            child: IntlPhoneField(
+                                              controller: myController5,
+                                              validator: authProvider.validatePhone,
+                                              onSaved:  (newValue) {
+                                                print(newValue.completeNumber);
+                                                authProvider.saveMobile(newValue.completeNumber);
+                                              },
+                                              autoValidate: false,
+                                              decoration: InputDecoration(
+                                                hintText: 'رقم الهاتف',
+                                                hintStyle:
+                                                TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: kBorder, width: 1.0),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: kBorder, width: 1.0),
+                                                ),
+                                              ),
+                                              initialCountryCode: 'SA',
+                                              showDropdownIcon: false,
+
+                                              onChanged: (phone) {
+                                                Provider.of<AuthProvider>(context,listen: false).saveMobile(phone.completeNumber);
+                                                print(phone.completeNumber);
+                                                print(authProvider.mobile);
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      textDirection: TextDirection.rtl,
+                                    ),
+                                  ),
+                                  SizedBox(height: 20),
+                                  Row(
+                                    children: <Widget>[
+                                      MaterialButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text('cancel'),
+                                      ),
+                                      Builder(
+                                        builder: (context) => GestureDetector(
+
+                                          child: Text(
+                                            'save',
+                                            style: TextStyle(color: Theme.of(context).accentColor),
+                                          ),
+                                          onTap: () {
+                                            Provider.of<AuthProvider>(context,listen: false).submitEditProfile(context, formAccountInformations);
+                                          },
+                                        ),
+                                      ),
+                                    ],
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                  ),
+                                  SizedBox(height: 10),
+                                ],
+                              );
+                            });
+                      },
+
+                    child: Padding(
+                      padding: const EdgeInsets.all(17),
+                      child: Text(
+                        'edit',
+                        style: kSeeAll.copyWith(
+                          fontSize: ScreenUtil().setSp(18),
+
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            preferredSize: Size.fromHeight(kToolbarHeight),
           ),
-          preferredSize: Size.fromHeight(kToolbarHeight),
-        ),
-        body: authProvider.isLogin?
-        Column(
-          children: [
-            SizedBox(
-              height: ScreenUtil().setHeight(25),
+          body:authProvider.showProfileModel==null? Center(
+            child: Text(
+              'هناك خطأ بالتسجيل',
+              style:
+              kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
             ),
-            ContainerCart(
-              // height: 60,
-              child: Row(
-                children: [
-                  Text(
-                    'USER NAME'  ,
-                    style: kSubTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(14),
-                    ),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(15),
-                  ),
-                  Text(
-                    'Wonderful customer',
-                    style: kProfile,
-                  ),
-                ],
-              ),
-            ),
-            ContainerCart(
-              // height: 60,
-              child: Row(
-                children: [
-
-                  Text(
-                    'Email'  ,
-                    style: kSubTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(14),
-                    ),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(15),
-                  ),
-                  Text(
-                    'Wonderful customer@gmail.com',
-                    style: kProfile,
-                  ),
-                ],
-              ),
-            ),
-            ContainerCart(
-              // height: 60,
-              child: Row(
-                children: [
-
-                  Text(
-                    'Password'  ,
-                    style: kSubTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(14),
-                    ),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(15),
-                  ),
-                  Text(
-                    '*************',
-                    style: kProfile,
-                  ),
-                ],
-              ),
-            ),
-            ContainerCart(
-              // height: 60,
-              child: Row(
-                children: [
-                  Text(
-                    'Phone Number'  ,
-                    style: kSubTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(14),
-                    ),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(15),
-                  ),
-                  Text(
-                    '+970592724106',
-                    style: kProfile,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ): Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          ):Column(
             children: [
-              Text(
-                'يرجى منك ',
-                style:
-                kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+              SizedBox(
+                height: ScreenUtil().setHeight(25),
               ),
-              Button(
-                text: 'تسجيل الدخول',
-                onTap: ()=>kNavigatorPush(context, SignIn()),
+              ContainerCart(
+                // height: 60,
+                child: Row(
+                  children: [
+                    Text(
+                      'اسم'  ,
+                      style: kSubTitleSign.copyWith(
+                        fontSize: ScreenUtil().setSp(14),
+                      ),
+                    ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(15),
+                    ),
+                    Text(
+                      authProvider.showProfileModel.data.displayName,
+                      style: kProfile,
+                    ),
+                  ],
+                ),
+              ),
+              ContainerCart(
+                // height: 60,
+                child: Row(
+                  children: [
+
+                    Text(
+                      'ايميل'  ,
+                      style: kSubTitleSign.copyWith(
+                        fontSize: ScreenUtil().setSp(14),
+                      ),
+                    ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(15),
+                    ),
+                    Text(
+                      authProvider.showProfileModel.data.email,
+                      style: kProfile,
+                    ),
+                  ],
+                ),
+              ),
+              ContainerCart(
+                // height: 60,
+                child: Row(
+                  children: [
+
+                    Text(
+                      'كلمة السر'  ,
+                      style: kSubTitleSign.copyWith(
+                        fontSize: ScreenUtil().setSp(14),
+                      ),
+                    ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(15),
+                    ),
+                    Text(
+                      '*************',
+                      style: kProfile,
+                    ),
+                  ],
+                ),
+              ),
+              ContainerCart(
+                // height: 60,
+                child: Row(
+                  children: [
+                    Text(
+                      'رقم الموبايل'  ,
+                      style: kSubTitleSign.copyWith(
+                        fontSize: ScreenUtil().setSp(14),
+                      ),
+                    ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(15),
+                    ),
+                    Text(
+                      authProvider.showProfileModel.data.mobileNumber,
+                      style: kProfile,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/splash.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/string.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
@@ -77,7 +79,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ApiProvider(),
         ),
       ],
-      child: MaterialApp(
+      child: GetMaterialApp(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
@@ -89,7 +91,6 @@ class MyApp extends StatelessWidget {
         home: Builder(builder: (context) {
           ScreenUtil.init(context,
               designSize: Size(375, 812), allowFontScaling: true);
-
           return Splash(screen);
         }),
 

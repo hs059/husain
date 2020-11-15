@@ -25,7 +25,7 @@ class BrandSection extends StatelessWidget {
             ),),
             GestureDetector(
               onTap: () {
-                tabController.animateTo(3);
+                tabControllerConstant.animateTo(3);
               },
               child: Text('رؤية الكل',style: kSeeAll.copyWith(
                   fontFamily: 'Cairo-Regular'

@@ -22,7 +22,7 @@ showToast(String title){
 
 }
 
-TabController tabController;
+TabController tabControllerConstant;
 
 
 String currency ='رس' ;
@@ -33,7 +33,6 @@ String loginUrl = 'login';
 String forget_password = 'forget_password';
 String sign_out = 'sign_out';
 String change_password = 'change_password';
-String edit_profile = 'edit_profile';
 String reset_password = 'reset_password';
 String verify_registration = 'verify_registration';
 String get_categories = 'get_categories';
@@ -42,6 +41,8 @@ String get_latest_products = 'get_latest_products';
 String get_product_for_custom_category = 'get_product_for_custom_category';
 String get_latest_brands = 'get_latest_brands';
 String get_product_like = 'get_product_like';
+String show_profile = 'show_profile';
+String edit_profile = 'edit_profile';
 
 List<String> getSliderIndex = [
   'get_first_slider',

@@ -85,5 +85,10 @@ class UiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool loading = false ;
+  setLoading(bool value){
+    this.loading = value ;
+    notifyListeners() ;
+  }
 
 }
