@@ -1,4 +1,5 @@
 
+import 'package:beauty/components/model/categoryModel.dart' as categoryModel;
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
@@ -12,24 +13,13 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CategoryItem extends StatelessWidget {
- final String image ;
- final String name ;
- final int id ;
- CategoryItem({this.image, this.name, this.id});
+
+ final categoryModel.Data category ;
+ CategoryItem({this.category});
   @override
   Widget build(BuildContext context) {
 
     return GestureDetector(
-      onTap: ()async {
-      await Provider.of<ApiProvider>(context, listen: false)
-            .getSubCategory(id,context);
-        kNavigatorPush(context, SubCategory(id: id,
-          countSub:Provider.of<ApiProvider>(context,listen: false ).subCategory.date.length,
-        title: name,
-        ),
-        );
-      },
-
 
       child: Row(
         children: [
@@ -46,7 +36,7 @@ class CategoryItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CachedNetworkImage(
-                  imageUrl: image,
+                  imageUrl: category.image,
                   placeholder: (context, url) => LoaderGif1(),
                   errorWidget: (context, url, error) =>
                       Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
@@ -56,7 +46,7 @@ class CategoryItem extends StatelessWidget {
                 SizedBox(
                   height: ScreenUtil().setHeight(10),
                 ),
-                Text(name,style: kSectionText,),
+                Text(category.name,style: kSectionText,),
               ],
             ),
           ),

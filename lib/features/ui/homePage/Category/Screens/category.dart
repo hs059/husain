@@ -1,14 +1,18 @@
 
 
 import 'package:beauty/components/model/categoryModel.dart';
+import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/components/widgets/serchTextFormField.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
+import 'package:beauty/features/ui/homePage/Category/Screens/subCategory.dart';
 import 'package:beauty/features/ui/homePage/Category/widgets/categoryItem.dart';
+import 'package:beauty/value/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:get/get.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
@@ -47,17 +51,37 @@ class Category extends StatelessWidget {
                      ),
                    ):
                      GridView.builder(
-                      itemBuilder: (context, index) =>  AnimationCart(
-                        Grid: true,
-                        index: index,
-                        count:category.data.length ,
-                        duration: 1500,
-                        child: CategoryItem(
-                          image: category.data[index].image,
-                          name:category.data[index].name,
-                          id: category.data[index].id,
-                        ),
-                      ),
+                      itemBuilder: (context, index) {
+
+                       return  GestureDetector(
+                         onTap: ()async {
+                           SubCategoryModel subCategoryModel =    await Provider.of<ApiProvider>(context, listen: false)
+                               .getSubCategory(category.data[index].id,context);
+                                    print(subCategoryModel.date.toString());
+                           kNavigatorPush(context, SubCategory(
+                             subCategoryModel: subCategoryModel,
+                             categor:category.data[index] ,
+                           ),
+                           );
+                                    // if(subCategoryModel.date.isNotEmpty){
+                                    //
+                                    // }else{
+                                    //   Get.defaultDialog(title: 'سيتم اضافة الاصناف قريبا',middleText: 'و اضافة المنتجات الرائعة')
+                                    // ;
+                                    // }
+
+                         },
+                         child: AnimationCart(
+                            Grid: true,
+                            index: index,
+                            count:category.data.length ,
+                            duration: 1500,
+                            child: CategoryItem(
+                              category: category.data[index],
+                            ),
+                          ),
+                       );
+                      },
                       physics: const BouncingScrollPhysics(),
                       primary: false,
                       shrinkWrap: true,

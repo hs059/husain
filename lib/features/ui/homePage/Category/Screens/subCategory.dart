@@ -1,5 +1,6 @@
-import 'package:beauty/components/model/productModel.dart';
-import 'package:beauty/components/model/subCategoryModel.dart';
+import 'package:beauty/components/model/categoryModel.dart' as cat;
+import 'package:beauty/components/model/productModel.dart'as product;
+import 'package:beauty/components/model/subCategoryModel.dart' as subCategory;
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
@@ -14,11 +15,9 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
 
 class SubCategory extends StatefulWidget {
-  final int id;
-  final int countSub;
-  final String title;
-
-  SubCategory({this.id, this.countSub, this.title});
+  final  cat.Data  categor ;
+ final  subCategory.SubCategoryModel subCategoryModel ;
+  SubCategory({this.subCategoryModel, this.categor, });
 
   @override
   _SubCategoryState createState() => _SubCategoryState();
@@ -30,11 +29,11 @@ class _SubCategoryState extends State<SubCategory>
 
   int index = 0;
   String _character;
-  ProductModel subProductModel;
+  product.ProductModel subProductModel;
   @override
   void initState() {
     tabControllerSub =
-        TabController(initialIndex: 0, vsync: this, length: widget.countSub);
+        TabController(initialIndex: 0, vsync: this, length: widget.subCategoryModel.date.length);
     super.initState();
   }
 
@@ -60,7 +59,7 @@ class _SubCategoryState extends State<SubCategory>
             ),
           ),
           title: Text(
-            widget.title,
+            widget.categor.name,
             style: kSubCategoryText,
           ),
           actions: [
@@ -101,8 +100,8 @@ class _SubCategoryState extends State<SubCategory>
         ),
         body: Consumer<ApiProvider>(
           builder: (context, value, child) {
-            SubCategoryModel subCategory = value.subCategory;
-            if (subCategory.date.isEmpty) {
+            subCategory.SubCategoryModel subCategor = value.subCategory;
+            if (subCategor.date.isEmpty) {
               return Center(
                 child: Text(
                   'سيتم اضافتها قريبا',
@@ -122,9 +121,6 @@ class _SubCategoryState extends State<SubCategory>
                         onTap: (value) async{
                           index = value;
 
-                         // await Provider.of<ApiProvider>(context,listen: false)
-                         //      .getSubProduct(subCategory.date[value].id);
-
                         },
                         controller: tabControllerSub,
                         indicatorColor: kPinkDark,
@@ -134,7 +130,7 @@ class _SubCategoryState extends State<SubCategory>
                         labelColor: kPinkDark,
                         unselectedLabelColor: kGray,
                         tabs: [
-                          ...subCategory.date
+                          ...subCategor.date
                               .map(
                                 (e) => Tab(
                                   text: e.name,
@@ -150,17 +146,17 @@ class _SubCategoryState extends State<SubCategory>
                         child: TabBarView(
                           controller: tabControllerSub,
                           children: [
-                            ...subCategory.date
+                            ...subCategor.date
                                 .map(
-                                  (e) => FutureBuilder<ProductModel>(
+                                  (e) => FutureBuilder<product.ProductModel>(
                                     future: Provider.of<ApiProvider>(context)
                                         .getSubProduct(e.id),
                                     builder: (context, snapshot) {
                                       if (snapshot.hasData) {
-                                        ProductModel subProduct =
+                                        product.ProductModel subProduct =
                                             snapshot.data;
                                         if (subProduct.data.isNotEmpty) {
-                                          print(subCategory.date.length);
+                                          print(subCategor.date.length);
                                           return GridView.builder(
                                             primary: false,
                                             shrinkWrap: true,

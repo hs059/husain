@@ -1,8 +1,14 @@
+import 'package:beauty/components/model/lineItems.dart';
+import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
+import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
+import 'package:beauty/features/repo/api_client.dart';
+import 'package:beauty/features/repo/db_client.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/profileScreen.dart';
 import 'package:beauty/features/ui/homePage/screens/brands.dart';
+import 'package:beauty/services/sp_helper.dart';
 import 'package:provider/provider.dart';
 import 'Category/Screens/category.dart';
 import 'package:beauty/features/ui/homePage/screens/home.dart';
@@ -48,6 +54,24 @@ class _HomePageState extends State<HomePage>
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+
+                await    Provider.of<ApiProvider>(context,listen: false).createOrder( 'hussein', 'aaa', 'pal', 'ccc',
+                     [
+                      LineItems(
+                        productId: '29',
+                        quantity: '3',
+                      ).toJson(),
+                       LineItems(
+                        productId: '103',
+                        quantity: '5',
+                      ).toJson(),
+                    ]
+                );
+                print( Provider.of<ApiProvider>(context,listen: false).createOrderGet.toJson());
+              },
+            ),
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               controller: tabControllerConstant,

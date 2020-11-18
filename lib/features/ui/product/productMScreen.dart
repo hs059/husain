@@ -1,10 +1,12 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/model/productM.dart';
 import 'package:beauty/components/model/productModel.dart' as subProduct;
+import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
+import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/components/model/sectionModel.dart' as sectionP ;
 import 'package:beauty/features/ui/product/productRecomended.dart';
@@ -174,6 +176,11 @@ class ProductMScreen extends StatelessWidget {
                             Button(
                               text: 'إضافة إلى العربة',
                               onTap: () {
+                                int count = 0 ;
+                                ProductSql productSql =
+                                ProductSql(image: image, count: count++, name: name, price: price,idProduct: int.parse(id));
+                                Provider.of<DBProvider>(context, listen: false)
+                                    .insertNewProduct(productSql);
                                 showMaterialModalBottomSheet(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(

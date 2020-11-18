@@ -1,10 +1,12 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/model/productCart.dart';
 import 'package:beauty/components/model/productModel.dart' as subProduct;
+import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
+import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/components/model/sectionModel.dart' as sectionP ;
 import 'package:beauty/features/ui/product/productRecomended.dart';
@@ -153,9 +155,10 @@ class ProductSubScreen extends StatelessWidget {
                   Button(
                     text: 'إضافة إلى العربة',
                     onTap: () {
-                      ProductCartModel productCartModel = ProductCartModel(image: image,id:id);
-                      ProductCartModelList.productCart.productCartList.add( productCartModel);
-                      print(ProductCartModelList.productCart.productCartList[0].image);
+                      ProductSql productSql =
+                      ProductSql(image: image, count: 1, name: name, price: price.toString(),idProduct: id);
+                      Provider.of<DBProvider>(context, listen: false)
+                          .insertNewProduct(productSql);
                       showMaterialModalBottomSheet(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(

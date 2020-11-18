@@ -76,7 +76,7 @@ TextStyle  kDiscount = TextStyle(
   fontWeight: FontWeight.bold
 );
 TextStyle  kSectionText = TextStyle(
-  fontFamily: 'SFUIText-Regular',
+  // fontFamily: 'SFUIText-Regular',
       fontSize: ScreenUtil().setSp(16),
       color: kBlack2,
 );

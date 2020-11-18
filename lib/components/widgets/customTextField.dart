@@ -14,6 +14,7 @@ class CustomTextFormField extends StatefulWidget {
   final IconData iconData;
   final TextInputType textInputType;
   final bool password;
+  String textInitialValue;
   TextEditingController textEditingController ;
   Widget type;
   CustomTextFormField({
@@ -24,7 +25,8 @@ class CustomTextFormField extends StatefulWidget {
     this.onSaved,
     this.iconData,
     this.type,
-    this.textInputType = TextInputType.text,this.textEditingController
+    this.textInputType = TextInputType.text,this.textEditingController,
+    this.textInitialValue
   });
 
 
@@ -51,7 +53,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
       ),
       child: TextFormField(
-        controller: widget.textEditingController,
+        initialValue: widget.textInitialValue,
+        // controller: widget.textEditingController,
         validator: (value) => widget.validator(value),
         onSaved: (newValue) => widget.onSaved(newValue),
        onChanged: (value){widget.onSaved(value);},

@@ -1,3 +1,5 @@
+import 'package:beauty/components/model/createOrderGet.dart';
+import 'package:beauty/components/model/lineItems.dart';
 import 'package:beauty/components/model/productM.dart';
 import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/model/brandModel.dart';
@@ -7,6 +9,7 @@ import 'package:beauty/components/model/showProfileModel.dart';
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/repo/api_client.dart';
+import 'package:beauty/features/ui/homePage/profile/screens/myOrder.dart';
 import 'package:beauty/services/sp_helper.dart';
 
 class ApiRepository {
@@ -36,6 +39,7 @@ class ApiRepository {
 
   Future<SectionModel> getSection(String title) async {
     Map<String, dynamic> map = await ApiClient.apiClient.getSection(title);
+    print(map);
     SectionModel sectionModel = SectionModel.fromJson(map);
     return sectionModel;
   }
@@ -57,31 +61,58 @@ class ApiRepository {
     ProductModel productModel = ProductModel.fromJson(map);
     return productModel;
   }
+
   Future<ProductM> getProductDetails(int id) async {
     Map map = await ApiClient.apiClient.getProductDetails(id);
     ProductM productM = ProductM.fromJson(map);
     return productM;
   }
 
-  Future<ProductModel> getSearch(String search)async{
+  Future<ProductModel> getSearch(String search) async {
     Map map = await ApiClient.apiClient.getSearch(search);
-    ProductModel  productModel = ProductModel.fromJson(map);
+    ProductModel productModel = ProductModel.fromJson(map);
     return productModel;
   }
 
-  Future<ProductModel> getProductByCategory(int id)async{
+  Future<ProductModel> getProductByCategory(int id) async {
     Map map = await ApiClient.apiClient.getProductByCategory(id);
-    ProductModel  productModel = ProductModel.fromJson(map);
-    return productModel ;
+    ProductModel productModel = ProductModel.fromJson(map);
+    return productModel;
   }
 
-  Future<ShowProfileModel> showProfile()async{
-    Map map =await ApiClient.apiClient.showProfile();
-    if(map['code']){
+  Future<ShowProfileModel> showProfile() async {
+    Map map = await ApiClient.apiClient.showProfile();
+    if (map['code']) {
       ShowProfileModel showProfileModel = ShowProfileModel.fromJson(map);
-      return showProfileModel ;
-    }else{
-      return null ;
-      }
+      return showProfileModel;
+    } else {
+      return null;
+    }
   }
+
+  //
+ Future<CreateOrderGet> createOrder(
+    String name,
+    String address1,
+    String country,
+    String city,
+    List<Map> product,
+  ) async {
+    String token = await SPHelper.spHelper.getToken();
+    int UserId = await SPHelper.spHelper.getUser();
+    Map map = await ApiClient.apiClient
+        .createOrder(UserId, token, name, address1, country, city, product);
+    if(map['code']){
+      CreateOrderGet createOrderGet = CreateOrderGet.fromJson(map);
+
+      return createOrderGet ;
+    }
+
+  }
+
+  getAllOrder(MyOrder myOrder)async{
+
+
+  }
+
 }

@@ -1,9 +1,9 @@
-class ProductCartModelList {
-  ProductCartModelList._();
-
-  static ProductCartModelList productCart = ProductCartModelList._();
-  List<ProductCartModel> productCartList;
-}
+// class ProductCartModelList {
+//   ProductCartModelList._();
+//
+//   static ProductCartModelList productCart = ProductCartModelList._();
+//   List<ProductCartModel> productCartList;
+// }
 
 class ProductCartModel {
   String image;
@@ -16,3 +16,4 @@ class ProductCartModel {
   }
 
 }
+

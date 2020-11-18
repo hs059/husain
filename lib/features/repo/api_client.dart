@@ -1,3 +1,4 @@
+import 'package:beauty/copyPast..dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/constant.dart';
@@ -20,8 +21,8 @@ class ApiClient {
     }
   }
 
-  Future<Map> registerUser(String fullName, String mobile, String password,
-      String email) async {
+  Future<Map> registerUser(
+      String fullName, String mobile, String password, String email) async {
     await initApi();
 
     FormData data = FormData.fromMap(
@@ -75,8 +76,8 @@ class ApiClient {
   }
 
 //////////////////////////////////////////////////////////////////////////////////
-  Future<Map> resetPassword(int id, String token, String emailPassword,
-      String newPassword) async {
+  Future<Map> resetPassword(
+      int id, String token, String emailPassword, String newPassword) async {
     await initApi();
     FormData data = FormData.fromMap({
       'user_id': id,
@@ -99,14 +100,14 @@ class ApiClient {
       data: data,
     );
 
-    print( response.data);
+    print(response.data);
 
     return response.data;
   }
 
   /////////////////////////////////////////////////////////////////////////////////
-  Future<Map> changePassword(String token, String id, String oldPassword,
-      String newPassword) async {
+  Future<Map> changePassword(
+      String token, String id, String oldPassword, String newPassword) async {
     await initApi();
     String token = await SPHelper.spHelper.getToken();
     int idUser = await SPHelper.spHelper.getUser();
@@ -161,21 +162,16 @@ class ApiClient {
       FormData data = FormData.fromMap({
         'user_id': id,
         'token': token,
-      }
-      );
-      print( ' token : $token user_id : $id');
+      });
+      print(' token : $token user_id : $id');
 
-      Response response = await dio.post(
-          baseUrl + show_profile,
-          data: data
-      );
+      Response response = await dio.post(baseUrl + show_profile, data: data);
       print(response.data);
       return response.data;
     } catch (e) {
       print(e);
     }
   }
-
 
 //ToDo:Verification
 
@@ -211,7 +207,7 @@ class ApiClient {
     try {
       await initApi();
       Response response =
-      await dio.get(baseUrl + get_sub_categories + id.toString());
+          await dio.get(baseUrl + get_sub_categories + id.toString());
       return response.data;
     } catch (e) {
       print(e);
@@ -232,9 +228,7 @@ class ApiClient {
       print(response.statusCode);
       return response.data;
     } catch (e) {
-      if (e is DioError) {
-
-      }
+      if (e is DioError) {}
     }
   }
 
@@ -244,11 +238,13 @@ class ApiClient {
       Response response = await dio.get(
         baseUrl + title,
       );
-      print(response.statusCode);
-
-      return response.data;
+      print(response.data);
+      // print(response.statusCode==200);
+      if (response.statusCode == 200) {
+        return response.data;
+      }
     } catch (e) {
-      print(e);
+      if (e.response.statusCode == 404) {}
     }
   }
 
@@ -316,8 +312,7 @@ class ApiClient {
       if (response.statusCode == 200) {
         print(response.data);
         return response.data;
-      }
-      else {
+      } else {
         throw Exception('error');
       }
     } on DioError catch (e) {
@@ -325,13 +320,11 @@ class ApiClient {
     }
   }
 
-
   Future getProductByBrand(int id) async {
     try {
       await initApi();
-      Response response = await dio.get(
-          baseUrl + 'get_products_by_brand?brand_id=$id&user_id='
-      );
+      Response response = await dio
+          .get(baseUrl + 'get_products_by_brand?brand_id=$id&user_id=');
       return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {
@@ -346,9 +339,7 @@ class ApiClient {
   Future getProductDetails(int id) async {
     try {
       await initApi();
-      Response response = await dio.get(
-          baseUrl + 'get_product?id=$id&user_id'
-      );
+      Response response = await dio.get(baseUrl + 'get_product?id=$id&user_id');
       return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {
@@ -363,9 +354,7 @@ class ApiClient {
   Future onBoarding() async {
     try {
       await initApi();
-      Response response = await dio.get(
-          baseUrl + get_front_page_slides
-      );
+      Response response = await dio.get(baseUrl + get_front_page_slides);
       return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {
@@ -376,12 +365,11 @@ class ApiClient {
       }
     }
   }
+
   Future getPrivacyPolicy() async {
     try {
       await initApi();
-      Response response = await dio.get(
-          baseUrl + get_privacy_policy
-      );
+      Response response = await dio.get(baseUrl + get_privacy_policy);
       print(response.data);
       return response.data;
     } on DioError catch (e) {
@@ -391,6 +379,71 @@ class ApiClient {
         print(e.message);
         print(e.request);
       }
+    }
+  }
+
+  Future createOrder(
+    int userId,
+    String token,
+    String name,
+    String address1,
+    String country,
+    String city,
+    List<Map> product,
+  ) async {
+    try {
+      await initApi();
+
+      FormData data = FormData.fromMap({
+        "user_id": userId,
+        "token": token,
+        "shipping": {
+          "first_name": name,
+          "last_name": "last_name",
+          "address_1": address1,
+          "address_2": "-",
+          "country": country,
+          "state": "Gaza Strip",
+          "city": city
+        },
+        "line_items": product
+      });
+      Response response = await dio.post(baseUrl + create_order, data: data);
+      if (response.statusCode == 200) {
+        print(response.data);
+        return response.data;
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
+    }
+  }
+
+
+  getAllOrder() async {
+    try {
+      await initApi() ;
+      String token = await SPHelper.spHelper.getToken();
+      int idUser = await SPHelper.spHelper.getUser();
+      String id = idUser.toString();
+      FormData data = FormData.fromMap({
+        "user_id":id,
+        "token":token,
+      });
+      Response response =await dio.post(
+        baseUrl + get_orders ,
+        data: data
+      );
+      if(response.statusCode == 200){
+        print(response.data);
+      return response.data ;
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }

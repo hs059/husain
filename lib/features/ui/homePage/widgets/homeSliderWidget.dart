@@ -1,6 +1,7 @@
 
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/model/sliderModel.dart';
+import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
@@ -14,8 +15,8 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
 
 class HomeSliderWidget extends StatefulWidget {
-int num  ;
-HomeSliderWidget({this.num});
+final int num  ;
+HomeSliderWidget({this.num = 1});
   @override
   _HomeSliderWidgetState createState() => _HomeSliderWidgetState();
 }
@@ -62,7 +63,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                     int index = slider.data.indexOf(url);
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(
+                      decoration: BoxDecoration(color: kBorder,
                         //toDo:color
                         borderRadius: BorderRadius.circular(7),
                         image: DecorationImage(
@@ -72,41 +73,53 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                           ),
                             fit: BoxFit.contain),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            slider.data[index].title,
-                            style:kBannerTitle,
-                            textAlign: TextAlign.start,
-                            overflow: TextOverflow.fade,
-                            maxLines: 3,
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(20),
-                          ),
-                          Container(
-                            constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(185),),
-                            child: Text(
-                              slider.data[index].content,
-                              style: kBannerSubTitle,
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.fade,
-                            ),
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(20),
-                          ),
-                         Row(
-                           children: [
-                             //Todo:push with product ID
-                             Container(
-                                 child: Button(text: '  Shop Now  ', onTap: (){
+                      child: Stack(
+                        children: [
+                          // CachedNetworkImage(
+                          //     imageUrl: slider.data[index].imageUrl,
+                          //     placeholder: (context, url) => LoaderGif1(),
+                          //     errorWidget: (context, url, error) =>
+                          //         Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+                          //     height: ScreenUtil().setHeight(176),
+                          //     fit: BoxFit.contain
+                          // ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                slider.data[index].title,
+                                style:kBannerTitle,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.fade,
+                                maxLines: 3,
+                              ),
+                              SizedBox(
+                                height: ScreenUtil().setHeight(20),
+                              ),
+                              Container(
+                                constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(185),),
+                                child: Text(
+                                  slider.data[index].content,
+                                  style: kBannerSubTitle,
+                                  textAlign: TextAlign.start,
+                                  overflow: TextOverflow.fade,
+                                ),
+                              ),
+                              SizedBox(
+                                height: ScreenUtil().setHeight(20),
+                              ),
+                             Row(
+                               children: [
+                                 //Todo:push with product ID
+                                 Container(
+                                     child: Button(text: '  Shop Now  ', onTap: (){
 
-                                 }),
+                                     }),
+                                 ),
+                               ],
                              ),
-                           ],
-                         ),
+                            ],
+                          ),
                         ],
                       ),
                     );

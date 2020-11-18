@@ -10,19 +10,20 @@ import 'package:flutter_svg/svg.dart';
 
 
 class DialogConfirmOrder extends StatelessWidget {
+ final  Function onTap ;
+ DialogConfirmOrder({this.onTap});
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(10.0))),
       content: Container(
         child: Wrap(
           children: [
             TitleSubTitle(
-              title: 'Order Success',
+              title: 'تم الطلب بنجاح',
               subTitle:
-              'Your order is being processed by the system, you can see the progress at',
+              'تتم معالجة طلبك بواسطة النظام ، يمكنك رؤية التقدم في',
             ),
             SizedBox(
               height: ScreenUtil().setHeight(10),
@@ -36,9 +37,7 @@ class DialogConfirmOrder extends StatelessWidget {
             ),
             Container(
               margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-              child: Button(text: 'Done', onTap: (){
-                kNavigatorPushAndRemoveUntil(context, HomePage());
-              }),
+              child: Button(text: 'تأكيد الطلب', onTap: onTap),
             )
           ],
         ),

@@ -1,5 +1,6 @@
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/splash.dart';
+import 'package:beauty/features/ui/splaxh222.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/string.dart';
@@ -14,6 +15,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
+import 'features/provider/db_provider.dart';
 import 'features/provider/uiProvider.dart';
 
 import 'features/ui/homePage/cart/screens/addnewAddress.dart';
@@ -27,6 +29,7 @@ import 'features/ui/signUI/screens/signUp.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ConnectivityService();
 
   await precachePicture(
       ExactAssetPicture(
@@ -77,6 +80,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<ApiProvider>(
           create: (context) => ApiProvider(),
+        ),
+        ChangeNotifierProvider<DBProvider>(
+          create: (context) => DBProvider(),
         ),
       ],
       child: GetMaterialApp(

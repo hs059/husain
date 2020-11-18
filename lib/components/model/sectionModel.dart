@@ -62,7 +62,6 @@ class Products {
   bool isFavourited;
   String stockCode;
   List<Reviews> reviews;
-
   Products(
       {this.id,
         this.name,

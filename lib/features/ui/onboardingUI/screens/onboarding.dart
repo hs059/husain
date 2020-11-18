@@ -51,7 +51,7 @@ class _OnboardingState extends State<Onboarding> {
                   children: <Widget>[
                     DetailsOnboarding(
                       image: 'assets/svg/on_boading1.svg',
-                      title: 'Explore many products',
+                      title: 'تصفح الكثير من المنتجات',
                       subTitle:
                           'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
                     ),

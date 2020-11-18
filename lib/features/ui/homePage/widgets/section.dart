@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 
 class Section extends StatelessWidget {
   final int num ;
-  Section({ this.num});
+  Section({this.num = 1});
   @override
   Widget build(BuildContext context) {
     return Consumer<ApiProvider>(
@@ -36,7 +36,6 @@ class Section extends StatelessWidget {
                     fontFamily: 'Cairo-Regular'
                   ),),
                 ),
-
               ],
             ),
             SizedBox(
@@ -64,7 +63,6 @@ class Section extends StatelessWidget {
                       imagePath: product.image,
                       prize:product.price,
                       rating: 4.5,
-                      onCart: true,
                       product: product,
                     ),
                   );
@@ -81,7 +79,6 @@ class Section extends StatelessWidget {
             primary: false,
             shrinkWrap: true,
             itemCount:10 ,
-            
             itemBuilder: (context, index) {
               return  Container(
                 width: ScreenUtil().setWidth(200),

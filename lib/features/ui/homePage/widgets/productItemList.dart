@@ -1,8 +1,11 @@
+import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/model/sectionModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/product/productSubScreen.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
@@ -11,6 +14,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -21,7 +25,6 @@ class ProductItemList extends StatelessWidget {
   final String prize;
   final bool fav;
   final Products product ;
-  final bool onCart;
 
   ProductItemList(
       {this.title,
@@ -29,11 +32,17 @@ class ProductItemList extends StatelessWidget {
       this.rating,
       this.prize,
       this.fav,
-      this.onCart = false,
-        this.product, });
+      this.product, });
 
   @override
   Widget build(BuildContext context) {
+    ProductSql productSql =  ProductSql(
+      count: 1,
+      idProduct: product.id,
+      price: product.price,
+      image: product.image,
+      name: product.name,
+    );
     return Row(
       children: [
         Container(
@@ -56,9 +65,12 @@ class ProductItemList extends StatelessWidget {
                       Center(
                         child: GestureDetector(
                           onTap: () {
-                            // print(product.id);
-                            // Provider.of<ApiProvider>(context,listen: false).getProductDetails(product.id);
-                            kNavigatorPush(context, ProductSubScreen(productS: product,section: true,));
+                            if (ConnectivityService.connectivityStatus ==
+                                ConnectivityHStatus.online) {
+                              kNavigatorPush(context, ProductSubScreen(productS: product,section: true,));
+                            }else{
+                              Get.defaultDialog(title: 'رسالة تحذير',middleText: 'لايوجد اتصال بالانترنت',);
+                            }
                           },
                           child: CachedNetworkImage(
                               imageUrl: imagePath,
@@ -131,17 +143,22 @@ class ProductItemList extends StatelessWidget {
                               ),
                               GestureDetector(
                                 //Todo: ID
-                                onTap: () {},
+                                onTap: () {
+
+                                  Provider.of<DBProvider>(context,listen: false).insertNewProduct(
+                                      productSql
+                                  );
+                                },
                                 child: Container(
                                   height: ScreenUtil().setHeight(30),
                                   width: ScreenUtil().setWidth(30),
-                                  padding: EdgeInsets.all(onCart ? 5 : 0),
+                                  padding: EdgeInsets.all(productSql.onCart ? 5 : 0),
                                   decoration: BoxDecoration(
-                                      color: onCart ? kPinkLight : Colors.white,
+                                      color: productSql.onCart ? kPinkLight : Colors.white,
                                       borderRadius: BorderRadius.circular(8)),
                                   child: SvgPicture.asset(
                                     'assets/svg/cardIcon2.svg',
-                                    color: onCart ? Colors.white : kPinkLight,
+                                    color: productSql.onCart ? Colors.white : kPinkLight,
                                   ),
                                 ),
                               ),
