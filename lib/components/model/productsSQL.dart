@@ -5,7 +5,7 @@ class ProductSql {
   String image;
   String name;
   String price;
-  int count;
+  int count ;
   int id;
   int idProduct ;
   bool onCart ;
@@ -14,7 +14,7 @@ class ProductSql {
     this.image,
     this.name,
     this.price,
-    this.count,
+    this.count = 1,
     this.idProduct,
     this.onCart = false,
   });

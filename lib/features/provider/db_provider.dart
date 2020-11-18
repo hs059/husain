@@ -16,51 +16,42 @@ class DBProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-
   insertNewProduct(ProductSql productSql) async {
     setAllProducts();
-    bool pppp = allProducts.any( (element) => element.idProduct == productSql.idProduct );
-    print(pppp);
-    print(pppp);
-    if(!pppp){
+    bool found = allProducts.any( (element) => element.idProduct == productSql.idProduct );
+    if(!found){
       await DBRepository.dbRepository.insertNewProduct(productSql);
       toggleOnCart(productSql);
-
-      print(productSql.toJson());
+      print(productSql.count);
       setAllProducts();
     }else{
+      print('productSql.count   =${productSql.count }');
+      productSql.count++ ;
       updateProduct(
         ProductSql(
           idProduct: productSql.idProduct,
           price: productSql.price,
-          count: productSql.count+1,
+          count: productSql.count,
           name:  productSql.name,
           image: productSql.image,
         ),
       );
     }
-
   }
-
   deleteProduct(ProductSql productSql) async {
     await DBRepository.dbRepository.deleteProduct(productSql);
     setAllProducts();
   }
-
   deleteAllProduct() async {
     await DBRepository.dbRepository.deleteAllProduct();
     setAllProducts();
   }
-
   updateProduct(ProductSql productSql)async{
     await DBRepository.dbRepository.updateProduct( productSql) ;
     setAllProducts();
   }
-
   toggleOnCart(ProductSql productSql)async{
     await DBRepository.dbRepository.toggleOnCart(productSql);
     setAllProducts();
-
   }
-
 }

@@ -33,16 +33,19 @@ class ProductItemList extends StatelessWidget {
       this.prize,
       this.fav,
       this.product, });
+  getproduct(){
+  return  ProductSql(
+        idProduct: product.id,
+        price: product.price,
+        image: product.image,
+        name: product.name,
+
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    ProductSql productSql =  ProductSql(
-      count: 1,
-      idProduct: product.id,
-      price: product.price,
-      image: product.image,
-      name: product.name,
-    );
+
     return Row(
       children: [
         Container(
@@ -146,19 +149,19 @@ class ProductItemList extends StatelessWidget {
                                 onTap: () {
 
                                   Provider.of<DBProvider>(context,listen: false).insertNewProduct(
-                                      productSql
+                                      getproduct()
                                   );
                                 },
                                 child: Container(
                                   height: ScreenUtil().setHeight(30),
                                   width: ScreenUtil().setWidth(30),
-                                  padding: EdgeInsets.all(productSql.onCart ? 5 : 0),
+                                  padding: EdgeInsets.all(getproduct().onCart ? 5 : 0),
                                   decoration: BoxDecoration(
-                                      color: productSql.onCart ? kPinkLight : Colors.white,
+                                      color: getproduct().onCart ? kPinkLight : Colors.white,
                                       borderRadius: BorderRadius.circular(8)),
                                   child: SvgPicture.asset(
                                     'assets/svg/cardIcon2.svg',
-                                    color: productSql.onCart ? Colors.white : kPinkLight,
+                                    color: getproduct().onCart ? Colors.white : kPinkLight,
                                   ),
                                 ),
                               ),

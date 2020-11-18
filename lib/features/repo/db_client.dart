@@ -65,10 +65,17 @@ class DBClient {
     try {
        await initDatabase();
       List<Map<String, dynamic>> results = await database.query(productTable);
+
       return results;
     } catch (error) {
       throw 'error is $error';
     }
+  }
+  Future<Map>getOneProduct(int productId) async{
+    await initDatabase();
+    List<Map<String, dynamic>> maps = await database.query(productTable,where: '$productIdColumn=?',whereArgs: [productId]);
+    Map<String, dynamic> map = maps.first;
+    return map;
   }
 
   Future<int> deleteProduct(int id) async {
@@ -84,7 +91,23 @@ class DBClient {
   Future<int> updateProduct(int id,Map<String,dynamic> map)async{
     try{
     await initDatabase();
-      int rows =await database.update(productTable,map,where: '$idColumn = ?',whereArgs: [id] ) ;
+    int rows =await database.update(productTable,map,where: '$productIdColumn = ?',whereArgs: [id] ) ;
+    print(rows);
+      return rows ;
+
+    }catch (error){
+      throw 'error is $error';
+    }
+
+  }
+  Future<int> updateProduct2(int id,Map<String,dynamic> map)async{
+    try{
+    await initDatabase();
+    int productId = map[productIdColumn];
+    Map map2 = await getOneProduct(productId);
+    map2[productCountColumn] = map2[productCountColumn]++;
+    int rows =await database.update(productTable,map2,where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']] ) ;
+    print(rows);
       return rows ;
 
     }catch (error){

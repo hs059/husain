@@ -27,7 +27,7 @@ class Cart extends StatelessWidget {
         appBar: appBarCart(title: 'Cart'),
         body: Consumer<DBProvider>(
           builder: (context, value, child) {
-            value.setAllProducts();
+            // value.setAllProducts();
             List<ProductSql> allProduct =  value.allProducts ;
             if(allProduct==null || allProduct.isEmpty ){
           return

@@ -446,4 +446,40 @@ class ApiClient {
       print(e);
     }
   }
+
+
+  Future<Map> addNewAddress(
+      String type,
+      String phone,
+      String address,
+      String houseNumber,
+      String apartment,
+      bool IsDefault,
+
+      )async{
+   await initApi();
+   String token = await SPHelper.spHelper.getToken();
+   int idUser = await SPHelper.spHelper.getUser();
+   FormData data  = FormData.fromMap(
+     {
+       'user_id':idUser,
+       'token':token,
+       'type':type,
+       'phone':phone,
+       'address':address,
+       'house_number':houseNumber,
+       'apartment':apartment,
+       'IsDefault':IsDefault,
+     }
+     );
+   Response response = await dio.post(
+     baseUrl + add_address ,
+     data: data
+   );
+        if(response.statusCode==200){
+          print(response.data);
+          return response.data;
+        }
+  }
+
 }

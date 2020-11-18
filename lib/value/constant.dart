@@ -47,6 +47,7 @@ String get_front_page_slides = 'get_front_page_slides';
 String get_privacy_policy = 'get_privacy_policy';
 String create_order = 'create_order';
 String get_orders = 'get_orders';
+String add_address = 'add_address';
 
 List<String> getSliderIndex = [
   'get_first_slider',

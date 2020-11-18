@@ -37,7 +37,7 @@ class DBRepository {
 
   Future<int> updateProduct(ProductSql productSql) async {
     int x = await DBClient.dbClient
-        .updateProduct(productSql.id, productSql.toJson());
+        .updateProduct(productSql.idProduct, productSql.toJson());
     return x;
   }
 

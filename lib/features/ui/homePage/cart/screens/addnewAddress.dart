@@ -1,8 +1,11 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/string.dart';
@@ -18,6 +21,8 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 
 class AddNewAddress extends StatefulWidget {
+  bool isDefault = false;
+
   @override
   _AddNewAddressState createState() => _AddNewAddressState();
 }
@@ -26,6 +31,14 @@ class _AddNewAddressState extends State<AddNewAddress> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
   String _currentAddress;
+  String name;
+
+  String houseNum;
+
+  String apartment;
+
+  String phoneNum;
+
 
   @override
   void initState() {
@@ -66,233 +79,283 @@ class _AddNewAddressState extends State<AddNewAddress> {
   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
+
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
     UiProvider uiProviderFalse =
         Provider.of<UiProvider>(context, listen: false);
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: appBarCart(title: 'Add new Address'),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    height: ScreenUtil().setHeight(58),
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(20),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Color(0xffF5F8FD),
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(width: 1.0, color: kBorder),
-                    ),
-                    child: DropdownButtonHideUnderline(
-                      child: DropdownButton(
-                        value: uiProvider.addressDropDown,
-                        isExpanded: true,
-                        items: <DropdownMenuItem>[
-                          ...addressIcon
-                              .map(
-                                (e) => DropdownMenuItem(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: ScreenUtil().setWidth(30)),
-                                    child: SvgPicture.asset(
-                                      'assets/svg/$e.svg',
-                                      fit: BoxFit.contain,
-                                      color: Color(0xff121924),
-                                      width: ScreenUtil().setWidth(18),
-                                      height: ScreenUtil().setHeight(18),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: appBarCart(title: 'إضافة عنوان جديد'),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Container(
+                      height: ScreenUtil().setHeight(58),
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(20),
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color(0xffF5F8FD),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(width: 1.0, color: kBorder),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          value: uiProvider.addressDropDown,
+                          isExpanded: true,
+                          items: <DropdownMenuItem>[
+                            ...addressIcon
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          right: ScreenUtil().setWidth(30)),
+                                      child: SvgPicture.asset(
+                                        'assets/svg/$e.svg',
+                                        fit: BoxFit.contain,
+                                        color: Color(0xff121924),
+                                        width: ScreenUtil().setWidth(18),
+                                        height: ScreenUtil().setHeight(18),
+                                      ),
                                     ),
+                                    value: e,
                                   ),
-                                  value: e,
-                                ),
-                              )
-                              .toList()
-                        ],
+                                )
+                                .toList()
+                          ],
+                          onChanged: (value) {
+                            uiProviderFalse.setAddressDropDown(value);
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: ScreenUtil().setWidth(10),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: ScreenUtil().setHeight(20),
+                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Color(0xffF5F8FD),
+                        borderRadius: BorderRadius.circular(8.0),
+                        border:
+                            Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                      ),
+                      child: TextFormField(
+                        cursorColor: Colors.grey,
                         onChanged: (value) {
-                          uiProviderFalse.setAddressDropDown(value);
+                          this.name = value;
                         },
+                        decoration: InputDecoration(
+                          hintText: 'Name',
+                          hintStyle:
+                              TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                          border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color(0xffF5F8FD),
+                            width: ScreenUtil().setWidth(2),
+                          )),
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color(0xffF5F8FD),
+                            width: ScreenUtil().setWidth(2),
+                          )),
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                            color: Color(0xffF5F8FD),
+                            width: ScreenUtil().setWidth(0.5),
+                          )),
+                        ),
                       ),
+                    ),
+                  )
+                ],
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(20),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Color(0xffF5F8FD),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                ),
+                child: ListTile(
+                  title: Text(
+                    _currentAddress ?? '',
+                    style: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                  ),
+                  trailing: GestureDetector(
+                    onTap: () async {
+                      await _getAddressFromLatLng();
+                      print(_currentAddress);
+                    },
+                    child: SvgPicture.asset(
+                      'assets/svg/locationBtn.svg',
+                      height: ScreenUtil().setHeight(32),
+                      width: ScreenUtil().setWidth(32),
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: ScreenUtil().setWidth(10),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(20),
                 ),
-                Expanded(
-                  flex: 3,
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(20),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Color(0xffF5F8FD),
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
-                    ),
-                    child: TextFormField(
-                      cursorColor: Colors.grey,
-                      decoration: InputDecoration(
-                        hintText: 'Name',
-                        hintStyle:
-                            TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                        border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Color(0xffF5F8FD),
-                          width: ScreenUtil().setWidth(2),
-                        )),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Color(0xffF5F8FD),
-                          width: ScreenUtil().setWidth(2),
-                        )),
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                          color: Color(0xffF5F8FD),
-                          width: ScreenUtil().setWidth(0.5),
-                        )),
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                top: ScreenUtil().setHeight(20),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Color(0xffF5F8FD),
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
-              ),
-              child: ListTile(
-                title:Text(
-                  _currentAddress ?? '',
-                  style: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                ) ,
-                trailing: GestureDetector(
-                  onTap: () async {
-                    await _getAddressFromLatLng();
-                    print(_currentAddress);
-                  },
-                  child: SvgPicture.asset(
-                    'assets/svg/locationBtn.svg',
-                    height: ScreenUtil().setHeight(32),
-                    width: ScreenUtil().setWidth(32),
-                    fit: BoxFit.contain,
-                  ),
-                ),              ),
-            ),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Color(0xffF5F8FD),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                ),
+                child: TextFormField(
+                  onChanged: (value) {
+                    this.houseNum = value;
+                    setState(() {
 
-            Container(
-              margin: EdgeInsets.only(
-                top: ScreenUtil().setHeight(20),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Color(0xffF5F8FD),
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
-              ),
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                  hintText: 'House number and street ',
-                  hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                  border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(2),
-                  )),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(2),
-                  )),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(0.5),
-                  )),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                top: ScreenUtil().setHeight(20),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-              decoration: BoxDecoration(
-                color: Color(0xffF5F8FD),
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
-              ),
-              child: TextFormField(
-                cursorColor: Colors.grey,
-                decoration: InputDecoration(
-                  hintText: 'Apartment, suite, unit, etc. (my choice) ',
-                  hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                  border: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(2),
-                  )),
-                  focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(2),
-                  )),
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: Color(0xffF5F8FD),
-                    width: ScreenUtil().setWidth(0.5),
-                  )),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                top: ScreenUtil().setHeight(20),
-              ),
-              decoration: BoxDecoration(
-                color: Color(0xffF5F8FD),
-                borderRadius: BorderRadius.circular(8.0),
-                border: Border.all(width: 1.0, color: kBorder),
-              ),
-              child: IntlPhoneField(
-                decoration: InputDecoration(
-                  hintText: 'Phone Number',
-                  hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: kBorder, width: 1.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: kBorder, width: 1.0),
+                    });
+                  },
+                  cursorColor: Colors.grey,
+                  decoration: InputDecoration(
+                    hintText: 'House number and street ',
+                    hintStyle:
+                        TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color(0xffF5F8FD),
+                      width: ScreenUtil().setWidth(2),
+                    )),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color(0xffF5F8FD),
+                      width: ScreenUtil().setWidth(2),
+                    )),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color(0xffF5F8FD),
+                      width: ScreenUtil().setWidth(0.5),
+                    )),
                   ),
                 ),
-                initialCountryCode: 'SA',
-                showDropdownIcon: false,
-                onChanged: (phone) {
-                  print(phone.completeNumber);
-                },
               ),
-            ),
-            ListTile(
-              leading: Check(),
-              title: Text(
-                'Default Delivery Address',
-                style: kSectionText,
+              Container(
+                margin: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(20),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Color(0xffF5F8FD),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                ),
+                child: TextFormField(
+                  onChanged: (value) {
+                    this.apartment = value;
+                    setState(() {
+
+                    });
+                  },
+                  cursorColor: Colors.grey,
+                  decoration: InputDecoration(
+                    hintText: 'Apartment,  ',
+                    hintStyle:
+                        TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                    border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color(0xffF5F8FD),
+                      width: ScreenUtil().setWidth(2),
+                    )),
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color(0xffF5F8FD),
+                      width: ScreenUtil().setWidth(2),
+                    )),
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                      color: Color(0xffF5F8FD),
+                      width: ScreenUtil().setWidth(0.5),
+                    )),
+                  ),
+                ),
               ),
-            ),
-            Button(text: 'Save', onTap: null),
-          ],
+              Container(
+                margin: EdgeInsets.only(
+                  top: ScreenUtil().setHeight(20),
+                ),
+                decoration: BoxDecoration(
+                  color: Color(0xffF5F8FD),
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(width: 1.0, color: kBorder),
+                ),
+                child: IntlPhoneField(
+                  validator: authProvider.validatePhone,
+                  onSaved: (newValue) {
+                    print(newValue.completeNumber);
+                    authProvider.saveMobile(newValue.completeNumber);
+                  },
+                  autoValidate: false,
+                  decoration: InputDecoration(
+                    hintText: 'رقم الهاتف',
+                    hintStyle:
+                        TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: kBorder, width: 1.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: kBorder, width: 1.0),
+                    ),
+                  ),
+                  initialCountryCode: 'SA',
+                  showDropdownIcon: false,
+                  onChanged: (phone) {
+                    print(phone.completeNumber);
+                    this.phoneNum = phone.completeNumber;
+                  },
+                ),
+              ),
+              ListTile(
+                leading: Check(value: widget.isDefault,),
+                title: Text(
+                  'عنوان التوصيل الافتراضي',
+                  style: kSectionText,
+                ),
+              ),
+              Button(
+                  text: 'Save',
+                  onTap: () async{
+                    print('addressDropDown = ${Provider.of<UiProvider>(context, listen: false)
+                        .addressDropDown} phoneNum = $phoneNum _currentAddress = $_currentAddress  houseNum =$houseNum  apartment = $apartment isDefault = ${widget.isDefault} ' );
+                    Provider.of<ApiProvider>(context, listen: false)
+                        .addNewAddress(
+                            Provider.of<UiProvider>(context, listen: false)
+                                .addressDropDown,
+                            phoneNum,
+                            _currentAddress.toString(),
+                            houseNum,
+                            apartment,
+                            widget.isDefault);
+
+                 String token = await   SPHelper.spHelper.getToken();
+                 print(token);
+                  }),
+            ],
+          ),
         ),
       ),
     );
@@ -300,36 +363,41 @@ class _AddNewAddressState extends State<AddNewAddress> {
 }
 
 class Check extends StatefulWidget {
+  bool value;
+
+  Check({this.value = false});
+
   @override
   _CheckState createState() => _CheckState();
 }
 
 class _CheckState extends State<Check> {
-  bool _value = false;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         setState(() {
-          _value = !_value;
+          widget.value = !widget.value;
         });
       },
       child: Container(
-        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          border: Border.all(color: kPinkLight, width: 2),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(2.0),
-          child: _value
+          padding: const EdgeInsets.all(5),
+          child: widget.value
               ? Icon(
-            Icons.check,
-            size: 20.0,
-            color: Colors.white,
-          )
+                  Icons.circle,
+                  size: 20.0,
+                  color: kPinkLight,
+                )
               : Icon(
-            Icons.check_box_outline_blank,
-            size: 20.0,
-            color: Colors.blue,
-          ),
+                  Icons.circle,
+                  size: 20.0,
+                  color: Colors.white,
+                ),
         ),
       ),
     );

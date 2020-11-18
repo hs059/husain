@@ -54,24 +54,11 @@ class _HomePageState extends State<HomePage>
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            floatingActionButton: FloatingActionButton(
-              onPressed: () async {
-
-                await    Provider.of<ApiProvider>(context,listen: false).createOrder( 'hussein', 'aaa', 'pal', 'ccc',
-                     [
-                      LineItems(
-                        productId: '29',
-                        quantity: '3',
-                      ).toJson(),
-                       LineItems(
-                        productId: '103',
-                        quantity: '5',
-                      ).toJson(),
-                    ]
-                );
-                print( Provider.of<ApiProvider>(context,listen: false).createOrderGet.toJson());
-              },
-            ),
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () async {
+            //
+            //   },
+            // ),
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               controller: tabControllerConstant,

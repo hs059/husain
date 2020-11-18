@@ -2,6 +2,7 @@ import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/createOrderGet.dart';
 import 'package:beauty/components/model/lineItems.dart';
+import 'package:beauty/components/model/myOrderModel.dart';
 import 'package:beauty/components/model/productM.dart';
 import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/model/sectionModel.dart';
@@ -141,8 +142,25 @@ class ApiProvider extends ChangeNotifier {
     String city,
     List<Map> product,
   ) async {
-
     createOrderGet = await ApiRepository.apiRepository.createOrder(name, address1, country, city, product);
     notifyListeners();
   }
+  MyOrderModel myOrderModel;
+
+  getAllOrder()async{
+    myOrderModel = await ApiRepository.apiRepository.getAllOrder();
+    notifyListeners();
+  }
+  addNewAddress(
+      String type,
+      String phone,
+      String address,
+      String houseNumber,
+      String apartment,
+      bool IsDefault,
+      )async{
+  Map map =   await ApiClient.apiClient.addNewAddress(type, phone, address, houseNumber, apartment, IsDefault);
+
+  }
+
 }
