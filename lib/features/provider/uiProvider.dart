@@ -90,5 +90,11 @@ class UiProvider extends ChangeNotifier {
     this.loading = value ;
     notifyListeners() ;
   }
+  bool defualtAddress = false;
+
+  toggleDefualtAddress(){
+    this.defualtAddress = !this.defualtAddress ;
+    notifyListeners() ;
+  }
 
 }

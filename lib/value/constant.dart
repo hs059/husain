@@ -48,6 +48,8 @@ String get_privacy_policy = 'get_privacy_policy';
 String create_order = 'create_order';
 String get_orders = 'get_orders';
 String add_address = 'add_address';
+String get_address = 'get_address';
+String remove_address = 'remove_address';
 
 List<String> getSliderIndex = [
   'get_first_slider',

@@ -320,6 +320,7 @@ class AuthProvider extends ChangeNotifier {
     SPHelper.spHelper.setToken('');
     SPHelper.spHelper.setToken('');
     showProfileModel = null;
+
   }
 
   ShowProfileModel showProfileModel;

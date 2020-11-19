@@ -2,15 +2,20 @@
 import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/bottomNavigationBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemWidget.dart';
+import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/sp_helper.dart';
+import 'package:beauty/value/navigator.dart';
 
 import 'package:beauty/value/style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 
@@ -27,7 +32,7 @@ class Cart extends StatelessWidget {
         appBar: appBarCart(title: 'Cart'),
         body: Consumer<DBProvider>(
           builder: (context, value, child) {
-            // value.setAllProducts();
+            value.setAllProducts();
             List<ProductSql> allProduct =  value.allProducts ;
             if(allProduct==null || allProduct.isEmpty ){
           return
@@ -53,12 +58,23 @@ class Cart extends StatelessWidget {
         bottomNavigationBar: Visibility(
           visible: Provider.of<DBProvider>(context).allProducts.isNotEmpty,
           child: bottomNavigationBarCart(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CheckOut(),
-                  ));
+            onTap: () async{
+              bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
+              if(!isLogin){
+                Fluttertoast.showToast(
+                    msg: 'يجب عليك تسجيل الدخول',
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 1,
+                    textColor: Color(0xffDAA095),
+                    fontSize: 16.0
+                );
+                kNavigatorPush(context, SignIn());
+              }else{
+                Provider.of<ApiProvider>(context,listen: false).getAllAddress();
+                Provider.of<AuthProvider>(context,listen: false).showProfile();
+                kNavigatorPush(context, CheckOut());
+              }
+
             },
             widget: Row(
               children: [

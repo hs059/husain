@@ -2,10 +2,12 @@ import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widge
 import 'package:beauty/components/model/myOrderModel.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/bottomNavigationBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/features/ui/homePage/profile/widgets/cartItemMyOrder.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
@@ -14,8 +16,13 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
 
 class MyOrder extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    ApiProvider apiProvider = Provider.of<ApiProvider>(context);
+    UiProvider uiProvider = Provider.of<UiProvider>(context);
+    UiProvider uiProviderFalse =
+    Provider.of<UiProvider>(context, listen: false);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -24,11 +31,35 @@ class MyOrder extends StatelessWidget {
 
         body: Consumer<ApiProvider>(
           builder: (context, value, child) {
-            value.getAllOrder();
             MyOrderModel myOrders = value.myOrderModel;
 
             if (myOrders == null || myOrders.data.isEmpty) {
-              return null;
+
+              if(myOrders ==null){
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 3,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Theme.of(context)
+                            .accentColor
+                            .withOpacity(0.2),
+                        valueColor: new AlwaysStoppedAnimation<Color>(
+                            kPinkLight),
+                      ),
+                    ),
+
+                  ],
+                );
+              }  else{
+                return Center(
+                  child: Text(
+                    'لا يوجد طلبات ',
+                    style: kSeeAll.copyWith(
+                        fontFamily: 'Cairo-Regular', fontSize: 18),
+                  ),
+                );
+              }
             } else {
               return ListView.builder(
                 physics: const BouncingScrollPhysics(),
@@ -160,7 +191,6 @@ class MyOrder extends StatelessWidget {
                                 'الحالة',
                                 style: kGrayText33,
                               ),
-
                               SizedBox(
                                 height: ScreenUtil().setHeight(34),
                                 width: ScreenUtil().setWidth(102),
@@ -195,7 +225,7 @@ class MyOrder extends StatelessWidget {
             tabControllerConstant.animateTo(0);
           },
           widget: Text(
-            'Go to Shopping',
+            'اذهب للتسوق',
             style: kBtnText,
           ),
         ),

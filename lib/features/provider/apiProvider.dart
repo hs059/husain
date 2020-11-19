@@ -1,3 +1,4 @@
+import 'package:beauty/components/model/allAddressModel.dart' as addressClass ;
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/createOrderGet.dart';
@@ -12,9 +13,12 @@ import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/api_repo.dart';
+import 'package:beauty/features/ui/homePage/cart/screens/changeDeliveryAddress.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/constant.dart';
+import 'package:beauty/value/navigator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -143,7 +147,7 @@ class ApiProvider extends ChangeNotifier {
     List<Map> product,
   ) async {
     createOrderGet = await ApiRepository.apiRepository.createOrder(name, address1, country, city, product);
-    notifyListeners();
+    getAllOrder();
   }
   MyOrderModel myOrderModel;
 
@@ -158,9 +162,45 @@ class ApiProvider extends ChangeNotifier {
       String houseNumber,
       String apartment,
       bool IsDefault,
+      BuildContext context ,
       )async{
-  Map map =   await ApiClient.apiClient.addNewAddress(type, phone, address, houseNumber, apartment, IsDefault);
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    Map map =   await ApiClient.apiClient.addNewAddress(type, phone, address, houseNumber, apartment, IsDefault);
+    getAllAddress();
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
 
+    if (map['code']) {
+    Get.snackbar('تمت اضافة العنوان', 'بامكانك رؤية كل العنوانين ... ' ,  );
+    Fluttertoast.showToast(
+        msg: 'تم اضافة العنوان',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.SNACKBAR,
+        timeInSecForIosWeb: 1,
+        textColor: Color(0xffDAA095),
+        fontSize: 16.0
+    );
+
+    Navigator.pop(context);
+    Navigator.pop(context);
+
+  }
+  }
+
+  addressClass.AllAddressModel allAddressModel ;
+  Future<addressClass.AllAddressModel> getAllAddress()async{
+    allAddressModel  = await ApiRepository.apiRepository.getAllAddress();
+    notifyListeners();
+    return allAddressModel ;
+  }
+
+  removeAddress(int addressId)async{
+    await ApiClient.apiClient.removeAdress(addressId);
+   await getAllAddress();
+  }
+  addressClass.Data  addressSelected ;
+  setAddressSelected(addressClass.Data   address){
+    this.addressSelected = address;
+    notifyListeners();
   }
 
 }

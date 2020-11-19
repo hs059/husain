@@ -1,5 +1,6 @@
 import 'package:beauty/components/model/lineItems.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemCheckOut.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemWidget.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/date&time.dart';
@@ -42,6 +43,8 @@ class CheckOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
+    ApiProvider apiProvider = Provider.of<ApiProvider>(context);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     UiProvider uiProviderFalse =
         Provider.of<UiProvider>(context, listen: false);
     List<ProductSql> allProducts =  Provider.of<DBProvider>(context).allProducts;
@@ -72,17 +75,31 @@ class CheckOut extends StatelessWidget {
                   ],
                 ),
               ),
-              CartAddressWidget(
-                address: '147 Al Riyadh, Saudi Arabia',
-                name: 'Wonderful customer',
-                phone: '+970592724106',
-                typeAddress: 1,
+              apiProvider.addressSelected !=null? CartAddressWidget(
+                address: apiProvider.addressSelected ==null?'aaaaaaaaaa':apiProvider.addressSelected.fullAddress,
+                name: authProvider.showProfileModel==null?'aaaaaa':authProvider.showProfileModel.data.displayName,
+                phone: apiProvider.addressSelected ==null? '55555':apiProvider.addressSelected.phone,
+                typeAddress: apiProvider.addressSelected.type ==addressIcon[0]?1:apiProvider.addressSelected.type ==addressIcon[1]?2:apiProvider.addressSelected.type ==addressIcon[2]?3:1,
                 changeBtn: true,
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChangeDeliveryAddress(),
-                    )),
+                onTap: () =>kNavigatorPush(context, ChangeDeliveryAddress()),
+              ):ContainerCart(
+                child: SizedBox(
+                  width: ScreenUtil().setWidth(311),
+                  height: ScreenUtil().setHeight(80),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.asset('assets/images/adress1.png',fit: BoxFit.contain,),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(10),
+                      ),
+                      Button(
+                        text: 'أختر عنوان',
+                        onTap: () =>kNavigatorPush(context, ChangeDeliveryAddress()),
+                      ),
+                    ],
+                  ),
+                ),
               ),
               DateAndTime(),
               Padding(

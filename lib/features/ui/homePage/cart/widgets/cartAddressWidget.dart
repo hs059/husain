@@ -1,4 +1,5 @@
 import 'package:beauty/value/shadow.dart';
+import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -6,18 +7,24 @@ import 'package:flutter_svg/svg.dart';
 
 import 'containerCart.dart';
 
-
 class CartAddressWidget extends StatelessWidget {
-  final String address,name,phone;
+  final String address, name, phone;
   final int typeAddress;
-  bool changeBtn  ;
-  Function onTap ;
+  bool changeBtn;
 
-  CartAddressWidget({ this.address, this.name, this.phone, this.typeAddress, this.changeBtn = false ,this.onTap});
+  Function onTap;
+
+  CartAddressWidget(
+      {this.address,
+      this.name,
+      this.phone,
+      this.typeAddress,
+      this.changeBtn = false,
+      this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return ContainerCart(
-      // height: 152,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -25,13 +32,17 @@ class CartAddressWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                typeAddress==1? 'Home':typeAddress==2?'Work':'Company',
+                typeAddress == 1
+                    ? '${addressIcon[0][0].toUpperCase()}${addressIcon[0].substring(1)}'
+                    : typeAddress == 2
+                        ?  '${addressIcon[1][0].toUpperCase()}${addressIcon[1].substring(1)}'
+                        :  '${addressIcon[2][0].toUpperCase()}${addressIcon[2].substring(1)}',
                 style: kSectionText,
               ),
               GestureDetector(
-                onTap: changeBtn?onTap:null,
+                onTap: changeBtn ? onTap : null,
                 child: Text(
-                  changeBtn? 'Change':'',
+                  changeBtn ? 'Change' : '',
                   style: kSeeAll,
                 ),
               )
@@ -42,7 +53,10 @@ class CartAddressWidget extends StatelessWidget {
             height: ScreenUtil().setHeight(80),
             child: Row(
               children: [
-                Image.asset('assets/images/adress$typeAddress.png',fit: BoxFit.contain,),
+                Image.asset(
+                  'assets/images/adress$typeAddress.png',
+                  fit: BoxFit.contain,
+                ),
                 SizedBox(
                   width: ScreenUtil().setWidth(10),
                 ),
@@ -61,7 +75,7 @@ class CartAddressWidget extends StatelessWidget {
                           width: ScreenUtil().setWidth(10),
                         ),
                         Text(
-                          '147 Al Riyadh, Saudi Arabia',
+                          address,
                           style: kTitleSign.copyWith(
                             fontSize: ScreenUtil().setSp(13),
                           ),
@@ -79,7 +93,7 @@ class CartAddressWidget extends StatelessWidget {
                           width: ScreenUtil().setWidth(10),
                         ),
                         Text(
-                          'Wonderful customer',
+                          name,
                           style: kTitleSign.copyWith(
                             fontSize: ScreenUtil().setSp(13),
                           ),
@@ -97,7 +111,7 @@ class CartAddressWidget extends StatelessWidget {
                           width: ScreenUtil().setWidth(10),
                         ),
                         Text(
-                          '970592724106',
+                          phone,
                           style: kTitleSign.copyWith(
                             fontSize: ScreenUtil().setSp(13),
                           ),

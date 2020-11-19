@@ -25,7 +25,6 @@ class DBProvider extends ChangeNotifier {
       print(productSql.count);
       setAllProducts();
     }else{
-      print('productSql.count   =${productSql.count }');
       productSql.count++ ;
       updateProduct(
         ProductSql(
@@ -53,5 +52,9 @@ class DBProvider extends ChangeNotifier {
   toggleOnCart(ProductSql productSql)async{
     await DBRepository.dbRepository.toggleOnCart(productSql);
     setAllProducts();
+  }
+  nullAllProduct(){
+    allProducts= null ;
+    notifyListeners();
   }
 }

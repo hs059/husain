@@ -1,3 +1,4 @@
+import 'package:beauty/components/model/allAddressModel.dart';
 import 'package:beauty/components/model/createOrderGet.dart';
 import 'package:beauty/components/model/lineItems.dart';
 import 'package:beauty/components/model/myOrderModel.dart';
@@ -92,22 +93,17 @@ class ApiRepository {
   }
 
   //
-  Future<CreateOrderGet> createOrder(String name,
-      String address1,
-      String country,
-      String city,
-      List<Map> product,) async {
+  Future<CreateOrderGet> createOrder(
+    String name,
+    String address1,
+    String country,
+    String city,
+    List<Map> product,
+  ) async {
     String token = await SPHelper.spHelper.getToken();
     int UserId = await SPHelper.spHelper.getUser();
     Map map = await ApiClient.apiClient
-        .createOrder(
-        UserId,
-        token,
-        name,
-        address1,
-        country,
-        city,
-        product);
+        .createOrder(UserId, token, name, address1, country, city, product);
     if (map['code']) {
       CreateOrderGet createOrderGet = CreateOrderGet.fromJson(map);
 
@@ -115,12 +111,19 @@ class ApiRepository {
     }
   }
 
-  getAllOrder() async {
+  Future<MyOrderModel> getAllOrder() async {
     Map map = await ApiClient.apiClient.getAllOrder();
-    if(map['code']){
+    if (map['code']) {
       MyOrderModel myOrderModel = MyOrderModel.fromJson(map);
       return myOrderModel;
     }
   }
 
+  Future<AllAddressModel> getAllAddress()async {
+    Map map = await ApiClient.apiClient.getAllAddress() ;
+    if(map['code']){
+      AllAddressModel addressModel =  AllAddressModel.fromJson(map);
+      return addressModel ;
+    }
+  }
 }

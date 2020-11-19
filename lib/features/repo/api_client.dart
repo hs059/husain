@@ -482,4 +482,45 @@ class ApiClient {
         }
   }
 
+
+  Future<Map>  getAllAddress()async{
+    String token = await SPHelper.spHelper.getToken();
+    int idUser = await SPHelper.spHelper.getUser();
+    FormData data  = FormData.fromMap(
+        {
+          'user_id':idUser,
+          'token':token,
+        }
+    );
+    Response response = await dio.post(
+        baseUrl + get_address ,
+        data: data
+    );
+    if(response.statusCode==200){
+      print(response.data);
+      return response.data;
+    }
+
+  }
+  Future<Map>  removeAdress(int addressId )async{
+    String token = await SPHelper.spHelper.getToken();
+    int idUser = await SPHelper.spHelper.getUser();
+    FormData data  = FormData.fromMap(
+        {
+          'user_id':idUser,
+          'token':token,
+          'address_id':addressId,
+        }
+    );
+    Response response = await dio.post(
+        baseUrl + remove_address ,
+        data: data
+    );
+    if(response.statusCode==200){
+      print(response.data);
+      return response.data;
+    }
+
+  }
+
 }

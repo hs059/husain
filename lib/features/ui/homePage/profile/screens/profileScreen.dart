@@ -1,6 +1,7 @@
 import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
+import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/Language.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/aboutUs.dart';
@@ -109,19 +110,19 @@ class ProfileScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ListTileProfile(
-                    title: 'Account Informations ',
+                    title: 'معلومات الحساب ',
                     image: 'assets/svg/personBtn.svg',
                     route: AccountInformations(),
                   ),
                   MyDivider(),
                   ListTileProfile(
-                    title: 'Favorite ',
+                    title: 'المفضلة',
                     image: 'assets/svg/favBtn.svg',
                     route: ShowProduct(title :'Favorite'),
                   ),
                   MyDivider(),
                   ListTileProfile(
-                    title: 'My Order',
+                    title: 'طلباتي',
                     image: 'assets/svg/shopBtn.svg',
                     route: MyOrder(),
                   ),
@@ -133,20 +134,20 @@ class ProfileScreen extends StatelessWidget {
             // height: 320,
             child: Column(
               children: [
+                // ListTileProfile(
+                //   title: 'Language',
+                //   image: 'assets/svg/settingBtn.svg',
+                //   route: Language(),
+                // ),
+                // MyDivider(),
                 ListTileProfile(
-                  title: 'Language',
-                  image: 'assets/svg/settingBtn.svg',
-                  route: Language(),
-                ),
-                MyDivider(),
-                ListTileProfile(
-                  title: 'Help Center',
+                  title: 'الدعم و المساندة',
                   image: 'assets/svg/soundBtn.svg',
                   route: HelpCenter(),
                 ),
                 MyDivider(),
                 ListTileProfile(
-                  title: 'About Us',
+                  title: 'من نحن',
                   image: 'assets/svg/aboutBtn.svg',
                   route: AboutUs(),
                 ),
@@ -157,7 +158,7 @@ class ProfileScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   title: Text(
-                    'Share App ',
+                    'مشاركة التطبيق',
                     style: kProfile,
                   ),
                   trailing: Icon(Icons.arrow_forward_ios),
@@ -175,6 +176,7 @@ class ProfileScreen extends StatelessWidget {
               // height: 85,
               child: GestureDetector(
                 onTap: () {
+                  Provider.of<DBProvider>(context,listen: false).nullAllProduct();
                   authProviderFalse.signOut();
                   kNavigatorPush(context, SignIn());
                 },
@@ -184,7 +186,7 @@ class ProfileScreen extends StatelessWidget {
                     fit: BoxFit.contain,
                   ),
                   title: Text(
-                    'Log Out ',
+                    'تسجيل الخروج ',
                     style: kProfile,
                   ),
                 ),
