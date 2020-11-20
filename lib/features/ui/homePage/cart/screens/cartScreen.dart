@@ -9,6 +9,7 @@ import 'package:beauty/features/ui/homePage/cart/widgets/bottomNavigationBarCart
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemWidget.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/sp_helper.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 
 import 'package:beauty/value/style.dart';
@@ -32,18 +33,30 @@ class Cart extends StatelessWidget {
         appBar: appBarCart(title: 'Cart'),
         body: Consumer<DBProvider>(
           builder: (context, value, child) {
-            value.setAllProducts();
             List<ProductSql> allProduct =  value.allProducts ;
-            if(allProduct==null || allProduct.isEmpty ){
+            if(allProduct==null){
           return
-                  Center(
-                    child: Text(
+            SizedBox(
+              height: 3,
+              child: LinearProgressIndicator(
+                backgroundColor: Theme.of(context)
+                    .accentColor
+                    .withOpacity(0.2),
+                valueColor: new AlwaysStoppedAnimation<Color>(
+                    kPinkLight),
+              ),
+            );
+            }else if(allProduct.isEmpty ){
+              return
+                Center(
+                  child: Text(
                     'لا يوجد طلبات بالعربة ',
                     style:
                     kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
-            ),
-              );
-            }else{
+                  ),
+                );
+            }
+            else{
               return  ListView.builder(
                 itemCount: allProduct.length,
                 scrollDirection: Axis.vertical,

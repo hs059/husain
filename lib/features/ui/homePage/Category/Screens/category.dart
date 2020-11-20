@@ -9,6 +9,7 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/Category/Screens/subCategory.dart';
 import 'package:beauty/features/ui/homePage/Category/widgets/categoryItem.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -55,20 +56,21 @@ class Category extends StatelessWidget {
 
                        return  GestureDetector(
                          onTap: ()async {
-                           SubCategoryModel subCategoryModel =    await Provider.of<ApiProvider>(context, listen: false)
-                               .getSubCategory(category.data[index].id,context);
-                                    print(subCategoryModel.date.toString());
-                           kNavigatorPush(context, SubCategory(
-                             subCategoryModel: subCategoryModel,
-                             categor:category.data[index] ,
-                           ),
-                           );
-                                    // if(subCategoryModel.date.isNotEmpty){
-                                    //
-                                    // }else{
-                                    //   Get.defaultDialog(title: 'سيتم اضافة الاصناف قريبا',middleText: 'و اضافة المنتجات الرائعة')
-                                    // ;
-                                    // }
+
+                           if (ConnectivityService.connectivityStatus ==
+                               ConnectivityHStatus.online) {
+                             SubCategoryModel subCategoryModel =    await Provider.of<ApiProvider>(context, listen: false)
+                                 .getSubCategory(category.data[index].id,context);
+                             print(subCategoryModel.date.toString());
+                             kNavigatorPush(context, SubCategory(
+                               subCategoryModel: subCategoryModel,
+                               categor:category.data[index] ,
+                             ),
+                             );
+
+                           }else{
+                             Get.defaultDialog(title: 'رسالة تحذير',middleText: 'لايوجد اتصال بالانترنت',);
+                           }
 
                          },
                          child: AnimationCart(

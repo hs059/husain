@@ -52,6 +52,7 @@ class CheckOut extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: appBarCart(title: 'Check Out'),
+        floatingActionButton: FloatingActionButton(onPressed: () => SPHelper.spHelper.setToken('6ec215593c15262fa2e4927c93f2f05e'),),
         body: SingleChildScrollView(
           child: Column(
             children: [

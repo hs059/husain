@@ -50,6 +50,7 @@ String get_orders = 'get_orders';
 String add_address = 'add_address';
 String get_address = 'get_address';
 String remove_address = 'remove_address';
+String add_reviews = 'add_reviews';
 
 List<String> getSliderIndex = [
   'get_first_slider',

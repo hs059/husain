@@ -39,7 +39,7 @@ class ProductItemList extends StatelessWidget {
         price: product.price,
         image: product.image,
         name: product.name,
-
+    count: product.count,
     );
   }
 

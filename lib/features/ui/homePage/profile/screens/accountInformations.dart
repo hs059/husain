@@ -18,11 +18,11 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 class AccountInformations extends StatelessWidget {
-  final myController1 = TextEditingController();
-  final myController2 = TextEditingController();
-  final myController3 = TextEditingController();
-  final myController4 = TextEditingController();
-  final myController5 = TextEditingController();
+  // final myController1 = TextEditingController();
+  // final myController2 = TextEditingController();
+  // final myController3 = TextEditingController();
+  // final myController4 = TextEditingController();
+  // final myController5 = TextEditingController();
   GlobalKey<FormState> formAccountInformations = GlobalKey<FormState>();
   String phone ='00';
   @override
@@ -90,39 +90,43 @@ class AccountInformations extends StatelessWidget {
                                       child: Column(
                                         children: [
                                           CustomTextFormField(
-                                            textEditingController: myController1,
+                                            // textEditingController: myController1,
                                             hintText: 'الاسم كامل',
                                             password: false,
                                             validator: authProvider.validateName,
                                             onSaved: authProvider.saveFullName,
+                                            textInitialValue: authProvider.showProfileModel.data.displayName,
                                           ),
                                           SizedBox(
                                             height: ScreenUtil().setHeight(15),
                                           ),
                                           CustomTextFormField(
-                                            textEditingController: myController2,
+                                            // textEditingController: myController2,
 
                                             hintText: 'الايميل',
                                             password: false,
                                             validator: authProvider.validateEmail,
                                             onSaved: authProvider.saveEmail,
                                             textInputType: TextInputType.emailAddress,
+                                            textInitialValue: authProvider.showProfileModel.data.email,
+
                                           ),
                                           SizedBox(
                                             height: ScreenUtil().setHeight(15),
                                           ),
                                           CustomTextFormField(
-                                            textEditingController: myController3,
+                                            // textEditingController: myController3,
                                             hintText: 'كلمة السر القديمة',
                                             password: true,
                                             validator: authProvider.validatePassword,
                                             onSaved: authProvider.savePassword,
+
                                           ),
                                           SizedBox(
                                             height: ScreenUtil().setHeight(15),
                                           ),
                                           CustomTextFormField(
-                                            textEditingController: myController4,
+                                            // textEditingController: myController4,
                                             hintText: 'كلمة المرور الجديدة',
                                             password: true,
                                             validator: authProvider.validatePassword,
@@ -137,7 +141,7 @@ class AccountInformations extends StatelessWidget {
                                               border: Border.all(width: 1.0, color: kBorder),
                                             ),
                                             child: IntlPhoneField(
-                                              controller: myController5,
+                                              // controller: myController5,
                                               validator: authProvider.validatePhone,
                                               onSaved:  (newValue) {
                                                 print(newValue.completeNumber);
@@ -157,7 +161,7 @@ class AccountInformations extends StatelessWidget {
                                               ),
                                               initialCountryCode: 'SA',
                                               showDropdownIcon: false,
-
+                                              initialValue: authProvider.showProfileModel.data.mobileNumber,
                                               onChanged: (phone) {
                                                 Provider.of<AuthProvider>(context,listen: false).saveMobile(phone.completeNumber);
                                                 print(phone.completeNumber);

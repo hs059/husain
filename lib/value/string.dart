@@ -48,3 +48,9 @@ List<String> addressIcon = [
 ];
 const  String   brand1 = 'assets/images/brand1.png' ;
 const  String   endOrder = 'assets/svg/endOrder.svg' ;
+
+// popularity
+// latest
+// rated
+// low_to_high
+// high_to_low

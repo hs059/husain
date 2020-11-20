@@ -14,7 +14,7 @@ class ProductSql {
     this.image,
     this.name,
     this.price,
-    this.count = 1,
+    this.count ,
     this.idProduct,
     this.onCart = false,
   });

@@ -62,6 +62,7 @@ class Products {
   bool isFavourited;
   String stockCode;
   List<Reviews> reviews;
+  int count ;
   Products(
       {this.id,
         this.name,
@@ -75,7 +76,7 @@ class Products {
         this.image,
         this.isFavourited,
         this.stockCode,
-        this.reviews});
+        this.reviews,this.count});
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -90,6 +91,7 @@ class Products {
     image = json['image'].toString();
     isFavourited = json['is_favourited'];
     stockCode = json['stock_code'];
+    count = 1 ;
     if (json['reviews'] != null) {
       reviews = new List<Reviews>();
       json['reviews'].forEach((v) {

@@ -423,104 +423,105 @@ class ApiClient {
     }
   }
 
-
   getAllOrder() async {
     try {
-      await initApi() ;
+      await initApi();
       String token = await SPHelper.spHelper.getToken();
       int idUser = await SPHelper.spHelper.getUser();
       String id = idUser.toString();
       FormData data = FormData.fromMap({
-        "user_id":id,
-        "token":token,
+        "user_id": id,
+        "token": token,
       });
-      Response response =await dio.post(
-        baseUrl + get_orders ,
-        data: data
-      );
-      if(response.statusCode == 200){
+      Response response = await dio.post(baseUrl + get_orders, data: data);
+      if (response.statusCode == 200) {
         print(response.data);
-      return response.data ;
+        return response.data;
       }
     } catch (e) {
       print(e);
     }
   }
 
-
   Future<Map> addNewAddress(
-      String type,
-      String phone,
-      String address,
-      String houseNumber,
-      String apartment,
-      bool IsDefault,
-
-      )async{
-   await initApi();
-   String token = await SPHelper.spHelper.getToken();
-   int idUser = await SPHelper.spHelper.getUser();
-   FormData data  = FormData.fromMap(
-     {
-       'user_id':idUser,
-       'token':token,
-       'type':type,
-       'phone':phone,
-       'address':address,
-       'house_number':houseNumber,
-       'apartment':apartment,
-       'IsDefault':IsDefault,
-     }
-     );
-   Response response = await dio.post(
-     baseUrl + add_address ,
-     data: data
-   );
-        if(response.statusCode==200){
-          print(response.data);
-          return response.data;
-        }
-  }
-
-
-  Future<Map>  getAllAddress()async{
+    String type,
+    String phone,
+    String address,
+    String houseNumber,
+    String apartment,
+    bool IsDefault,
+  ) async {
+    await initApi();
     String token = await SPHelper.spHelper.getToken();
     int idUser = await SPHelper.spHelper.getUser();
-    FormData data  = FormData.fromMap(
-        {
-          'user_id':idUser,
-          'token':token,
-        }
-    );
-    Response response = await dio.post(
-        baseUrl + get_address ,
-        data: data
-    );
-    if(response.statusCode==200){
+    FormData data = FormData.fromMap({
+      'user_id': idUser,
+      'token': token,
+      'type': type,
+      'phone': phone,
+      'address': address,
+      'house_number': houseNumber,
+      'apartment': apartment,
+      'IsDefault': IsDefault,
+    });
+    Response response = await dio.post(baseUrl + add_address, data: data);
+    if (response.statusCode == 200) {
       print(response.data);
       return response.data;
     }
-
   }
-  Future<Map>  removeAdress(int addressId )async{
+
+  Future<Map> getAllAddress() async {
     String token = await SPHelper.spHelper.getToken();
     int idUser = await SPHelper.spHelper.getUser();
-    FormData data  = FormData.fromMap(
-        {
-          'user_id':idUser,
-          'token':token,
-          'address_id':addressId,
-        }
-    );
-    Response response = await dio.post(
-        baseUrl + remove_address ,
-        data: data
-    );
-    if(response.statusCode==200){
+    FormData data = FormData.fromMap({
+      'user_id': idUser,
+      'token': token,
+    });
+    Response response = await dio.post(baseUrl + get_address, data: data);
+    if (response.statusCode == 200) {
       print(response.data);
       return response.data;
     }
-
   }
 
+  Future<Map> removeAdress(int addressId) async {
+    String token = await SPHelper.spHelper.getToken();
+    int idUser = await SPHelper.spHelper.getUser();
+    FormData data = FormData.fromMap({
+      'user_id': idUser,
+      'token': token,
+      'address_id': addressId,
+    });
+    Response response = await dio.post(baseUrl + remove_address, data: data);
+    if (response.statusCode == 200) {
+      print(response.data);
+      return response.data;
+    }
+  }
+
+  Future<Map> addRev(
+    int productId,
+    double RatingCount,
+    String comment,
+  ) async {
+    String token = await SPHelper.spHelper.getToken();
+    int idUser = await SPHelper.spHelper.getUser();
+    FormData data = FormData.fromMap({
+      "user_id": idUser,
+      "token": token,
+      "product_id": productId,
+      "rating_count": RatingCount,
+      "comment": comment,
+    });
+
+    Response response =await dio.post(
+        baseUrl + add_reviews,
+        data: data ,
+    );
+    if (response.statusCode == 200) {
+      print(response.data);
+      return response.data;
+    }
+  }
 }

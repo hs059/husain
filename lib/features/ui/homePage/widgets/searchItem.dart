@@ -66,7 +66,7 @@ class SearchItem extends StatelessWidget {
                           child: Text(
                             name,
                             style: kTitleSign.copyWith(
-                              fontSize: ScreenUtil().setSp(15),
+                              fontSize: ScreenUtil().setSp(14),
                             ),
                             textAlign: TextAlign.center,
                           ),

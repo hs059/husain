@@ -1,6 +1,7 @@
 import 'package:beauty/components/animate_do.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
+import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/style.dart';
 
@@ -53,7 +54,7 @@ class _SplashState extends State<Splash> {
                 Provider.of<ApiProvider>(context, listen: false).getSlider();
                 Provider.of<ApiProvider>(context, listen: false).getSection();
                 Provider.of<ApiProvider>(context, listen: false).getBrand();
-
+                Provider.of<DBProvider>(context,listen: false).setAllProducts();
                 var delay = Duration(seconds: 4);
                 Future.delayed(delay, () {
                   Navigator.pushReplacement(context, MaterialPageRoute(

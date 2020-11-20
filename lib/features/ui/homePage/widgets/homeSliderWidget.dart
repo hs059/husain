@@ -49,7 +49,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                   options: CarouselOptions(
                     autoPlay: true,
                     autoPlayInterval: Duration(seconds: 5),
-                    height: 185,
+                    height: ScreenUtil().setHeight(185),
                     viewportFraction: 1.0,
 
                     onPageChanged: (index, reason) {
@@ -63,26 +63,33 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                     int index = slider.data.indexOf(url);
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: BoxDecoration(color: kBorder,
+                      decoration: BoxDecoration(
                         //toDo:color
                         borderRadius: BorderRadius.circular(7),
-                        image: DecorationImage(
-                            // image: AssetImage(image[index]),
-                          image: CachedNetworkImageProvider(
-                            slider.data[index].imageUrl,
-                          ),
-                            fit: BoxFit.contain),
+                        // image: DecorationImage(
+                        //     // image: AssetImage(image[index]),
+                        //   image: CachedNetworkImageProvider(
+                        //     slider.data[index].imageUrl,
+                        //   ),
+                        //     fit: BoxFit.contain),
                       ),
                       child: Stack(
                         children: [
-                          // CachedNetworkImage(
-                          //     imageUrl: slider.data[index].imageUrl,
-                          //     placeholder: (context, url) => LoaderGif1(),
-                          //     errorWidget: (context, url, error) =>
-                          //         Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
-                          //     height: ScreenUtil().setHeight(176),
-                          //     fit: BoxFit.contain
-                          // ),
+                          Container(
+                            height: ScreenUtil().setHeight(176),
+
+                          ),
+                          Container(
+
+                            child: CachedNetworkImage(
+                                imageUrl: slider.data[index].imageUrl,
+                                placeholder: (context, url) => LoaderGif1(),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+                                height: ScreenUtil().setHeight(176),
+                                fit: BoxFit.contain
+                            ),alignment:Alignment.bottomLeft ,
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[

@@ -25,12 +25,13 @@ class DBProvider extends ChangeNotifier {
       print(productSql.count);
       setAllProducts();
     }else{
-      productSql.count++ ;
+
+int count = productSql.count??1;
       updateProduct(
         ProductSql(
           idProduct: productSql.idProduct,
           price: productSql.price,
-          count: productSql.count,
+          count: count++,
           name:  productSql.name,
           image: productSql.image,
         ),
@@ -47,6 +48,8 @@ class DBProvider extends ChangeNotifier {
   }
   updateProduct(ProductSql productSql)async{
     await DBRepository.dbRepository.updateProduct( productSql) ;
+    notifyListeners();
+
     setAllProducts();
   }
   toggleOnCart(ProductSql productSql)async{

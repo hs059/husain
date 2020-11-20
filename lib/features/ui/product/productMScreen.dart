@@ -37,7 +37,6 @@ class ProductMScreen extends StatelessWidget {
 
 
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -101,6 +100,15 @@ class ProductMScreen extends StatelessWidget {
                 bool isFavourited  = value.productM.data.isFavourited??false;
                 String image = value.productM.data.images[0].imageUrl;
                 List<Reviews > reviews =value.productM.data.reviews??[];
+                getproduct(){
+                  return  ProductSql(
+                    idProduct: int.parse(id),
+                    price: regularPrice,
+                    image: image,
+                    name: name,
+                  );
+                }
+
                 return  Scaffold(
                   backgroundColor: Colors.white,
                   appBar: AppBar(
@@ -176,11 +184,9 @@ class ProductMScreen extends StatelessWidget {
                             Button(
                               text: 'إضافة إلى العربة',
                               onTap: () {
-                                int count = 0 ;
-                                ProductSql productSql =
-                                ProductSql(image: image, count: count++, name: name, price: price,idProduct: int.parse(id));
-                                Provider.of<DBProvider>(context, listen: false)
-                                    .insertNewProduct(productSql);
+                                Provider.of<DBProvider>(context,listen: false).insertNewProduct(
+                                    getproduct()
+                                );
                                 showMaterialModalBottomSheet(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(

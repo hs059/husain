@@ -1,7 +1,9 @@
 import 'package:beauty/components/model/productM.dart';
 import 'package:beauty/components/model/productModel.dart' as subProduct;
+import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/features/ui/product/productSubScreen.dart';
@@ -29,7 +31,14 @@ class ProductItemGrid extends StatelessWidget {
 
   ProductItemGrid({@required this.imagePath
     , @required this.title, @required this.rating, @required this.prize, @required this.fav, this.product,});
-
+  getproduct(){
+    return  ProductSql(
+      idProduct: product.id,
+      price: product.price,
+      image: product.image,
+      name: product.name,
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -163,21 +172,28 @@ class ProductItemGrid extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomLeft,
                 child:
-                Padding(
-                  padding:
-                  EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(15),
-                      vertical: ScreenUtil().setWidth(5)
-                  ),
+                GestureDetector(
+                  onTap: () {
+                    Provider.of<DBProvider>(context,listen: false).insertNewProduct(
+                        getproduct()
+                    );
+                  },
+                  child: Padding(
+                    padding:
+                    EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(15),
+                        vertical: ScreenUtil().setWidth(5)
+                    ),
 
-                  child: GestureDetector(
-                    //Todo: ID
                     child: Container(
                       height: ScreenUtil().setHeight(30),
                       width: ScreenUtil().setWidth(30),
+                      padding: EdgeInsets.all(getproduct().onCart ? 5 : 0),
+                      decoration: BoxDecoration(
+                          color: getproduct().onCart ? kPinkLight : Colors.white,
+                          borderRadius: BorderRadius.circular(8)),
                       child: SvgPicture.asset(
-                        'assets/svg/cardIcon.svg',
-                        height: ScreenUtil().setHeight(30),
-                        width: ScreenUtil().setWidth(30),
+                        'assets/svg/cardIcon2.svg',
+                        color: getproduct().onCart ? Colors.white : kPinkLight,
                       ),
                     ),
                   ),

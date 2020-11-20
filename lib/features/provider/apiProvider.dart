@@ -2,12 +2,10 @@ import 'package:beauty/components/model/allAddressModel.dart' as addressClass ;
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/createOrderGet.dart';
-import 'package:beauty/components/model/lineItems.dart';
 import 'package:beauty/components/model/myOrderModel.dart';
-import 'package:beauty/components/model/productM.dart';
+import 'package:beauty/components/model/productM.dart' as productClass;
 import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/model/sectionModel.dart';
-import 'package:beauty/components/model/showProfileModel.dart';
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
@@ -46,7 +44,7 @@ class ApiProvider extends ChangeNotifier {
 
   ProductModel productByCategory;
 
-  ProductM productM;
+  productClass.ProductM productM;
 
   getCategory() async {
     category = await ApiRepository.apiRepository.getCategory();
@@ -109,8 +107,11 @@ class ApiProvider extends ChangeNotifier {
     print(productM.toJson());
     notifyListeners();
   }
-
-  Future<ProductM> getProductDetailsSearch(int id, BuildContext context) async {
+Future<List<productClass.Reviews>> getProductRev(int id)async{
+  productM = await ApiRepository.apiRepository.getProductDetails(id);
+    return productM.data.reviews ;
+}
+  Future<productClass.ProductM> getProductDetailsSearch(int id, BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
@@ -201,6 +202,36 @@ class ApiProvider extends ChangeNotifier {
   setAddressSelected(addressClass.Data   address){
     this.addressSelected = address;
     notifyListeners();
+  }
+
+  String comment ;
+  saveComment(String value){
+    this.comment = value ;
+    notifyListeners();
+  }
+
+  double rating ;
+  saveRating(double value){
+    this.rating = value ;
+    notifyListeners();
+  }
+
+  Future<Map> addRev(int productId )async{
+  Map map =   await ApiClient.apiClient.addRev(productId, rating, comment);
+
+  if(map['code']){
+    Fluttertoast.showToast(
+        msg: 'تم اضافة تعليقك',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.SNACKBAR,
+        timeInSecForIosWeb: 1,
+        textColor: Color(0xffDAA095),
+        fontSize: 16.0
+    );
+    return map ;
+
+  }
+
   }
 
 }

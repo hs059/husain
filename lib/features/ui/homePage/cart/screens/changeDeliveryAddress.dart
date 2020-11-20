@@ -32,8 +32,12 @@ class ChangeDeliveryAddress extends StatelessWidget {
             AllAddressModel allAddress = value.allAddressModel;
             if (allAddress == null || allAddress.data.isEmpty) {
                       if(allAddress == null){
-                        return Center(
-                          child:Image.asset('assets/gif/wait.gif', fit: BoxFit.cover),
+                        return Column(
+                          children: [
+                            Center(
+                              child:Image.asset('assets/gif/wait.gif', fit: BoxFit.cover),
+                            ),
+                          ],
                         );
                       }else{
                         return Center(

@@ -7,6 +7,8 @@ import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
+import 'package:beauty/components/model/productM.dart' as productClass;
+
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/components/model/sectionModel.dart' as sectionP ;
 import 'package:beauty/features/ui/product/productRecomended.dart';
@@ -48,7 +50,7 @@ class ProductSubScreen extends StatelessWidget {
   List<sectionP.Reviews> reviewsS;
   List<Map> rev ;
   int id ;
-
+  int count ;
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +66,7 @@ class ProductSubScreen extends StatelessWidget {
       reviewsS = productS.reviews ;
       rev = reviewsS.map((e) => e.toJson()).toList();
       id = productS.id ;
+      count = productS.count;
     }else{
       name = product.name ;
       permalink = product.permalink ;
@@ -78,6 +81,18 @@ class ProductSubScreen extends StatelessWidget {
       id = product.id ;
 
     }
+    getproduct(){
+      return  ProductSql(
+        idProduct: id,
+        price: price,
+        image: image,
+        name:name,
+      );
+    }
+
+    ApiProvider apiProvider =   Provider.of<ApiProvider>(context) ;
+    ApiProvider apiProviderFalse =   Provider.of<ApiProvider>(context,listen: false) ;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -238,68 +253,98 @@ class ProductSubScreen extends StatelessWidget {
                 ),
               ),
               children: [
-                rev.isNotEmpty? Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(15),
-                  ),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            SmoothStarRating(
-                              rating: 4.5,
-                              color: kStar,
-                              isReadOnly: true,
-                              size: 15,
-                              borderColor: kBorder,
-                              filledIconData: Icons.star,
-                              halfFilledIconData: Icons.star_half,
-                              defaultIconData: Icons.star_border,
-                              starCount: 5,
-                              allowHalfRating: true,
-                              spacing: 1.0,
-                              onRated: (value) {
-                                print("rating value -> $value");
-                              },
-                            ),
-                            Text(
-                              ' Unknown ',
-                              style: kGrayTextStyle,
-                              textAlign: TextAlign.start,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(30),
-                        ),
-                        Container(
-                          constraints: BoxConstraints(
-                            maxWidth: ScreenUtil().setWidth(280),
-                          ),
-                          child: Text(
-                              '''Wonderful gives a smooth texture to the skin 
-I highly recommend it''',
-                              style: kReviews.copyWith(
-                                fontSize: ScreenUtil().setSp(14),
-                              )),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(40),
-                        ),
-                      ],
-                    ),
-                  ),
-                ):Center(
-                  child: Text(
-                    '',
-                    style:
-                    kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
-                  ),
-                ),
+                 FutureBuilder(
+                   future: Provider.of<ApiProvider>(context).getProductRev(id),
+                   builder: (context, snapshot) {
+                     if(snapshot.hasData){
+                       List<productClass.Reviews> reviews = snapshot.data ;
+                       if(reviews.isNotEmpty){
+                         return ListView.builder(
+                           shrinkWrap: true,
+                           primary: false,
+                           itemCount: reviews.length,
+                           scrollDirection: Axis.vertical,
+                           physics: const BouncingScrollPhysics(),
+                           itemBuilder:(context, index) {
+                             productClass.Reviews  review = reviews[index];
+                             return Padding(
+                               padding: EdgeInsets.symmetric(
+                                 horizontal: ScreenUtil().setWidth(15),
+                               ),
+                               child: Align(
+                                 alignment: Alignment.topLeft,
+                                 child: Column(
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   mainAxisSize: MainAxisSize.min,
+                                   children: [
+                                     Row(
+                                       children: [
+                                         SmoothStarRating(
+                                           rating: double.parse(review.reviewCount),
+                                           color: kStar,
+                                           isReadOnly: true,
+                                           size: 15,
+                                           borderColor: kBorder,
+                                           filledIconData: Icons.star,
+                                           halfFilledIconData: Icons.star_half,
+                                           defaultIconData: Icons.star_border,
+                                           starCount: 5,
+                                           allowHalfRating: true,
+                                           spacing: 1.0,
+                                           onRated: (value) {
+                                             print("rating value -> $value");
+                                           },
+                                         ),
+                                         Text(
+                                           review.user.userName,
+                                           style: kGrayTextStyle,
+                                           textAlign: TextAlign.start,
+                                         ),
+                                       ],
+                                     ),
+                                     SizedBox(
+                                       height: ScreenUtil().setHeight(10),
+                                     ),
+                                     Container(
+                                       constraints: BoxConstraints(
+                                         maxWidth: ScreenUtil().setWidth(280),
+                                       ),
+                                       child: Text(
+                                           review.comment,
+                                           style: kReviews.copyWith(
+                                             fontSize: ScreenUtil().setSp(14),
+                                           )),
+                                     ),
+                                     SizedBox(
+                                       height: ScreenUtil().setHeight(40),
+                                     ),
+                                   ],
+                                 ),
+                               ),
+                             );
+                           }  ,
+                         );
+                       }else{
+                     return Center(
+                         child: Text(
+                         'لا يوجد تعليقات أضف تعليقك ...',
+                         style:
+                         kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+                     )) ;
+                       }
+                     }else{
+                       return SizedBox(
+                         height: 3,
+                         child: LinearProgressIndicator(
+                           backgroundColor:
+                           Theme.of(context).accentColor.withOpacity(0.2),
+                           valueColor:
+                           new AlwaysStoppedAnimation<Color>(kPinkLight),
+                         ),
+                       );
+                     }
+                   },
+                 ),
                 ListTile(
                   title: Visibility(
                     visible:  rev.isNotEmpty,
@@ -351,7 +396,7 @@ I highly recommend it''',
                                       ),
 
                                       SmoothStarRating(
-                                        rating: 2,
+                                        rating: 4,
                                         color: kStar,
                                         borderColor: kStar,
                                         isReadOnly: false,
@@ -360,11 +405,10 @@ I highly recommend it''',
                                         halfFilledIconData: Icons.star_half,
                                         defaultIconData: Icons.star_border,
                                         starCount: 5,
-                                        allowHalfRating: true,
+                                        allowHalfRating: false,
                                         spacing: 1.0,
-                                        onRated: (value) {
-                                          print("rating value -> $value");
-                                        },
+                                        onRated: apiProvider.saveRating,
+
                                       ),
                                       ContainerCart(
                                         child: Directionality(
@@ -383,7 +427,7 @@ I highly recommend it''',
                                                 textDirection: TextDirection.rtl,
                                                 child: TextField(
                                                   maxLines: null,
-                                                  onChanged: (String txt) {},
+                                                  onChanged: apiProvider.saveComment,
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     color: Color(0xFF313A44),
@@ -405,8 +449,9 @@ I highly recommend it''',
                                             horizontal: ScreenUtil().setWidth(50),
                                             vertical: ScreenUtil().setHeight(10)
                                         ),
-                                        child: Button(text: 'تم',
-                                          onTap: (){
+                                        child: Button(text: 'أضف التعليق',
+                                          onTap: ()async{
+                                           await apiProviderFalse.addRev(id);
                                             Navigator.pop(context);
                                           },
                                         ),),
