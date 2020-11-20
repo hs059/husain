@@ -3,6 +3,7 @@ import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widge
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
@@ -119,8 +120,9 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                children: [
                                  //Todo:push with product ID
                                  Container(
-                                     child: Button(text: '  Shop Now  ', onTap: (){
-
+                                     child: Button(text: '  Shop Now  ', onTap: ()async{
+                                    await   Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(slider.data[index].id,context);
+                                          kNavigatorPush(context, ProductMScreen());
                                      }),
                                  ),
                                ],
