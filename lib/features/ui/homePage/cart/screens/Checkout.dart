@@ -52,7 +52,6 @@ class CheckOut extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: appBarCart(title: 'Check Out'),
-        floatingActionButton: FloatingActionButton(onPressed: () => SPHelper.spHelper.setToken('6ec215593c15262fa2e4927c93f2f05e'),),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -373,14 +372,18 @@ class CheckOut extends StatelessWidget {
                   }else{
                     Provider.of<ApiProvider>(context,listen: false).createOrder( 'hussein', 'aaa', 'pal', 'ccc',
                         [
-                          LineItems(
-                            productId: '29',
-                            quantity: '3',
-                          ).toJson(),
-                          LineItems(
-                            productId: '103',
-                            quantity: '5',
-                          ).toJson(),
+                      ...    allProducts.map((e) =>  LineItems(
+                        productId: e.idProduct.toString(),
+                        quantity: e.count.toString(),
+                      ).toJson()).toList(),
+                          // LineItems(
+                          //   productId: '29',
+                          //   quantity: '3',
+                          // ).toJson(),
+                          // LineItems(
+                          //   productId: '103',
+                          //   quantity: '5',
+                          // ).toJson(),
                         ]
                     );
                     showDialog(
