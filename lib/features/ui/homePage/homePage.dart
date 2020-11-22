@@ -43,6 +43,7 @@ class _HomePageState extends State<HomePage>
       setState(() {});
     });
     Provider.of<ApiProvider>(context,listen: false).getCategory();
+    Provider.of<DBProvider>(context,listen: false).setAllProducts();
 
     super.initState();
   }

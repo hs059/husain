@@ -145,8 +145,7 @@ bool load ;
                       child: Expanded(
                         child: TabBarView(
                           controller: tabControllerSub,
-                          children: [
-                            ...subCategor.date
+                          children: subCategor.date
                                 .map(
                                   (e) => FutureBuilder<product.ProductModel>(
                                     future: Provider.of<ApiProvider>(context)
@@ -212,7 +211,6 @@ bool load ;
                                                   crossAxisSpacing: 10,
                                                   childAspectRatio: 0.80,
                                                   mainAxisSpacing: 10
-// mainAxisSpacing: 15.0,
                                                   ),
                                         );
                                       }
@@ -220,7 +218,6 @@ bool load ;
                                   ),
                                 )
                                 .toList(),
-                          ],
                         ),
                       ),
                     ),

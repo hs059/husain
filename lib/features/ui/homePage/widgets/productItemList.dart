@@ -186,10 +186,13 @@ class ProductItemList extends StatelessWidget {
                                 },
                                 child: Builder(
                                   builder: (context) {
+                                    print(product.id);
+
                                     bool onCart =
                                         Provider.of<DBProvider>(context)
                                             .getOnCart(
                                                 product.id, getproduct());
+
                                     return Container(
                                       height: ScreenUtil().setHeight(30),
                                       width: ScreenUtil().setWidth(30),

@@ -22,7 +22,8 @@ class DBProvider extends ChangeNotifier {
   }
   bool getOnCart(int id ,ProductSql productSql){
     bool found = allProducts.any( (element) => element.idProduct == productSql.idProduct )??false;
-    return found;
+    List<ProductSql> ffff = allProducts.where((element) => element.idProduct == productSql.idProduct ).toList();
+    return ffff.length !=0;
   }
   insertNewProduct(ProductSql productSql) async {
 

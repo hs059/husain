@@ -272,11 +272,11 @@ class ApiClient {
     }
   }
 
-  Future getSubProduct(int id) async {
+  Future getSubProduct(int id, int userId,) async {
     try {
       await initApi();
       Response response = await dio.get(
-        'https://3beauty.net/wp-json/beauty/v1/get_product_by_category?cat_id=$id&user_id=25',
+        'https://3beauty.net/wp-json/beauty/v1/get_product_by_category?cat_id=$id&user_id=$userId',
       );
       if (response.statusCode == 200) {
         return response.data;
@@ -332,11 +332,11 @@ class ApiClient {
     }
   }
 
-  Future getProductByBrand(int id) async {
+  Future getProductByBrand(int id,int userId,) async {
     try {
       await initApi();
       Response response = await dio
-          .get(baseUrl + 'get_products_by_brand?brand_id=$id&user_id=');
+          .get(baseUrl + 'get_products_by_brand?brand_id=$id&user_id=$userId');
       return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {
@@ -348,10 +348,11 @@ class ApiClient {
     }
   }
 
-  Future getProductDetails(int id) async {
+  Future getProductDetails(int id,int userId,
+      ) async {
     try {
       await initApi();
-      Response response = await dio.get(baseUrl + 'get_product?id=$id&user_id');
+      Response response = await dio.get(baseUrl + 'get_product?id=$id&user_id=$userId');
       return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {

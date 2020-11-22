@@ -50,22 +50,35 @@ setState(() {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) => GestureDetector(
-         onTap: () {
-           isFav?_controller.reverse(): _controller.forward();
-           setState(() {
-
-           });
-         },
-          child: Icon(
-            Icons.favorite,
-            color: _colorAnimation.value,
-            size: 30,
+      body: Center(child: ClipPath(
+        clipper: CustomTriangleClipper(),
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.bottomLeft,
+              end: Alignment.topRight,
+              colors: [Color(0xffF25D50), Color(0xffF2BB77)],
+            ),
           ),
         ),
       ),),
     );
+  }
+}
+class CustomTriangleClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+    path.lineTo(size.width, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, 0);
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) {
+    return true;
   }
 }

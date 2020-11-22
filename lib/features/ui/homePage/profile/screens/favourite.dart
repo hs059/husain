@@ -46,7 +46,7 @@ class Favourite extends StatelessWidget {
                         primary: false,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 0.80,
+                          childAspectRatio: 0.60,
                         ),
                         itemCount: productsFav.data.length,
                         itemBuilder: (BuildContext context, int index) {

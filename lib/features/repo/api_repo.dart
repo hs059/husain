@@ -54,20 +54,23 @@ class ApiRepository {
   }
 
   Future<ProductModel> getSubProduct(int id) async {
-    Map map = await ApiClient.apiClient.getSubProduct(id);
+    int UserId = await SPHelper.spHelper.getUser();
+    Map map = await ApiClient.apiClient.getSubProduct(id,UserId);
     print(map);
     ProductModel subProductModel = ProductModel.fromJson(map);
     return subProductModel;
   }
 
   Future<ProductModel> getProductByBrand(int id) async {
-    Map map = await ApiClient.apiClient.getProductByBrand(id);
+    int UserId = await SPHelper.spHelper.getUser();
+    Map map = await ApiClient.apiClient.getProductByBrand(id,UserId);
     ProductModel productModel = ProductModel.fromJson(map);
     return productModel;
   }
 
   Future<ProductM> getProductDetails(int id) async {
-    Map map = await ApiClient.apiClient.getProductDetails(id);
+    int UserId = await SPHelper.spHelper.getUser();
+    Map map = await ApiClient.apiClient.getProductDetails(id,UserId);
     ProductM productM = ProductM.fromJson(map);
     return productM;
   }
