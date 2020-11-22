@@ -5,6 +5,7 @@ import 'package:beauty/features/repo/api_repo.dart';
 import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/homePage/screens/home.dart';
 import 'package:beauty/features/ui/signUI/screens/Verification.dart';
+import 'package:beauty/features/ui/signUI/screens/VerifyForgetPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/sp_helper.dart';
@@ -33,6 +34,12 @@ class AuthProvider extends ChangeNotifier {
   }
   saveVerificationCode(String value) {
     this.verificationCode = value;
+    print(verificationCode);
+    notifyListeners();
+  }
+  int verifyForgetPassword ;
+  saveVerifyForgetPassword(int value) {
+    this.verifyForgetPassword = value;
     notifyListeners();
   }
 
@@ -225,6 +232,7 @@ class AuthProvider extends ChangeNotifier {
     print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
+      await SPHelper.spHelper.setUser(map['data']['user_id']);
 
       Fluttertoast.showToast(
           msg: map['message'],
@@ -234,7 +242,7 @@ class AuthProvider extends ChangeNotifier {
           fontSize: 16.0);
       kNavigatorPush(
         context,
-        ResetPassword(),
+        VerifyForgetPassword(),
       );
     } else {
       Scaffold.of(context).showSnackBar(
@@ -266,7 +274,7 @@ class AuthProvider extends ChangeNotifier {
     String token = await SPHelper.spHelper.getToken();
     print(token);
     Map map = await ApiClient.apiClient
-        .resetPassword(id, token, emailPassword, newPassword);
+        .resetPassword(id, token, newPassword);
     print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
@@ -280,7 +288,36 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-//ToDo:Verification
+
+  submitVerifyForgetPassword(BuildContext context) async {
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    int id = await SPHelper.spHelper.getUser();
+    Map map =
+    await ApiClient.apiClient.verifyForgetPassword(id, verifyForgetPassword);
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    if (map['code']) {
+      await SPHelper.spHelper.setToken(map['data']['token']);
+      Fluttertoast.showToast(
+          msg: map['message'],
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          textColor: Color(0xffDAA095),
+          fontSize: 16.0);
+      kNavigatorPushAndRemoveUntil(context, ResetPassword());
+    } else {
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'رسالة تحذير',
+            textAlign: TextAlign.right,
+          ),
+          messageText: Text(
+            map['message'],
+            textAlign: TextAlign.right,
+          ));
+    }
+  }
+
 ////////////////////////////////////////////////////////////////////////////////
 
   submitVerification(BuildContext context) async {

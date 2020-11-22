@@ -58,7 +58,6 @@ dependencies:
   cached_network_image: ^2.3.3
   connectivity: ^2.0.1
   get: ^3.17.1
-  popup_menu: ^1.0.5
 
 
 

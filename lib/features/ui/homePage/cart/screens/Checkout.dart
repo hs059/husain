@@ -5,6 +5,7 @@ import 'package:beauty/features/ui/homePage/cart/widgets/cartItemCheckOut.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemWidget.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/date&time.dart';
 import 'package:beauty/features/ui/homePage/homePage.dart';
+import 'package:beauty/services/location.dart';
 import 'package:beauty/value/constant.dart';
 
 import 'cartScreen.dart';
@@ -40,14 +41,15 @@ import 'package:beauty/value/colors.dart';
 import 'changeDeliveryAddress.dart';
 
 class CheckOut extends StatelessWidget {
-  @override
+   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
     ApiProvider apiProvider = Provider.of<ApiProvider>(context);
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    DBProvider dbProvider = Provider.of<DBProvider>(context);
     UiProvider uiProviderFalse =
         Provider.of<UiProvider>(context, listen: false);
-    List<ProductSql> allProducts =  Provider.of<DBProvider>(context).allProducts;
+    List<ProductSql> allProducts = Provider.of<DBProvider>(context).allProducts;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -55,52 +57,48 @@ class CheckOut extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: ScreenUtil().setHeight(20),
-                  left: ScreenUtil().setWidth(15),
-                  right: ScreenUtil().setWidth(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Order ID',
-                      style: kSectionText,
-                    ),
-                    Text(
-                      'ID5439',
-                      style: kSeeAll,
+              apiProvider.addressSelected != null
+                  ? CartAddressWidget(
+                      address: apiProvider.addressSelected.fullAddress,
+                      name: authProvider.showProfileModel.data.displayName,
+                      phone:  apiProvider.addressSelected.phone,
+                      typeAddress: apiProvider.addressSelected.type ==
+                              addressIcon[0]
+                          ? 1
+                          : apiProvider.addressSelected.type == addressIcon[1]
+                              ? 2
+                              : apiProvider.addressSelected.type ==
+                                      addressIcon[2]
+                                  ? 3
+                                  : 1,
+                      changeBtn: true,
+                      onTap: () =>
+                          kNavigatorPush(context, ChangeDeliveryAddress()),
                     )
-                  ],
-                ),
-              ),
-              apiProvider.addressSelected !=null? CartAddressWidget(
-                address: apiProvider.addressSelected ==null?'aaaaaaaaaa':apiProvider.addressSelected.fullAddress,
-                name: authProvider.showProfileModel==null?'aaaaaa':authProvider.showProfileModel.data.displayName,
-                phone: apiProvider.addressSelected ==null? '55555':apiProvider.addressSelected.phone,
-                typeAddress: apiProvider.addressSelected.type ==addressIcon[0]?1:apiProvider.addressSelected.type ==addressIcon[1]?2:apiProvider.addressSelected.type ==addressIcon[2]?3:1,
-                changeBtn: true,
-                onTap: () =>kNavigatorPush(context, ChangeDeliveryAddress()),
-              ):ContainerCart(
-                child: SizedBox(
-                  width: ScreenUtil().setWidth(311),
-                  height: ScreenUtil().setHeight(80),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset('assets/images/adress1.png',fit: BoxFit.contain,),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(10),
+                  : ContainerCart(
+                      child: SizedBox(
+                        width: ScreenUtil().setWidth(311),
+                        height: ScreenUtil().setHeight(80),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(
+                              'assets/images/adress1.png',
+                              fit: BoxFit.contain,
+                            ),
+                            SizedBox(
+                              width: ScreenUtil().setWidth(10),
+                            ),
+                            Button(
+                              text: 'أختر عنوان',
+                              onTap: () => kNavigatorPush(
+                                  context, ChangeDeliveryAddress()),
+                            ),
+                          ],
+                        ),
                       ),
-                      Button(
-                        text: 'أختر عنوان',
-                        onTap: () =>kNavigatorPush(context, ChangeDeliveryAddress()),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+                    ),
+
               DateAndTime(),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -148,15 +146,19 @@ class CheckOut extends StatelessWidget {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap:  () {
+                                    onTap: () {
                                       showDialog(
                                           context: context,
                                           builder: (context) {
                                             return Directionality(
                                               textDirection: TextDirection.rtl,
                                               child: SimpleDialog(
-                                                contentPadding: EdgeInsets.all(15),
-                                                titlePadding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+                                                contentPadding:
+                                                    EdgeInsets.all(15),
+                                                titlePadding:
+                                                    EdgeInsets.symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 20),
                                                 title: Row(
                                                   children: <Widget>[
                                                     Icon(Icons.category),
@@ -166,29 +168,33 @@ class CheckOut extends StatelessWidget {
                                                     )
                                                   ],
                                                 ),
-                                                children: allProducts.map((e) => CartItemCheckOut(
-                                                  productSql: e,
-                                                ),).toList(),
+                                                children: allProducts
+                                                    .map(
+                                                      (e) => CartItemCheckOut(
+                                                        productSql: e,
+                                                      ),
+                                                    )
+                                                    .toList(),
                                               ),
                                             );
                                           });
                                     },
-
                                     child: Padding(
                                       padding: EdgeInsets.symmetric(
-                                          horizontal: ScreenUtil().setHeight(15)),
-                                      child:  Row(
+                                          horizontal:
+                                              ScreenUtil().setHeight(15)),
+                                      child: Row(
                                         children: [
                                           Text(
                                             allProducts.length.toString(),
                                             style: kGrayText33,
                                           ),
-
                                           Text(
                                             '  طلب',
                                             style: kGrayText33,
                                           ),
-                                          Icon(Icons.arrow_drop_down,color: Color(0xff8F9BB3))
+                                          Icon(Icons.arrow_drop_down,
+                                              color: Color(0xff8F9BB3))
                                         ],
                                       ),
                                     ),
@@ -203,7 +209,6 @@ class CheckOut extends StatelessWidget {
                               ),
                             ],
                           ),
-
                           Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: ScreenUtil().setWidth(15),
@@ -216,7 +221,9 @@ class CheckOut extends StatelessWidget {
                                   style: kSeeAll,
                                 ),
                                 Text(
-                                  220.toString() + ' ' + currency,
+                                  dbProvider.totalPrize.toString() +
+                                      ' ' +
+                                      currency,
                                   style: kSeeAll,
                                   textAlign: TextAlign.center,
                                 ),
@@ -358,46 +365,41 @@ class CheckOut extends StatelessWidget {
                   'Confirm Order',
                   style: kBtnText,
                 ),
-                onTap: () async{
-                  bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
-                  if(!isLogin){
+                onTap: () async {
+                  bool isLogin = await SPHelper.spHelper.getIsLogin() ?? false;
+                  if (!isLogin) {
                     Fluttertoast.showToast(
                         msg: 'يجب عليك تسجيل الدخول',
                         toastLength: Toast.LENGTH_SHORT,
                         timeInSecForIosWeb: 1,
                         textColor: Color(0xffDAA095),
-                        fontSize: 16.0
-                    );
+                        fontSize: 16.0);
                     kNavigatorPush(context, SignIn());
-                  }else{
-                    Provider.of<ApiProvider>(context,listen: false).createOrder( 'hussein', 'aaa', 'pal', 'ccc',
+                  } else {
+                    Provider.of<ApiProvider>(context, listen: false)
+                        .createOrder(
+                        authProvider.showProfileModel.data.displayName,
+                        apiProvider.addressSelected.fullAddress,
+                        apiProvider.addressSelected.houseNumber,
+                        apiProvider.addressSelected.apartment,
                         [
-                      ...    allProducts.map((e) =>  LineItems(
-                        productId: e.idProduct.toString(),
-                        quantity: e.count.toString(),
-                      ).toJson()).toList(),
-                          // LineItems(
-                          //   productId: '29',
-                          //   quantity: '3',
-                          // ).toJson(),
-                          // LineItems(
-                          //   productId: '103',
-                          //   quantity: '5',
-                          // ).toJson(),
-                        ]
-                    );
+                      ...allProducts
+                          .map((e) => LineItems(
+                                productId: e.idProduct.toString(),
+                                quantity: e.count.toString(),
+                              ).toJson())
+                          .toList(),
+                    ]);
                     showDialog(
                       context: context,
                       builder: (context) => DialogConfirmOrder(
-                        onTap: ()async{
-                        kNavigatorPushReplacement(context, HomePage());
+                        onTap: () async {
+                          kNavigatorPushReplacement(context, HomePage());
                         },
                       ),
                     );
                   }
-
                 },
-
               ),
             ],
           ),
@@ -406,5 +408,3 @@ class CheckOut extends StatelessWidget {
     );
   }
 }
-
-

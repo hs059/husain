@@ -47,4 +47,9 @@ class DBRepository {
         .toggleOnCart(productSql.id, productSql.toJson());
     return raw;
   }
+
+  subtractionProduct(ProductSql productSql)async{
+    await DBClient.dbClient.subtractionProduct(productSql.idProduct, productSql.toJson());
+  }
+
 }

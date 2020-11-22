@@ -63,6 +63,10 @@ class Products {
   String stockCode;
   List<Reviews> reviews;
   int count ;
+    toggle(){
+      this.isFavourited = !this.isFavourited ;
+    }
+
   Products(
       {this.id,
         this.name,
@@ -76,22 +80,24 @@ class Products {
         this.image,
         this.isFavourited,
         this.stockCode,
-        this.reviews,this.count});
+        this.reviews,this.count,});
 
   Products.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     currency = json['currency'];
     permalink = json['permalink'];
-    price = json['price'];
-    salePrice = json['sale_price'];
-    regularPrice = json['regular_price'];
+    price = json['price']  ==null||json['price']  ==''?'0':json['price'].toString();
+    salePrice = json['sale_price']==null||json['sale_price']  ==''?'0':json['sale_price'].toString();
+    regularPrice = json['regular_price']==null||json['regular_price']  ==''?'0':json['regular_price'].toString();
     description = json['description'];
     sizePerUnit = json['size_per_unit'];
     image = json['image'].toString();
     isFavourited = json['is_favourited'];
     stockCode = json['stock_code'];
     count = 1 ;
+
+
     if (json['reviews'] != null) {
       reviews = new List<Reviews>();
       json['reviews'].forEach((v) {

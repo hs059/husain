@@ -78,18 +78,23 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                         children: [
                           Container(
                             height: ScreenUtil().setHeight(176),
-
                           ),
-                          Container(
-
-                            child: CachedNetworkImage(
-                                imageUrl: slider.data[index].imageUrl,
-                                placeholder: (context, url) => LoaderGif1(),
-                                errorWidget: (context, url, error) =>
-                                    Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
-                                height: ScreenUtil().setHeight(176),
-                                fit: BoxFit.contain
-                            ),alignment:Alignment.bottomLeft ,
+                          Row(
+                            children: [
+                              Expanded(child: Container(),
+                              flex: 1,),
+                              Expanded(
+                                child: CachedNetworkImage(
+                                    imageUrl: slider.data[index].imageUrl,
+                                    placeholder: (context, url) => LoaderGif1(),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+                                    height: ScreenUtil().setHeight(176),
+                                    fit: BoxFit.contain
+                                ),
+                                flex: 1,
+                              ),
+                            ],
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +114,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                 child: Text(
                                   slider.data[index].content,
                                   style: kBannerSubTitle,
-                                  textAlign: TextAlign.start,
+                                  textAlign: TextAlign.justify,
                                   overflow: TextOverflow.fade,
                                 ),
                               ),
@@ -121,7 +126,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                  //Todo:push with product ID
                                  Container(
                                      child: Button(text: '  Shop Now  ', onTap: ()async{
-                                    await   Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(slider.data[index].id,context);
+                                       Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(int.parse(slider.data[index].prodOrCatId),context);
                                           kNavigatorPush(context, ProductMScreen());
                                      }),
                                  ),

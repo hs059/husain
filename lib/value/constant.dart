@@ -51,6 +51,11 @@ String add_address = 'add_address';
 String get_address = 'get_address';
 String remove_address = 'remove_address';
 String add_reviews = 'add_reviews';
+String get_terms_and_conditions = 'get_terms_and_conditions';
+String verify_for_forget_password = 'verify_for_forget_password';
+String add_product_to_wishlist = 'add_product_to_wishlist';
+String remove_product_from_wishlist = 'remove_product_from_wishlist';
+String get_favourite_products = 'get_favourite_products';
 
 List<String> getSliderIndex = [
   'get_first_slider',

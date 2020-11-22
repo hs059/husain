@@ -15,7 +15,7 @@ class HelpCenter extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-          appBar: appBarCart(title: 'Help Center'),
+          appBar: appBarCart(title: 'الدعم و المساندة'),
           body: Padding(
             padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
             child: ContainerCart(
@@ -29,7 +29,7 @@ class HelpCenter extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                     title: Text(
-                      'Email Us',
+                      'راسلنا',
                       style: kProfile,
                     ),
                   ),
@@ -44,7 +44,7 @@ class HelpCenter extends StatelessWidget {
                       width: ScreenUtil().setWidth(35),
                     ),
                     title: Text(
-                      'Call Us',
+                      'تواصل معنا',
                       style: kProfile,
                     ),
                   ),

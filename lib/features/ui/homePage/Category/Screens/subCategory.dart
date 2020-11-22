@@ -26,12 +26,12 @@ class SubCategory extends StatefulWidget {
 class _SubCategoryState extends State<SubCategory>
     with SingleTickerProviderStateMixin {
   TabController tabControllerSub;
-
+bool load ;
   int index = 0;
-  String _character;
   product.ProductModel subProductModel;
   @override
   void initState() {
+
     tabControllerSub =
         TabController(initialIndex: 0, vsync: this, length: widget.subCategoryModel.date.length);
     super.initState();

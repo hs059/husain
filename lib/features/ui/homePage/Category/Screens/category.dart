@@ -17,14 +17,14 @@ import 'package:get/get.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
+import 'SubCategoryLoad.dart';
+
 class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: ModalProgressHUD(
-      inAsyncCall:uiProvider.spinner,
       child: Container(
           padding: EdgeInsets.all(15),
           color: Colors.white,
@@ -59,10 +59,15 @@ class Category extends StatelessWidget {
 
                            if (ConnectivityService.connectivityStatus ==
                                ConnectivityHStatus.online) {
+                             DateTime now = DateTime.now();
+                             print(now.toString());
+                             kNavigatorPush(context, SubCategoryWait(categor:category.data[index],));
                              SubCategoryModel subCategoryModel =    await Provider.of<ApiProvider>(context, listen: false)
                                  .getSubCategory(category.data[index].id,context);
+                             DateTime now2 = DateTime.now();
+                             print(now2.toString());
                              print(subCategoryModel.date.toString());
-                             kNavigatorPush(context, SubCategory(
+                             kNavigatorPushReplacement(context, SubCategory(
                                subCategoryModel: subCategoryModel,
                                categor:category.data[index] ,
                              ),
@@ -101,7 +106,6 @@ class Category extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }

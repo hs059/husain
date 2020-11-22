@@ -1,43 +1,71 @@
 
-
-
+import 'package:beauty/value/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:popup_menu/popup_menu.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
+class Test extends StatefulWidget {
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _TestState createState() => _TestState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final GlobalKey _menuKey = new GlobalKey();
+class _TestState extends State<Test>with SingleTickerProviderStateMixin  {
+  AnimationController _controller ;
+  Animation _colorAnimation ;
+  bool isFav =false;
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 500),
+      vsync: this,
+    );
+    _colorAnimation = ColorTween(begin: kGray,end: kRed).animate(_controller);
+    _controller.addListener(() {
+setState(() {
 
+});
+    });
+
+    _controller.addStatusListener((status) {
+      if(status ==AnimationStatus.completed){
+        setState(() {
+          isFav =true ;
+        });
+      }
+      if(status ==AnimationStatus.dismissed){
+        setState(() {
+          isFav =false ;
+        });
+      }
+
+    });
+
+  }
+  @override
+  void dispose() {
+    _controller.dispose();
+     super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
-    final button = new PopupMenuButton(icon: Icon(Icons.category,color: Colors.white,),
-        key: _menuKey,
-        itemBuilder: (_) => <PopupMenuItem<String>>[
-          new PopupMenuItem<String>(
-              child: const Text('Doge'), value: 'Doge'),
-          new PopupMenuItem<String>(
-              child: const Text('Lion'), value: 'Lion'),
-        ],
-        onSelected: (_) {});
+    return Scaffold(
+      body: Center(child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) => GestureDetector(
+         onTap: () {
+           isFav?_controller.reverse(): _controller.forward();
+           setState(() {
 
-    final tile =
-    new ListTile(title: new Text('Doge or lion?'), trailing: button, onTap: () {
-      // This is a hack because _PopupMenuButtonState is private.
-      dynamic state = _menuKey.currentState;
-      state.showButtonMenu();
-    });
-    return new Scaffold(
-      body: new Center(
-        child: tile,
-      ),
+           });
+         },
+          child: Icon(
+            Icons.favorite,
+            color: _colorAnimation.value,
+            size: 30,
+          ),
+        ),
+      ),),
     );
   }
 }

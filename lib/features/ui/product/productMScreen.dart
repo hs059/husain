@@ -32,14 +32,11 @@ import 'package:share/share.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class ProductMScreen extends StatelessWidget {
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
-
+    ApiProvider apiProvider =   Provider.of<ApiProvider>(context) ;
+    ApiProvider apiProviderFalse =   Provider.of<ApiProvider>(context,listen: false) ;
+    AuthProvider authProvider =    Provider.of<AuthProvider>(context);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -87,7 +84,7 @@ class ProductMScreen extends StatelessWidget {
               );
             }else{
               if(value.productM.data == null){
-                return Center(child: Text('waitaaaaaaaaaaaaaaa'));
+                return Center(child: CircularProgressIndicator());
               }else{
                 String name = value.productM.data.name??'';
                 String id = value.productM.data.id??'125';
@@ -134,16 +131,21 @@ class ProductMScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () => null,
+
+                      authProvider.isLogin? GestureDetector(
+                        onTap: () {
+                     apiProviderFalse.toggleFavUIM(apiProvider.productM.data);
+                        },
                         child: Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(5),
+                          //ToDo:Check Token
                           child: Icon(
-                            Icons.favorite_border,
-                            color: isFavourited ? kPinkLight:Colors.black,
+                            isFavourited ? Icons.favorite : Icons.favorite_border,
+                            color: isFavourited ? kRed : Colors.black,
+                            size: 30,
                           ),
                         ),
-                      ),
+                      ):Container(),
                     ],
                   ),
                   body: ListView(
@@ -177,7 +179,7 @@ class ProductMScreen extends StatelessWidget {
                               reviews:reviews.length,
                             ),
                             MyDivider(),
-                            ProductPrize(prize: price,oldPrize: regularPrice,),
+                            ProductPrize(prize: price==null || price==''?'0':price,oldPrize:  regularPrice==null || regularPrice==''?'0':regularPrice,),
                             SizedBox(
                               height: ScreenUtil().setHeight(24),
                             ),

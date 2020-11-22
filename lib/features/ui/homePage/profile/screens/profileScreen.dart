@@ -19,6 +19,8 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import 'favourite.dart';
+
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -118,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
                   ListTileProfile(
                     title: 'المفضلة',
                     image: 'assets/svg/favBtn.svg',
-                    route: ShowProduct(title :'Favorite'),
+                    route: Favourite(),
                   ),
                   MyDivider(),
                   ListTileProfile(

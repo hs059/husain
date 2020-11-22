@@ -105,17 +105,23 @@ class CartItemWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        height: ScreenUtil().setHeight(30),
-                        width: ScreenUtil().setWidth(30),
-                        child: Icon(
-                          FontAwesomeIcons.minus,
-                          size: 15,
-                          color: kPinkLight,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(color: kBorder, width: 1),
+                      GestureDetector(
+                        onTap: () {
+
+                         productSql.count ==1 ?null :Provider.of<DBProvider>(context,listen: false).subtractionProduct(productSql);
+                        },
+                        child: Container(
+                          height: ScreenUtil().setHeight(30),
+                          width: ScreenUtil().setWidth(30),
+                          child: Icon(
+                            FontAwesomeIcons.minus,
+                            size: 15,
+                            color: kPinkLight,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            border: Border.all(color: kBorder, width: 1),
+                          ),
                         ),
                       ),
                       Text(
@@ -124,7 +130,7 @@ class CartItemWidget extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-
+                          dbProviderFalse.insertNewProduct(productSql);
 
                         },
                         child: Container(
@@ -143,6 +149,13 @@ class CartItemWidget extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(10),
+                ),
+                Text(
+                 'الاجمالي : ' + '${double.parse(productSql.price) *double.parse(productSql.count.toString())}' +' '+ currency,
+                  style: kReviews,
                 ),
               ],
             ),

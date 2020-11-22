@@ -14,12 +14,12 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:pin_code_text_field/pin_code_text_field.dart';
 import 'package:provider/provider.dart';
 
-class Verification extends StatefulWidget {
+class VerifyForgetPassword extends StatefulWidget {
   @override
-  _VerificationState createState() => _VerificationState();
+  _VerifyForgetPasswordState createState() => _VerifyForgetPasswordState();
 }
 
-class _VerificationState extends State<Verification>
+class _VerifyForgetPasswordState extends State<VerifyForgetPassword>
     with SingleTickerProviderStateMixin {
   TextEditingController controllerPin;
   GlobalKey formKeySignUp = GlobalKey<FormState>();
@@ -32,8 +32,8 @@ class _VerificationState extends State<Verification>
     const oneSec = const Duration(seconds: 1);
     _timer = new Timer.periodic(
       oneSec,
-      (Timer timer) => setState(
-        () {
+          (Timer timer) => setState(
+            () {
           if (_start < 1) {
             timer.cancel();
           } else {
@@ -117,7 +117,7 @@ class _VerificationState extends State<Verification>
                       onDone: (text) {
                         doneText = text;
                         print("DONE $text");
-                        authProviderFalse.saveVerificationCode(text);
+                        authProviderFalse.saveVerifyForgetPassword(int.parse(text));
                         // print("DONE CONTROLLER ${controllerPin.text}");
                       },
                       pinBoxWidth: ScreenUtil().setWidth(50),
@@ -125,10 +125,10 @@ class _VerificationState extends State<Verification>
                       hasUnderline: false,
                       wrapAlignment: WrapAlignment.center,
                       pinBoxDecoration:
-                          ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                      ProvidedPinBoxDecoration.defaultPinBoxDecoration,
                       pinTextStyle: kPinCode,
                       pinTextAnimatedSwitcherTransition:
-                          ProvidedPinBoxTextAnimation.scalingTransition,
+                      ProvidedPinBoxTextAnimation.scalingTransition,
 //                    pinBoxColor: Colors.green[100],
                       pinTextAnimatedSwitcherDuration: Duration(milliseconds: 150),
 //                    highlightAnimation: true,
@@ -152,7 +152,7 @@ class _VerificationState extends State<Verification>
                   Button(
                       text: 'أرسل',
                       onTap: () {
-                        authProviderFalse.submitVerification(context);
+                        authProviderFalse.submitVerifyForgetPassword(context);
                       }),
                 ],
               ),

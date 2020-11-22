@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -89,35 +90,34 @@ class DBClient {
     }
   }
   Future<int> updateProduct(int id,Map<String,dynamic> map)async{
-    try{
+  try {
     await initDatabase();
-    int rows =await database.update(productTable,map,where: '$productIdColumn = ?',whereArgs: [id] ) ;
-    print(rows);
-      return rows ;
+     List<Map> results = await database.query(productTable,where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']] );
+     int count = results.first['productCountColumn'];
+     Map updatedMap = Map.from(results.first);
 
-    }catch (error){
-      throw 'error is $error';
-    }
-
+    updatedMap['productCountColumn'] = ++count;
+    print(updatedMap);
+     database.update(productTable,Map<String, dynamic>.from(updatedMap),where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']]);
+  }  catch (e) {
+    // TODO
   }
 
-  // Future<int> updateProduct(int id,Map<String,dynamic> map)async{
-  //   try{
-  //   await initDatabase();
-  //   int productId = map[productIdColumn];
-  //   Map map2 = await getOneProduct(productId);
-  //   map2[productCountColumn] = map2[productCountColumn]++;
-  //
-  //   int rows =await database.update(productTable,map2,where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']] ) ;
-  //
-  //   print(rows);
-  //     return rows ;
-  //
-  //   }catch (error){
-  //     throw 'error is $error';
-  //   }
-  //
-  // }
+  }
+  Future<int> subtractionProduct(int id,Map<String,dynamic> map)async{
+  try {
+    await initDatabase();
+     List<Map> results = await database.query(productTable,where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']] );
+     int count = results.first['productCountColumn'];
+     Map updatedMap = Map.from(results.first);
+     updatedMap['productCountColumn'] =--count;
+    print(updatedMap);
+     database.update(productTable,Map<String, dynamic>.from(updatedMap),where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']]);
+  }  catch (e) {
+    // TODO
+  }
+
+  }
 
   Future<int> deleteAllProduct() async {
     try {

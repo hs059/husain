@@ -5,15 +5,10 @@ import 'package:geolocator/geolocator.dart';
 class Location {
 
   Location._();
-  Location location =   Location._();
+  static final  Location location =   Location._();
   Position currentPosition;
   String currentAddress;
   String name;
-
-  String houseNum;
-
-  String apartment;
-
   String phoneNum;
   Geolocator geolocator ;
 
@@ -25,7 +20,6 @@ class Location {
       return geolocator;
     }
   }
-
 
   getCurrentLocation()async{
     geolocator =await initGeolocator();
@@ -43,10 +37,13 @@ class Location {
     try {
       geolocator =await initGeolocator();
       List<Placemark> p =
-      await geolocator.placemarkFromCoordinates(21.324220, 39.114267);
+      // await geolocator.placemarkFromCoordinates(21.324220, 39.114267);
+      await geolocator.placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
       Placemark place = p[0];
         currentAddress =
         "${place.locality}, ${place.postalCode}, ${place.country}";
+        print(currentAddress);
+        return currentAddress ;
     } catch (e) {
       print(e);
     }

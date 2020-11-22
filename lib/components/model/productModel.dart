@@ -41,6 +41,9 @@ class Data {
   bool isFavourited;
   String stockCode;
   List<Reviews> reviews;
+  toggle(){
+    this.isFavourited = !this.isFavourited ;
+  }
 
   Data(
       {this.id,

@@ -30,7 +30,7 @@ class Cart extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: appBarCart(title: 'Cart'),
+        appBar: appBarCart(title: 'العربة'),
         body: Consumer<DBProvider>(
           builder: (context, value, child) {
             List<ProductSql> allProduct =  value.allProducts ;

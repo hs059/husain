@@ -77,12 +77,11 @@ class ApiClient {
 
 //////////////////////////////////////////////////////////////////////////////////
   Future<Map> resetPassword(
-      int id, String token, String emailPassword, String newPassword) async {
+      int id, String token,String newPassword) async {
     await initApi();
     FormData data = FormData.fromMap({
       'user_id': id,
       'token': token,
-      'email_password': emailPassword,
       'newPassword': newPassword,
     });
     Response response = await dio.post(baseUrl + reset_password, data: data);
@@ -172,9 +171,22 @@ class ApiClient {
       print(e);
     }
   }
+  Future<Map> verifyForgetPassword(int id, int verificationCode) async {
+    await initApi();
+    FormData data = FormData.fromMap({
+      "user_id": id,
+      "verification_code": verificationCode,
+    });
+
+    Response response = await dio.post(
+      baseUrl + verify_for_forget_password,
+      data: data,
+    );
+    print(response.data);
+    return response.data;
+  }
 
 //ToDo:Verification
-
   Future<Map> verification(String id, String verificationCode) async {
     await initApi();
     FormData data = FormData.fromMap({
@@ -387,8 +399,10 @@ class ApiClient {
     String token,
     String name,
     String address1,
-    String country,
-    String city,
+
+    String houseNum,
+    String apartment,
+
     List<Map> product,
   ) async {
     try {
@@ -401,10 +415,24 @@ class ApiClient {
           "first_name": name,
           "last_name": "last_name",
           "address_1": address1,
-          "address_2": "-",
-          "country": country,
-          "state": "Gaza Strip",
-          "city": city
+          "address_2": "house_number:$houseNum , apartment :$apartment",
+          "country": 'on_address_1',
+          "state": " on_address_1",
+          "city": 'on_address_1'
+        },
+        "line_items": product
+      });
+      print({
+        "user_id": userId,
+        "token": token,
+        "shipping": {
+          "first_name": name,
+          "last_name": "on first Name",
+          "address_1": address1,
+          "address_2": "house_number:$houseNum , apartment :$apartment",
+          "country": '',
+          "state": "",
+          "city": ''
         },
         "line_items": product
       });
@@ -524,4 +552,105 @@ class ApiClient {
       return response.data;
     }
   }
+  Future<Map> getTermsAndConditions() async {
+    try {
+      await initApi();
+      Response response = await dio.get(baseUrl + get_terms_and_conditions);
+      if(response.statusCode == 200 ){
+        return response.data;
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
+    }
+  }
+Future<Map> addFav(int productId)async{
+    try {
+      await initApi() ;
+      int idUser = await SPHelper.spHelper.getUser();
+
+      FormData data  = FormData.fromMap({
+        "user_id":idUser,
+        "product_id":productId,
+      });
+      Response response = await dio.post(
+        baseUrl + add_product_to_wishlist ,
+        data:data
+      );
+
+      if(response.statusCode == 200 ){
+        return response.data;
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
+    }
+
+}
+Future<Map> removeFav(int productId)async{
+    try {
+      await initApi() ;
+      int idUser = await SPHelper.spHelper.getUser();
+
+      FormData data  = FormData.fromMap({
+        "user_id":idUser,
+        "products":[
+          {
+            "id":productId
+          }
+        ]
+      });
+      Response response = await dio.post(
+        baseUrl + remove_product_from_wishlist ,
+        data:data
+      );
+
+      if(response.statusCode == 200 ){
+        return response.data;
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
+    }
+
+}
+
+getAllFav()async{
+  try {
+    await initApi() ;
+    int idUser = await SPHelper.spHelper.getUser();
+
+    FormData data  = FormData.fromMap({
+      "user_id":idUser
+    });
+    Response response = await dio.post(
+        baseUrl + get_favourite_products ,
+        data:data
+    );
+
+    if(response.statusCode == 200 ){
+      return response.data;
+    }
+  } on DioError catch (e) {
+    if (e.response.statusCode != 200) {
+      print(e.response.statusCode);
+    } else {
+      print(e.message);
+      print(e.request);
+    }
+  }
+}
+
 }

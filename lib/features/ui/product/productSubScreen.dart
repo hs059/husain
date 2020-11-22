@@ -3,6 +3,7 @@ import 'package:beauty/components/model/productCart.dart';
 import 'package:beauty/components/model/productModel.dart' as subProduct;
 import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
+import 'package:beauty/components/widgets/animationIcon.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
@@ -51,7 +52,7 @@ class ProductSubScreen extends StatelessWidget {
   List<Map> rev ;
   int id ;
   int count ;
-
+  Function toggleFav ;
   @override
   Widget build(BuildContext context) {
     if(section){
@@ -59,7 +60,7 @@ class ProductSubScreen extends StatelessWidget {
       permalink = productS.permalink ;
       regularPrice = productS.regularPrice ;
       salePrice = productS.salePrice ;
-      price = productS.price ;
+      price = productS.price??'0' ;
       description = productS.description ;
       image = productS.image ;
       isFavourited = productS.isFavourited ;
@@ -72,7 +73,7 @@ class ProductSubScreen extends StatelessWidget {
       permalink = product.permalink ;
       regularPrice = product.regularPrice ;
       salePrice = product.salePrice ;
-      price = product.price ;
+      price = product.price??'0'  ;
       description = product.description ;
       image = product.image ;
       isFavourited = product.isFavourited ;
@@ -92,6 +93,7 @@ class ProductSubScreen extends StatelessWidget {
 
     ApiProvider apiProvider =   Provider.of<ApiProvider>(context) ;
     ApiProvider apiProviderFalse =   Provider.of<ApiProvider>(context,listen: false) ;
+    AuthProvider authProvider =    Provider.of<AuthProvider>(context);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -120,16 +122,20 @@ class ProductSubScreen extends StatelessWidget {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () => null,
+            authProvider.isLogin? GestureDetector(
+              onTap: () {
+               section? apiProviderFalse.toggleFavUIS(productS):apiProviderFalse.toggleFavUI(product);
+              },
               child: Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(8),
+                //ToDo:Check Token
                 child: Icon(
-                  Icons.favorite_border,
-                  color:isFavourited? kPinkLight:Colors.black,
+                  isFavourited ? Icons.favorite : Icons.favorite_border,
+                  color: isFavourited ? kRed : Colors.black45,
+                  size: 30,
                 ),
               ),
-            ),
+            ):Container(),
           ],
         ),
         body: ListView(
@@ -163,17 +169,15 @@ class ProductSubScreen extends StatelessWidget {
                     reviews:section?productS.reviews.length: product.reviews.length,
                   ),
                   MyDivider(),
-                  ProductPrize(prize: price,oldPrize: regularPrice,),
+                  ProductPrize(prize: price==null || price==''?'0':price,oldPrize:  regularPrice==null || regularPrice==''?'0':regularPrice,),
                   SizedBox(
                     height: ScreenUtil().setHeight(24),
                   ),
                   Button(
                     text: 'إضافة إلى العربة',
                     onTap: () {
-                      ProductSql productSql =
-                      ProductSql(image: image, count: 1, name: name, price: price.toString(),idProduct: id);
                       Provider.of<DBProvider>(context, listen: false)
-                          .insertNewProduct(productSql);
+                          .insertNewProduct(getproduct());
                       showMaterialModalBottomSheet(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.only(
@@ -481,7 +485,7 @@ class ProductSubScreen extends StatelessWidget {
             ),
             Column(
               children: [
-                ProductRecommended(id: id,onCart: false,),
+                ProductRecommended(id: id),
                 SizedBox(
                   height: ScreenUtil().setHeight(10),
                 ),

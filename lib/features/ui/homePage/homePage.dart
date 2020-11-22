@@ -1,5 +1,6 @@
 import 'package:beauty/components/model/lineItems.dart';
 import 'package:beauty/components/model/productsSQL.dart';
+import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
@@ -54,11 +55,7 @@ class _HomePageState extends State<HomePage>
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: () async {
-            //
-            //   },
-            // ),
+
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               controller: tabControllerConstant,

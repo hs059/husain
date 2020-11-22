@@ -22,8 +22,8 @@ class ProductSql {
   ProductSql.fromJson(Map<String, dynamic> map) {
     this.id = map[DBClient.dbClient.idColumn];
     this.name = map[DBClient.dbClient.productNameColumn];
-    this.price = map[DBClient.dbClient.productPriceColumn].toString();
-    this.count = map[DBClient.dbClient.productCountColumn];
+    this.price = map[DBClient.dbClient.productPriceColumn].toString() ==null ||map[DBClient.dbClient.productPriceColumn].toString() ==''?'0':map[DBClient.dbClient.productPriceColumn].toString();
+    this.count = map[DBClient.dbClient.productCountColumn] ;
     this.image=map[DBClient.dbClient.productImageColumn].toString();
     this.idProduct = map[DBClient.dbClient.productIdColumn];
     this.onCart = map[DBClient.dbClient.productOnCartColumn] ==1 ?true:false;

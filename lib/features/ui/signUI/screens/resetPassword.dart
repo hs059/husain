@@ -50,16 +50,6 @@ class ResetPassword extends StatelessWidget {
                   child: Column(
                     children: [
                       CustomTextFormField(
-                        hintText: 'أدخل الكود المرسلة لك ',
-                        password: uiProvider.toggleEye,
-                        iconData: uiProvider.iconData,
-                        validator: authProvider.validatePassword,
-                        onSaved: authProvider.saveEmailPassword,
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(15),
-                      ),
-                      CustomTextFormField(
                         hintText: 'كلمة السر الجديدة',
                         password: uiProvider.toggleEye,
                         iconData: uiProvider.iconData,

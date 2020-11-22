@@ -3,6 +3,7 @@ import 'package:beauty/components/model/productModel.dart' as subProduct;
 import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/services/connectivity.dart';
@@ -16,6 +17,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -37,10 +39,13 @@ class ProductItemGrid extends StatelessWidget {
       price: product.price,
       image: product.image,
       name: product.name,
+      count: 1
     );
   }
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider =    Provider.of<AuthProvider>(context);
+    ApiProvider apiProviderFalse =    Provider.of<ApiProvider>(context,listen: false);
     return Row(
       children: [
         Container(
@@ -94,14 +99,20 @@ class ProductItemGrid extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Align(
+                        authProvider.isLogin?  Align(
                           alignment: Alignment.topRight,
-                          child: Icon(
-                            fav ? Icons.favorite : Icons.favorite_border,
-                            color: fav ? kRed : Colors.black45,
-                            size: 30,
+                          child: GestureDetector(
+                            onTap: () {
+                              apiProviderFalse.toggleFavUI(product);
+                            },
+                            child: Icon(
+                              fav ? Icons.favorite : Icons.favorite_border,
+                              color: fav ? kRed : Colors.black45,
+                              size: 30,
+                            ),
                           ),
-                        ),
+                        ):Container(),
+
                       ],
                     ),
                   ),
@@ -173,29 +184,50 @@ class ProductItemGrid extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 child:
                 GestureDetector(
+                  //Todo: ID
                   onTap: () {
-                    Provider.of<DBProvider>(context,listen: false).insertNewProduct(
-                        getproduct()
-                    );
-                  },
-                  child: Padding(
-                    padding:
-                    EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(15),
-                        vertical: ScreenUtil().setWidth(5)
-                    ),
+                    Provider.of<DBProvider>(context,
+                        listen: false)
+                        .insertNewProduct(getproduct());
+                    Fluttertoast.showToast(
+                        backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                        msg: 'تمت اضافة المنتج الى العربة',
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.TOP,
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0);
 
-                    child: Container(
-                      height: ScreenUtil().setHeight(30),
-                      width: ScreenUtil().setWidth(30),
-                      padding: EdgeInsets.all(getproduct().onCart ? 5 : 0),
-                      decoration: BoxDecoration(
-                          color: getproduct().onCart ? kPinkLight : Colors.white,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: SvgPicture.asset(
-                        'assets/svg/cardIcon2.svg',
-                        color: getproduct().onCart ? Colors.white : kPinkLight,
-                      ),
-                    ),
+                  },
+                  child: Builder(
+                    builder: (context) {
+                      bool onCart =
+                      Provider.of<DBProvider>(context)
+                          .getOnCart(
+                          product.id, getproduct());
+                      return Padding(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: ScreenUtil().setHeight(15),
+                            vertical: ScreenUtil().setWidth(5)
+                        ),
+                        child: Container(
+                          height: ScreenUtil().setHeight(30),
+                          width: ScreenUtil().setWidth(30),
+                          padding: EdgeInsets.all(onCart ? 5 : 0),
+                          decoration: BoxDecoration(
+                              color: onCart
+                                  ? kPinkLight
+                                  : Colors.white,
+                              borderRadius:
+                              BorderRadius.circular(8)),
+                          child: SvgPicture.asset(
+                            'assets/svg/cardIcon2.svg',
+                            color:
+                            onCart ? Colors.white : kPinkLight,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),

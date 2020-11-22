@@ -13,6 +13,7 @@ import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/myOrder.dart';
 import 'package:beauty/services/sp_helper.dart';
+import 'package:flutter/material.dart';
 
 class ApiRepository {
   ApiRepository._();
@@ -54,6 +55,7 @@ class ApiRepository {
 
   Future<ProductModel> getSubProduct(int id) async {
     Map map = await ApiClient.apiClient.getSubProduct(id);
+    print(map);
     ProductModel subProductModel = ProductModel.fromJson(map);
     return subProductModel;
   }
@@ -96,14 +98,14 @@ class ApiRepository {
   Future<CreateOrderGet> createOrder(
     String name,
     String address1,
-    String country,
-    String city,
+    String houseNum,
+    String apartment,
     List<Map> product,
   ) async {
     String token = await SPHelper.spHelper.getToken();
     int UserId = await SPHelper.spHelper.getUser();
     Map map = await ApiClient.apiClient
-        .createOrder(UserId, token, name, address1, country, city, product);
+        .createOrder(UserId, token, name, address1, houseNum, apartment, product);
     if (map['code']) {
       CreateOrderGet createOrderGet = CreateOrderGet.fromJson(map);
 
@@ -126,4 +128,15 @@ class ApiRepository {
       return addressModel ;
     }
   }
+
+  Future<ProductModel> getAllFav()async{
+   Map map =  await ApiClient.apiClient.getAllFav();
+   if(map['code']){
+     print(map);
+     ProductModel productModel =  ProductModel.fromJson(map);
+     // print(productModel.toJson());
+     return productModel ;
+   }
+  }
+
 }

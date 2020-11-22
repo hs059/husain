@@ -14,7 +14,6 @@ class ConnectivityService {
   static StreamController<ConnectivityStatus> connectionStatusController = StreamController<ConnectivityStatus>();
 
   ConnectivityService() {
-    // Subscribe to the connectivity Chanaged Steam
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       print('hello from connectivity');
 

@@ -1,48 +1,45 @@
-import 'package:beauty/components/model/allAddressModel.dart' as addressClass ;
+import 'package:beauty/components/model/allAddressModel.dart' as addressClass;
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/createOrderGet.dart';
 import 'package:beauty/components/model/myOrderModel.dart';
 import 'package:beauty/components/model/productM.dart' as productClass;
-import 'package:beauty/components/model/productModel.dart';
-import 'package:beauty/components/model/sectionModel.dart';
+import 'package:beauty/components/model/productModel.dart'as productModelClass;
+import 'package:beauty/components/model/sectionModel.dart' as sectionClass;
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/api_repo.dart';
-import 'package:beauty/features/ui/homePage/cart/screens/changeDeliveryAddress.dart';
-import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/constant.dart';
-import 'package:beauty/value/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class ApiProvider extends ChangeNotifier {
-  ProductModel subProductModel;
+  productModelClass.ProductModel subProductModel;
 
   CategoryModel category;
   SubCategoryModel subCategory;
-  List<SubCategoryModel> subCategoryList = [];
   SliderModel slider1;
   SliderModel slider2;
   SliderModel slider3;
-  SectionModel latestProducts;
+  sectionClass.SectionModel latestProducts;
 
-  SectionModel mostRated;
+  sectionClass.SectionModel mostRated;
 
-  SectionModel customCategory;
+  sectionClass.SectionModel customCategory;
 
-  ProductModel subProduct;
+  productModelClass.ProductModel subProduct;
   BrandModel brand;
 
-  ProductModel productByBrand;
+  productModelClass.ProductModel productByBrand;
 
-  ProductModel productSearch;
+  productModelClass.ProductModel productSearch;
 
-  ProductModel productByCategory;
+  productModelClass.ProductModel productByCategory;
+  productModelClass.ProductModel productFav;
 
   productClass.ProductM productM;
 
@@ -51,10 +48,27 @@ class ApiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<SubCategoryModel>> allSubCategory() async {
+    DateTime now = DateTime.now();
+    print(now.toString());
+    category = await ApiRepository.apiRepository.getCategory();
+    List<SubCategoryModel> subCategoryList = [];
+    for (int i = 0; i < category.data.length; i++) {
+      SubCategoryModel subCModel =
+          await ApiRepository.apiRepository.getSubCategory(category.data[i].id);
+      subCategoryList.add(subCModel);
+    }
+    DateTime now2 = DateTime.now();
+    print(now2.toString());
+
+    print(subCategoryList.length);
+    return subCategoryList;
+  }
+
   Future<SubCategoryModel> getSubCategory(int id, BuildContext context) async {
-    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    // Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     subCategory = await ApiRepository.apiRepository.getSubCategory(id);
-    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    // Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     notifyListeners();
     return subCategory;
   }
@@ -82,7 +96,7 @@ class ApiProvider extends ChangeNotifier {
     return brand;
   }
 
-  Future<ProductModel> getSubProduct(int id) async {
+  Future<productModelClass.ProductModel> getSubProduct(int id) async {
     subProduct = await ApiRepository.apiRepository.getSubProduct(id);
     if (subProduct.code) {
       return subProduct;
@@ -95,11 +109,12 @@ class ApiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<ProductModel> getProductByCategory(int id) async {
+  Future<productModelClass.ProductModel> getProductByCategory(int id) async {
     productByCategory =
         await ApiRepository.apiRepository.getProductByCategory(id);
     return productByCategory;
   }
+
 
   getProductDetails(int id) async {
     productM = null;
@@ -107,11 +122,14 @@ class ApiProvider extends ChangeNotifier {
     print(productM.toJson());
     notifyListeners();
   }
-Future<List<productClass.Reviews>> getProductRev(int id)async{
-  productM = await ApiRepository.apiRepository.getProductDetails(id);
-    return productM.data.reviews ;
-}
-  Future<productClass.ProductM> getProductDetailsSearch(int id, BuildContext context) async {
+
+  Future<List<productClass.Reviews>> getProductRev(int id) async {
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+    return productM.data.reviews;
+  }
+
+  Future<productClass.ProductM> getProductDetailsSearch(
+      int id, BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
@@ -143,95 +161,140 @@ Future<List<productClass.Reviews>> getProductRev(int id)async{
   createOrder(
     String name,
     String address1,
-    String country,
-    String city,
+    String houseNum,
+    String apartment,
+
     List<Map> product,
   ) async {
-    createOrderGet = await ApiRepository.apiRepository.createOrder(name, address1, country, city, product);
+    createOrderGet = await ApiRepository.apiRepository
+        .createOrder(name, address1,houseNum, apartment, product);
     getAllOrder();
   }
+
   MyOrderModel myOrderModel;
 
-  getAllOrder()async{
+  getAllOrder() async {
     myOrderModel = await ApiRepository.apiRepository.getAllOrder();
     notifyListeners();
   }
+
   addNewAddress(
-      String type,
-      String phone,
-      String address,
-      String houseNumber,
-      String apartment,
-      bool IsDefault,
-      BuildContext context ,
-      )async{
+    String type,
+    String phone,
+    String address,
+    String houseNumber,
+    String apartment,
+    bool IsDefault,
+    BuildContext context,
+  ) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    Map map =   await ApiClient.apiClient.addNewAddress(type, phone, address, houseNumber, apartment, IsDefault);
+    Map map = await ApiClient.apiClient
+        .addNewAddress(type, phone, address, houseNumber, apartment, IsDefault);
     getAllAddress();
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
 
     if (map['code']) {
-    Get.snackbar('تمت اضافة العنوان', 'بامكانك رؤية كل العنوانين ... ' ,  );
-    Fluttertoast.showToast(
-        msg: 'تم اضافة العنوان',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.SNACKBAR,
-        timeInSecForIosWeb: 1,
-        textColor: Color(0xffDAA095),
-        fontSize: 16.0
-    );
+      Get.snackbar(
+        'تمت اضافة العنوان',
+        'بامكانك رؤية كل العنوانين ... ',
+      );
+      Fluttertoast.showToast(
+          msg: 'تم اضافة العنوان',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.SNACKBAR,
+          timeInSecForIosWeb: 1,
+          textColor: Color(0xffDAA095),
+          fontSize: 16.0);
 
-    Navigator.pop(context);
-    Navigator.pop(context);
-
+      Navigator.pop(context);
+      Navigator.pop(context);
+    }
   }
-  }
 
-  addressClass.AllAddressModel allAddressModel ;
-  Future<addressClass.AllAddressModel> getAllAddress()async{
-    allAddressModel  = await ApiRepository.apiRepository.getAllAddress();
+  addressClass.AllAddressModel allAddressModel;
+
+  Future<addressClass.AllAddressModel> getAllAddress() async {
+    allAddressModel = await ApiRepository.apiRepository.getAllAddress();
     notifyListeners();
-    return allAddressModel ;
+    return allAddressModel;
   }
 
-  removeAddress(int addressId)async{
+  removeAddress(int addressId) async {
     await ApiClient.apiClient.removeAdress(addressId);
-   await getAllAddress();
+    await getAllAddress();
   }
-  addressClass.Data  addressSelected ;
-  setAddressSelected(addressClass.Data   address){
+
+  addressClass.Data addressSelected;
+
+  setAddressSelected(addressClass.Data address) {
     this.addressSelected = address;
     notifyListeners();
   }
 
-  String comment ;
-  saveComment(String value){
-    this.comment = value ;
+  String comment;
+
+  saveComment(String value) {
+    this.comment = value;
     notifyListeners();
   }
 
-  double rating ;
-  saveRating(double value){
-    this.rating = value ;
+  double rating;
+
+  saveRating(double value) {
+    this.rating = value;
     notifyListeners();
   }
 
-  Future<Map> addRev(int productId )async{
-  Map map =   await ApiClient.apiClient.addRev(productId, rating, comment);
+  Future<Map> addRev(int productId) async {
+    Map map = await ApiClient.apiClient.addRev(productId, rating, comment);
 
-  if(map['code']){
-    Fluttertoast.showToast(
-        msg: 'تم اضافة تعليقك',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.SNACKBAR,
-        timeInSecForIosWeb: 1,
-        textColor: Color(0xffDAA095),
-        fontSize: 16.0
-    );
-    return map ;
-
+    if (map['code']) {
+      Fluttertoast.showToast(
+          msg: 'تم اضافة تعليقك',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.SNACKBAR,
+          timeInSecForIosWeb: 1,
+          textColor: Color(0xffDAA095),
+          fontSize: 16.0);
+      return map;
+    }
   }
 
+  addFav(int productId) async {
+    Map map = await ApiClient.apiClient.addFav(productId);
+    print(map);
+    notifyListeners();
+  }
+
+  removeFav(int productId) async {
+    Map map = await ApiClient.apiClient.removeFav(productId);
+    print(map);
+    notifyListeners();
+  }
+
+  toggleFavUIS(sectionClass.Products product) {
+    product.toggle();
+    print(product.isFavourited);
+    product.isFavourited ? addFav(product.id) : removeFav(product.id);
+    notifyListeners();
+  }
+  toggleFavUI(productModelClass.Data product) {
+    product.toggle();
+    print(product.isFavourited);
+    product.isFavourited ? addFav(product.id) : removeFav(product.id);
+    notifyListeners();
+  }  toggleFavUIM(productClass.Data product) {
+    product.toggle();
+    print(product.isFavourited);
+    product.isFavourited ? addFav(int.parse( product.id )) : removeFav(int.parse( product.id ));
+    notifyListeners();
+  }
+
+  ///////I use FutureBuilder for this method ////////
+  Future<productModelClass.ProductModel> getAllFav()async{
+ productFav =    await ApiRepository.apiRepository.getAllFav();
+ print(productFav.toJson());
+ return productFav ;
   }
 
 }

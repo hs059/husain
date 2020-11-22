@@ -39,6 +39,9 @@ class Data {
   String stockCode;
   List<Brand> brand;
   List<Reviews> reviews;
+  toggle(){
+    this.isFavourited = !this.isFavourited ;
+  }
 
   Data(
       {this.id,
