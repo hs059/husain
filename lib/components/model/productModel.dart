@@ -38,9 +38,9 @@ class Data {
   String description;
   String sizePerUnit;
   String image;
-  bool isFavourited;
   String stockCode;
   List<Reviews> reviews;
+  bool isFavourited;
   toggle(){
     this.isFavourited = !this.isFavourited ;
   }

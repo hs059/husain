@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
+import 'dart:async';
+
 import 'package:sqflite/sqflite.dart';
 
 import 'package:path/path.dart';
@@ -97,7 +99,6 @@ class DBClient {
      Map updatedMap = Map.from(results.first);
 
     updatedMap['productCountColumn'] = ++count;
-    print(updatedMap);
      database.update(productTable,Map<String, dynamic>.from(updatedMap),where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']]);
   }  catch (e) {
     // TODO
@@ -111,7 +112,6 @@ class DBClient {
      int count = results.first['productCountColumn'];
      Map updatedMap = Map.from(results.first);
      updatedMap['productCountColumn'] =--count;
-    print(updatedMap);
      database.update(productTable,Map<String, dynamic>.from(updatedMap),where: '$productIdColumn = ?',whereArgs: [map['productIdColumn']]);
   }  catch (e) {
     // TODO

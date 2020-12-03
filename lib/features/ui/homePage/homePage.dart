@@ -42,9 +42,6 @@ class _HomePageState extends State<HomePage>
       bottomIndex = tabControllerConstant.index;
       setState(() {});
     });
-    Provider.of<ApiProvider>(context,listen: false).getCategory();
-    Provider.of<DBProvider>(context,listen: false).setAllProducts();
-
     super.initState();
   }
   @override
@@ -77,7 +74,6 @@ class _HomePageState extends State<HomePage>
               //ToDo:svg icon
               child: TabBar(onTap: (value) {
                 if(value == 4){
-                  print('bababab');
                   Provider.of<AuthProvider>(context,listen: false).showProfile();
                 }
               },

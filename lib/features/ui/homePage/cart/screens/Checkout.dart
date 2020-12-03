@@ -9,6 +9,7 @@ import 'package:beauty/services/location.dart';
 import 'package:beauty/value/constant.dart';
 
 import 'cartScreen.dart';
+import 'fatoorah.dart';
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
@@ -31,7 +32,6 @@ import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -168,13 +168,14 @@ class CheckOut extends StatelessWidget {
                                                     )
                                                   ],
                                                 ),
-                                                children: allProducts
-                                                    .map(
-                                                      (e) => CartItemCheckOut(
-                                                        productSql: e,
-                                                      ),
-                                                    )
-                                                    .toList(),
+                                                children:
+                                                  allProducts
+                                                      .map(
+                                                        (e) => CartItemCheckOut(
+                                                      productSql: e,
+                                                    ),
+                                                  ).toList(),
+
                                               ),
                                             );
                                           });
@@ -247,84 +248,43 @@ class CheckOut extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Payment Method',
+                          'طريقة الدفع',
                           style: kSectionText,
                         ),
-                        GestureDetector(
-                          onTap: null,
-                          child: Text(
-                            'Add new Method',
-                            style: kSeeAll,
-                          ),
-                        )
+
                       ],
                     ),
                     SizedBox(
                       height: ScreenUtil().setHeight(15),
                     ),
-                    Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: RadioListTile(
-                        activeColor: kPinkLight,
-                        value: paymentList[0],
-                        groupValue: uiProvider.paymentGroup,
-                        onChanged: (value) {
-                          uiProviderFalse.setPaymentGroup(value);
-                        },
-                        title: Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: CustomTextFormField(
-                            hintText: '**** ****  *368',
-                            password: true,
-                            type: SvgPicture.asset(
-                              'assets/svg/cashCart.svg',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: RadioListTile(
-                        activeColor: kPinkLight,
-                        value: paymentList[1],
-                        groupValue: uiProvider.paymentGroup,
-                        onChanged: (value) {
-                          uiProviderFalse.setPaymentGroup(value);
-                        },
-                        title: Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: CustomTextFormField(
-                            password: true,
-                            hintText: '**** ****  *368',
-                            type: Container(
-                              height: ScreenUtil().setHeight(50),
-                              width: ScreenUtil().setWidth(60),
-                              child: SvgPicture.asset(
-                                'assets/svg/visa.svg',
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: RadioListTile(
-                        activeColor: kPinkLight,
-                        value: paymentList[2],
-                        groupValue: uiProvider.paymentGroup,
-                        onChanged: (value) {},
-                        title: Directionality(
-                          textDirection: TextDirection.ltr,
-                          child: Text(
-                            'Cash to Driver',
+                    Column(
+                      children: [
+                        RadioListTile(
+                          activeColor: kPinkLight,
+                          value: paymentList[0],
+                          groupValue: uiProvider.paymentGroup,
+                          onChanged: (value) {
+                            uiProviderFalse.setPaymentGroup(value);
+                          },
+                          title: Text(
+                            paymentList[0],
                             style: kSectionText,
                           ),
                         ),
-                      ),
+
+                        RadioListTile(
+                          activeColor: kPinkLight,
+                          value: paymentList[1],
+                          groupValue: uiProvider.paymentGroup,
+                          onChanged: (value) {
+                            uiProviderFalse.setPaymentGroup(value);
+                          },
+                          title: Text(
+                            paymentList[1],
+                            style: kSectionText,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -334,9 +294,15 @@ class CheckOut extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Text(
-                          'Note',
-                          style: kSectionText,
+                        GestureDetector(
+
+                          child: Text(
+                            'ملاحظة',
+                            style: kSectionText,
+                          ),
+                          onTap: () {
+                            print(uiProvider.paymentGroup);
+                          },
                         ),
                       ],
                     ),
@@ -350,7 +316,7 @@ class CheckOut extends StatelessWidget {
                       cursorColor: Colors.blue,
                       decoration: InputDecoration(
                           border: InputBorder.none,
-                          hintText: 'Type something you want here...'),
+                          hintText: 'أدخل ملاحظتك هنا ...'),
                     ),
 
                     // Note
@@ -362,19 +328,12 @@ class CheckOut extends StatelessWidget {
               ),
               bottomNavigationBarCart(
                 widget: Text(
-                  'Confirm Order',
+                  'تأكيد الطلب',
                   style: kBtnText,
                 ),
                 onTap: () async {
-                  bool isLogin = await SPHelper.spHelper.getIsLogin() ?? false;
-                  if (!isLogin) {
-                    Fluttertoast.showToast(
-                        msg: 'يجب عليك تسجيل الدخول',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        textColor: Color(0xffDAA095),
-                        fontSize: 16.0);
-                    kNavigatorPush(context, SignIn());
+                  if (uiProvider.paymentGroup == paymentList[0]) {
+                    kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()));
                   } else {
                     Provider.of<ApiProvider>(context, listen: false)
                         .createOrder(
@@ -382,19 +341,18 @@ class CheckOut extends StatelessWidget {
                         apiProvider.addressSelected.fullAddress,
                         apiProvider.addressSelected.houseNumber,
                         apiProvider.addressSelected.apartment,
-                        [
-                      ...allProducts
+                        allProducts
                           .map((e) => LineItems(
                                 productId: e.idProduct.toString(),
                                 quantity: e.count.toString(),
                               ).toJson())
                           .toList(),
-                    ]);
+                    );
                     showDialog(
                       context: context,
                       builder: (context) => DialogConfirmOrder(
                         onTap: () async {
-                          kNavigatorPushReplacement(context, HomePage());
+                          kNavigatorPushAndRemoveUntil(context, HomePage());
                         },
                       ),
                     );

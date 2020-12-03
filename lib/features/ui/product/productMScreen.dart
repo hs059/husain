@@ -26,7 +26,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -132,8 +131,21 @@ class ProductMScreen extends StatelessWidget {
                         ),
                       ),
 
-                      authProvider.isLogin? GestureDetector(
+                     GestureDetector(
                         onTap: () {
+                          if(authProvider.isLogin){
+                            apiProviderFalse.toggleFavUIM(apiProvider.productM.data);
+                          }else{
+                            Fluttertoast.showToast(
+                                msg: 'يجب عليك تسجيل الدخول',
+                                toastLength: Toast.LENGTH_SHORT,
+                                backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                timeInSecForIosWeb: 1,
+                                textColor: Colors.white,
+                                fontSize: 16.0
+                            );
+                            kNavigatorPush(context, SignIn());
+                          }
                      apiProviderFalse.toggleFavUIM(apiProvider.productM.data);
                         },
                         child: Padding(
@@ -145,7 +157,7 @@ class ProductMScreen extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                      ):Container(),
+                      ),
                     ],
                   ),
                   body: ListView(
@@ -189,16 +201,16 @@ class ProductMScreen extends StatelessWidget {
                                 Provider.of<DBProvider>(context,listen: false).insertNewProduct(
                                     getproduct()
                                 );
-                                showMaterialModalBottomSheet(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    ),
-                                  ),
-                                  context: context,
-                                  builder: (context, scrollController) => AddCartSheet(prize:price,),
-                                );
+                                // showMaterialModalBottomSheet(
+                                //   shape: RoundedRectangleBorder(
+                                //     borderRadius: BorderRadius.only(
+                                //       topLeft: Radius.circular(20),
+                                //       topRight: Radius.circular(20),
+                                //     ),
+                                //   ),
+                                //   context: context,
+                                //   builder: (context, scrollController) => AddCartSheet(prize:price,),
+                                // );
                               },
                             ),
                           ],
@@ -346,15 +358,13 @@ I highly recommend it''',
                             trailing: GestureDetector(
                               onTap: () async{
                                 bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
-
-                                print(isLogen);
                                 if(isLogen == false){
                                   Fluttertoast.showToast(
                                       msg: 'يجب عليك تسجيل الدخول',
                                       toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.SNACKBAR,
+                                      backgroundColor: Color(0xffDAA095).withOpacity(0.8),
                                       timeInSecForIosWeb: 1,
-                                      textColor: Color(0xffDAA095),
+                                      textColor: Colors.white,
                                       fontSize: 16.0
                                   );
                                   kNavigatorPush(context, SignIn());

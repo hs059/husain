@@ -26,14 +26,14 @@ class SPHelper {
     return x;
   }
 
-  setUser(int value) async {
+  setUser(String value) async {
     sharedPreferences = await initSharedPrefrences();
-    sharedPreferences.setInt('userId', value);
+    sharedPreferences.setString('userId', value);
   }
 
-  Future<int> getUser() async {
+  Future<String> getUser() async {
     sharedPreferences = await initSharedPrefrences();
-    int x = sharedPreferences.getInt('userId');
+    String x = sharedPreferences.getString('userId');
     return x;
   }
 

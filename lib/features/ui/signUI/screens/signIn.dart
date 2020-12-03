@@ -3,8 +3,11 @@ import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
+import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/signUI/screens/forgotPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/signUp.dart';
+import 'package:beauty/services/aaaaa.dart';
+import 'package:beauty/services/auth.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
@@ -217,8 +220,9 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               turns:
                                   Tween(begin: 0.0, end: 1.0).animate(controller),
                               child: GestureDetector(
-                                onTap: () {
-
+                                onTap: () async{
+                                  bool result = await Auth.auth.signInWithFacebook();
+                                  result?kNavigatorPush(context,HomePage()):print('do not connect');
 
                                 },
                                 child: Container(
@@ -240,11 +244,17 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             child: RotationTransition(
                               turns:
                                   Tween(begin: 0.0, end: 1.0).animate(controller),
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: ScreenUtil().setHeight(46),
-                                child: SvgPicture.asset(
-                                  'assets/svg/btn.twitter.svg',
+                              child: GestureDetector(
+                                onTap: () async{
+                                   // Auth.auth.signInTwitter();
+                                  // kNavigatorPush(context, AAAAA());
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: ScreenUtil().setHeight(46),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/btn.twitter.svg',
+                                  ),
                                 ),
                               ),
                             ),
@@ -252,17 +262,26 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                           SizedBox(
                             width: ScreenUtil().setWidth(30),
                           ),
+                          ////////google SignIn///////
                           Transform(
                             transform: Matrix4.translationValues(
                                 animation3.value * width, 0.0, 0.0),
                             child: RotationTransition(
                               turns:
                                   Tween(begin: 0.0, end: 1.0).animate(controller),
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: ScreenUtil().setHeight(46),
-                                child: SvgPicture.asset(
-                                  'assets/svg/btn.google.svg',
+                              child: GestureDetector(
+                                onTap: () async{
+                                 bool result = await Auth.auth.loginUsingGoogle();
+                                 authProvider.getLogin();
+
+                                 result?kNavigatorPush(context,HomePage()):print('do not connect');
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: ScreenUtil().setHeight(46),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/btn.google.svg',
+                                  ),
                                 ),
                               ),
                             ),

@@ -9,6 +9,7 @@ import 'package:beauty/features/ui/homePage/screens/search.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -16,7 +17,7 @@ import 'package:provider/provider.dart';
 
 class SubCategory extends StatefulWidget {
   final  cat.Data  categor ;
- final  subCategory.SubCategoryModel subCategoryModel ;
+  final  subCategory.SubCategoryModel subCategoryModel ;
   SubCategory({this.subCategoryModel, this.categor, });
 
   @override
@@ -26,7 +27,7 @@ class SubCategory extends StatefulWidget {
 class _SubCategoryState extends State<SubCategory>
     with SingleTickerProviderStateMixin {
   TabController tabControllerSub;
-bool load ;
+  bool load ;
   int index = 0;
   product.ProductModel subProductModel;
   @override
@@ -45,6 +46,7 @@ bool load ;
 
   @override
   Widget build(BuildContext context) {
+    ApiProvider apiProvider =  Provider.of<ApiProvider>(context) ;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -106,7 +108,7 @@ bool load ;
                 child: Text(
                   'سيتم اضافتها قريبا',
                   style:
-                      kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+                  kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
                 ),
               );
             } else {
@@ -133,9 +135,9 @@ bool load ;
                           ...subCategor.date
                               .map(
                                 (e) => Tab(
-                                  text: e.name,
-                                ),
-                              )
+                              text: e.name,
+                            ),
+                          )
                               .toList(),
                         ],
                       ),
@@ -146,78 +148,77 @@ bool load ;
                         child: TabBarView(
                           controller: tabControllerSub,
                           children: subCategor.date
-                                .map(
-                                  (e) => FutureBuilder<product.ProductModel>(
-                                    future: Provider.of<ApiProvider>(context)
-                                        .getSubProduct(e.id),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        product.ProductModel subProduct =
-                                            snapshot.data;
-                                        if (subProduct.data.isNotEmpty) {
-                                          print(subCategor.date.length);
-                                          return GridView.builder(
-                                            primary: false,
-                                            shrinkWrap: true,
-                                            itemCount: subProduct.data.length,
-                                            itemBuilder: (context, index) =>
-                                                AnimationCart(
-                                                  Grid: true,
-                                                  index: index,
-                                                  count:subProduct.data.length ,
-                                                  duration: 1500,
-                                                  child: ProductItemGrid(
-                                                      imagePath: subProduct
-                                                          .data[index].image,
-                                                      title: subProduct
-                                                          .data[index].name,
-                                                      rating: 4.2,
-                                                      prize: subProduct
-                                                          .data[index].price,
-                                                      fav: subProduct.data[index]
-                                                          .isFavourited,
-                                                    product:subProduct
-                                                        .data[index] ,
+                              .map(
+                                (e) => FutureBuilder<product.ProductModel>(
+                              future: apiProvider.typeSelected ==0? apiProvider
+                                  .getSubProduct(e.id):apiProvider.sortByCategory(63, sort[apiProvider.typeSelected],),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  product.ProductModel subProduct =
+                                      snapshot.data;
+                                  if (subProduct.data.isNotEmpty) {
+                                    return GridView.builder(
+                                      primary: false,
+                                      shrinkWrap: true,
+                                      itemCount: subProduct.data.length,
+                                      itemBuilder: (context, index) =>
+                                          AnimationCart(
+                                            Grid: true,
+                                            index: index,
+                                            count:subProduct.data.length ,
+                                            duration: 1500,
+                                            child: ProductItemGrid(
+                                              imagePath: subProduct
+                                                  .data[index].image,
+                                              title: subProduct
+                                                  .data[index].name,
+                                              rating: 4.2,
+                                              prize: subProduct
+                                                  .data[index].price,
+                                              fav: subProduct.data[index]
+                                                  .isFavourited,
+                                              product:subProduct
+                                                  .data[index] ,
 
-                                                  ),
-                                                ),
-                                            gridDelegate:
-                                                SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 2,
-                                              crossAxisSpacing: 0,
-                                              childAspectRatio: 0.6,
                                             ),
-                                          );
-                                        } else {
-                                          return Center(
-                                            child: Text(
-                                              'سيتم اضافتها قريبا',
-                                              style: kSeeAll.copyWith(
-                                                  fontFamily: 'Cairo-Regular',
-                                                  fontSize: 18),
-                                            ),
-                                          );
-                                        }
-                                      } else {
-                                        return GridView.builder(
-                                          primary: false,
-                                          shrinkWrap: true,
-                                          itemCount: 10,
-                                          itemBuilder: (context, index) =>
-                                              LoaderGif2(),
-                                          gridDelegate:
-                                              SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 2,
-                                                  crossAxisSpacing: 10,
-                                                  childAspectRatio: 0.80,
-                                                  mainAxisSpacing: 10
-                                                  ),
-                                        );
-                                      }
-                                    },
-                                  ),
-                                )
-                                .toList(),
+                                          ),
+                                      gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 0,
+                                        childAspectRatio: 0.6,
+                                      ),
+                                    );
+                                  } else {
+                                    return Center(
+                                      child: Text(
+                                        'سيتم اضافتها قريبا',
+                                        style: kSeeAll.copyWith(
+                                            fontFamily: 'Cairo-Regular',
+                                            fontSize: 18),
+                                      ),
+                                    );
+                                  }
+                                } else {
+                                  return GridView.builder(
+                                    primary: false,
+                                    shrinkWrap: true,
+                                    itemCount: 10,
+                                    itemBuilder: (context, index) =>
+                                        LoaderGif2(),
+                                    gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 10,
+                                        childAspectRatio: 0.80,
+                                        mainAxisSpacing: 10
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          )
+                              .toList(),
                         ),
                       ),
                     ),

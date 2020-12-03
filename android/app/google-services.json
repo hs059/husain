@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "271957208980",
-    "firebase_url": "https://beauty-52676.firebaseio.com",
-    "project_id": "beauty-52676",
-    "storage_bucket": "beauty-52676.appspot.com"
+    "project_number": "55748411856",
+    "firebase_url": "https://beauty-39590.firebaseio.com",
+    "project_id": "beauty-39590",
+    "storage_bucket": "beauty-39590.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:271957208980:android:7926c09ac5a7f979826981",
+        "mobilesdk_app_id": "1:55748411856:android:9c1e9a57441105b027f9d5",
         "android_client_info": {
           "package_name": "com.a7seen.beauty"
         }
       },
       "oauth_client": [
         {
-          "client_id": "271957208980-9d77khvfh5us72k6ctvc91irl9jstqf7.apps.googleusercontent.com",
+          "client_id": "55748411856-u1qgednabjp7m6ff4cccvqj622280fns.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.a7seen.beauty",
@@ -23,21 +23,29 @@
           }
         },
         {
-          "client_id": "271957208980-36mbh7f7u7cek6nuoubdr25et4f4uoeu.apps.googleusercontent.com",
+          "client_id": "55748411856-npkak8bi8kn6f3dkkj7i20dj04k30blf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCH4uH1r_uCcJoJGy835fxLeie_QjdqCLI"
+          "current_key": "AIzaSyBx_pRkcNVjwklJwIAASeJyp11O0BQmzEM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "271957208980-36mbh7f7u7cek6nuoubdr25et4f4uoeu.apps.googleusercontent.com",
+              "client_id": "55748411856-npkak8bi8kn6f3dkkj7i20dj04k30blf.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "55748411856-d5idvpts5fjqvephr4hioj78cq0nmmgl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hesham.beautyApp",
+                "app_store_id": "1527001215"
+              }
             }
           ]
         }

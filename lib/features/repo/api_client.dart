@@ -1,8 +1,5 @@
-import 'package:beauty/copyPast..dart';
-import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/constant.dart';
-import 'package:connectivity/connectivity.dart';
 import 'package:dio/dio.dart';
 
 class ApiClient {
@@ -39,7 +36,6 @@ class ApiClient {
       data: data,
     );
 
-    print(response.data);
     return response.data;
   }
 
@@ -59,7 +55,6 @@ class ApiClient {
       data: data,
     );
 
-    print(response.data);
     return response.data;
   }
 
@@ -77,7 +72,7 @@ class ApiClient {
 
 //////////////////////////////////////////////////////////////////////////////////
   Future<Map> resetPassword(
-      int id, String token,String newPassword) async {
+      String id, String token,String newPassword) async {
     await initApi();
     FormData data = FormData.fromMap({
       'user_id': id,
@@ -99,7 +94,6 @@ class ApiClient {
       data: data,
     );
 
-    print(response.data);
 
     return response.data;
   }
@@ -109,7 +103,7 @@ class ApiClient {
       String token, String id, String oldPassword, String newPassword) async {
     await initApi();
     String token = await SPHelper.spHelper.getToken();
-    int idUser = await SPHelper.spHelper.getUser();
+    String idUser = await SPHelper.spHelper.getUser();
     String id = idUser.toString();
     FormData data = FormData.fromMap({
       'user_id': id,
@@ -123,7 +117,6 @@ class ApiClient {
       data: data,
     );
 
-    print(response.data);
 
     return response.data;
   }
@@ -144,7 +137,6 @@ class ApiClient {
         baseUrl + edit_profile,
         data: data,
       );
-      print(response.data);
       return response.data;
     } catch (e) {
       print(e);
@@ -156,14 +148,12 @@ class ApiClient {
     try {
       await initApi();
       String token = await SPHelper.spHelper.getToken();
-      int idUser = await SPHelper.spHelper.getUser();
+      String idUser = await SPHelper.spHelper.getUser();
       String id = idUser.toString();
       FormData data = FormData.fromMap({
         'user_id': id,
         'token': token,
       });
-      print(' token : $token user_id : $id');
-
       Response response = await dio.post(baseUrl + show_profile, data: data);
       print(response.data);
       return response.data;
@@ -171,7 +161,7 @@ class ApiClient {
       print(e);
     }
   }
-  Future<Map> verifyForgetPassword(int id, int verificationCode) async {
+  Future<Map> verifyForgetPassword(String id, int verificationCode) async {
     await initApi();
     FormData data = FormData.fromMap({
       "user_id": id,
@@ -272,7 +262,7 @@ class ApiClient {
     }
   }
 
-  Future getSubProduct(int id, int userId,) async {
+  Future getSubProduct(int id, String userId,) async {
     try {
       await initApi();
       Response response = await dio.get(
@@ -332,7 +322,7 @@ class ApiClient {
     }
   }
 
-  Future getProductByBrand(int id,int userId,) async {
+  Future getProductByBrand(int id,String userId,) async {
     try {
       await initApi();
       Response response = await dio
@@ -348,7 +338,7 @@ class ApiClient {
     }
   }
 
-  Future getProductDetails(int id,int userId,
+  Future getProductDetails(int id,String userId,
       ) async {
     try {
       await initApi();
@@ -396,7 +386,7 @@ class ApiClient {
   }
 
   Future createOrder(
-    int userId,
+      String userId,
     String token,
     String name,
     String address1,
@@ -456,7 +446,7 @@ class ApiClient {
     try {
       await initApi();
       String token = await SPHelper.spHelper.getToken();
-      int idUser = await SPHelper.spHelper.getUser();
+      String idUser = await SPHelper.spHelper.getUser();
       String id = idUser.toString();
       FormData data = FormData.fromMap({
         "user_id": id,
@@ -464,7 +454,6 @@ class ApiClient {
       });
       Response response = await dio.post(baseUrl + get_orders, data: data);
       if (response.statusCode == 200) {
-        print(response.data);
         return response.data;
       }
     } catch (e) {
@@ -482,7 +471,7 @@ class ApiClient {
   ) async {
     await initApi();
     String token = await SPHelper.spHelper.getToken();
-    int idUser = await SPHelper.spHelper.getUser();
+    String idUser = await SPHelper.spHelper.getUser();
     FormData data = FormData.fromMap({
       'user_id': idUser,
       'token': token,
@@ -495,28 +484,26 @@ class ApiClient {
     });
     Response response = await dio.post(baseUrl + add_address, data: data);
     if (response.statusCode == 200) {
-      print(response.data);
       return response.data;
     }
   }
 
   Future<Map> getAllAddress() async {
     String token = await SPHelper.spHelper.getToken();
-    int idUser = await SPHelper.spHelper.getUser();
+    String idUser = await SPHelper.spHelper.getUser();
     FormData data = FormData.fromMap({
       'user_id': idUser,
       'token': token,
     });
     Response response = await dio.post(baseUrl + get_address, data: data);
     if (response.statusCode == 200) {
-      print(response.data);
       return response.data;
     }
   }
 
   Future<Map> removeAdress(int addressId) async {
     String token = await SPHelper.spHelper.getToken();
-    int idUser = await SPHelper.spHelper.getUser();
+    String idUser = await SPHelper.spHelper.getUser();
     FormData data = FormData.fromMap({
       'user_id': idUser,
       'token': token,
@@ -535,7 +522,7 @@ class ApiClient {
     String comment,
   ) async {
     String token = await SPHelper.spHelper.getToken();
-    int idUser = await SPHelper.spHelper.getUser();
+    String idUser = await SPHelper.spHelper.getUser();
     FormData data = FormData.fromMap({
       "user_id": idUser,
       "token": token,
@@ -572,7 +559,7 @@ class ApiClient {
 Future<Map> addFav(int productId)async{
     try {
       await initApi() ;
-      int idUser = await SPHelper.spHelper.getUser();
+      String idUser = await SPHelper.spHelper.getUser();
 
       FormData data  = FormData.fromMap({
         "user_id":idUser,
@@ -599,7 +586,7 @@ Future<Map> addFav(int productId)async{
 Future<Map> removeFav(int productId)async{
     try {
       await initApi() ;
-      int idUser = await SPHelper.spHelper.getUser();
+      String idUser = await SPHelper.spHelper.getUser();
 
       FormData data  = FormData.fromMap({
         "user_id":idUser,
@@ -631,7 +618,7 @@ Future<Map> removeFav(int productId)async{
 getAllFav()async{
   try {
     await initApi() ;
-    int idUser = await SPHelper.spHelper.getUser();
+    String idUser = await SPHelper.spHelper.getUser();
 
     FormData data  = FormData.fromMap({
       "user_id":idUser
@@ -654,4 +641,35 @@ getAllFav()async{
   }
 }
 
+  Future<Map> sortByCategory(int subCategoryId , String type)async{
+    try {
+      await initApi() ;
+      print('subCategoryId $subCategoryId type $type');
+      Response response =await dio.get(
+       baseUrl+'sort_products_by?type=$type&category_id=$subCategoryId'
+       // baseUrl+'sort_products_by?type=low_to_high&category_id=63'
+      );
+
+      return response.data ;
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
+    }
+  }
+
+  socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type  )async{
+    await initApi() ;
+    FormData data = FormData.fromMap({
+      "id":socialId,
+      "userName":userName,
+      "mobileNumber":mobileNumber,
+      "email":email,
+      "type":type
+    });
+
+  }
 }

@@ -10,6 +10,7 @@ import 'package:beauty/features/ui/homePage/cart/widgets/cartItemWidget.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
+import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 
 import 'package:beauty/value/style.dart';
@@ -30,7 +31,40 @@ class Cart extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: appBarCart(title: 'العربة'),
+        appBar: PreferredSize(
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: kBorder,
+                offset: Offset(0, 2.0),
+                blurRadius: 4.0,
+              )
+            ]),
+            child: AppBar(
+              // iconTheme: IconThemeData(color: Color(0xff121924)),
+              backgroundColor: Colors.white,
+
+              leading:  GestureDetector(
+                onTap: () {
+                  tabControllerConstant.animateTo(0);
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Color(0xff121924),
+                ),
+              ),
+              title: Text(
+                'العربة',
+                style: kSubCategoryText.copyWith(
+                  color: kBlack,
+                ),
+              ),
+              elevation: 0.0,
+            ),
+
+          ),
+          preferredSize: Size.fromHeight(kToolbarHeight),
+        ),
         body: Consumer<DBProvider>(
           builder: (context, value, child) {
             List<ProductSql> allProduct =  value.allProducts ;
@@ -77,8 +111,9 @@ class Cart extends StatelessWidget {
                 Fluttertoast.showToast(
                     msg: 'يجب عليك تسجيل الدخول',
                     toastLength: Toast.LENGTH_SHORT,
+                    backgroundColor: Color(0xffDAA095).withOpacity(0.8),
                     timeInSecForIosWeb: 1,
-                    textColor: Color(0xffDAA095),
+                    textColor: Colors.white,
                     fontSize: 16.0
                 );
                 kNavigatorPush(context, SignIn());
@@ -106,7 +141,7 @@ class Cart extends StatelessWidget {
                   width: ScreenUtil().setWidth(40),
                 ),
                 Icon(
-                  Icons.arrow_forward_sharp,
+                  Icons.arrow_forward,
                   color: Colors.white,
                 ),
               ],

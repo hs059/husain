@@ -386,12 +386,12 @@ class CheckDefualtAddress extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           child: uiProvider.defualtAddress
               ? Icon(
-                  Icons.circle,
+            Icons.check_circle,
                   size: 20.0,
                   color: kPinkLight,
                 )
               : Icon(
-                  Icons.circle,
+                  Icons.check_circle,
                   size: 20.0,
                   color: Colors.white,
                 ),

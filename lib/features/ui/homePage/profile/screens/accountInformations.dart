@@ -34,18 +34,7 @@ class AccountInformations extends StatelessWidget {
       child: ModalProgressHUD(
         inAsyncCall:uiProvider.spinner,
         child: Scaffold(
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () async{
-          //     print('hay');
-          //     String token = await SPHelper.spHelper.getToken();
-          //     int idUser = await SPHelper.spHelper.getUser();
-          //     String id = idUser.toString();
-          //     print(token);
-          //     print(id);
-          //    await ApiClient.apiClient.editProfile(token,
-          //        id, 'hussein', 'i.7sseen1997@gmail.com', '+966123456789');
-          //   },
-          // ),
+
           appBar: PreferredSize(
             child: Container(
               decoration: BoxDecoration(boxShadow: [
@@ -144,7 +133,6 @@ class AccountInformations extends StatelessWidget {
                                               // controller: myController5,
                                               validator: authProvider.validatePhone,
                                               onSaved:  (newValue) {
-                                                print(newValue.completeNumber);
                                                 authProvider.saveMobile(newValue.completeNumber);
                                               },
                                               autoValidate: false,
@@ -164,8 +152,6 @@ class AccountInformations extends StatelessWidget {
                                               initialValue: authProvider.showProfileModel.data.mobileNumber,
                                               onChanged: (phone) {
                                                 Provider.of<AuthProvider>(context,listen: false).saveMobile(phone.completeNumber);
-                                                print(phone.completeNumber);
-                                                print(authProvider.mobile);
                                               },
                                             ),
                                           ),

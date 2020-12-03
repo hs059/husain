@@ -63,7 +63,6 @@ class _AnimationIconState extends State<AnimationIcon>with SingleTickerProviderS
       builder: (context, child) => GestureDetector(
         onTap: () {
           setState(() {
-            print(widget.isFav);
             widget.isFav?_controller.reverse(): _controller.forward();
 
           });

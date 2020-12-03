@@ -15,8 +15,6 @@ class ConnectivityService {
 
   ConnectivityService() {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
-      print('hello from connectivity');
-
       connectionStatusController.add(_getStatusFromResult(result));
     });
   }

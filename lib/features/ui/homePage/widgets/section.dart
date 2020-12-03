@@ -5,6 +5,7 @@ import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
+import 'package:beauty/features/ui/homePage/profile/screens/showProductSection.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/value/navigator.dart';
@@ -31,7 +32,7 @@ class Section extends StatelessWidget {
                         fontFamily: 'Cairo-Regular'
                 ),),
                 GestureDetector(
-                  onTap: () => kNavigatorPush(context, ShowProduct(title: section.data.sectionTitle)),
+                  onTap: () => kNavigatorPush(context, ShowProductSection(title: section.data.sectionTitle,num: num,)),
                   child:Text('رؤية الكل',style: kSeeAll.copyWith(
                     fontFamily: 'Cairo-Regular'
                   ),),
@@ -56,7 +57,7 @@ class Section extends StatelessWidget {
                     index:index ,
                     Grid: false,
                     count:section.data.products.length ,
-                    duration: 1500,
+                    duration: 700,
                     child: ProductItemList(
                       title: product.name,
                       fav: product.isFavourited,

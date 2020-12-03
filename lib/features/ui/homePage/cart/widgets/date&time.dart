@@ -43,7 +43,7 @@ class DateAndTime extends StatelessWidget {
                 '${uiProvider.selectedDate.year}/${uiProvider.selectedDate.month}/${uiProvider.selectedDate.day}',
                 style: kGrayText33,
               ),
-              trailing: Icon(Icons.calendar_today_outlined),
+              trailing: Icon(Icons.calendar_today),
             ),
           ),
           SizedBox(
@@ -65,7 +65,7 @@ class DateAndTime extends StatelessWidget {
                 uiProvider.timeCheckOut.format(context),
                 style: kGrayText33,
               ),
-              trailing: Icon(Icons.access_time_outlined),
+              trailing: Icon(Icons.access_time),
             ),
           ),
         ],

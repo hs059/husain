@@ -42,7 +42,6 @@ class Location {
       Placemark place = p[0];
         currentAddress =
         "${place.locality}, ${place.postalCode}, ${place.country}";
-        print(currentAddress);
         return currentAddress ;
     } catch (e) {
       print(e);

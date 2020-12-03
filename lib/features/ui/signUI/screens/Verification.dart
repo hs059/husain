@@ -116,7 +116,6 @@ class _VerificationState extends State<Verification>
                       },
                       onDone: (text) {
                         doneText = text;
-                        print("DONE $text");
                         authProviderFalse.saveVerificationCode(text);
                         // print("DONE CONTROLLER ${controllerPin.text}");
                       },

@@ -70,7 +70,6 @@ class _HammamState extends State<Hammam> {
             groupValue: _character,
             onChanged: (value) {
               setState(() {
-                print(_character);
                 _character = value;
               });
             },

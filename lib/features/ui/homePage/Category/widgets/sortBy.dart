@@ -1,4 +1,5 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/style.dart';
@@ -55,6 +56,8 @@ class _SortByState extends State<SortBy> {
           child: Button(
               text: 'Save',
               onTap: () {
+                Provider.of<ApiProvider>(context,listen: false).nullProductSort();
+                Provider.of<ApiProvider>(context,listen: false).setTypeSelected(index);
                 Navigator.pop(context);
               }),
         ),
@@ -64,7 +67,7 @@ class _SortByState extends State<SortBy> {
 
   List<Widget> radio() {
     List<Widget> radios = [];
-    for (int i = 1; i <= 5; i++) {
+    for (int i = 0; i <= 4; i++) {
       radios.add(Row(
         children: [
           Radio(
@@ -74,6 +77,7 @@ class _SortByState extends State<SortBy> {
             onChanged: (value) {
               setState(() {
                 _character = value;
+                index = i ;
               });
             },
           ),
@@ -81,10 +85,10 @@ class _SortByState extends State<SortBy> {
             onTap: () {
               setState(() {
                 _character = sort[i];
-                print(_character);
+                index = i ;
               });
             },
-              child: Text(sort[i]),
+              child: Text(sortUi[i]),
           ),
         ],
       ));

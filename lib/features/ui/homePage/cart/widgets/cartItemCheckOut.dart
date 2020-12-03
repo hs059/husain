@@ -20,7 +20,6 @@ class CartItemCheckOut extends StatelessWidget {
   CartItemCheckOut({this.productSql});
   @override
   Widget build(BuildContext context) {
-    DBProvider dbProviderFalse=  Provider.of<DBProvider>(context,listen: false);
     return Container(
       margin: EdgeInsets.only(top: ScreenUtil().setHeight(5)),
       decoration: BoxDecoration(

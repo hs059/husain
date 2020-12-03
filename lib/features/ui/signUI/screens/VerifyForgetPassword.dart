@@ -116,7 +116,6 @@ class _VerifyForgetPasswordState extends State<VerifyForgetPassword>
                       },
                       onDone: (text) {
                         doneText = text;
-                        print("DONE $text");
                         authProviderFalse.saveVerifyForgetPassword(int.parse(text));
                         // print("DONE CONTROLLER ${controllerPin.text}");
                       },

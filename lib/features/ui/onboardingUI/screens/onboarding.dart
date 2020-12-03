@@ -1,4 +1,5 @@
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/onboardingUI/widgets/detailsOnboarding.dart';
 import 'package:beauty/features/ui/onboardingUI/widgets/indicatorOnboarding.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 
 class Onboarding extends StatefulWidget {
   @override
@@ -26,6 +28,7 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   Widget build(BuildContext context) {
+    ApiProvider apiProvider = Provider.of<ApiProvider>(context,);
     return WillPopScope(
       onWillPop:onWillPop ,
       child: Scaffold(

@@ -34,7 +34,6 @@ class AuthProvider extends ChangeNotifier {
   }
   saveVerificationCode(String value) {
     this.verificationCode = value;
-    print(verificationCode);
     notifyListeners();
   }
   int verifyForgetPassword ;
@@ -49,20 +48,17 @@ class AuthProvider extends ChangeNotifier {
   }
 
   savePassword(String value) {
-    print('//////////////////////////// $value');
     this.password = value;
     notifyListeners();
   }
 
   saveNewPassword(String value) {
-    print('/////////////saveNewPassword/////////////// $value');
 
     this.newPassword = value;
     notifyListeners();
   }
 
   saveConfirmPassword(String value) {
-    print('/////////////saveConfirmPassword/////////////// $value');
 
     this.confirmPassword = value;
     notifyListeners();
@@ -74,7 +70,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   saveFullName(String value) {
-    print('/////////////saveFullName/////////////// $value');
 
     this.fullName = value;
     notifyListeners();
@@ -98,7 +93,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   validateConfirmPassword(String value) {
-    print('password = $password');
     if (value == null || value == '') {
       return ' this field is required ';
     } else if (!isAlphanumeric(value)) {
@@ -152,9 +146,8 @@ class AuthProvider extends ChangeNotifier {
     Map map = await ApiClient.apiClient
         .registerUser(this.fullName, this.mobile, this.password, this.email);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    print(map);
     if (map['code']) {
-      await SPHelper.spHelper.setUser(map['data']['id']);
+      await SPHelper.spHelper.setUser(map['data']['id'].toString());
       kNavigatorPush(
         context,
         Verification(),
@@ -187,12 +180,11 @@ class AuthProvider extends ChangeNotifier {
   loginUser(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     Map map = await ApiClient.apiClient.loginUser(this.email, this.password);
-    print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
       isLogin = true;
       await SPHelper.spHelper.setToken(map['data']['token']);
-      await SPHelper.spHelper.setUser(map['data']['id']);
+      await SPHelper.spHelper.setUser(map['data']['id'].toString());
       await SPHelper.spHelper.setIsLogin(true);
       showProfile();
       kNavigatorPush(
@@ -200,7 +192,6 @@ class AuthProvider extends ChangeNotifier {
         HomePage(),
       );
     } else {
-      print(map['message']);
       Get.snackbar('', '',
           snackPosition: SnackPosition.TOP,
           titleText: Text(
@@ -229,7 +220,6 @@ class AuthProvider extends ChangeNotifier {
   forgetPassword(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     Map map = await ApiClient.apiClient.forgetPassword(this.email);
-    print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
       await SPHelper.spHelper.setUser(map['data']['user_id']);
@@ -270,12 +260,10 @@ class AuthProvider extends ChangeNotifier {
 
   resetPassword(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    int id = await SPHelper.spHelper.getUser();
+    String id = await SPHelper.spHelper.getUser();
     String token = await SPHelper.spHelper.getToken();
-    print(token);
     Map map = await ApiClient.apiClient
         .resetPassword(id, token, newPassword);
-    print(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
       Fluttertoast.showToast(
@@ -291,7 +279,7 @@ class AuthProvider extends ChangeNotifier {
 
   submitVerifyForgetPassword(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    int id = await SPHelper.spHelper.getUser();
+    String id = await SPHelper.spHelper.getUser();
     Map map =
     await ApiClient.apiClient.verifyForgetPassword(id, verifyForgetPassword);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
@@ -322,7 +310,7 @@ class AuthProvider extends ChangeNotifier {
 
   submitVerification(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    int id = await SPHelper.spHelper.getUser();
+    String id = await SPHelper.spHelper.getUser();
     Map map =
         await ApiClient.apiClient.verification(id.toString(), verificationCode);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
@@ -378,15 +366,12 @@ class AuthProvider extends ChangeNotifier {
 
   editProfile(BuildContext context) async {
     String token = await SPHelper.spHelper.getToken();
-    int idUser = await SPHelper.spHelper.getUser();
+    String idUser = await SPHelper.spHelper.getUser();
     String id = idUser.toString();
-    print(
-        'token = $token id = $id name = $fullName email = $email mobile = $mobile password = $password newPassword = $newPassword');
     Map map1 = await ApiClient.apiClient
         .editProfile(token, id, this.fullName, this.email, this.mobile);
     Map map2 = await ApiClient.apiClient
         .changePassword(token, id, password, newPassword);
-    print(map2);
     if (map1['code'] && map2['code']) {
       showProfileModel = await ApiRepository.apiRepository.showProfile();
       Navigator.pop(context);

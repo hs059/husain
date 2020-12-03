@@ -6,6 +6,7 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
+import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/features/ui/product/productSubScreen.dart';
 import 'package:beauty/value/colors.dart';
@@ -99,11 +100,23 @@ class ProductItemGrid extends StatelessWidget {
                             ),
                           ),
                         ),
-                        authProvider.isLogin?  Align(
+                         Align(
                           alignment: Alignment.topRight,
                           child: GestureDetector(
                             onTap: () {
-                              apiProviderFalse.toggleFavUI(product);
+                              if(authProvider.isLogin){
+                                apiProviderFalse.toggleFavUI(product);
+                              }else{
+                                Fluttertoast.showToast(
+                                    msg: 'يجب عليك تسجيل الدخول',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                    timeInSecForIosWeb: 1,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+                                kNavigatorPush(context, SignIn());
+                              }
                             },
                             child: Icon(
                               fav ? Icons.favorite : Icons.favorite_border,
@@ -111,7 +124,7 @@ class ProductItemGrid extends StatelessWidget {
                               size: 30,
                             ),
                           ),
-                        ):Container(),
+                        ),
 
                       ],
                     ),

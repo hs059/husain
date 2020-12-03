@@ -85,80 +85,80 @@ class CartItemWidget extends StatelessWidget {
             ),
           ),
 
-          Padding(
-            padding: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                GestureDetector(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              GestureDetector(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
                     child: SvgPicture.asset('assets/svg/delete.svg'),
-                  onTap: () {
-                    Provider.of<DBProvider>(context,listen: false).deleteProduct(productSql);
-                  },
-                ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(22),
-                ),
-                Container(
-                  width: ScreenUtil().setWidth(98),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-
-                         productSql.count ==1 ?null :Provider.of<DBProvider>(context,listen: false).subtractionProduct(productSql);
-                        },
-                        child: Container(
-                          height: ScreenUtil().setHeight(30),
-                          width: ScreenUtil().setWidth(30),
-                          child: Icon(
-                            FontAwesomeIcons.minus,
-                            size: 15,
-                            color: kPinkLight,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: kBorder, width: 1),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        productSql.count.toString(),
-                        style: kReviews,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          dbProviderFalse.insertNewProduct(productSql);
-
-                        },
-                        child: Container(
-                          height: ScreenUtil().setHeight(30),
-                          width: ScreenUtil().setWidth(30),
-                          child: Icon(
-                            FontAwesomeIcons.plus,
-                            size: 15,
-                            color: kPinkLight,
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(color: kBorder, width: 1),
-                          ),
-                        ),
-                      ),
-                    ],
                   ),
+                onTap: () {
+                  Provider.of<DBProvider>(context,listen: false).deleteProduct(productSql);
+                },
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(22),
+              ),
+              Container(
+                width: ScreenUtil().setWidth(98),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+
+                       productSql.count ==1 ?null :Provider.of<DBProvider>(context,listen: false).subtractionProduct(productSql);
+                      },
+                      child: Container(
+                        height: ScreenUtil().setHeight(30),
+                        width: ScreenUtil().setWidth(30),
+                        child: Icon(
+                          FontAwesomeIcons.minus,
+                          size: 15,
+                          color: kPinkLight,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: kBorder, width: 1),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      productSql.count.toString(),
+                      style: kReviews,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        dbProviderFalse.insertNewProduct(productSql);
+
+                      },
+                      child: Container(
+                        height: ScreenUtil().setHeight(30),
+                        width: ScreenUtil().setWidth(30),
+                        child: Icon(
+                          FontAwesomeIcons.plus,
+                          size: 15,
+                          color: kPinkLight,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(color: kBorder, width: 1),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: ScreenUtil().setHeight(10),
-                ),
-                Text(
-                 'الاجمالي : ' + '${double.parse(productSql.price) *double.parse(productSql.count.toString())}' +' '+ currency,
-                  style: kReviews,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: ScreenUtil().setHeight(10),
+              ),
+              Text(
+               'الاجمالي : ' + '${double.parse(productSql.price) *double.parse(productSql.count.toString())}' +' '+ currency,
+                style: kReviews,
+              ),
+            ],
           ),
         ],
       ),

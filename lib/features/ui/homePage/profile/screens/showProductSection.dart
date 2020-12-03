@@ -1,5 +1,6 @@
 
 
+import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 
 import 'package:beauty/components/model/productModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
@@ -12,10 +13,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-class ShowProduct extends StatelessWidget {
+import 'package:beauty/components/model/sectionModel.dart';
+
+import 'package:flutter_screenutil/screenutil.dart';
+class ShowProductSection extends StatelessWidget {
   final  String title ;
-  ShowProduct({
+  final  int num  ;
+  ShowProductSection({
     this.title,
+    this.num
   });
   @override
   Widget build(BuildContext context) {
@@ -30,9 +36,9 @@ class ShowProduct extends StatelessWidget {
             right: ScreenUtil().setWidth(10),),
           child: Consumer<ApiProvider>(
             builder: (context, value, child) {
-              ProductModel product = value.productByBrand ;
-              if(product!=null){
-                if(product.data.isEmpty){
+              SectionModel section = num==1? value.latestProducts:num==2?value.customCategory:value.mostRated;
+              if(section!=null){
+                if(section.data.products.isEmpty){
                   return Center(
                     child: Text(
                       'سيتم اضافتها قريبا',
@@ -51,16 +57,16 @@ class ShowProduct extends StatelessWidget {
                         crossAxisCount: 2,
                         childAspectRatio: 0.60,
                       ),
-                      itemCount: product.data.length,
+                      itemCount: section.data.products.length,
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
-                          child:  ProductItemGrid(
-                              imagePath: product.data[index].image ,
-                              title: product.data[index].name,
-                              rating: 4,
-                              prize: product.data[index].price,
-                              fav: product.data[index].isFavourited,
-                          product:product.data[index] ,),
+                          child:  ProductItemList(
+                            imagePath: section.data.products[index].image ,
+                            title: section.data.products[index].name,
+                            rating: 4,
+                            prize: section.data.products[index].price,
+                            fav: section.data.products[index].isFavourited,
+                            product:section.data.products[index] ,),
                         );
                       },
                     ),
@@ -71,10 +77,10 @@ class ShowProduct extends StatelessWidget {
                   shrinkWrap: true,
                   primary: false,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 0.80,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10
+                      crossAxisCount: 2,
+                      childAspectRatio: 0.80,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10
 
                   ),
                   itemCount: 4,

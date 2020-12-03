@@ -61,15 +61,12 @@ class SearchItem extends StatelessWidget {
                         constraints: BoxConstraints(
                           maxWidth: 200,
                         ),
-                        child: GestureDetector(
-                          onTap: () => print(id),
-                          child: Text(
-                            name,
-                            style: kTitleSign.copyWith(
-                              fontSize: ScreenUtil().setSp(14),
-                            ),
-                            textAlign: TextAlign.center,
+                        child: Text(
+                          name,
+                          style: kTitleSign.copyWith(
+                            fontSize: ScreenUtil().setSp(14),
                           ),
+                          textAlign: TextAlign.center,
                         ),
                       ),
                       Text(

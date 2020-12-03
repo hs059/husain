@@ -27,18 +27,23 @@ List<String>tabIconI = [
   'assets/svg/icon/brandsI.svg',
   'assets/svg/icon/profileI.svg',
 ];
-List sort = [
+List sortUi = [
   'Default sort',
   'Popularity',
-  'Rating',
   'Latest',
   'Low to high',
   'High to low',
 ];
+List sort = [
+  'default',
+  'popularity',
+  'latest',
+  'low_to_high',
+  'high_to_low',
+];
 List<String> paymentList = [
-  'visa',
-  'cashCart',
-  'Cash to Driver'
+  'الدفع أونلاين',
+  'الدفع كاش'
 ];
 String home = 'assets/svg/home.svg';
 String work = 'assets/svg/work.svg';
@@ -48,9 +53,11 @@ List<String> addressIcon = [
 ];
 const  String   brand1 = 'assets/images/brand1.png' ;
 const  String   endOrder = 'assets/svg/endOrder.svg' ;
+// 'default'
+
+
 
 // popularity
 // latest
-// rated
 // low_to_high
 // high_to_low

@@ -8,6 +8,7 @@ import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 import 'package:beauty/features/ui/product/productSubScreen.dart';
+import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
@@ -102,11 +103,23 @@ class ProductRecommended extends StatelessWidget {
                                                       fit: BoxFit.contain),
                                                 ),
                                               ),
-                                              authProvider.isLogin?  Align(
+                                              Align(
                                                 alignment: Alignment.topRight,
                                                 child: GestureDetector(
                                                   onTap: () {
-                                                    apiProviderFalse.toggleFavUI(productModel.data[index]);
+                                                    if(authProvider.isLogin){
+                                                      apiProviderFalse.toggleFavUI(productModel.data[index]);
+                                                    }else{
+                                                      Fluttertoast.showToast(
+                                                          msg: 'يجب عليك تسجيل الدخول',
+                                                          toastLength: Toast.LENGTH_SHORT,
+                                                          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                                          timeInSecForIosWeb: 1,
+                                                          textColor: Colors.white,
+                                                          fontSize: 16.0
+                                                      );
+                                                      kNavigatorPush(context, SignIn());
+                                                    }
                                                   },
                                                   child: Padding(
                                                     padding: EdgeInsets.all(8),
@@ -118,7 +131,7 @@ class ProductRecommended extends StatelessWidget {
                                                     ),
                                                   ),
                                                 ),
-                                              ):Container(),
+                                              ),
 
                                             ],
                                           ),

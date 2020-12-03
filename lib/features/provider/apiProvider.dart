@@ -40,6 +40,7 @@ class ApiProvider extends ChangeNotifier {
 
   productModelClass.ProductModel productByCategory;
   productModelClass.ProductModel productFav;
+  productModelClass.ProductModel productSort;
 
   productClass.ProductM productM;
 
@@ -48,22 +49,7 @@ class ApiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<SubCategoryModel>> allSubCategory() async {
-    DateTime now = DateTime.now();
-    print(now.toString());
-    category = await ApiRepository.apiRepository.getCategory();
-    List<SubCategoryModel> subCategoryList = [];
-    for (int i = 0; i < category.data.length; i++) {
-      SubCategoryModel subCModel =
-          await ApiRepository.apiRepository.getSubCategory(category.data[i].id);
-      subCategoryList.add(subCModel);
-    }
-    DateTime now2 = DateTime.now();
-    print(now2.toString());
 
-    print(subCategoryList.length);
-    return subCategoryList;
-  }
 
   Future<SubCategoryModel> getSubCategory(int id, BuildContext context) async {
     // Provider.of<UiProvider>(context, listen: false).toggleSpinner();
@@ -119,7 +105,6 @@ class ApiProvider extends ChangeNotifier {
   getProductDetails(int id) async {
     productM = null;
     productM = await ApiRepository.apiRepository.getProductDetails(id);
-    print(productM.toJson());
     notifyListeners();
   }
 
@@ -146,15 +131,7 @@ class ApiProvider extends ChangeNotifier {
     productSearch = null;
   }
 
-  onBoarding() async {
-    Map map = await ApiClient.apiClient.onBoarding();
-    if (!map['code']) {
-      Get.defaultDialog(
-        title: 'error',
-      );
-    }
-    print(map);
-  }
+
 
   CreateOrderGet createOrderGet;
 
@@ -262,39 +239,71 @@ class ApiProvider extends ChangeNotifier {
 
   addFav(int productId) async {
     Map map = await ApiClient.apiClient.addFav(productId);
-    print(map);
+    getAllFav();
     notifyListeners();
   }
 
   removeFav(int productId) async {
     Map map = await ApiClient.apiClient.removeFav(productId);
-    print(map);
+    getAllFav();
     notifyListeners();
   }
 
   toggleFavUIS(sectionClass.Products product) {
     product.toggle();
-    print(product.isFavourited);
     product.isFavourited ? addFav(product.id) : removeFav(product.id);
     notifyListeners();
   }
   toggleFavUI(productModelClass.Data product) {
     product.toggle();
-    print(product.isFavourited);
     product.isFavourited ? addFav(product.id) : removeFav(product.id);
     notifyListeners();
   }  toggleFavUIM(productClass.Data product) {
+
     product.toggle();
-    print(product.isFavourited);
     product.isFavourited ? addFav(int.parse( product.id )) : removeFav(int.parse( product.id ));
+
     notifyListeners();
   }
 
-  ///////I use FutureBuilder for this method ////////
-  Future<productModelClass.ProductModel> getAllFav()async{
+  ///////I use ConsumerBuilder for this method ////////
+ getAllFav()async{
  productFav =    await ApiRepository.apiRepository.getAllFav();
- print(productFav.toJson());
+ notifyListeners();
+  }  ///////I use FutureBuilder for this method ////////
+  Future<productModelClass.ProductModel> getAllFavV()async{
+ productFav =    await ApiRepository.apiRepository.getAllFav();
  return productFav ;
   }
 
+
+  Future<productModelClass.ProductModel> sortByCategory(int subCategoryId , String type,)async{
+    productSort = await ApiRepository.apiRepository.sortByCategory(subCategoryId, type);
+  print(productSort.toJson());
+    return productSort ;
+  }
+ nullProductSort(){
+   productSort= null ;
+   notifyListeners();
+ }
+  bool isSort =false ;
+  setIsSort(bool value){
+    this.isSort = value ;
+    notifyListeners();
+  }
+  int typeSelected = 0 ;
+  setTypeSelected(int value){
+    this.typeSelected = value ;
+    print('typeSelected $typeSelected');
+    notifyListeners();
+  }
+  Map onbourding ;
+  getOnbourding()async{
+    DateTime now = DateTime.now();
+print('now:$now');
+    onbourding = await ApiClient.apiClient.onBoarding();
+    print(onbourding);
+    DateTime now2 = DateTime.now();
+    print('now2:$now2');
+  }
 }

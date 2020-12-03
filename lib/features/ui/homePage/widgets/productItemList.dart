@@ -6,6 +6,7 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/product/productSubScreen.dart';
+import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
@@ -99,11 +100,23 @@ class ProductItemList extends StatelessWidget {
                               fit: BoxFit.contain),
                         ),
                       ),
-                      authProvider.isLogin?  Align(
+                      Align(
                         alignment: Alignment.topRight,
                         child: GestureDetector(
                           onTap: () {
-                            apiProviderFalse.toggleFavUIS(product);
+                            if(authProvider.isLogin){
+                              apiProviderFalse.toggleFavUIS(product);
+                            }else{
+                              Fluttertoast.showToast(
+                                  msg: 'يجب عليك تسجيل الدخول',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                  timeInSecForIosWeb: 1,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              );
+                              kNavigatorPush(context, SignIn());
+                            }
                           },
                           child: Padding(
                             padding: EdgeInsets.all(8),
@@ -115,7 +128,7 @@ class ProductItemList extends StatelessWidget {
                             ),
                           ),
                         ),
-                      ):Container(),
+                      ),
                     ],
                   ),
                 ),
@@ -126,13 +139,9 @@ class ProductItemList extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          GestureDetector(
-
-                            child: Text(
-                              title,
-                              style: k15Black,
-                            ),
-                            onTap: () => print(product.id),
+                          Text(
+                            title,
+                            style: k15Black,
                           ),
                           SizedBox(
                             height: ScreenUtil().setHeight(9),
@@ -146,6 +155,7 @@ class ProductItemList extends StatelessWidget {
                                   SmoothStarRating(
                                     rating: rating,
                                     color: kStar,
+                                    borderColor: kStar,
                                     isReadOnly: true,
                                     size: 15,
                                     filledIconData: Icons.star,
@@ -186,7 +196,6 @@ class ProductItemList extends StatelessWidget {
                                 },
                                 child: Builder(
                                   builder: (context) {
-                                    print(product.id);
 
                                     bool onCart =
                                         Provider.of<DBProvider>(context)

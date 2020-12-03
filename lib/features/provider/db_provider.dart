@@ -20,19 +20,18 @@ class DBProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
   bool getOnCart(int id ,ProductSql productSql){
     bool found = allProducts.any( (element) => element.idProduct == productSql.idProduct )??false;
     List<ProductSql> ffff = allProducts.where((element) => element.idProduct == productSql.idProduct ).toList();
     return ffff.length !=0;
   }
   insertNewProduct(ProductSql productSql) async {
-
     setAllProducts();
     bool found = allProducts.any( (element) => element.idProduct == productSql.idProduct )??false;
     if(!found){
       await DBRepository.dbRepository.insertNewProduct(productSql);
       toggleOnCart(productSql);
-      print(productSql.count);
       setAllProducts();
     }else{
 
@@ -48,7 +47,12 @@ int count = productSql.count??1;
       );
     }
   }
+  updateProduct(ProductSql productSql)async{
+    await DBRepository.dbRepository.updateProduct( productSql) ;
+    notifyListeners();
 
+    setAllProducts();
+  }
   subtractionProduct(ProductSql productSql) async {
     await DBRepository.dbRepository.subtractionProduct(productSql);
     setAllProducts();
@@ -62,12 +66,7 @@ int count = productSql.count??1;
     await DBRepository.dbRepository.deleteAllProduct();
     setAllProducts();
   }
-  updateProduct(ProductSql productSql)async{
-    await DBRepository.dbRepository.updateProduct( productSql) ;
-    notifyListeners();
 
-    setAllProducts();
-  }
   toggleOnCart(ProductSql productSql)async{
     await DBRepository.dbRepository.toggleOnCart(productSql);
     setAllProducts();

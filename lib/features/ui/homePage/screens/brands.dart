@@ -2,7 +2,6 @@ import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
-import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
@@ -11,6 +10,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:beauty/value/constant.dart';
+
+import 'package:flutter/cupertino.dart';
 
 class Brands extends StatelessWidget {
 
@@ -29,7 +31,16 @@ class Brands extends StatelessWidget {
                 blurRadius: 4.0,
               )
             ]),
-            child: AppBar(iconTheme: IconThemeData(color: Color(0xff121924)),
+            child: AppBar(
+              leading:  GestureDetector(
+                onTap: () {
+                  tabControllerConstant.animateTo(0);
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: Color(0xff121924),
+                ),
+              ),
               backgroundColor: Colors.white,
               title: Text(
                 "أحدث الماركات العالمية", style: kSectionText.copyWith(

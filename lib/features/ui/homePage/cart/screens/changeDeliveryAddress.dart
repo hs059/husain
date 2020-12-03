@@ -77,7 +77,6 @@ class ChangeDeliveryAddress extends StatelessWidget {
                      child: GestureDetector(
                        onTap: () {
                          value.setAddressSelected(address);
-                         print(value.addressSelected.toJson());
                        Navigator.pop(context);
                        },
                        child: CartAddressWidget(

@@ -120,7 +120,6 @@ class _SignUpState extends State<SignUp> {
                             initialCountryCode: 'SA',
                             showDropdownIcon: false,
                             onChanged: (phone) {
-                              print(phone.completeNumber);
                             },
                           ),
                         ),
@@ -156,7 +155,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                kNavigatorPushAndRemoveUntil(context, SignIn());
+                                Navigator.pop(context);
                               },
                           ),
                         ],
