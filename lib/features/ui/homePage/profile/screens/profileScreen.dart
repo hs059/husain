@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
@@ -18,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 import 'favourite.dart';
 
@@ -155,6 +158,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 MyDivider(),
                 ListTile(
+                  onTap: () => Share.share(
+                      Platform.isAndroid ?
+                      'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US&gl=US':'https://apps.apple.com/us/app/facebook/id284882215',
+                      subject: 'استمتع باروع التخفيضات'),
                   leading: SvgPicture.asset(
                     'assets/svg/shareBtn.svg',
                     fit: BoxFit.contain,

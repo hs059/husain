@@ -1,6 +1,7 @@
 
 
 import 'package:beauty/components/widgets/myDivider.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/features/ui/homePage/profile/widgets/webView.dart';
@@ -10,6 +11,7 @@ import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -29,6 +31,7 @@ class AboutUs extends StatelessWidget {
                   child: Column(
                     children: [
                       ListTile(
+
                         leading: SvgPicture.asset(
                           'assets/svg/privacyBtn.svg',
                           fit: BoxFit.contain,
@@ -38,7 +41,13 @@ class AboutUs extends StatelessWidget {
                           style: kProfile,
                         ),
                         trailing: Icon(Icons.arrow_forward_ios),
-
+// onTap: () => print(Provider.of<ApiProvider>(context,listen: false).privacyPolicy['data']['url']),
+                      onTap: () {
+                          kNavigatorPush(context,WebSite(
+                            title: 'privacyPolicy',
+                            link: Provider.of<ApiProvider>(context,listen: false).privacyPolicy['data']['url'],
+                          ));
+                      },
                       ),
                       MyDivider(),
                       ListTile(

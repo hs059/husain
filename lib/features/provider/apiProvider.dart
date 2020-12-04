@@ -306,4 +306,14 @@ print('now:$now');
     DateTime now2 = DateTime.now();
     print('now2:$now2');
   }
+Map privacyPolicy ;
+  getPrivacyPolicy()async{
+    Map map  = await ApiClient.apiClient.getPrivacyPolicy();
+    if(map['code']){
+      privacyPolicy = map ;
+      print(privacyPolicy);
+    }
+  }
+
+
 }

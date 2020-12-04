@@ -332,31 +332,41 @@ class CheckOut extends StatelessWidget {
                   style: kBtnText,
                 ),
                 onTap: () async {
-                  if (uiProvider.paymentGroup == paymentList[0]) {
-                    kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()));
-                  } else {
-                    Provider.of<ApiProvider>(context, listen: false)
-                        .createOrder(
+                    if( apiProvider.addressSelected!=null ){
+                      Provider.of<ApiProvider>(context, listen: false)
+                          .createOrder(
                         authProvider.showProfileModel.data.displayName,
                         apiProvider.addressSelected.fullAddress,
                         apiProvider.addressSelected.houseNumber,
                         apiProvider.addressSelected.apartment,
                         allProducts
-                          .map((e) => LineItems(
-                                productId: e.idProduct.toString(),
-                                quantity: e.count.toString(),
-                              ).toJson())
-                          .toList(),
-                    );
-                    showDialog(
-                      context: context,
-                      builder: (context) => DialogConfirmOrder(
-                        onTap: () async {
-                          kNavigatorPushAndRemoveUntil(context, HomePage());
-                        },
-                      ),
-                    );
-                  }
+                            .map((e) => LineItems(
+                          productId: e.idProduct.toString(),
+                          quantity: e.count.toString(),
+                        ).toJson())
+                            .toList(),
+                      );
+                      uiProvider.paymentGroup == paymentList[0]? kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()))  :showDialog(
+                        context: context,
+                        builder: (context) => DialogConfirmOrder(
+                          onTap: () async {
+                            kNavigatorPushAndRemoveUntil(context, HomePage());
+                          },
+                        ),
+                      );
+                    }else{
+                      Fluttertoast.showToast(
+                          msg: 'أضف عنوان التوصيل',
+                          toastLength: Toast.LENGTH_SHORT,
+                          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                          timeInSecForIosWeb: 1,
+                          gravity:ToastGravity.TOP ,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
+                    }
+
+
                 },
               ),
             ],

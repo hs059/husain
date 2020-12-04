@@ -98,6 +98,8 @@ class _SplashState extends State<Splash> {
                 Provider.of<ApiProvider>(context, listen: false).getBrand();
                 Location.location.getCurrentLocation();
                 Provider.of<ApiProvider>(context,listen: false).getCategory();
+                Provider.of<ApiProvider>(context,listen: false).getPrivacyPolicy();
+                Provider.of<ApiProvider>(context,listen: false).getAllOrder();
                 Provider.of<DBProvider>(context,listen: false).setAllProducts();
 
                 var delay = Duration(seconds: 4);
