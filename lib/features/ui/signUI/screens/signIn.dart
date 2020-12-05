@@ -221,8 +221,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                   Tween(begin: 0.0, end: 1.0).animate(controller),
                               child: GestureDetector(
                                 onTap: () async{
-                                  bool result = await Auth.auth.signInWithFacebook();
-                                  result?kNavigatorPush(context,HomePage()):print('do not connect');
+                                  // bool result = await Auth.auth.signInWithFacebook();
+                                  // result?kNavigatorPush(context,HomePage()):print('do not connect');
 
                                 },
                                 child: Container(
@@ -246,8 +246,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                   Tween(begin: 0.0, end: 1.0).animate(controller),
                               child: GestureDetector(
                                 onTap: () async{
-                                   // Auth.auth.signInTwitter();
-                                  // kNavigatorPush(context, AAAAA());
+                                   Auth.auth.signInWithTwitter();
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -271,10 +270,10 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                   Tween(begin: 0.0, end: 1.0).animate(controller),
                               child: GestureDetector(
                                 onTap: () async{
-                                 bool result = await Auth.auth.loginUsingGoogle();
-                                 authProvider.getLogin();
+                                 // bool result = await Auth.auth.loginUsingGoogle();
+                                 // authProvider.getLogin();
 
-                                 result?kNavigatorPush(context,HomePage()):print('do not connect');
+                                 // result?kNavigatorPush(context,HomePage()):print('do not connect');
                                 },
                                 child: Container(
                                   alignment: Alignment.center,

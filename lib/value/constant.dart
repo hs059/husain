@@ -56,6 +56,7 @@ String verify_for_forget_password = 'verify_for_forget_password';
 String add_product_to_wishlist = 'add_product_to_wishlist';
 String remove_product_from_wishlist = 'remove_product_from_wishlist';
 String get_favourite_products = 'get_favourite_products';
+String register_by_social_media = 'register_by_social_media';
 
 List<String> getSliderIndex = [
   'get_first_slider',

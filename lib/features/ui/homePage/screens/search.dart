@@ -53,6 +53,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                   iconTheme: IconThemeData(color: Color(0xff121924)),
                   backgroundColor: Colors.white,
                   title: TextField(
+                    autofocus: true,
                     onChanged: (value) async {
                       uiProviderFalse.setLoading(true);
                       await Provider.of<ApiProvider>(context, listen: false)
@@ -163,7 +164,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                               Grid: false,
                               index: index,
                               count: apiProvider.productSearch.data.length,
-                              duration: 1500,
+                              duration: 800,
                               child: SearchItem(
                                 name:
                                     apiProvider.productSearch.data[index].name,

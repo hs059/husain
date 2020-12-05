@@ -9,6 +9,7 @@ import 'package:beauty/features/ui/product/productSubScreen.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/colors.dart';
+import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
@@ -50,8 +51,9 @@ class ProductItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider =    Provider.of<AuthProvider>(context);
-    ApiProvider apiProviderFalse =    Provider.of<ApiProvider>(context,listen: false);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    ApiProvider apiProviderFalse =
+        Provider.of<ApiProvider>(context, listen: false);
     return Row(
       children: [
         Container(
@@ -76,6 +78,7 @@ class ProductItemList extends StatelessWidget {
                           onTap: () {
                             if (ConnectivityService.connectivityStatus ==
                                 ConnectivityHStatus.online) {
+                              apiProviderFalse.getProductDetails(product.id);
                               kNavigatorPush(
                                   context,
                                   ProductSubScreen(
@@ -104,17 +107,17 @@ class ProductItemList extends StatelessWidget {
                         alignment: Alignment.topRight,
                         child: GestureDetector(
                           onTap: () {
-                            if(authProvider.isLogin){
+                            if (authProvider.isLogin) {
                               apiProviderFalse.toggleFavUIS(product);
-                            }else{
+                            } else {
                               Fluttertoast.showToast(
                                   msg: 'يجب عليك تسجيل الدخول',
                                   toastLength: Toast.LENGTH_SHORT,
-                                  backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                  backgroundColor:
+                                      Color(0xffDAA095).withOpacity(0.8),
                                   timeInSecForIosWeb: 1,
                                   textColor: Colors.white,
-                                  fontSize: 16.0
-                              );
+                                  fontSize: 16.0);
                               kNavigatorPush(context, SignIn());
                             }
                           },
@@ -122,8 +125,11 @@ class ProductItemList extends StatelessWidget {
                             padding: EdgeInsets.all(8),
                             //ToDo:Check Token
                             child: Icon(
-                              product.isFavourited ? Icons.favorite : Icons.favorite_border,
-                              color: product.isFavourited ? kRed : Colors.black45,
+                              product.isFavourited
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color:
+                                  product.isFavourited ? kRed : Colors.black45,
                               size: 30,
                             ),
                           ),
@@ -172,7 +178,7 @@ class ProductItemList extends StatelessWidget {
                                     height: ScreenUtil().setHeight(10),
                                   ),
                                   Text(
-                                    prize.toString(),
+                                    prize.toString() + ' ' + currency,
                                     style: kPrize,
                                     textAlign: TextAlign.center,
                                   ),
@@ -185,18 +191,17 @@ class ProductItemList extends StatelessWidget {
                                           listen: false)
                                       .insertNewProduct(getproduct());
                                   Fluttertoast.showToast(
-                                      backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                      backgroundColor:
+                                          Color(0xffDAA095).withOpacity(0.8),
                                       msg: 'تمت اضافة المنتج الى العربة',
                                       toastLength: Toast.LENGTH_SHORT,
                                       gravity: ToastGravity.TOP,
                                       timeInSecForIosWeb: 1,
                                       textColor: Colors.white,
                                       fontSize: 16.0);
-
                                 },
                                 child: Builder(
                                   builder: (context) {
-
                                     bool onCart =
                                         Provider.of<DBProvider>(context)
                                             .getOnCart(

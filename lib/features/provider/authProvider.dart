@@ -8,13 +8,16 @@ import 'package:beauty/features/ui/signUI/screens/Verification.dart';
 import 'package:beauty/features/ui/signUI/screens/VerifyForgetPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/auth.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
 
@@ -396,4 +399,24 @@ class AuthProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+
+
+
+
+  signInWithTwitter()async{
+    UserCredential userCredential =  await Auth.auth.signInWithTwitter();
+    Logger().d(  userCredential.user.email);
+    Logger().d(  userCredential.user.displayName);
+    Logger().d(  userCredential.user.uid);
+
+
+  }
+  loginUsingGoogle()async{
+
+  }
+  signInWithFacebook()async{
+
+  }
+
 }

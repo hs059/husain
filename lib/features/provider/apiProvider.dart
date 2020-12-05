@@ -15,6 +15,7 @@ import 'package:beauty/value/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class ApiProvider extends ChangeNotifier {
@@ -67,12 +68,13 @@ class ApiProvider extends ChangeNotifier {
   }
 
   getSection() async {
+    latestProducts =
+    await ApiRepository.apiRepository.getSection(get_latest_products);
     customCategory = await ApiRepository.apiRepository
         .getSection(get_product_for_custom_category);
     mostRated = await ApiRepository.apiRepository
         .getSection(get_product_for_custom_category);
-    latestProducts =
-        await ApiRepository.apiRepository.getSection(get_latest_products);
+
     notifyListeners();
   }
 
@@ -105,12 +107,17 @@ class ApiProvider extends ChangeNotifier {
   getProductDetails(int id) async {
     productM = null;
     productM = await ApiRepository.apiRepository.getProductDetails(id);
+    Logger().d(productM.data.toJson());
     notifyListeners();
   }
 
   Future<List<productClass.Reviews>> getProductRev(int id) async {
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     return productM.data.reviews;
+  }
+ Future<List<productClass.Reviews>> getProductRevCon(int id) async {
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+   notifyListeners();
   }
 
   Future<productClass.ProductM> getProductDetailsSearch(
@@ -224,15 +231,17 @@ class ApiProvider extends ChangeNotifier {
 
   Future<Map> addRev(int productId) async {
     Map map = await ApiClient.apiClient.addRev(productId, rating, comment);
-
     if (map['code']) {
       Fluttertoast.showToast(
-          msg: 'تم اضافة تعليقك',
+          msg:'تم اضافة تعليقك',
           toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.SNACKBAR,
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
           timeInSecForIosWeb: 1,
-          textColor: Color(0xffDAA095),
-          fontSize: 16.0);
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      getProductRevCon(productId);
+
       return map;
     }
   }

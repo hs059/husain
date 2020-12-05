@@ -6,6 +6,7 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
+import 'package:beauty/features/ui/product/productSubScreen.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/features/ui/product/productSubScreen.dart';
@@ -69,6 +70,7 @@ class ProductItemGrid extends StatelessWidget {
                           onTap: () {
                             if (ConnectivityService.connectivityStatus ==
                                 ConnectivityHStatus.online) {
+                              apiProviderFalse.getProductDetails( product.id);
                               kNavigatorPush(
                                   context,
                                   ProductSubScreen(

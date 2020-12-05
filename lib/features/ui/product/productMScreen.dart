@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
@@ -60,7 +61,7 @@ class ProductMScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         BrandProduct(),
-                        MyDivider(),
+
                         LoaderGif1(),
                         MyDivider(),
                         LoaderGif1(),
@@ -185,7 +186,7 @@ class ProductMScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             BrandProduct(),
-                            MyDivider(),
+
                             ProductName(
                               name: name,
                               reviews:reviews.length,
@@ -201,16 +202,16 @@ class ProductMScreen extends StatelessWidget {
                                 Provider.of<DBProvider>(context,listen: false).insertNewProduct(
                                     getproduct()
                                 );
-                                // showMaterialModalBottomSheet(
-                                //   shape: RoundedRectangleBorder(
-                                //     borderRadius: BorderRadius.only(
-                                //       topLeft: Radius.circular(20),
-                                //       topRight: Radius.circular(20),
-                                //     ),
-                                //   ),
-                                //   context: context,
-                                //   builder: (context, scrollController) => AddCartSheet(prize:price,),
-                                // );
+                                showMaterialModalBottomSheet(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                  context: context,
+                                  builder: (context) => AddCartSheet(prize:price,),
+                                );
                               },
                             ),
                           ],
@@ -280,81 +281,82 @@ class ProductMScreen extends StatelessWidget {
                           ),
                         ),
                         children: [
-                          reviews.isNotEmpty? Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: ScreenUtil().setWidth(15),
-                            ),
-                            child: Align(
-                              alignment: Alignment.topLeft,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Row(
+                          reviews.isNotEmpty?ListView.builder(
+                            shrinkWrap: true,
+                            primary: false,
+                            itemCount: reviews.length,
+                            scrollDirection: Axis.vertical,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder:(context, index) {
+                             Reviews  review = reviews[index];
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: ScreenUtil().setWidth(15),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      SmoothStarRating(
-                                        rating: 4.5,
-                                        color: kStar,
-                                        isReadOnly: true,
-                                        size: 15,
-                                        borderColor: kBorder,
-                                        filledIconData: Icons.star,
-                                        halfFilledIconData: Icons.star_half,
-                                        defaultIconData: Icons.star_border,
-                                        starCount: 5,
-                                        allowHalfRating: true,
-                                        spacing: 1.0,
-                                        onRated: (value) {
-                                          print("rating value -> $value");
-                                        },
+                                      Row(
+                                        children: [
+                                          SmoothStarRating(
+                                            rating: double.parse(review.reviewCount),
+                                            color: kStar,
+                                            isReadOnly: true,
+                                            size: 15,
+                                            borderColor: kBorder,
+                                            filledIconData: Icons.star,
+                                            halfFilledIconData: Icons.star_half,
+                                            defaultIconData: Icons.star_border,
+                                            starCount: 5,
+                                            allowHalfRating: true,
+                                            spacing: 1.0,
+                                            onRated: (value) {
+                                              print("rating value -> $value");
+                                            },
+                                          ),
+                                          Text(
+                                            review.user.userName,
+                                            style: kGrayTextStyle,
+                                            textAlign: TextAlign.start,
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        ' Unknown ',
-                                        style: kGrayTextStyle,
-                                        textAlign: TextAlign.start,
+                                      SizedBox(
+                                        height: ScreenUtil().setHeight(10),
+                                      ),
+                                      Container(
+                                        constraints: BoxConstraints(
+                                          maxWidth: ScreenUtil().setWidth(280),
+                                        ),
+                                        child: Text(
+                                            review.comment,
+                                            style: kReviews.copyWith(
+                                              fontSize: ScreenUtil().setSp(14),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        height: ScreenUtil().setHeight(40),
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    height: ScreenUtil().setHeight(30),
-                                  ),
-                                  Container(
-                                    constraints: BoxConstraints(
-                                      maxWidth: ScreenUtil().setWidth(280),
-                                    ),
-                                    child: Text(
-                                        '''Wonderful gives a smooth texture to the skin 
-I highly recommend it''',
-                                        style: kReviews.copyWith(
-                                          fontSize: ScreenUtil().setSp(14),
-                                        )),
-                                  ),
-                                  SizedBox(
-                                    height: ScreenUtil().setHeight(40),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ):Center(
-                            child: Text(
-                              '',
-                              style:
-                              kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
-                            ),
-                          ),
-                          ListTile(
-                            title: Visibility(
-                              visible:  reviews.isNotEmpty,
-                              child: GestureDetector(
-                                onTap: () => print(reviews.length),
-                                child: Text(
-                                  'جميع التعليقات',
-                                  style: kSeeAll.copyWith(
-                                    fontSize: ScreenUtil().setSp(16),
-                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            }  ,
+                          ):
+                          Center(
+                              child: Text(
+                                  'لا يوجد تعليقات أضف تعليقك ...',
+                                  style:TextStyle(
+                                      fontFamily: 'Cairo-Regular',
+                                      fontSize: 18,
+                                      color: kGray
+                                  )
+
+                              )) ,
+                          ListTile(
                             trailing: GestureDetector(
                               onTap: () async{
                                 bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
@@ -462,7 +464,7 @@ I highly recommend it''',
                                 }
                               },
                               child: Text(
-                                'أضف تعليقك و تقييمك',
+                                'أضف تعليقك',
                                 style: kSeeAll.copyWith(
                                   fontSize: ScreenUtil().setSp(16),
                                 ),

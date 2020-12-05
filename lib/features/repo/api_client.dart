@@ -161,6 +161,7 @@ class ApiClient {
       print(e);
     }
   }
+  ////////////////////////////////////////////
   Future<Map> verifyForgetPassword(String id, int verificationCode) async {
     await initApi();
     FormData data = FormData.fromMap({
@@ -175,8 +176,8 @@ class ApiClient {
     print(response.data);
     return response.data;
   }
+///////////////////////////////////////////////////////
 
-//ToDo:Verification
   Future<Map> verification(String id, String verificationCode) async {
     await initApi();
     FormData data = FormData.fromMap({
@@ -191,7 +192,25 @@ class ApiClient {
     print(response.data);
     return response.data;
   }
+  ///////////////////////////////////////////////////////////////////////////////////////
 
+  socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type  )async{
+    await initApi() ;
+    FormData data = FormData.fromMap({
+      "id":socialId,
+      "userName":userName,
+      "mobileNumber":mobileNumber,
+      "email":email,
+      "type":type
+    });
+    Response response = await dio.post(
+      baseUrl + register_by_social_media,
+      data: data,
+    );
+    print(response.data);
+    return response.data;
+  }
+///////////////////////////////////////////////////////////////////////////////////////
   Future<Map> getCategory() async {
     try {
       await initApi();
@@ -661,15 +680,5 @@ getAllFav()async{
     }
   }
 
-  socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type  )async{
-    await initApi() ;
-    FormData data = FormData.fromMap({
-      "id":socialId,
-      "userName":userName,
-      "mobileNumber":mobileNumber,
-      "email":email,
-      "type":type
-    });
 
-  }
 }

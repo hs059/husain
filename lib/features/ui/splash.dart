@@ -32,8 +32,10 @@ class _SplashState extends State<Splash> {
   _registerOnFirebase()async {
     _firebaseMessaging.subscribeToTopic('all');
     String token = await _firebaseMessaging.getToken();
+    _firebaseMessaging.subscribeToTopic(token);
+
     print(token);
-    // _firebaseMessaging.subscribeToTopic(token);
+
   }
 
   @override
@@ -75,11 +77,11 @@ class _SplashState extends State<Splash> {
           print(message);
           setState(() {});
         }, onResume: (Map<String, dynamic> message) async {
-      print('on resume ششششششششششش$message');
+      print('on resume $message');
 
       setState(() {});
     }, onLaunch: (Map<String, dynamic> message) async {
-      print('on launch شششششششششششششش $message');
+      print('on launch  $message');
       setState(() {});
     });
   }

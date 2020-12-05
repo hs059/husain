@@ -18,11 +18,6 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 
 class AccountInformations extends StatelessWidget {
-  // final myController1 = TextEditingController();
-  // final myController2 = TextEditingController();
-  // final myController3 = TextEditingController();
-  // final myController4 = TextEditingController();
-  // final myController5 = TextEditingController();
   GlobalKey<FormState> formAccountInformations = GlobalKey<FormState>();
   String phone ='00';
   @override
@@ -34,8 +29,7 @@ class AccountInformations extends StatelessWidget {
       child: ModalProgressHUD(
         inAsyncCall:uiProvider.spinner,
         child: Scaffold(
-
-          appBar: PreferredSize(
+           appBar: PreferredSize(
             child: Container(
               decoration: BoxDecoration(boxShadow: [
                 BoxShadow(
@@ -48,7 +42,7 @@ class AccountInformations extends StatelessWidget {
                 iconTheme: IconThemeData(color: Color(0xff121924)),
                 backgroundColor: Colors.white,
                 title: Text(
-                  'Account Informations',
+                  'معلومات الحساب',
                   style: kSubCategoryText.copyWith(
                     color: kBlack,
                   ),
@@ -149,7 +143,7 @@ class AccountInformations extends StatelessWidget {
                                               ),
                                               initialCountryCode: 'SA',
                                               showDropdownIcon: false,
-                                              initialValue: authProvider.showProfileModel.data.mobileNumber,
+                                              initialValue: authProvider.showProfileModel.data.mobileNumber.substring(4),
                                               onChanged: (phone) {
                                                 Provider.of<AuthProvider>(context,listen: false).saveMobile(phone.completeNumber);
                                               },
@@ -195,7 +189,7 @@ class AccountInformations extends StatelessWidget {
                       },
 
                     child: Padding(
-                      padding: const EdgeInsets.all(17),
+                      padding: const EdgeInsets.all(10),
                       child: Text(
                         'edit',
                         style: kSeeAll.copyWith(

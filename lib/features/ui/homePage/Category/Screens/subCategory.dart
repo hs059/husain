@@ -166,7 +166,7 @@ class _SubCategoryState extends State<SubCategory>
                                             Grid: true,
                                             index: index,
                                             count:subProduct.data.length ,
-                                            duration: 1500,
+                                            duration: 800,
                                             child: ProductItemGrid(
                                               imagePath: subProduct
                                                   .data[index].image,
@@ -186,7 +186,7 @@ class _SubCategoryState extends State<SubCategory>
                                       SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         crossAxisSpacing: 0,
-                                        childAspectRatio: 0.6,
+                                        childAspectRatio: 0.57,
                                       ),
                                     );
                                   } else {

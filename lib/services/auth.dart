@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
+import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 // import 'package:flutter_twitter/flutter_twitter.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -18,7 +19,7 @@ class Auth {
   GoogleSignIn googleSignIn = GoogleSignIn();
   FacebookLogin facebookLogin = FacebookLogin();
 
-  Future<bool> loginUsingGoogle() async {
+  Future<UserCredential> loginUsingGoogle() async {
     try {
       GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
       GoogleSignInAuthentication googleSignInAuthentication =
@@ -34,84 +35,45 @@ class Auth {
       String name = authResult.user.displayName;
       SPHelper.spHelper.setUser(userId.toString());
     SPHelper.spHelper.setIsLogin(true);
-      if (authResult.user == null) {
-        return false;
-      } else {
-        return true;
-      }
-
+      // if (authResult.user == null) {
+      //   return false;
+      // } else {
+      //   return true;
+      // }
+    return authResult ;
     } catch (e) {
       print(e);
     }
   }
-//   void signInTwitter() async {
-//     var twitterLogin = new TwitterLogin(
-//       consumerKey: 'bsrsIrms09tBGoMGq4WkI1oUE',
-//       consumerSecret: 'HGh7K6V7xNteVGDnHQWA9KA2ggkgOfJ8qlChfVxFg6ohoCwb33',
-//     );
-//
-//     final TwitterLoginResult result = await twitterLogin.authorize();
-//
-//     switch (result.status) {
-//       case TwitterLoginStatus.loggedIn:
-//         var session = result.session;
-//         print('successful sign in: ${session.username}');
-// //        _sendTokenAndSecretToServer(session.token, session.secret);
-//         break;
-//       case TwitterLoginStatus.cancelledByUser:
-// //        _showCancelMessage();
-//         print('cancelled by user');
-//         break;
-//       case TwitterLoginStatus.error:
-//         print(result.errorMessage);
-//         break;
-//     }
-//   }
-
-  // Future<UserCredential> signInWithTwitter222() async {
-  //   // Create a TwitterLogin instance
-  //   final TwitterLogin twitterLogin = new TwitterLogin(
-  //     consumerKey: '<your consumer key>',
-  //     consumerSecret:' <your consumer secret>',
-  //   );
-  //
-  //   // Trigger the sign-in flow
-  //   final TwitterLoginResult loginResult = await twitterLogin.authorize();
-  //
-  //   // Get the Logged In session
-  //   final TwitterSession twitterSession = loginResult.session;
-  //
-  //   // Create a credential from the access token
-  //   final AuthCredential twitterAuthCredential =
-  //   TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);
-  //
-  //   // Once signed in, return the UserCredential
-  //   return await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
-  // }
-
-   Future<bool> loginUsingFacebook() async {
-//    2407536649-ZFNGnaMhK7tCHBYL4rQ2SGT9nkuTbnL8g3aJCxq acc token
-//    Niz5D73o0BaUMZU4GHHGCTSpJmIoxmoPIITPeuOH46SMO acc token secret
+  Future<UserCredential> signInWithTwitter() async {
+    // Create a TwitterLogin instance
     try {
-      final result = await facebookLogin.logIn(['email']);
-      final token = result.accessToken.token;
-      print('token ......$token');
-      final graphResponse = await http.get(
-          'https://graph.facebook.com/v2.12/me?fields=name,first_name,last_name&access_token=${token}');
-      print(graphResponse.body);
-      if (result.status == FacebookLoginStatus.loggedIn) {
-        final credential = FacebookAuthProvider.credential( token);
-        firebaseAuth.signInWithCredential(credential);
-        return true ;
-      }
-    } catch (e) {
-      Get.snackbar('رسالة تحذير', 'هناك خطأ بالتسجيل باستخدام فيس بوك');
+      final TwitterLogin twitterLogin = new TwitterLogin(
+        consumerKey: 'bsrsIrms09tBGoMGq4WkI1oUE',
+        consumerSecret:'HGh7K6V7xNteVGDnHQWA9KA2ggkgOfJ8qlChfVxFg6ohoCwb33',
+      );
+
+      // Trigger the sign-in flow
+      final TwitterLoginResult loginResult = await twitterLogin.authorize();
+
+      // Get the Logged In session
+      final TwitterSession twitterSession = loginResult.session;
+      // Create a credential from the access token
+      final AuthCredential twitterAuthCredential =
+      TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);
+      // Once signed in, return the UserCredential
+      UserCredential userCredential  = await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
+      Logger().d(  userCredential.user.email);
+      Logger().d(  userCredential.user.displayName);
+      Logger().d(  userCredential.user.uid);
+
+      return userCredential;
+    }  catch (e) {
+      Get.snackbar('رسالة تحذير', 'هناك خطأ بالتسجيل باستخدام التويتر');
     }
   }
 
-
-
-   Future<bool> signInWithFacebook() async {
+Future<Map> signInWithFacebook() async {
     try {
       // by default the login method has the next permissions ['email','public_profile']
       AccessToken accessToken = await FacebookAuth.instance
@@ -123,11 +85,12 @@ class Auth {
       String email = userData['email'] ;
       String id = userData['id'] ;
       Logger().d(userData['name']);
+      Logger().d(userData);
       Logger().d(userData['email']);
       Logger().d(userData['id']);
 
       bool done = userData.isNotEmpty;
-      return done ;
+      return userData ;
     } catch (e, s) {
       if (e is FacebookAuthException) {
         print(e.message);

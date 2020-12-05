@@ -18,7 +18,7 @@ class SubCategoryWait extends StatelessWidget {
         appBar:  AppBar(
         backgroundColor: Colors.white,
         leading: GestureDetector(
-          onTap: () => Navigator.pop(context),
+          onTap: () => print('no'),
           child: Icon(
             Icons.arrow_back,
             color: Colors.black,
