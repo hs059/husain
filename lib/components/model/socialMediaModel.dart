@@ -23,7 +23,7 @@ class SocialMedia {
 }
 
 class Data {
-  int id;
+  String id;
   String socialId;
   String email;
   String userName;

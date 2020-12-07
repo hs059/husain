@@ -59,15 +59,17 @@ class Category extends StatelessWidget {
 
                            if (ConnectivityService.connectivityStatus ==
                                ConnectivityHStatus.online) {
-                             kNavigatorPush(context, SubCategoryWait(categor:category.data[index],));
-                             SubCategoryModel subCategoryModel =    await Provider.of<ApiProvider>(context, listen: false)
+                             // kNavigatorPush(context, SubCategoryWait(categor:category.data[index],));
+                             // SubCategoryModel subCategoryModel =    await Provider.of<ApiProvider>(context, listen: false)
+                             //     .getSubCategory(category.data[index].id,context);
+                             // kNavigatorPushReplacement(context, SubCategory(
+                             //   subCategoryModel: subCategoryModel,
+                             //   categor:category.data[index] ,
+                             // ),
+                             // );
+                             Provider.of<ApiProvider>(context, listen: false)
                                  .getSubCategory(category.data[index].id,context);
-                             kNavigatorPushReplacement(context, SubCategory(
-                               subCategoryModel: subCategoryModel,
-                               categor:category.data[index] ,
-                             ),
-                             );
-
+                            kNavigatorPush(context,  subCategory222(category.data[index]));
                            }else{
                              Get.defaultDialog(title: 'رسالة تحذير',middleText: 'لايوجد اتصال بالانترنت',);
                            }

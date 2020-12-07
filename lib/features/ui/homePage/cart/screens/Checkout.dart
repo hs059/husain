@@ -1,3 +1,4 @@
+import 'package:beauty/components/model/allAddressModel.dart' as addressClass;
 import 'package:beauty/components/model/lineItems.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
@@ -47,9 +48,11 @@ class CheckOut extends StatelessWidget {
     ApiProvider apiProvider = Provider.of<ApiProvider>(context);
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
     DBProvider dbProvider = Provider.of<DBProvider>(context);
+    DBProvider dbProviderFalse = Provider.of<DBProvider>(context,listen: false);
     UiProvider uiProviderFalse =
         Provider.of<UiProvider>(context, listen: false);
     List<ProductSql> allProducts = Provider.of<DBProvider>(context).allProducts;
+    List<addressClass.Data> deffult ;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -59,23 +62,46 @@ class CheckOut extends StatelessWidget {
             children: [
               apiProvider.addressSelected != null
                   ? CartAddressWidget(
-                      address: apiProvider.addressSelected.fullAddress,
+                address: apiProvider.addressSelected.fullAddress,
+                name: authProvider.showProfileModel.data.displayName,
+                phone:  apiProvider.addressSelected.phone,
+                typeAddress: apiProvider.addressSelected.type ==
+                    addressIcon[0]
+                    ? 1
+                    : apiProvider.addressSelected.type == addressIcon[1]
+                    ? 2
+                    : apiProvider.addressSelected.type ==
+                    addressIcon[2]
+                    ? 3
+                    : 1,
+                changeBtn: true,
+                onTap: () =>
+                    kNavigatorPush(context, ChangeDeliveryAddress()),
+              )
+                  : Builder(
+                builder: (context) {
+                  addressClass.AllAddressModel allAddress =   apiProvider.allAddressModel ;
+                  deffult  = allAddress.data.where((element) => element.defualtAddress =="true").toList();
+                  if(deffult.isNotEmpty){
+                    return CartAddressWidget(
+                      address: deffult.first.fullAddress,
                       name: authProvider.showProfileModel.data.displayName,
-                      phone:  apiProvider.addressSelected.phone,
-                      typeAddress: apiProvider.addressSelected.type ==
-                              addressIcon[0]
+                      phone:  deffult.first.phone,
+                      typeAddress: deffult.first.type ==
+                          addressIcon[0]
                           ? 1
-                          : apiProvider.addressSelected.type == addressIcon[1]
-                              ? 2
-                              : apiProvider.addressSelected.type ==
-                                      addressIcon[2]
-                                  ? 3
-                                  : 1,
+                          : deffult.first.type == addressIcon[1]
+                          ? 2
+                          : deffult.first.type ==
+                          addressIcon[2]
+                          ? 3
+                          : 1,
                       changeBtn: true,
                       onTap: () =>
                           kNavigatorPush(context, ChangeDeliveryAddress()),
-                    )
-                  : ContainerCart(
+                    );
+                  }else{
+                    return ContainerCart(
                       child: SizedBox(
                         width: ScreenUtil().setWidth(311),
                         height: ScreenUtil().setHeight(80),
@@ -97,7 +123,12 @@ class CheckOut extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
+                    );
+                  }
+
+                },
+
+                  ),
 
               DateAndTime(),
               Padding(
@@ -122,9 +153,11 @@ class CheckOut extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            Text(
-                              'اجمالي الفاتورة',
-                              style: kSectionText,
+                            GestureDetector(
+                              child: Text(
+                                'اجمالي الفاتورة',
+                                style: kSectionText,
+                              ),onTap: () => print( deffult.first.iD),
                             ),
                           ],
                         ),
@@ -350,11 +383,36 @@ class CheckOut extends StatelessWidget {
                         context: context,
                         builder: (context) => DialogConfirmOrder(
                           onTap: () async {
+                            dbProviderFalse.deleteAllProduct();
                             kNavigatorPushAndRemoveUntil(context, HomePage());
                           },
                         ),
                       );
-                    }else{
+                    }else if(deffult.isNotEmpty){
+                      Provider.of<ApiProvider>(context, listen: false)
+                          .createOrder(
+                        authProvider.showProfileModel.data.displayName,
+                        deffult.first.fullAddress,
+                        deffult.first.houseNumber,
+                        deffult.first.apartment,
+                        allProducts
+                            .map((e) => LineItems(
+                          productId: e.idProduct.toString(),
+                          quantity: e.count.toString(),
+                        ).toJson())
+                            .toList(),
+                      );
+                      uiProvider.paymentGroup == paymentList[0]? kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()))  :showDialog(
+                        context: context,
+                        builder: (context) => DialogConfirmOrder(
+                          onTap: () async {
+                            dbProviderFalse.deleteAllProduct();
+                            kNavigatorPushAndRemoveUntil(context, HomePage());
+                          },
+                        ),
+                      );
+                    }
+                    else{
                       Fluttertoast.showToast(
                           msg: 'أضف عنوان التوصيل',
                           toastLength: Toast.LENGTH_SHORT,

@@ -39,6 +39,7 @@ class Data {
   String stockCode;
   List<Brand> brand;
   List<Reviews> reviews;
+  List<Category> category;
   toggle(){
     this.isFavourited = !this.isFavourited ;
   }
@@ -59,6 +60,7 @@ class Data {
         this.isFavourited,
         this.stockCode,
         this.brand,
+        this.category,
         this.reviews});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -85,6 +87,12 @@ class Data {
       brand = new List<Brand>();
       json['brand'].forEach((v) {
         brand.add(new Brand.fromJson(v));
+      });
+    }
+    if (json['category'] != null) {
+      category = new List<Category>();
+      json['category'].forEach((v) {
+        category.add(new Category.fromJson(v));
       });
     }
     if (json['reviews'] != null) {
@@ -115,6 +123,9 @@ class Data {
     data['stock_code'] = this.stockCode;
     if (this.brand != null) {
       data['brand'] = this.brand.map((v) => v.toJson()).toList();
+    }
+    if (this.category != null) {
+      data['category'] = this.category.map((v) => v.toJson()).toList();
     }
     if (this.reviews != null) {
       data['reviews'] = this.reviews.map((v) => v.toJson()).toList();
@@ -254,6 +265,26 @@ class Brand {
     data['parent'] = this.parent;
     data['count'] = this.count;
     data['filter'] = this.filter;
+    return data;
+  }
+}
+class Category {
+  Brand parent;
+  Null child;
+
+  Category({this.parent, this.child});
+
+  Category.fromJson(Map<String, dynamic> json) {
+    parent = json['parent'] != null ? new Brand.fromJson(json['parent']) : null;
+    child = json['child'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.parent != null) {
+      data['parent'] = this.parent.toJson();
+    }
+    data['child'] = this.child;
     return data;
   }
 }

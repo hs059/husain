@@ -1,6 +1,7 @@
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 
 class ApiClient {
   ApiClient._();
@@ -194,7 +195,7 @@ class ApiClient {
   }
   ///////////////////////////////////////////////////////////////////////////////////////
 
-  socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type  )async{
+  Future<Map> socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type  )async{
     await initApi() ;
     FormData data = FormData.fromMap({
       "id":socialId,
@@ -207,7 +208,6 @@ class ApiClient {
       baseUrl + register_by_social_media,
       data: data,
     );
-    print(response.data);
     return response.data;
   }
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -305,8 +305,9 @@ class ApiClient {
   Future getProductByCategory(int id) async {
     try {
       await initApi();
+      String idUser = await SPHelper.spHelper.getUser();
       Response response = await dio.get(
-        'https://3beauty.net/wp-json/beauty/v1/get_recommended_products?product_id=$id',
+        'https://3beauty.net/wp-json/beauty/v1/get_recommended_products?product_id=$id&user_id=$idUser',
       );
       if (response.statusCode == 200) {
         return response.data;
@@ -362,6 +363,7 @@ class ApiClient {
     try {
       await initApi();
       Response response = await dio.get(baseUrl + 'get_product?id=$id&user_id=$userId');
+      Logger().d(response.data);
       return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {

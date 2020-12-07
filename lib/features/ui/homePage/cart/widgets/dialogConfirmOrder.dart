@@ -23,7 +23,7 @@ class DialogConfirmOrder extends StatelessWidget {
             TitleSubTitle(
               title: 'تم الطلب بنجاح',
               subTitle:
-              'تتم معالجة طلبك بواسطة النظام ، يمكنك رؤية التقدم في',
+              ' تتم معالجة طلبك بواسطة النظام ، يمكنك رؤية الطلب و حالته في خانة طلباتي في صفحة معلومات المستخدم ',
             ),
             SizedBox(
               height: ScreenUtil().setHeight(10),

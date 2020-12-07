@@ -127,7 +127,15 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                             ),
                           ],
                         );
-                } else {
+                } else if(value.productSearch.data.isEmpty){
+                  return  Center(
+                    child: Text(
+                      'ابحث عن منتج اخر ',
+                      style: kSeeAll.copyWith(
+                          fontFamily: 'Cairo-Regular', fontSize: 18),
+                    ),
+                  );
+                }else{
                   if (uiProvider.loading) {
                     return Column(
                       children: [
@@ -164,7 +172,7 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
                               Grid: false,
                               index: index,
                               count: apiProvider.productSearch.data.length,
-                              duration: 800,
+                              duration: 500,
                               child: SearchItem(
                                 name:
                                     apiProvider.productSearch.data[index].name,

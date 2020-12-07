@@ -1,4 +1,5 @@
 import 'package:beauty/components/model/showProfileModel.dart';
+import 'package:beauty/components/model/socialMediaModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/api_repo.dart';
@@ -35,11 +36,14 @@ class AuthProvider extends ChangeNotifier {
     this.email = value;
     notifyListeners();
   }
+
   saveVerificationCode(String value) {
     this.verificationCode = value;
     notifyListeners();
   }
-  int verifyForgetPassword ;
+
+  int verifyForgetPassword;
+
   saveVerifyForgetPassword(int value) {
     this.verifyForgetPassword = value;
     notifyListeners();
@@ -56,13 +60,11 @@ class AuthProvider extends ChangeNotifier {
   }
 
   saveNewPassword(String value) {
-
     this.newPassword = value;
     notifyListeners();
   }
 
   saveConfirmPassword(String value) {
-
     this.confirmPassword = value;
     notifyListeners();
   }
@@ -73,7 +75,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   saveFullName(String value) {
-
     this.fullName = value;
     notifyListeners();
   }
@@ -126,7 +127,7 @@ class AuthProvider extends ChangeNotifier {
   bool isLogin;
 
   getLogin() async {
-    isLogin = await SPHelper.spHelper.getIsLogin()??false;
+    isLogin = await SPHelper.spHelper.getIsLogin() ?? false;
     if (isLogin) {
       showProfile();
     }
@@ -265,8 +266,7 @@ class AuthProvider extends ChangeNotifier {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     String id = await SPHelper.spHelper.getUser();
     String token = await SPHelper.spHelper.getToken();
-    Map map = await ApiClient.apiClient
-        .resetPassword(id, token, newPassword);
+    Map map = await ApiClient.apiClient.resetPassword(id, token, newPassword);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
       Fluttertoast.showToast(
@@ -279,12 +279,11 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-
   submitVerifyForgetPassword(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     String id = await SPHelper.spHelper.getUser();
-    Map map =
-    await ApiClient.apiClient.verifyForgetPassword(id, verifyForgetPassword);
+    Map map = await ApiClient.apiClient
+        .verifyForgetPassword(id, verifyForgetPassword);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
       await SPHelper.spHelper.setToken(map['data']['token']);
@@ -348,7 +347,6 @@ class AuthProvider extends ChangeNotifier {
     SPHelper.spHelper.setToken('');
     SPHelper.spHelper.setToken('');
     showProfileModel = null;
-
   }
 
   ShowProfileModel showProfileModel;
@@ -400,23 +398,41 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  socialMediaLogin(String socialId, String userName, String mobileNumber,
+      String email, String type,BuildContext context) async {
+    SocialMedia socialMedia = await ApiRepository.apiRepository
+        .socialMediaLogin(socialId, userName, mobileNumber, email, type);
 
-
-
-
-  signInWithTwitter()async{
-    UserCredential userCredential =  await Auth.auth.signInWithTwitter();
-    Logger().d(  userCredential.user.email);
-    Logger().d(  userCredential.user.displayName);
-    Logger().d(  userCredential.user.uid);
-
-
-  }
-  loginUsingGoogle()async{
-
-  }
-  signInWithFacebook()async{
-
+    SPHelper.spHelper.setToken(socialMedia.data.token);
+    SPHelper.spHelper.setUser(socialMedia.data.id);
+    await SPHelper.spHelper.setIsLogin(true);
+    getLogin();
+    kNavigatorPush(context, HomePage());
   }
 
+  signInWithTwitter(String mobileNumber,BuildContext context) async {
+    UserCredential userCredential = await Auth.auth.signInWithTwitter();
+    Logger().d(userCredential.user.email);
+    Logger().d(userCredential.user.displayName);
+    Logger().d(userCredential.user.tenantId);
+    String socialId = userCredential.user.uid;
+    String userName = userCredential.user.displayName;
+    String email = userCredential.user.email;
+    String type = 'twitter';
+    socialMediaLogin(socialId, userName, mobileNumber, email, type,context);
+  }
+
+  loginUsingGoogle(String mobileNumber,BuildContext context) async {
+    UserCredential userCredential = await Auth.auth.loginUsingGoogle();
+    Logger().d(userCredential.user.email);
+    Logger().d(userCredential.user.displayName);
+    Logger().d(userCredential.user.uid);
+    String socialId = userCredential.user.uid;
+    String userName = userCredential.user.displayName;
+    String email = userCredential.user.email;
+    String type = 'twitter';
+    socialMediaLogin(socialId, userName, mobileNumber, email, type,context);
+  }
+
+  signInWithFacebook() async {}
 }

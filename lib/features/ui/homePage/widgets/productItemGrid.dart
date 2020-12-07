@@ -120,9 +120,13 @@ class ProductItemGrid extends StatelessWidget {
                                 kNavigatorPush(context, SignIn());
                               }
                             },
-                            child: Icon(
+                            child:authProvider.isLogin? Icon(
                               fav ? Icons.favorite : Icons.favorite_border,
                               color: fav ? kRed : Colors.black45,
+                              size: 30,
+                            ):Icon(
+                              Icons.favorite_border,
+                              color: Colors.black45,
                               size: 30,
                             ),
                           ),

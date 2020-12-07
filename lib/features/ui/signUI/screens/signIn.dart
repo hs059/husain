@@ -3,6 +3,8 @@ import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
+import 'package:beauty/features/repo/api_client.dart';
+import 'package:beauty/features/repo/api_repo.dart';
 import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/signUI/screens/forgotPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/signUp.dart';
@@ -271,8 +273,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               child: GestureDetector(
                                 onTap: () async{
                                  // bool result = await Auth.auth.loginUsingGoogle();
-                                 // authProvider.getLogin();
-
+                                 authProvider.getLogin();
+                                  ApiRepository.apiRepository.socialMediaLogin('1171774863285679', 'aa3qq3', ' aaqq33', "i.77aqq87a8.com", "facebook");
                                  // result?kNavigatorPush(context,HomePage()):print('do not connect');
                                 },
                                 child: Container(

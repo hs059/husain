@@ -55,6 +55,8 @@ class Auth {
 
       // Trigger the sign-in flow
       final TwitterLoginResult loginResult = await twitterLogin.authorize();
+      TwitterLoginStatus twitterLoginStatus = loginResult.status ;
+      Logger().d(twitterLoginStatus);
 
       // Get the Logged In session
       final TwitterSession twitterSession = loginResult.session;

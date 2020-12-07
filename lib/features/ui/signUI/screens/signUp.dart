@@ -4,12 +4,14 @@ import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/features/ui/signUI/widgets/appBarAuth.dart';
+import 'package:beauty/services/auth.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +49,7 @@ class _SignUpState extends State<SignUp> {
                     textAlign: TextAlign.start,
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(20),
+                    height: ScreenUtil().setHeight(10),
                   ),
                   Text(
                     'الرجاء كتابة المعلومات الخاصة بك أدناه',
@@ -55,7 +57,7 @@ class _SignUpState extends State<SignUp> {
                     textAlign: TextAlign.start,
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(40),
+                    height: ScreenUtil().setHeight(20),
                   ),
                   Form(
                     key: formKeySignUp,
@@ -68,7 +70,7 @@ class _SignUpState extends State<SignUp> {
                           onSaved: authProvider.saveFullName,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(15),
+                          height: ScreenUtil().setHeight(10),
                         ),
                         CustomTextFormField(
                           hintText: 'الايميل',
@@ -78,7 +80,7 @@ class _SignUpState extends State<SignUp> {
                           textInputType: TextInputType.emailAddress,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(15),
+                          height: ScreenUtil().setHeight(10),
                         ),
                         CustomTextFormField(
                           hintText: 'كلمة السر',
@@ -87,7 +89,7 @@ class _SignUpState extends State<SignUp> {
                           onSaved: authProvider.savePassword,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(15),
+                          height: ScreenUtil().setHeight(10),
                         ),
                         CustomTextFormField(
                           hintText: 'تأكيد كلمة السر',
@@ -96,7 +98,7 @@ class _SignUpState extends State<SignUp> {
                           onSaved: authProvider.saveConfirmPassword,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(15),
+                          height: ScreenUtil().setHeight(10),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -127,7 +129,7 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(70),
+                    height: ScreenUtil().setHeight(40),
                   ),
                   Builder(
                     builder: (context) =>  Button(
@@ -138,7 +140,85 @@ class _SignUpState extends State<SignUp> {
                         }),
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(50),
+                    height: ScreenUtil().setHeight(20),
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          child: Divider(
+                            color: Color(0xffEDF1F7),
+                            thickness: 1,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text('أو'),
+                      ),
+                      Expanded(
+                          child: Divider(
+                            color: Color(0xffEDF1F7),
+                            thickness: 1,
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(10),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () async{
+                          // bool result = await Auth.auth.signInWithFacebook();
+                          // result?kNavigatorPush(context,HomePage()):print('do not connect');
+
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: ScreenUtil().setHeight(46),
+                          child: SvgPicture.asset(
+                            'assets/svg/btn.facebook.svg',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(30),
+                      ),
+                      GestureDetector(
+                        onTap: () async{
+                          Provider.of<AuthProvider>(context,listen: false).signInWithTwitter('',context);
+
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: ScreenUtil().setHeight(46),
+                          child: SvgPicture.asset(
+                            'assets/svg/btn.twitter.svg',
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: ScreenUtil().setWidth(30),
+                      ),
+                      ////////google SignIn///////
+                      GestureDetector(
+                        onTap: () async{
+                          // bool result = await Auth.auth.loginUsingGoogle();
+                          authProvider.getLogin();
+                          // ApiRepository.apiRepository.socialMediaLogin('1171774863285679', 'aa3qq3', ' aaqq33', "i.77aqq87a8.com", "facebook");
+                          // result?kNavigatorPush(context,HomePage()):print('do not connect');
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          height: ScreenUtil().setHeight(46),
+                          child: SvgPicture.asset(
+                            'assets/svg/btn.google.svg',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(20),
                   ),
                   Container(
                     alignment: Alignment.center,

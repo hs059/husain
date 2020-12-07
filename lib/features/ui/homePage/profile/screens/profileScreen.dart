@@ -13,7 +13,9 @@ import 'package:beauty/features/ui/homePage/profile/screens/myOrder.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
 import 'package:beauty/features/ui/homePage/profile/widgets/listTileProfile.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
+import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
@@ -44,18 +46,23 @@ class ProfileScreen extends StatelessWidget {
                         SizedBox(
                           height: ScreenUtil().setHeight(25),
                         ),
-                        Container(
-                          height: ScreenUtil().setHeight(95),
-                          width: ScreenUtil().setWidth(95),
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                            color: kBorder.withOpacity(0.8),
+                        GestureDetector(
+                          child: Container(
+                            height: ScreenUtil().setHeight(95),
+                            width: ScreenUtil().setWidth(95),
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100),
+                              color: kBorder.withOpacity(0.8),
+                            ),
+                            child: SvgPicture.asset(
+                              'assets/svg/person.svg',
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                          child: SvgPicture.asset(
-                            'assets/svg/person.svg',
-                            fit: BoxFit.contain,
-                          ),
+                          onTap: () async{
+                           print(await SPHelper.spHelper.getToken());
+                          },
                         ),
                         SizedBox(
                           height: ScreenUtil().setHeight(10),
@@ -96,7 +103,10 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           Button(
                             text: 'تسجيل الدخول',
-                            onTap: () => kNavigatorPush(context, SignIn()),
+                            onTap: () {
+                              tabControllerConstant.animateTo(0);
+                              kNavigatorPush(context, SignIn());
+                            }
                           ),
                         ],
                       ),

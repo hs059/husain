@@ -124,12 +124,17 @@ class ProductItemList extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.all(8),
                             //ToDo:Check Token
-                            child: Icon(
+                            child:authProvider.isLogin? Icon(
                               product.isFavourited
                                   ? Icons.favorite
                                   : Icons.favorite_border,
                               color:
                                   product.isFavourited ? kRed : Colors.black45,
+                              size: 30,
+                            ):Icon(
+                               Icons.favorite_border,
+                              color:
+                             Colors.black45,
                               size: 30,
                             ),
                           ),

@@ -197,7 +197,7 @@ class MyOrder extends StatelessWidget {
                                 child: Container(
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
-                                    color: Color(0xff0095FF),
+                                    color: myOrder.status=='pending'?Color(0xff0095FF):myOrder.status=='processing'?Color(0xFFFF8900):Color(0xFF7ED320),
                                     borderRadius: BorderRadius.circular(6),
                                   ),
                                   child: Text(

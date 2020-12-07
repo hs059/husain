@@ -11,7 +11,7 @@ import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/components/model/productM.dart' as productClass;
 
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
-import 'package:beauty/components/model/sectionModel.dart' as sectionP ;
+import 'package:beauty/components/model/sectionModel.dart' as sectionP;
 import 'package:beauty/features/ui/product/productRecomended.dart';
 import 'package:beauty/features/ui/product/widgets/addCartSheet.dart';
 import 'package:beauty/features/ui/product/widgets/brandProduct.dart';
@@ -32,12 +32,20 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:beauty/components/model/productM.dart' as productClass;
-class ProductSubScreen extends StatelessWidget {
-  final subProduct.Data product ;
-  final sectionP.Products productS ;
-  final  bool section  ;
 
-  ProductSubScreen({this.product, this.productS, this.section = false,});
+class ProductSubScreen extends StatelessWidget {
+  final subProduct.Data product;
+
+  final sectionP.Products productS;
+
+  final bool section;
+
+  ProductSubScreen({
+    this.product,
+    this.productS,
+    this.section = false,
+  });
+
   String name;
   String permalink;
   String price;
@@ -46,54 +54,59 @@ class ProductSubScreen extends StatelessWidget {
   String description;
   String sizePerUnit;
   bool isFavourited;
-  String image ;
-  List<subProduct.Reviews > reviews;
+  String image;
+
+  List<subProduct.Reviews> reviews;
   List<sectionP.Reviews> reviewsS;
-  List<Map> rev ;
-  int id ;
-  int count ;
-  Function toggleFav ;
+  List<Map> rev;
+
+  int id;
+
+  int count;
+
+  Function toggleFav;
+
   @override
   Widget build(BuildContext context) {
-    if(section){
-      name = productS.name ;
-      permalink = productS.permalink ;
-      regularPrice = productS.regularPrice ;
-      salePrice = productS.salePrice ;
-      price = productS.price??'0' ;
-      description = productS.description ;
-      image = productS.image ;
-      isFavourited = productS.isFavourited ;
-      reviewsS = productS.reviews ;
+    if (section) {
+      name = productS.name;
+      permalink = productS.permalink;
+      regularPrice = productS.regularPrice;
+      salePrice = productS.salePrice;
+      price = productS.price ?? '0';
+      description = productS.description;
+      image = productS.image;
+      isFavourited = productS.isFavourited;
+      reviewsS = productS.reviews;
       rev = reviewsS.map((e) => e.toJson()).toList();
-      id = productS.id ;
+      id = productS.id;
       count = productS.count;
-    }else{
-      name = product.name ;
-      permalink = product.permalink ;
-      regularPrice = product.regularPrice ;
-      salePrice = product.salePrice ;
-      price = product.price??'0'  ;
-      description = product.description ;
-      image = product.image ;
-      isFavourited = product.isFavourited ;
-      reviews = product.reviews ;
+    } else {
+      name = product.name;
+      permalink = product.permalink;
+      regularPrice = product.regularPrice;
+      salePrice = product.salePrice;
+      price = product.price ?? '0';
+      description = product.description;
+      image = product.image;
+      isFavourited = product.isFavourited;
+      reviews = product.reviews;
       rev = reviews.map((e) => e.toJson()).toList();
-      id = product.id ;
-
+      id = product.id;
     }
-    getproduct(){
-      return  ProductSql(
+    getproduct() {
+      return ProductSql(
         idProduct: id,
         price: price,
         image: image,
-        name:name,
+        name: name,
       );
     }
 
-    ApiProvider apiProvider =   Provider.of<ApiProvider>(context) ;
-    ApiProvider apiProviderFalse =   Provider.of<ApiProvider>(context,listen: false) ;
-    AuthProvider authProvider =    Provider.of<AuthProvider>(context);
+    ApiProvider apiProvider = Provider.of<ApiProvider>(context);
+    ApiProvider apiProviderFalse =
+        Provider.of<ApiProvider>(context, listen: false);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -111,9 +124,7 @@ class ProductSubScreen extends StatelessWidget {
           ),
           actions: [
             GestureDetector(
-              onTap: () => Share.share(
-                  permalink,
-                  subject: 'Look what I made!'),
+              onTap: () => Share.share(permalink, subject: 'Look what I made!'),
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
@@ -122,30 +133,37 @@ class ProductSubScreen extends StatelessWidget {
                 ),
               ),
             ),
-           GestureDetector(
+            GestureDetector(
               onTap: () {
-                if(authProvider.isLogin){
-                  section? apiProviderFalse.toggleFavUIS(productS):apiProviderFalse.toggleFavUI(product);
-                }else{
+                if (authProvider.isLogin) {
+                  section
+                      ? apiProviderFalse.toggleFavUIS(productS)
+                      : apiProviderFalse.toggleFavUI(product);
+                } else {
                   Fluttertoast.showToast(
                       msg: 'يجب عليك تسجيل الدخول',
                       toastLength: Toast.LENGTH_SHORT,
                       backgroundColor: Color(0xffDAA095).withOpacity(0.8),
                       timeInSecForIosWeb: 1,
                       textColor: Colors.white,
-                      fontSize: 16.0
-                  );
+                      fontSize: 16.0);
                   kNavigatorPush(context, SignIn());
                 }
               },
               child: Padding(
                 padding: EdgeInsets.all(8),
                 //ToDo:Check Token
-                child: Icon(
-                  isFavourited ? Icons.favorite : Icons.favorite_border,
-                  color: isFavourited ? kRed : Colors.black45,
-                  size: 30,
-                ),
+                child: authProvider.isLogin
+                    ? Icon(
+                        isFavourited ? Icons.favorite : Icons.favorite_border,
+                        color: isFavourited ? kRed : Colors.black45,
+                        size: 30,
+                      )
+                    : Icon(
+                        Icons.favorite_border,
+                        color: Colors.black45,
+                        size: 30,
+                      ),
               ),
             ),
           ],
@@ -159,29 +177,38 @@ class ProductSubScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 color: Colors.white,
               ),
-              child: image!= ''?CachedNetworkImage(
-                  imageUrl: image,
-                  placeholder: (context, url) => LoaderGif1(),
-                  errorWidget: (context, url, error) =>
-                      Icon(Icons.image),
-                  height: ScreenUtil().setHeight(50),
-                  fit: BoxFit.contain
-              ):Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+              child: image != ''
+                  ? CachedNetworkImage(
+                      imageUrl: image,
+                      placeholder: (context, url) => LoaderGif1(),
+                      errorWidget: (context, url, error) => Icon(Icons.image),
+                      height: ScreenUtil().setHeight(50),
+                      fit: BoxFit.contain)
+                  : Image.asset(
+                      'assets/images/3beauty.png',
+                      fit: BoxFit.contain,
+                    ),
             ),
             MyDivider(),
             Padding(
               padding:
-              EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+                  EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
               child: Column(
                 children: [
                   BrandProduct(),
-
                   ProductName(
                     name: name,
-                    reviews:section?productS.reviews.length: product.reviews.length,
+                    reviews: section
+                        ? productS.reviews.length
+                        : product.reviews.length,
                   ),
                   MyDivider(),
-                  ProductPrize(prize: price==null || price==''?'0':price,oldPrize:  regularPrice==null || regularPrice==''?'0':regularPrice,),
+                  ProductPrize(
+                    prize: price == null || price == '' ? '0' : price,
+                    oldPrize: regularPrice == null || regularPrice == ''
+                        ? '0'
+                        : regularPrice,
+                  ),
                   SizedBox(
                     height: ScreenUtil().setHeight(24),
                   ),
@@ -198,7 +225,9 @@ class ProductSubScreen extends StatelessWidget {
                           ),
                         ),
                         context: context,
-                        builder: (context) => AddCartSheet(prize:price,),
+                        builder: (context) => AddCartSheet(
+                          prize: price,
+                        ),
                       );
                     },
                   ),
@@ -215,7 +244,7 @@ class ProductSubScreen extends StatelessWidget {
               ),
               children: [
                 ProductDescription(
-                  name:name,
+                  name: name,
                   description: description,
                 ),
               ],
@@ -230,6 +259,7 @@ class ProductSubScreen extends StatelessWidget {
               ),
               children: [
                 ListTile(
+                  onTap: () => print(id),
                   title: Text('الصنف الرئيسي'),
                   trailing: Container(
                     constraints: BoxConstraints(
@@ -237,24 +267,27 @@ class ProductSubScreen extends StatelessWidget {
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(
-                        'skin care',
-                        style: kGrayTextStyle,
-                      ),
-                    ),
-                  ),
-                ),
-                ListTile(
-                  title: Text('الصنف الفرعي'),
-                  trailing: Container(
-                    constraints: BoxConstraints(
-                      maxWidth: ScreenUtil().setWidth(150),
-                    ),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Serum',
-                        style: kGrayTextStyle,
+                      child: Consumer<ApiProvider>(
+                        builder: (context, value, child) {
+                          if(value.productM !=null){
+                            if(value.productM.data.category.isNotEmpty){
+                              String categoryName = value.productM.data.category.first.parent.name ;
+                              return Text(
+                                categoryName,
+                                style: kGrayTextStyle,
+                              );
+                            }else{
+                              return Text(
+                               'سيتم تصنيفه قريبا',
+                                style: kGrayTextStyle,
+                              );
+                            }
+
+                          }else{
+                            return   Container();
+                          }
+
+                        },
                       ),
                     ),
                   ),
@@ -271,18 +304,19 @@ class ProductSubScreen extends StatelessWidget {
               children: [
                 Consumer<ApiProvider>(
                   builder: (context, value, child) {
-                    productClass.ProductM productM = value.productM ;
-                    if(productM !=null){
-                      List<productClass.Reviews> reviews = productM.data.reviews ;
-                      if(productM.data.reviews.isNotEmpty){
+                    productClass.ProductM productM = value.productM;
+                    if (productM != null) {
+                      List<productClass.Reviews> reviews =
+                          productM.data.reviews;
+                      if (productM.data.reviews.isNotEmpty) {
                         return ListView.builder(
                           shrinkWrap: true,
                           primary: false,
                           itemCount: reviews.length,
                           scrollDirection: Axis.vertical,
                           physics: const BouncingScrollPhysics(),
-                          itemBuilder:(context, index) {
-                            productClass.Reviews  review = reviews[index];
+                          itemBuilder: (context, index) {
+                            productClass.Reviews review = reviews[index];
                             return Padding(
                               padding: EdgeInsets.symmetric(
                                 horizontal: ScreenUtil().setWidth(15),
@@ -296,7 +330,8 @@ class ProductSubScreen extends StatelessWidget {
                                     Row(
                                       children: [
                                         SmoothStarRating(
-                                          rating: double.parse(review.reviewCount),
+                                          rating:
+                                              double.parse(review.reviewCount),
                                           color: kStar,
                                           isReadOnly: true,
                                           size: 15,
@@ -325,8 +360,7 @@ class ProductSubScreen extends StatelessWidget {
                                       constraints: BoxConstraints(
                                         maxWidth: ScreenUtil().setWidth(280),
                                       ),
-                                      child: Text(
-                                          review.comment,
+                                      child: Text(review.comment,
                                           style: kReviews.copyWith(
                                             fontSize: ScreenUtil().setSp(14),
                                           )),
@@ -338,57 +372,52 @@ class ProductSubScreen extends StatelessWidget {
                                 ),
                               ),
                             );
-                          }  ,
+                          },
                         );
-                      }else{
+                      } else {
                         return Center(
-                            child: Text(
-                              'لا يوجد تعليقات أضف تعليقك ...',
-                              style:TextStyle(
-                                  fontFamily: 'Cairo-Regular',
-                                  fontSize: 18,
-                                color: kGray
-                              )
-
-                            )) ;
+                            child: Text('لا يوجد تعليقات أضف تعليقك ...',
+                                style: TextStyle(
+                                    fontFamily: 'Cairo-Regular',
+                                    fontSize: 18,
+                                    color: kGray)));
                       }
-
-                    }else{
+                    } else {
                       return SizedBox(
                         height: 3,
                         child: LinearProgressIndicator(
                           backgroundColor:
-                          Theme.of(context).accentColor.withOpacity(0.2),
+                              Theme.of(context).accentColor.withOpacity(0.2),
                           valueColor:
-                          new AlwaysStoppedAnimation<Color>(kPinkLight),
+                              new AlwaysStoppedAnimation<Color>(kPinkLight),
                         ),
                       );
                     }
-
                   },
                 ),
                 ListTile(
                   trailing: GestureDetector(
-                    onTap: () async{
-                      bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
+                    onTap: () async {
+                      bool isLogen =
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .isLogin;
 
-                      if(isLogen ==false){
+                      if (isLogen == false) {
                         Fluttertoast.showToast(
                             msg: 'يجب عليك تسجيل الدخول',
                             toastLength: Toast.LENGTH_SHORT,
                             backgroundColor: Color(0xffDAA095).withOpacity(0.8),
                             timeInSecForIosWeb: 1,
                             textColor: Colors.white,
-                            fontSize: 16.0
-                        );
+                            fontSize: 16.0);
                         kNavigatorPush(context, SignIn());
-                      }else{
+                      } else {
                         showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
                             shape: RoundedRectangleBorder(
                                 borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
+                                    BorderRadius.all(Radius.circular(10.0))),
                             content: Container(
                               child: Wrap(
                                 children: [
@@ -398,12 +427,11 @@ class ProductSubScreen extends StatelessWidget {
                                       TitleSubTitle(
                                         title: 'قيم و أضف تعليقك',
                                         subTitle:
-                                        'يسرنا الاخذ بتقييمك و تعليقك',
+                                            'يسرنا الاخذ بتقييمك و تعليقك',
                                       ),
                                       SizedBox(
                                         height: ScreenUtil().setHeight(10),
                                       ),
-
                                       SmoothStarRating(
                                         rating: 4,
                                         color: kStar,
@@ -417,7 +445,6 @@ class ProductSubScreen extends StatelessWidget {
                                         allowHalfRating: false,
                                         spacing: 1.0,
                                         onRated: apiProvider.saveRating,
-
                                       ),
                                       ContainerCart(
                                         child: Directionality(
@@ -433,10 +460,12 @@ class ProductSubScreen extends StatelessWidget {
                                                 ],
                                               ),
                                               Directionality(
-                                                textDirection: TextDirection.rtl,
+                                                textDirection:
+                                                    TextDirection.rtl,
                                                 child: TextField(
                                                   maxLines: null,
-                                                  onChanged: apiProvider.saveComment,
+                                                  onChanged:
+                                                      apiProvider.saveComment,
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                     color: Color(0xFF313A44),
@@ -444,7 +473,8 @@ class ProductSubScreen extends StatelessWidget {
                                                   cursorColor: Colors.blue,
                                                   decoration: InputDecoration(
                                                       border: InputBorder.none,
-                                                      hintText: 'أضف تعليق ...'),
+                                                      hintText:
+                                                          'أضف تعليق ...'),
                                                 ),
                                               ),
 
@@ -455,20 +485,21 @@ class ProductSubScreen extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: ScreenUtil().setWidth(50),
-                                            vertical: ScreenUtil().setHeight(10)
-                                        ),
-                                        child: Button(text: 'أضف التعليق',
-                                          onTap: ()async{
+                                            horizontal:
+                                                ScreenUtil().setWidth(50),
+                                            vertical:
+                                                ScreenUtil().setHeight(10)),
+                                        child: Button(
+                                          text: 'أضف التعليق',
+                                          onTap: () async {
                                             apiProviderFalse.addRev(id);
                                             Navigator.pop(context);
                                           },
-                                        ),),
-
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ],
-
                               ),
                             ),
                           ),

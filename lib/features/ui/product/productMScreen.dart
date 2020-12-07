@@ -96,6 +96,7 @@ class ProductMScreen extends StatelessWidget {
                 String sizePerUnit  = value.productM.data.sizePerUnit??'';
                 bool isFavourited  = value.productM.data.isFavourited??false;
                 String image = value.productM.data.images[0].imageUrl;
+                String categoryName = value.productM.data.category.isEmpty ? 'سيتم تصنيفه قريبا':value.productM.data.category.first.parent.name;
                 List<Reviews > reviews =value.productM.data.reviews??[];
                 getproduct(){
                   return  ProductSql(
@@ -152,9 +153,13 @@ class ProductMScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(5),
                           //ToDo:Check Token
-                          child: Icon(
+                          child:authProvider.isLogin ?Icon(
                             isFavourited ? Icons.favorite : Icons.favorite_border,
                             color: isFavourited ? kRed : Colors.black,
+                            size: 30,
+                          ):Icon(
+                           Icons.favorite_border,
+                            color: Colors.black,
                             size: 30,
                           ),
                         ),
@@ -242,6 +247,7 @@ class ProductMScreen extends StatelessWidget {
                         ),
                         children: [
                           ListTile(
+                            onTap: () => print(value.productM.data.category.isEmpty),
                             title: Text('الصنف الرئيسي'),
                             trailing: Container(
                               constraints: BoxConstraints(
@@ -250,22 +256,7 @@ class ProductMScreen extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  'skin care',
-                                  style: kGrayTextStyle,
-                                ),
-                              ),
-                            ),
-                          ),
-                          ListTile(
-                            title: Text('الصنف الفرعي'),
-                            trailing: Container(
-                              constraints: BoxConstraints(
-                                maxWidth: ScreenUtil().setWidth(150),
-                              ),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  'Serum',
+                                  categoryName,
                                   style: kGrayTextStyle,
                                 ),
                               ),

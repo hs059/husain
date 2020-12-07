@@ -51,15 +51,32 @@ class ApiProvider extends ChangeNotifier {
   }
 
 
+bool subCat = false ;
+  setSubCat(bool value){
+    subCat = value ;
+    notifyListeners();
+  }
 
   Future<SubCategoryModel> getSubCategory(int id, BuildContext context) async {
     // Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    setSubCat(false);
     subCategory = await ApiRepository.apiRepository.getSubCategory(id);
+    setSubCat(true);
     // Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    print(subCategory.toJson());
     notifyListeners();
     return subCategory;
   }
+   getSubCategoryCons(int id, BuildContext context) async {
+    // Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    subCategory = await ApiRepository.apiRepository.getSubCategory(id);
+    // Provider.of<UiProvider>(context, listen: false).toggleSpinner();
 
+
+  }
+setSubCategoryNull(){
+  subCategory = null ;
+}
   getSlider() async {
     slider1 = await ApiRepository.apiRepository.getSlider(0);
     slider2 = await ApiRepository.apiRepository.getSlider(1);
@@ -107,7 +124,7 @@ class ApiProvider extends ChangeNotifier {
   getProductDetails(int id) async {
     productM = null;
     productM = await ApiRepository.apiRepository.getProductDetails(id);
-    Logger().d(productM.data.toJson());
+    Logger().d(productM.data.category.first.parent.name);
     notifyListeners();
   }
 
@@ -209,9 +226,11 @@ class ApiProvider extends ChangeNotifier {
   }
 
   addressClass.Data addressSelected;
+  bool addressSelectedBool =false;
 
   setAddressSelected(addressClass.Data address) {
     this.addressSelected = address;
+    addressSelectedBool = true ;
     notifyListeners();
   }
 

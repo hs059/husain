@@ -31,11 +31,11 @@ class SearchItem extends StatelessWidget {
       child: ContainerCart(
         child: Container(
           width: ScreenUtil().setWidth(300),
-          height: ScreenUtil().setHeight(65),
+          height: ScreenUtil().setHeight(80),
           child: Row(
             children: [
               GestureDetector(
-             
+
                 child:imagePath!=''?CachedNetworkImage(
                     imageUrl:imagePath,
                     placeholder: (context, url) => LoaderGif1(),

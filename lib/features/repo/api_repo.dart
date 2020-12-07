@@ -9,6 +9,7 @@ import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/sectionModel.dart';
 import 'package:beauty/components/model/showProfileModel.dart';
 import 'package:beauty/components/model/sliderModel.dart';
+import 'package:beauty/components/model/socialMediaModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/myOrder.dart';
@@ -144,6 +145,14 @@ class ApiRepository {
       print(map);
       ProductModel productModel = ProductModel.fromJson(map);
     return productModel ;
+    }
+  }
+  Future<SocialMedia> socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type )async{
+    Map map = await ApiClient.apiClient.socialMediaLogin(socialId, userName, mobileNumber, email, type);
+    if(map['code']){
+      SocialMedia socialMediaData  = SocialMedia.fromJson(map);
+      print(socialMediaData.message);
+      return socialMediaData ;
     }
   }
 

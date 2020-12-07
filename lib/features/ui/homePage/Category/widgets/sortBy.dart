@@ -20,6 +20,7 @@ class _SortByState extends State<SortBy> {
   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
+    index= Provider.of<ApiProvider>(context,).typeSelected ??0;
     return Column(
       children: <Widget>[
         Container(
