@@ -1,7 +1,7 @@
 
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/model/sliderModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
+import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/value/colors.dart';
@@ -36,7 +36,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
           return slider == null
               ? HomeSliderLoaderWidget()
               : Container(
-            height: ScreenUtil().setHeight(176),
+            height: ScreenUtil().setHeight(200),
             margin: EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
@@ -64,6 +64,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                     int index = slider.data.indexOf(url);
                     return Container(
                       padding: EdgeInsets.symmetric(horizontal: 10),
+                      height: ScreenUtil().setHeight(200),
                       decoration: BoxDecoration(
                         //toDo:color
                         borderRadius: BorderRadius.circular(7),
@@ -98,6 +99,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                           ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                               Text(
                                 slider.data[index].title,
@@ -106,9 +108,9 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                 overflow: TextOverflow.fade,
                                 maxLines: 3,
                               ),
-                              SizedBox(
-                                height: ScreenUtil().setHeight(20),
-                              ),
+                              // SizedBox(
+                              //   height: ScreenUtil().setHeight(10),
+                              // ),
                               Container(
                                 constraints: BoxConstraints(maxWidth: ScreenUtil().setWidth(185),),
                                 child: Text(
@@ -118,9 +120,9 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                   overflow: TextOverflow.fade,
                                 ),
                               ),
-                              SizedBox(
-                                height: ScreenUtil().setHeight(20),
-                              ),
+                              // SizedBox(
+                              //   height: ScreenUtil().setHeight(20),
+                              // ),
                              Row(
                                children: [
                                  //Todo:push with product ID

@@ -1,5 +1,6 @@
 import 'package:beauty/components/model/allAddressModel.dart' as addressClass;
 import 'package:beauty/components/model/lineItems.dart';
+import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemCheckOut.dart';
@@ -11,7 +12,6 @@ import 'package:beauty/value/constant.dart';
 
 import 'cartScreen.dart';
 import 'fatoorah.dart';
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/components/widgets/myDivider.dart';

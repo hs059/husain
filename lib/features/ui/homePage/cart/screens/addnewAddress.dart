@@ -1,8 +1,8 @@
+import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/services/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'changeDeliveryAddress.dart';
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';

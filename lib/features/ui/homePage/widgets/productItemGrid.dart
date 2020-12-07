@@ -9,7 +9,6 @@ import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/features/ui/product/productSubScreen.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/connectivity.dart';
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/features/ui/product/productSubScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
@@ -87,14 +86,17 @@ class ProductItemGrid extends StatelessWidget {
                             child: Container(
                               height: ScreenUtil().setHeight(127),
                               width: ScreenUtil().setWidth(162),
-                              child: imagePath != '' ? CachedNetworkImage(
-                                  imageUrl: imagePath,
-                                  placeholder: (context, url) => LoaderGif1(),
-                                  errorWidget: (context, url, error) =>
-                                      Image.asset('assets/images/3beauty.png',
-                                        fit: BoxFit.contain,),
-                                  height: ScreenUtil().setHeight(50),
-                                  fit: BoxFit.contain
+                              child: imagePath != '' ? Hero(
+                                tag:'$imagePath' ,
+                                child: CachedNetworkImage(
+                                    imageUrl: imagePath,
+                                    placeholder: (context, url) => LoaderGif1(),
+                                    errorWidget: (context, url, error) =>
+                                        Image.asset('assets/images/3beauty.png',
+                                          fit: BoxFit.contain,),
+                                    height: ScreenUtil().setHeight(50),
+                                    fit: BoxFit.contain
+                                ),
                               ) : Image.asset(
                                 'assets/images/3beauty.png',
                                 fit: BoxFit.contain,

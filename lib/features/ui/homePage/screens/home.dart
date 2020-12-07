@@ -1,4 +1,3 @@
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/serchTextFormField.dart';
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/ProductModel.dart';
 import 'package:beauty/components/model/productsSQL.dart';
@@ -39,7 +38,7 @@ class Home extends StatelessWidget {
             primary: false,
             children: [
               Container(
-                height: ScreenUtil().setHeight(44),
+                height: ScreenUtil().setHeight(60),
                 child: GestureDetector(
                   onTap: () {
                     kNavigatorPush(context, Search());
@@ -47,14 +46,16 @@ class Home extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
+                        
                         decoration: BoxDecoration(
                           color: Color(0xffF5F5F5),
                           borderRadius: BorderRadius.circular(8.0),
                           border:
                               Border.all(width: 1.0, color: Color(0xffedf1f7)),
                         ),
+
                         child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(5.0),
                           child: Row(
                             children: [
                               Icon(

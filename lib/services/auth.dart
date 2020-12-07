@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:logger/logger.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 
 class Auth {
   Auth._();
@@ -19,31 +21,27 @@ class Auth {
   GoogleSignIn googleSignIn = GoogleSignIn();
   FacebookLogin facebookLogin = FacebookLogin();
 
-  Future<UserCredential> loginUsingGoogle() async {
-    try {
-      GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
-      GoogleSignInAuthentication googleSignInAuthentication =
-      await googleSignInAccount.authentication;
-      String accessToken = googleSignInAuthentication.accessToken;
-      String idToken = googleSignInAuthentication.idToken;
-      SPHelper.spHelper.setToken(idToken.toString());
-      AuthCredential authCredential =  GoogleAuthProvider.credential(
-          idToken: idToken, accessToken: accessToken);
-      UserCredential authResult =
-      await firebaseAuth.signInWithCredential(authCredential);
-      String userId =  authResult.user.uid;
-      String name = authResult.user.displayName;
-      SPHelper.spHelper.setUser(userId.toString());
-    SPHelper.spHelper.setIsLogin(true);
-      // if (authResult.user == null) {
-      //   return false;
-      // } else {
-      //   return true;
-      // }
-    return authResult ;
-    } catch (e) {
-      print(e);
-    }
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+    // Create a new credential
+    final GoogleAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+    Logger().d(  userCredential.user.email);
+    Logger().d(  userCredential.user.displayName);
+    Logger().d(  userCredential.user.uid);
+    Logger().d( userCredential.user.getIdToken());
+
+    return  userCredential;
   }
   Future<UserCredential> signInWithTwitter() async {
     // Create a TwitterLogin instance
@@ -68,6 +66,7 @@ class Auth {
       Logger().d(  userCredential.user.email);
       Logger().d(  userCredential.user.displayName);
       Logger().d(  userCredential.user.uid);
+      Logger().d( userCredential.user.getIdToken());
 
       return userCredential;
     }  catch (e) {
@@ -83,11 +82,11 @@ Future<Map> signInWithFacebook() async {
       Logger().d(accessToken.token);
       // get the user data
       final userData = await FacebookAuth.instance.getUserData();
+      Logger().d(userData);
       String name = userData['name'];
       String email = userData['email'] ;
       String id = userData['id'] ;
       Logger().d(userData['name']);
-      Logger().d(userData);
       Logger().d(userData['email']);
       Logger().d(userData['id']);
 

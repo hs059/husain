@@ -204,7 +204,8 @@ setSubCategoryNull(){
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.SNACKBAR,
           timeInSecForIosWeb: 1,
-          textColor: Color(0xffDAA095),
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          textColor: Colors.white,
           fontSize: 16.0);
 
       Navigator.pop(context);

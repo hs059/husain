@@ -1,17 +1,16 @@
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/customTextField.dart';
+
+import 'package:beauty/components/widgets/btn.dart';
+import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/features/ui/signUI/widgets/appBarAuth.dart';
-import 'package:beauty/services/auth.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +38,7 @@ class _SignUpState extends State<SignUp> {
             padding: EdgeInsets.symmetric(horizontal: 15),
             child: SingleChildScrollView(
               padding:
-                  EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -49,7 +48,7 @@ class _SignUpState extends State<SignUp> {
                     textAlign: TextAlign.start,
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(10),
+                    height: ScreenUtil().setHeight(20),
                   ),
                   Text(
                     'الرجاء كتابة المعلومات الخاصة بك أدناه',
@@ -57,7 +56,7 @@ class _SignUpState extends State<SignUp> {
                     textAlign: TextAlign.start,
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(20),
+                    height: ScreenUtil().setHeight(40),
                   ),
                   Form(
                     key: formKeySignUp,
@@ -70,7 +69,7 @@ class _SignUpState extends State<SignUp> {
                           onSaved: authProvider.saveFullName,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(10),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         CustomTextFormField(
                           hintText: 'الايميل',
@@ -80,7 +79,7 @@ class _SignUpState extends State<SignUp> {
                           textInputType: TextInputType.emailAddress,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(10),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         CustomTextFormField(
                           hintText: 'كلمة السر',
@@ -89,7 +88,7 @@ class _SignUpState extends State<SignUp> {
                           onSaved: authProvider.savePassword,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(10),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         CustomTextFormField(
                           hintText: 'تأكيد كلمة السر',
@@ -98,7 +97,7 @@ class _SignUpState extends State<SignUp> {
                           onSaved: authProvider.saveConfirmPassword,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(10),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -111,7 +110,7 @@ class _SignUpState extends State<SignUp> {
                             decoration: InputDecoration(
                               hintText: 'رقم الموبايل',
                               hintStyle:
-                                  TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                              TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
                               enabledBorder: OutlineInputBorder(
                                 borderSide: BorderSide(color: kBorder, width: 1.0),
                               ),
@@ -129,96 +128,18 @@ class _SignUpState extends State<SignUp> {
                     ),
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(40),
+                    height: ScreenUtil().setHeight(70),
                   ),
                   Builder(
                     builder: (context) =>  Button(
                         text: 'تسجيل ',
                         onTap: () {
                           Provider.of<AuthProvider>(context,listen: false).submitRegister(formKeySignUp, context);
-                         // saveForm();
+                          // saveForm();
                         }),
                   ),
                   SizedBox(
-                    height: ScreenUtil().setHeight(20),
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                          child: Divider(
-                            color: Color(0xffEDF1F7),
-                            thickness: 1,
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text('أو'),
-                      ),
-                      Expanded(
-                          child: Divider(
-                            color: Color(0xffEDF1F7),
-                            thickness: 1,
-                          )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(10),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async{
-                          // bool result = await Auth.auth.signInWithFacebook();
-                          // result?kNavigatorPush(context,HomePage()):print('do not connect');
-
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: ScreenUtil().setHeight(46),
-                          child: SvgPicture.asset(
-                            'assets/svg/btn.facebook.svg',
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(30),
-                      ),
-                      GestureDetector(
-                        onTap: () async{
-                          Provider.of<AuthProvider>(context,listen: false).signInWithTwitter('',context);
-
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: ScreenUtil().setHeight(46),
-                          child: SvgPicture.asset(
-                            'assets/svg/btn.twitter.svg',
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(30),
-                      ),
-                      ////////google SignIn///////
-                      GestureDetector(
-                        onTap: () async{
-                          // bool result = await Auth.auth.loginUsingGoogle();
-                          authProvider.getLogin();
-                          // ApiRepository.apiRepository.socialMediaLogin('1171774863285679', 'aa3qq3', ' aaqq33', "i.77aqq87a8.com", "facebook");
-                          // result?kNavigatorPush(context,HomePage()):print('do not connect');
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          height: ScreenUtil().setHeight(46),
-                          child: SvgPicture.asset(
-                            'assets/svg/btn.google.svg',
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(20),
+                    height: ScreenUtil().setHeight(50),
                   ),
                   Container(
                     alignment: Alignment.center,

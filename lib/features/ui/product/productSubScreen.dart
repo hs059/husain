@@ -1,9 +1,9 @@
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
 import 'package:beauty/components/model/productCart.dart';
 import 'package:beauty/components/model/productModel.dart' as subProduct;
 import 'package:beauty/components/model/productsSQL.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationIcon.dart';
+import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
@@ -178,12 +178,15 @@ class ProductSubScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               child: image != ''
-                  ? CachedNetworkImage(
-                      imageUrl: image,
-                      placeholder: (context, url) => LoaderGif1(),
-                      errorWidget: (context, url, error) => Icon(Icons.image),
-                      height: ScreenUtil().setHeight(50),
-                      fit: BoxFit.contain)
+                  ? Hero(
+                tag: '$image',
+                    child: CachedNetworkImage(
+                        imageUrl: image,
+                        placeholder: (context, url) => LoaderGif1(),
+                        errorWidget: (context, url, error) => Icon(Icons.image),
+                        height: ScreenUtil().setHeight(50),
+                        fit: BoxFit.contain),
+                  )
                   : Image.asset(
                       'assets/images/3beauty.png',
                       fit: BoxFit.contain,

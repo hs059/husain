@@ -1,4 +1,4 @@
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
+import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/value/colors.dart';

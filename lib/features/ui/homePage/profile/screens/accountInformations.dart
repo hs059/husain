@@ -23,7 +23,10 @@ class AccountInformations extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    AuthProvider authProviderFalse = Provider.of<AuthProvider>(context,listen: false);
     UiProvider uiProvider = Provider.of<UiProvider>(context);
+
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: ModalProgressHUD(
@@ -94,27 +97,39 @@ class AccountInformations extends StatelessWidget {
                                             textInitialValue: authProvider.showProfileModel.data.email,
 
                                           ),
-                                          SizedBox(
-                                            height: ScreenUtil().setHeight(15),
-                                          ),
-                                          CustomTextFormField(
-                                            // textEditingController: myController3,
-                                            hintText: 'كلمة السر القديمة',
-                                            password: true,
-                                            validator: authProvider.validatePassword,
-                                            onSaved: authProvider.savePassword,
+                                          Visibility(
+                                            visible: !authProvider.isLoginSocial,
+                                            child: Column(
+                                              children: [
 
+                                                SizedBox(
+                                                  height: ScreenUtil().setHeight(15),
+                                                ),
+
+                                                CustomTextFormField(
+                                                  // textEditingController: myController3,
+                                                  hintText: 'كلمة السر القديمة',
+                                                  password: true,
+                                                  validator: authProvider.validatePassword,
+                                                  onSaved: authProvider.savePassword,
+
+                                                ),
+                                                SizedBox(
+                                                  height: ScreenUtil().setHeight(15),
+                                                ),
+                                                CustomTextFormField(
+                                                  // textEditingController: myController4,
+                                                  hintText: 'كلمة المرور الجديدة',
+                                                  password: true,
+                                                  validator: authProvider.validatePassword,
+                                                  onSaved: authProvider.saveNewPassword,
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          SizedBox(
-                                            height: ScreenUtil().setHeight(15),
-                                          ),
-                                          CustomTextFormField(
-                                            // textEditingController: myController4,
-                                            hintText: 'كلمة المرور الجديدة',
-                                            password: true,
-                                            validator: authProvider.validatePassword,
-                                            onSaved: authProvider.saveNewPassword,
-                                          ),
+
+
+
                                           SizedBox(
                                             height: ScreenUtil().setHeight(15),
                                           ),
@@ -143,7 +158,7 @@ class AccountInformations extends StatelessWidget {
                                               ),
                                               initialCountryCode: 'SA',
                                               showDropdownIcon: false,
-                                              initialValue: authProvider.showProfileModel.data.mobileNumber.substring(4),
+                                              initialValue:authProvider.showProfileModel.data.mobileNumber ==null || authProvider.showProfileModel.data.mobileNumber.length<4?'7777777777' :authProvider.showProfileModel.data.mobileNumber.substring(4),
                                               onChanged: (phone) {
                                                 Provider.of<AuthProvider>(context,listen: false).saveMobile(phone.completeNumber);
                                               },
@@ -175,7 +190,7 @@ class AccountInformations extends StatelessWidget {
                                             ),
                                           ),
                                           onTap: () {
-                                            Provider.of<AuthProvider>(context,listen: false).submitEditProfile(context, formAccountInformations);
+                                            authProvider.isLoginSocial?authProviderFalse.submitEditProfileSocial(context, formAccountInformations) :authProviderFalse.submitEditProfile(context, formAccountInformations);
                                           },
                                         ),
                                       ),
@@ -277,24 +292,27 @@ class AccountInformations extends StatelessWidget {
                   ],
                 ),
               ),
-              ContainerCart(
-                // height: 60,
-                child: Row(
-                  children: [
-                    Text(
-                      'رقم الموبايل'  ,
-                      style: kSubTitleSign.copyWith(
-                        fontSize: ScreenUtil().setSp(14),
+              GestureDetector(
+                onTap: () => print(authProvider.isLoginSocial),
+                child: ContainerCart(
+                  // height: 60,
+                  child: Row(
+                    children: [
+                      Text(
+                        'رقم الموبايل'  ,
+                        style: kSubTitleSign.copyWith(
+                          fontSize: ScreenUtil().setSp(14),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: ScreenUtil().setWidth(15),
-                    ),
-                    Text(
-                      authProvider.showProfileModel.data.mobileNumber,
-                      style: kProfile,
-                    ),
-                  ],
+                      SizedBox(
+                        width: ScreenUtil().setWidth(15),
+                      ),
+                      Text(
+                        authProvider.showProfileModel.data.mobileNumber,
+                        style: kProfile,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

@@ -92,15 +92,18 @@ class ProductItemList extends StatelessWidget {
                               );
                             }
                           },
-                          child: CachedNetworkImage(
-                              imageUrl: imagePath,
-                              placeholder: (context, url) => LoaderGif1(),
-                              errorWidget: (context, url, error) => Image.asset(
-                                    'assets/images/3beauty.png',
-                                    fit: BoxFit.contain,
-                                  ),
-                              height: ScreenUtil().setHeight(101),
-                              fit: BoxFit.contain),
+                          child: Hero(
+                            tag: '$imagePath',
+                            child: CachedNetworkImage(
+                                imageUrl: imagePath,
+                                placeholder: (context, url) => LoaderGif1(),
+                                errorWidget: (context, url, error) => Image.asset(
+                                      'assets/images/3beauty.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                height: ScreenUtil().setHeight(101),
+                                fit: BoxFit.contain),
+                          ),
                         ),
                       ),
                       Align(
@@ -217,7 +220,7 @@ class ProductItemList extends StatelessWidget {
                                       width: ScreenUtil().setWidth(30),
                                       padding: EdgeInsets.all(onCart ? 5 : 0),
                                       decoration: BoxDecoration(
-                                          color: onCart
+                                          color: onCart??false
                                               ? kPinkLight
                                               : Colors.white,
                                           borderRadius:

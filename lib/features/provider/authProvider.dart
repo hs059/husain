@@ -134,6 +134,16 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isLoginSocial ;
+  getLoginSocial() async {
+    isLoginSocial = await SPHelper.spHelper.getIsLoginSocial() ?? false;
+    if (isLogin) {
+      getLogin();
+    }
+    notifyListeners();
+  }
+
+
 //////////////////////submit////////////////////////////////
   submitRegister(GlobalKey<FormState> globalKey, BuildContext context) {
     if (globalKey.currentState.validate()) {
@@ -232,7 +242,8 @@ class AuthProvider extends ChangeNotifier {
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          textColor: Color(0xffDAA095),
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          textColor: Colors.white,
           fontSize: 16.0);
       kNavigatorPush(
         context,
@@ -273,7 +284,8 @@ class AuthProvider extends ChangeNotifier {
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          textColor: Color(0xffDAA095),
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          textColor: Colors.white,
           fontSize: 16.0);
       kNavigatorPushAndRemoveUntil(context, SignIn());
     }
@@ -291,7 +303,8 @@ class AuthProvider extends ChangeNotifier {
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          textColor: Color(0xffDAA095),
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          textColor: Colors.white,
           fontSize: 16.0);
       kNavigatorPushAndRemoveUntil(context, ResetPassword());
     } else {
@@ -324,7 +337,8 @@ class AuthProvider extends ChangeNotifier {
           msg: map['message'],
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
-          textColor: Color(0xffDAA095),
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          textColor: Colors.white,
           fontSize: 16.0);
       kNavigatorPushAndRemoveUntil(context, HomePage());
     } else {
@@ -377,10 +391,52 @@ class AuthProvider extends ChangeNotifier {
       showProfileModel = await ApiRepository.apiRepository.showProfile();
       Navigator.pop(context);
       Fluttertoast.showToast(
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
           msg: 'تم تعديل بيناتك بنجاح',
           toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
           timeInSecForIosWeb: 1,
-          textColor: Color(0xffDAA095),
+          textColor: Colors.white,
+          fontSize: 16.0);
+    } else {
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'رسالة تحذير',
+            textAlign: TextAlign.right,
+          ),
+          messageText: Text(
+            'يرجى منك اتمام كل المعلومات بشكل صحيح',
+            textAlign: TextAlign.right,
+          ));
+    }
+
+    notifyListeners();
+  }
+
+  submitEditProfileSocial(BuildContext context, GlobalKey<FormState> globalKey) {
+    if (globalKey.currentState.validate()) {
+      globalKey.currentState.save();
+      editProfileSocial(context);
+    }
+  }
+
+  editProfileSocial(BuildContext context) async {
+    String token = await SPHelper.spHelper.getToken();
+    String idUser = await SPHelper.spHelper.getUser();
+    String id = idUser.toString();
+    Map map1 = await ApiClient.apiClient
+        .editProfile(token, id, this.fullName, this.email, this.mobile);
+    if (map1['code'] ) {
+      showProfileModel = await ApiRepository.apiRepository.showProfile();
+      Navigator.pop(context);
+      Fluttertoast.showToast(
+          msg: 'تم تعديل بيناتك بنجاح',
+          gravity: ToastGravity.TOP,
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          textColor: Colors.white,
           fontSize: 16.0);
     } else {
       Get.snackbar('', '',
@@ -400,17 +456,22 @@ class AuthProvider extends ChangeNotifier {
 
   socialMediaLogin(String socialId, String userName, String mobileNumber,
       String email, String type,BuildContext context) async {
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+
     SocialMedia socialMedia = await ApiRepository.apiRepository
         .socialMediaLogin(socialId, userName, mobileNumber, email, type);
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
 
     SPHelper.spHelper.setToken(socialMedia.data.token);
     SPHelper.spHelper.setUser(socialMedia.data.id);
-    await SPHelper.spHelper.setIsLogin(true);
+    SPHelper.spHelper.setIsLogin(true);
+    SPHelper.spHelper.setIsLoginSocial(true);
     getLogin();
+    getLoginSocial();
     kNavigatorPush(context, HomePage());
   }
 
-  signInWithTwitter(String mobileNumber,BuildContext context) async {
+  signInWithTwitter(BuildContext context) async {
     UserCredential userCredential = await Auth.auth.signInWithTwitter();
     Logger().d(userCredential.user.email);
     Logger().d(userCredential.user.displayName);
@@ -419,20 +480,32 @@ class AuthProvider extends ChangeNotifier {
     String userName = userCredential.user.displayName;
     String email = userCredential.user.email;
     String type = 'twitter';
-    socialMediaLogin(socialId, userName, mobileNumber, email, type,context);
+    socialMediaLogin(socialId, userName, '', email, type,context);
   }
 
-  loginUsingGoogle(String mobileNumber,BuildContext context) async {
-    UserCredential userCredential = await Auth.auth.loginUsingGoogle();
+  loginUsingGoogle(BuildContext context) async {
+    UserCredential userCredential = await Auth.auth.signInWithGoogle();
     Logger().d(userCredential.user.email);
     Logger().d(userCredential.user.displayName);
     Logger().d(userCredential.user.uid);
     String socialId = userCredential.user.uid;
     String userName = userCredential.user.displayName;
     String email = userCredential.user.email;
-    String type = 'twitter';
-    socialMediaLogin(socialId, userName, mobileNumber, email, type,context);
+    String type = 'gmail';
+    socialMediaLogin(socialId, userName, '', email, type,context);
   }
 
-  signInWithFacebook() async {}
+  signInWithFacebook(BuildContext context) async {
+    Map userData = await Auth.auth.signInWithFacebook();
+    Logger().d(userData);
+    String socialId = userData['id'] ;
+    String userName = userData['name'];
+    String email = userData['email'] ;
+    String type = 'facebook';
+    Logger().d(userData['name']);
+    Logger().d(userData);
+    Logger().d(userData['email']);
+    Logger().d(userData['id']);
+    socialMediaLogin(socialId, userName, '99999999999', email, type,context);
+  }
 }

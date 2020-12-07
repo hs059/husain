@@ -1,4 +1,4 @@
-import 'file:///E:/Programming/Dart/projects/3beauty/beauty/lib/components/widgets/btn.dart';
+import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
@@ -69,6 +69,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    AuthProvider authProviderFalse = Provider.of<AuthProvider>(context,listen: false);
     double width = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -225,7 +226,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                 onTap: () async{
                                   // bool result = await Auth.auth.signInWithFacebook();
                                   // result?kNavigatorPush(context,HomePage()):print('do not connect');
-
+                                  authProviderFalse.signInWithFacebook(context);
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -273,9 +274,9 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               child: GestureDetector(
                                 onTap: () async{
                                  // bool result = await Auth.auth.loginUsingGoogle();
-                                 authProvider.getLogin();
-                                  ApiRepository.apiRepository.socialMediaLogin('1171774863285679', 'aa3qq3', ' aaqq33', "i.77aqq87a8.com", "facebook");
-                                 // result?kNavigatorPush(context,HomePage()):print('do not connect');
+                                 // authProvider.getLogin();
+                                 // authProviderFalse.loginUsingGoogle(context);
+                                  Auth.auth.signInWithGoogle();
                                 },
                                 child: Container(
                                   alignment: Alignment.center,

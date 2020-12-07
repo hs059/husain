@@ -62,6 +62,7 @@ class ProfileScreen extends StatelessWidget {
                           ),
                           onTap: () async{
                            print(await SPHelper.spHelper.getToken());
+                           print(await SPHelper.spHelper.getUser());
                           },
                         ),
                         SizedBox(
@@ -124,10 +125,20 @@ class ProfileScreen extends StatelessWidget {
               // height: 250,
               child: Column(
                 children: [
-                  ListTileProfile(
-                    title: 'معلومات الحساب ',
-                    image: 'assets/svg/personBtn.svg',
-                    route: AccountInformations(),
+                  GestureDetector(
+                    onTap: () async{
+
+                    },
+                    child: GestureDetector(
+                      onTap: () async{
+
+                      },
+                      child: ListTileProfile(
+                        title: 'معلومات الحساب ',
+                        image: 'assets/svg/personBtn.svg',
+                        route: AccountInformations(),
+                      ),
+                    ),
                   ),
                   MyDivider(),
                   ListTileProfile(
@@ -195,7 +206,7 @@ class ProfileScreen extends StatelessWidget {
               // height: 85,
               child: GestureDetector(
                 onTap: () {
-                  Provider.of<DBProvider>(context,listen: false).nullAllProduct();
+                  Provider.of<DBProvider>(context,listen: false).deleteAllProduct();
                   authProviderFalse.signOut();
                   kNavigatorPush(context, SignIn());
                 },

@@ -95,6 +95,7 @@ class _SplashState extends State<Splash> {
 
               if( snapshot.data ==ConnectivityStatus.WiFi || snapshot.data ==ConnectivityStatus.Cellular  ){
                 Provider.of<AuthProvider>(context, listen: false).getLogin();
+                Provider.of<AuthProvider>(context, listen: false).getLoginSocial();
                 Provider.of<ApiProvider>(context, listen: false).getSlider();
                 Provider.of<ApiProvider>(context, listen: false).getSection();
                 Provider.of<ApiProvider>(context, listen: false).getBrand();

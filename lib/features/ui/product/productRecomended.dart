@@ -110,13 +110,16 @@ class ProductRecommended extends StatelessWidget {
                                                         apiProviderFalse.getProductDetails( productModel.data[index].id);
                                                         kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
                                                       },
-                                                      child: CachedNetworkImage(
-                                                          imageUrl: productModel.data[index].image,
-                                                          placeholder: (context, url) => LoaderGif1(),
-                                                          errorWidget: (context, url, error) =>
-                                                              Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
-                                                          height: ScreenUtil().setHeight(101),
-                                                          fit: BoxFit.contain),
+                                                      child: Hero(
+                                                        tag: '${productModel.data[index].image}',
+                                                        child: CachedNetworkImage(
+                                                            imageUrl: productModel.data[index].image,
+                                                            placeholder: (context, url) => LoaderGif1(),
+                                                            errorWidget: (context, url, error) =>
+                                                                Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+                                                            height: ScreenUtil().setHeight(101),
+                                                            fit: BoxFit.contain),
+                                                      ),
                                                     ),
                                                   ),
                                                   Align(

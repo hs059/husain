@@ -208,6 +208,7 @@ class ApiClient {
       baseUrl + register_by_social_media,
       data: data,
     );
+    Logger().d(response.data);
     return response.data;
   }
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -256,8 +257,9 @@ class ApiClient {
   Future getSection(String title) async {
     try {
       await initApi();
+      String idUser = await SPHelper.spHelper.getUser();
       Response response = await dio.get(
-        baseUrl + title,
+        baseUrl + title +'?user_id=$idUser',
       );
       print(response.data);
       // print(response.statusCode==200);
