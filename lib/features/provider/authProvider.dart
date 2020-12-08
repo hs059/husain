@@ -479,8 +479,9 @@ class AuthProvider extends ChangeNotifier {
     String socialId = userCredential.user.uid;
     String userName = userCredential.user.displayName;
     String email = userCredential.user.email;
+    String phoneNumber = userCredential.user.phoneNumber??'';
     String type = 'twitter';
-    socialMediaLogin(socialId, userName, '', email, type,context);
+    socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
   }
 
   loginUsingGoogle(BuildContext context) async {
@@ -491,8 +492,9 @@ class AuthProvider extends ChangeNotifier {
     String socialId = userCredential.user.uid;
     String userName = userCredential.user.displayName;
     String email = userCredential.user.email;
+    String phoneNumber = userCredential.user.phoneNumber??'';
     String type = 'gmail';
-    socialMediaLogin(socialId, userName, '', email, type,context);
+    socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
   }
 
   signInWithFacebook(BuildContext context) async {

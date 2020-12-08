@@ -24,26 +24,30 @@ class Section extends StatelessWidget {
         SectionModel section = num==1? value.latestProducts:num==2?value.customCategory:value.mostRated;
         return section!=null? Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(section.data.sectionTitle,style: kSectionText.copyWith(
-                  fontSize: ScreenUtil().setSp(18),
-                        fontFamily: 'Cairo-Regular'
-                ),),
-                GestureDetector(
-                  onTap: () => kNavigatorPush(context, ShowProductSection(title: section.data.sectionTitle,num: num,)),
-                  child:Text('رؤية الكل',style: kSeeAll.copyWith(
-                    fontFamily: 'Cairo-Regular'
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(section.data.sectionTitle,style: kSectionText.copyWith(
+                    fontSize: ScreenUtil().setSp(18),
+                          fontFamily: 'Cairo-Regular'
                   ),),
-                ),
-              ],
+                  GestureDetector(
+                    onTap: () => kNavigatorPush(context, ShowProductSection(title: section.data.sectionTitle,num: num,)),
+                    child:Text('رؤية الكل',style: kSeeAll.copyWith(
+                      fontFamily: 'Cairo-Regular'
+                    ),),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: ScreenUtil().setHeight(15),
             ),
             Container(
               height: ScreenUtil().setHeight(300),
+              padding:  EdgeInsets.only(right: ScreenUtil().setWidth(15)),
               alignment: Alignment.center,
               child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
@@ -83,7 +87,7 @@ class Section extends StatelessWidget {
             itemBuilder: (context, index) {
               return  Container(
                 width: ScreenUtil().setWidth(200),
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10)),
                   child: LoaderGif2()
               );
             },

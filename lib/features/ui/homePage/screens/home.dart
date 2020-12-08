@@ -1,6 +1,7 @@
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/ProductModel.dart';
 import 'package:beauty/components/model/productsSQL.dart';
+import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
@@ -28,95 +29,88 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-
-        body: Container(
-          padding: EdgeInsets.fromLTRB(15, 15, 15, 0),
-          color: Colors.white,
-          child: ListView(
-            physics: const BouncingScrollPhysics(),
-            primary: false,
-            children: [
-              Container(
-                height: ScreenUtil().setHeight(60),
-                child: GestureDetector(
-                  onTap: () {
-                    kNavigatorPush(context, Search());
-                  },
-                  child: Column(
-                    children: [
-                      Container(
-                        
-                        decoration: BoxDecoration(
-                          color: Color(0xffF5F5F5),
-                          borderRadius: BorderRadius.circular(8.0),
-                          border:
-                              Border.all(width: 1.0, color: Color(0xffedf1f7)),
-                        ),
-
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.search,
-                                color: kGrayText,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                'Search in 3beauty',
-                                style: kSearchHint,
-                              ),
-                            ],
+      child: SafeArea(
+        child: Scaffold(
+          body: Container(
+            color: Colors.white,
+            padding: EdgeInsets.symmetric(vertical: 15),
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
+              primary: false,
+              children: [
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                  child: GestureDetector(
+                    onTap: () {
+                      kNavigatorPush(context, Search());
+                    },
+                    child: Column(
+                      children:[
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xffF5F5F5),
+                            borderRadius: BorderRadius.circular(8.0),
+                            border:
+                                Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.search,
+                                  color: kGrayText,
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Search in 3beauty',
+                                  style: kSearchHint,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(20),
-              ),
-              HomeSliderWidget(num: 1),
-              SizedBox(
-                height: ScreenUtil().setHeight(30),
-              ),
-              Section(
-                num: 1,
-              ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(10),
+                ),
+                HomeSliderWidget(num: 1),
+                SizedBox(
+                  height: ScreenUtil().setHeight(20),
+                ),
+                Section(
+                  num: 1,
+                ),
 
-              SizedBox(
-                height: ScreenUtil().setHeight(30),
-              ),
-              BrandSection(),
+                SizedBox(
+                  height: ScreenUtil().setHeight(30),
+                ),
+                BrandSection(),
 
-              SizedBox(
-                height: ScreenUtil().setHeight(20),
-              ),
-              HomeSliderWidget(num: 2),
-              SizedBox(
-                height: ScreenUtil().setHeight(30),
-              ),
-              Section(
-                num: 2,
-              ),
-
-              SizedBox(
-                height: ScreenUtil().setHeight(30),
-              ),
-              // Section(num: 3,),
-
-              SizedBox(
-                height: ScreenUtil().setHeight(20),
-              ),
-              HomeSliderWidget(num: 3),
-              SizedBox(
-                height: ScreenUtil().setHeight(30),
-              ),
-            ],
+                SizedBox(
+                  height: ScreenUtil().setHeight(20),
+                ),
+                HomeSliderWidget(num: 2),
+                SizedBox(
+                  height: ScreenUtil().setHeight(30),
+                ),
+                Section(
+                  num: 2,
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(10),
+                ),
+                HomeSliderWidget(num: 3),
+                SizedBox(
+                  height: ScreenUtil().setHeight(15),
+                ),
+              ],
+            ),
           ),
         ),
       ),

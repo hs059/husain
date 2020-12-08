@@ -69,91 +69,93 @@ class _VerificationState extends State<Verification>
       inAsyncCall:Provider.of<UiProvider>(context).spinner,
       child: Directionality(
         textDirection: TextDirection.rtl,
-        child: Scaffold(
+        child: SafeArea(
+          child: Scaffold(
 
-          backgroundColor: Colors.white,
-          appBar: appBarAuth(context),
-          body: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(
-                    height: ScreenUtil().setHeight(50),
-                  ),
-                  Text(
-                    'كود التحقق',
-                    style: kTitleSign,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(20),
-                  ),
-                  Text(
-                    'لقد أرسلنا للتو بريدك الإلكتروني كود التحقق ، يرجى إدخال أدناه للتحقق',
-                    style: kSubTitleSign,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(60),
-                  ),
-                  Center(
-                    child: PinCodeTextField(
-                      autofocus: true,
-                      controller: controllerPin,
-                      highlight: true,
-                      highlightColor: kBorder,
-                      defaultBorderColor: kBorder,
-                      hasTextBorderColor: kBorder,
-                      maxLength: 4,
-                      hasError: hasError,
-                      onTextChanged: (text) {
-                        setState(() {
-                          hasError = false;
-                          // print("DO $text");
-                        });
-                      },
-                      onDone: (text) {
-                        doneText = text;
-                        authProviderFalse.saveVerificationCode(text);
-                        // print("DONE CONTROLLER ${controllerPin.text}");
-                      },
-                      pinBoxWidth: ScreenUtil().setWidth(50),
-                      pinBoxHeight: ScreenUtil().setHeight(60),
-                      hasUnderline: false,
-                      wrapAlignment: WrapAlignment.center,
-                      pinBoxDecoration:
-                          ProvidedPinBoxDecoration.defaultPinBoxDecoration,
-                      pinTextStyle: kPinCode,
-                      pinTextAnimatedSwitcherTransition:
-                          ProvidedPinBoxTextAnimation.scalingTransition,
-//                    pinBoxColor: Colors.green[100],
-                      pinTextAnimatedSwitcherDuration: Duration(milliseconds: 150),
-//                    highlightAnimation: true,
-                      highlightAnimationBeginColor: Colors.black,
-                      highlightAnimationEndColor: Colors.white12,
-                      keyboardType: TextInputType.number,
-                      pinBoxRadius: 10,
+            backgroundColor: Colors.white,
+            appBar: appBarAuth(context),
+            body: Container(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      height: ScreenUtil().setHeight(50),
                     ),
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(30),
-                  ),
-                  Text(
-                    'Resend on ${_start ~/ 60}:${_start % 60}',
-                    textAlign: TextAlign.center,
-                    style: kSubTitleSign.copyWith(color: kPinkDark),
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(45),
-                  ),
-                  Button(
-                      text: 'أرسل',
-                      onTap: () {
-                        authProviderFalse.submitVerification(context);
-                      }),
-                ],
+                    Text(
+                      'كود التحقق',
+                      style: kTitleSign,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(20),
+                    ),
+                    Text(
+                      'لقد أرسلنا للتو بريدك الإلكتروني كود التحقق ، يرجى إدخال أدناه للتحقق',
+                      style: kSubTitleSign,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(60),
+                    ),
+                    Center(
+                      child: PinCodeTextField(
+                        autofocus: true,
+                        controller: controllerPin,
+                        highlight: true,
+                        highlightColor: kBorder,
+                        defaultBorderColor: kBorder,
+                        hasTextBorderColor: kBorder,
+                        maxLength: 4,
+                        hasError: hasError,
+                        onTextChanged: (text) {
+                          setState(() {
+                            hasError = false;
+                            // print("DO $text");
+                          });
+                        },
+                        onDone: (text) {
+                          doneText = text;
+                          authProviderFalse.saveVerificationCode(text);
+                          // print("DONE CONTROLLER ${controllerPin.text}");
+                        },
+                        pinBoxWidth: ScreenUtil().setWidth(50),
+                        pinBoxHeight: ScreenUtil().setHeight(60),
+                        hasUnderline: false,
+                        wrapAlignment: WrapAlignment.center,
+                        pinBoxDecoration:
+                            ProvidedPinBoxDecoration.defaultPinBoxDecoration,
+                        pinTextStyle: kPinCode,
+                        pinTextAnimatedSwitcherTransition:
+                            ProvidedPinBoxTextAnimation.scalingTransition,
+//                    pinBoxColor: Colors.green[100],
+                        pinTextAnimatedSwitcherDuration: Duration(milliseconds: 150),
+//                    highlightAnimation: true,
+                        highlightAnimationBeginColor: Colors.black,
+                        highlightAnimationEndColor: Colors.white12,
+                        keyboardType: TextInputType.number,
+                        pinBoxRadius: 10,
+                      ),
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(30),
+                    ),
+                    Text(
+                      'Resend on ${_start ~/ 60}:${_start % 60}',
+                      textAlign: TextAlign.center,
+                      style: kSubTitleSign.copyWith(color: kPinkDark),
+                    ),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(45),
+                    ),
+                    Button(
+                        text: 'أرسل',
+                        onTap: () {
+                          authProviderFalse.submitVerification(context);
+                        }),
+                  ],
+                ),
               ),
             ),
           ),

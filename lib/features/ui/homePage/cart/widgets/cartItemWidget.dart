@@ -154,9 +154,15 @@ class CartItemWidget extends StatelessWidget {
               SizedBox(
                 height: ScreenUtil().setHeight(10),
               ),
-              Text(
-               'الاجمالي : ' + '${double.parse(productSql.price) *double.parse(productSql.count.toString())}' +' '+ currency,
-                style: kReviews,
+              Builder(builder: (context) {
+                double  total = double.parse(productSql.price) *double.parse(productSql.count.toString()) ;
+                String totalUI  = total.toStringAsFixed(2) ;
+                return Text(
+                  'الاجمالي : ' + '$totalUI' +' '+ currency,
+                  style: kReviews,
+                );
+              },
+
               ),
             ],
           ),

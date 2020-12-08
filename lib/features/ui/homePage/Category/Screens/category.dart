@@ -9,8 +9,11 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/Category/Screens/subCategory.dart';
 import 'package:beauty/features/ui/homePage/Category/widgets/categoryItem.dart';
+import 'package:beauty/features/ui/homePage/screens/search.dart';
 import 'package:beauty/services/connectivity.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:get/get.dart';
@@ -30,9 +33,47 @@ class Category extends StatelessWidget {
           color: Colors.white,
           child: Column(
             children: [
-              SearchText(),
+              Container(
+                height: ScreenUtil().setHeight(60),
+                padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                child: GestureDetector(
+                  onTap: () {
+                    kNavigatorPush(context, Search());
+                  },
+                  child: Column(
+                    children:[
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xffF5F5F5),
+                          borderRadius: BorderRadius.circular(8.0),
+                          border:
+                          Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.search,
+                                color: kGrayText,
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                'Search in 3beauty',
+                                style: kSearchHint,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
-                height: ScreenUtil().setHeight(30),
+                height: ScreenUtil().setHeight(10),
               ),
               Expanded(
                 child: Consumer<ApiProvider>(

@@ -1,12 +1,11 @@
-import 'package:beauty/features/provider/apiProvider.dart';
-import 'package:beauty/features/ui/splash.dart';
+
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/string.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:beauty/value/colors.dart';
-import 'package:beauty/features/provider/authProvider.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -16,6 +15,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
+import 'features/provider/apiProvider.dart';
+import 'features/provider/authProvider.dart';
 import 'features/provider/db_provider.dart';
 import 'features/provider/uiProvider.dart';
 
@@ -29,6 +30,8 @@ import 'features/ui/signUI/screens/signIn.dart';
 import 'features/ui/signUI/screens/signUp.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+import 'features/ui/splash.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ConnectivityService();
@@ -47,18 +50,6 @@ void main() async {
       null);
   await precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoder, endOrder), null);
-
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
-    statusBarBrightness:
-        Platform.isAndroid ? Brightness.dark : Brightness.light,
-    systemNavigationBarColor: Colors.white,
-    systemNavigationBarDividerColor: Colors.grey,
-    systemNavigationBarIconBrightness: Brightness.dark,
-  ));
-
-
   runApp(Husain());
 }
 class Husain extends StatelessWidget{
@@ -133,7 +124,7 @@ class _AppState extends State<App> {
         if (snapshot.connectionState == ConnectionState.done) {
           ScreenUtil.init(context,
               designSize: Size(375, 812), allowFontScaling: true);
-          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark,
             statusBarBrightness:
@@ -142,6 +133,7 @@ class _AppState extends State<App> {
             systemNavigationBarDividerColor: Colors.grey,
             systemNavigationBarIconBrightness: Brightness.dark,
           ));
+
           return MyApp(screen);
         }
         return  Center(

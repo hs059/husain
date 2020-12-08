@@ -29,122 +29,125 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-          child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: kBorder,
-                offset: Offset(0, 2.0),
-                blurRadius: 4.0,
-              )
-            ]),
-            child: AppBar(
-              // iconTheme: IconThemeData(color: Color(0xff121924)),
-              backgroundColor: Colors.white,
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Colors.white,
+          appBar: PreferredSize(
+            child: Container(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: kBorder,
+                  offset: Offset(0, 2.0),
+                  blurRadius: 4.0,
+                )
+              ]),
+              child: AppBar(
+                // iconTheme: IconThemeData(color: Color(0xff121924)),
+                backgroundColor: Colors.white,
 
-              leading:  GestureDetector(
-                onTap: () {
-                  tabControllerConstant.animateTo(0);
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: Color(0xff121924),
-                ),
-              ),
-              title: Text(
-                'العربة',
-                style: kSubCategoryText.copyWith(
-                  color: kBlack,
-                ),
-              ),
-              elevation: 0.0,
-            ),
-
-          ),
-          preferredSize: Size.fromHeight(kToolbarHeight),
-        ),
-        body: Consumer<DBProvider>(
-          builder: (context, value, child) {
-            List<ProductSql> allProduct =  value.allProducts ;
-            if(allProduct==null){
-          return
-            SizedBox(
-              height: 3,
-              child: LinearProgressIndicator(
-                backgroundColor: Theme.of(context)
-                    .accentColor
-                    .withOpacity(0.2),
-                valueColor: new AlwaysStoppedAnimation<Color>(
-                    kPinkLight),
-              ),
-            );
-            }else if(allProduct.isEmpty ){
-              return
-                Center(
-                  child: Text(
-                    'لا يوجد طلبات بالعربة ',
-                    style:
-                    kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+                // leading:  GestureDetector(
+                //   onTap: () {
+                //     print('no');
+                //   },
+                //   child: Icon(
+                //     Icons.arrow_back,
+                //     color: Colors.white,
+                //   ),
+                // ),
+                title: Text(
+                  'السلة',
+                  style: kSubCategoryText.copyWith(
+                    color: kBlack,
                   ),
-                );
-            }
-            else{
-              return  ListView.builder(
-                itemCount: allProduct.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) => CartItemWidget(
-                   productSql: allProduct[index],
+                ),
+                elevation: 0.0,
+
+              ),
+
+            ),
+            preferredSize: Size.fromHeight(kToolbarHeight),
+          ),
+          body: Consumer<DBProvider>(
+            builder: (context, value, child) {
+              List<ProductSql> allProduct =  value.allProducts ;
+              if(allProduct==null){
+            return
+              SizedBox(
+                height: 3,
+                child: LinearProgressIndicator(
+                  backgroundColor: Theme.of(context)
+                      .accentColor
+                      .withOpacity(0.2),
+                  valueColor: new AlwaysStoppedAnimation<Color>(
+                      kPinkLight),
                 ),
               );
-            }
-
-          },
-        ),
-        bottomNavigationBar: Visibility(
-          visible: Provider.of<DBProvider>(context).allProducts.isNotEmpty,
-          child: bottomNavigationBarCart(
-            onTap: () async{
-              bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
-              if(!isLogin){
-                Fluttertoast.showToast(
-                    msg: 'يجب عليك تسجيل الدخول',
-                    toastLength: Toast.LENGTH_SHORT,
-                    backgroundColor: Color(0xffDAA095).withOpacity(0.8),
-                    timeInSecForIosWeb: 1,
-                    textColor: Colors.white,
-                    fontSize: 16.0
+              }else if(allProduct.isEmpty ){
+                return
+                  Center(
+                    child: Text(
+                      'لا يوجد طلبات بالسلة ',
+                      style:
+                      kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+                    ),
+                  );
+              }
+              else{
+                return  ListView.builder(
+                  itemCount: allProduct.length,
+                  scrollDirection: Axis.vertical,
+                  itemBuilder: (context, index) => CartItemWidget(
+                     productSql: allProduct[index],
+                  ),
                 );
-                kNavigatorPush(context, SignIn());
-              }else{
-                Provider.of<ApiProvider>(context,listen: false).getAllAddress();
-                Provider.of<AuthProvider>(context,listen: false).showProfile();
-                kNavigatorPush(context, CheckOut());
               }
 
             },
-            widget: Row(
-              children: [
-                Text(
-                  'Cart price',
-                  style: kBtnText,
-                ),
-                SizedBox(
-                  width: ScreenUtil().setWidth(100),
-                ),
-                Text(
-                  'Check Out',
-                  style: kBtnText,
-                ),
-                SizedBox(
-                  width: ScreenUtil().setWidth(40),
-                ),
-                Icon(
-                  Icons.arrow_forward,
-                  color: Colors.white,
-                ),
-              ],
+          ),
+          bottomNavigationBar: Visibility(
+            visible: Provider.of<DBProvider>(context).allProducts.isNotEmpty,
+            child: bottomNavigationBarCart(
+              onTap: () async{
+                bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
+                if(!isLogin){
+                  Fluttertoast.showToast(
+                      msg: 'يجب عليك تسجيل الدخول',
+                      toastLength: Toast.LENGTH_SHORT,
+                      backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                      timeInSecForIosWeb: 1,
+                      textColor: Colors.white,
+                      fontSize: 16.0
+                  );
+                  kNavigatorPush(context, SignIn());
+                }else{
+                  Provider.of<ApiProvider>(context,listen: false).getAllAddress();
+                  Provider.of<AuthProvider>(context,listen: false).showProfile();
+                  kNavigatorPush(context, CheckOut());
+                }
+
+              },
+              widget: Row(
+                children: [
+                  Text(
+                    'Cart price',
+                    style: kBtnText,
+                  ),
+                  SizedBox(
+                    width: ScreenUtil().setWidth(100),
+                  ),
+                  Text(
+                    'Check Out',
+                    style: kBtnText,
+                  ),
+                  SizedBox(
+                    width: ScreenUtil().setWidth(40),
+                  ),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

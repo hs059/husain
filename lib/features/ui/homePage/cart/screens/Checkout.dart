@@ -55,379 +55,381 @@ class CheckOut extends StatelessWidget {
     List<addressClass.Data> deffult ;
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-        appBar: appBarCart(title: 'Check Out'),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              apiProvider.addressSelected != null
-                  ? CartAddressWidget(
-                address: apiProvider.addressSelected.fullAddress,
-                name: authProvider.showProfileModel.data.displayName,
-                phone:  apiProvider.addressSelected.phone,
-                typeAddress: apiProvider.addressSelected.type ==
-                    addressIcon[0]
-                    ? 1
-                    : apiProvider.addressSelected.type == addressIcon[1]
-                    ? 2
-                    : apiProvider.addressSelected.type ==
-                    addressIcon[2]
-                    ? 3
-                    : 1,
-                changeBtn: true,
-                onTap: () =>
-                    kNavigatorPush(context, ChangeDeliveryAddress()),
-              )
-                  : Builder(
-                builder: (context) {
-                  addressClass.AllAddressModel allAddress =   apiProvider.allAddressModel ;
-                  deffult  = allAddress.data.where((element) => element.defualtAddress =="true").toList();
-                  if(deffult.isNotEmpty){
-                    return CartAddressWidget(
-                      address: deffult.first.fullAddress,
-                      name: authProvider.showProfileModel.data.displayName,
-                      phone:  deffult.first.phone,
-                      typeAddress: deffult.first.type ==
-                          addressIcon[0]
-                          ? 1
-                          : deffult.first.type == addressIcon[1]
-                          ? 2
-                          : deffult.first.type ==
-                          addressIcon[2]
-                          ? 3
-                          : 1,
-                      changeBtn: true,
-                      onTap: () =>
-                          kNavigatorPush(context, ChangeDeliveryAddress()),
-                    );
-                  }else{
-                    return ContainerCart(
-                      child: SizedBox(
-                        width: ScreenUtil().setWidth(311),
-                        height: ScreenUtil().setHeight(80),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Image.asset(
-                              'assets/images/adress1.png',
-                              fit: BoxFit.contain,
-                            ),
-                            SizedBox(
-                              width: ScreenUtil().setWidth(10),
-                            ),
-                            Button(
-                              text: 'أختر عنوان',
-                              onTap: () => kNavigatorPush(
-                                  context, ChangeDeliveryAddress()),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }
-
-                },
-
-                  ),
-
-              DateAndTime(),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setHeight(15), vertical: 5),
-                child: Container(
-                  width: ScreenUtil().setWidth(343),
-                  margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
-                  padding: EdgeInsets.symmetric(
-                    vertical: ScreenUtil().setHeight(15),
-                  ),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: sCardShadow,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: ScreenUtil().setHeight(10),
-                          horizontal: ScreenUtil().setWidth(15),
-                        ),
-                        child: Row(
-                          children: [
-                            GestureDetector(
-                              child: Text(
-                                'اجمالي الفاتورة',
-                                style: kSectionText,
-                              ),onTap: () => print( deffult.first.iD),
-                            ),
-                          ],
-                        ),
-                      ),
-                      MyDivider(),
-                      Column(
-                        children: [
-                          Column(
+      child: SafeArea(
+        child: Scaffold(
+          appBar: appBarCart(title: 'Check Out'),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                apiProvider.addressSelected != null
+                    ? CartAddressWidget(
+                  address: apiProvider.addressSelected.fullAddress,
+                  name: authProvider.showProfileModel.data.displayName,
+                  phone:  apiProvider.addressSelected.phone,
+                  typeAddress: apiProvider.addressSelected.type ==
+                      addressIcon[0]
+                      ? 1
+                      : apiProvider.addressSelected.type == addressIcon[1]
+                      ? 2
+                      : apiProvider.addressSelected.type ==
+                      addressIcon[2]
+                      ? 3
+                      : 1,
+                  changeBtn: true,
+                  onTap: () =>
+                      kNavigatorPush(context, ChangeDeliveryAddress()),
+                )
+                    : Builder(
+                  builder: (context) {
+                    addressClass.AllAddressModel allAddress =   apiProvider.allAddressModel ;
+                    deffult  = allAddress.data.where((element) => element.defualtAddress =="true").toList();
+                    if(deffult.isNotEmpty){
+                      return CartAddressWidget(
+                        address: deffult.first.fullAddress,
+                        name: authProvider.showProfileModel.data.displayName,
+                        phone:  deffult.first.phone,
+                        typeAddress: deffult.first.type ==
+                            addressIcon[0]
+                            ? 1
+                            : deffult.first.type == addressIcon[1]
+                            ? 2
+                            : deffult.first.type ==
+                            addressIcon[2]
+                            ? 3
+                            : 1,
+                        changeBtn: true,
+                        onTap: () =>
+                            kNavigatorPush(context, ChangeDeliveryAddress()),
+                      );
+                    }else{
+                      return ContainerCart(
+                        child: SizedBox(
+                          width: ScreenUtil().setWidth(311),
+                          height: ScreenUtil().setHeight(80),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: ScreenUtil().setWidth(15),
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      'الطلبات',
-                                      style: kGrayText33,
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return Directionality(
-                                              textDirection: TextDirection.rtl,
-                                              child: SimpleDialog(
-                                                contentPadding:
-                                                    EdgeInsets.all(15),
-                                                titlePadding:
-                                                    EdgeInsets.symmetric(
-                                                        horizontal: 15,
-                                                        vertical: 20),
-                                                title: Row(
-                                                  children: <Widget>[
-                                                    Icon(Icons.category),
-                                                    SizedBox(width: 10),
-                                                    Text(
-                                                      'جميع الطلبات',
-                                                    )
-                                                  ],
-                                                ),
-                                                children:
-                                                  allProducts
-                                                      .map(
-                                                        (e) => CartItemCheckOut(
-                                                      productSql: e,
-                                                    ),
-                                                  ).toList(),
-
-                                              ),
-                                            );
-                                          });
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              ScreenUtil().setHeight(15)),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            allProducts.length.toString(),
-                                            style: kGrayText33,
-                                          ),
-                                          Text(
-                                            '  طلب',
-                                            style: kGrayText33,
-                                          ),
-                                          Icon(Icons.arrow_drop_down,
-                                              color: Color(0xff8F9BB3))
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                              Image.asset(
+                                'assets/images/adress1.png',
+                                fit: BoxFit.contain,
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: ScreenUtil().setWidth(15),
-                                ),
-                                child: MyDivider(),
+                              SizedBox(
+                                width: ScreenUtil().setWidth(10),
+                              ),
+                              Button(
+                                text: 'أختر عنوان',
+                                onTap: () => kNavigatorPush(
+                                    context, ChangeDeliveryAddress()),
                               ),
                             ],
                           ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: ScreenUtil().setWidth(15),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        ),
+                      );
+                    }
+
+                  },
+
+                    ),
+
+                DateAndTime(),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: ScreenUtil().setHeight(15), vertical: 5),
+                  child: Container(
+                    width: ScreenUtil().setWidth(343),
+                    margin: EdgeInsets.only(top: ScreenUtil().setHeight(20)),
+                    padding: EdgeInsets.symmetric(
+                      vertical: ScreenUtil().setHeight(15),
+                    ),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: sCardShadow,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: ScreenUtil().setHeight(10),
+                            horizontal: ScreenUtil().setWidth(15),
+                          ),
+                          child: Row(
+                            children: [
+                              GestureDetector(
+                                child: Text(
+                                  'اجمالي الفاتورة',
+                                  style: kSectionText,
+                                ),onTap: () => print( deffult.first.iD),
+                              ),
+                            ],
+                          ),
+                        ),
+                        MyDivider(),
+                        Column(
+                          children: [
+                            Column(
                               children: [
-                                Text(
-                                  'السعر الكلي',
-                                  style: kSeeAll,
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: ScreenUtil().setWidth(15),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        'الطلبات',
+                                        style: kGrayText33,
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Directionality(
+                                                textDirection: TextDirection.rtl,
+                                                child: SimpleDialog(
+                                                  contentPadding:
+                                                      EdgeInsets.all(15),
+                                                  titlePadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal: 15,
+                                                          vertical: 20),
+                                                  title: Row(
+                                                    children: <Widget>[
+                                                      Icon(Icons.category),
+                                                      SizedBox(width: 10),
+                                                      Text(
+                                                        'جميع الطلبات',
+                                                      )
+                                                    ],
+                                                  ),
+                                                  children:
+                                                    allProducts
+                                                        .map(
+                                                          (e) => CartItemCheckOut(
+                                                        productSql: e,
+                                                      ),
+                                                    ).toList(),
+
+                                                ),
+                                              );
+                                            });
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                ScreenUtil().setHeight(15)),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              allProducts.length.toString(),
+                                              style: kGrayText33,
+                                            ),
+                                            Text(
+                                              '  طلب',
+                                              style: kGrayText33,
+                                            ),
+                                            Icon(Icons.arrow_drop_down,
+                                                color: Color(0xff8F9BB3))
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Text(
-                                  dbProvider.totalPrize.toString() +
-                                      ' ' +
-                                      currency,
-                                  style: kSeeAll,
-                                  textAlign: TextAlign.center,
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: ScreenUtil().setWidth(15),
+                                  ),
+                                  child: MyDivider(),
                                 ),
                               ],
                             ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: ScreenUtil().setWidth(15),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'السعر الكلي',
+                                    style: kSeeAll,
+                                  ),
+                                  Text(
+                                    dbProvider.totalPrize.toString() +
+                                        ' ' +
+                                        currency,
+                                    style: kSeeAll,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: ScreenUtil().setHeight(10),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                ContainerCart(
+                  // height: 260,
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'طريقة الدفع',
+                            style: kSectionText,
                           ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(10),
+
+                        ],
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(15),
+                      ),
+                      Column(
+                        children: [
+                          RadioListTile(
+                            activeColor: kPinkLight,
+                            value: paymentList[0],
+                            groupValue: uiProvider.paymentGroup,
+                            onChanged: (value) {
+                              uiProviderFalse.setPaymentGroup(value);
+                            },
+                            title: Text(
+                              paymentList[0],
+                              style: kSectionText,
+                            ),
+                          ),
+
+                          RadioListTile(
+                            activeColor: kPinkLight,
+                            value: paymentList[1],
+                            groupValue: uiProvider.paymentGroup,
+                            onChanged: (value) {
+                              uiProviderFalse.setPaymentGroup(value);
+                            },
+                            title: Text(
+                              paymentList[1],
+                              style: kSectionText,
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
                 ),
-              ),
-              ContainerCart(
-                // height: 260,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'طريقة الدفع',
-                          style: kSectionText,
-                        ),
+                ContainerCart(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          GestureDetector(
 
-                      ],
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(15),
-                    ),
-                    Column(
-                      children: [
-                        RadioListTile(
-                          activeColor: kPinkLight,
-                          value: paymentList[0],
-                          groupValue: uiProvider.paymentGroup,
-                          onChanged: (value) {
-                            uiProviderFalse.setPaymentGroup(value);
-                          },
-                          title: Text(
-                            paymentList[0],
-                            style: kSectionText,
+                            child: Text(
+                              'ملاحظة',
+                              style: kSectionText,
+                            ),
+                            onTap: () {
+                              print(uiProvider.paymentGroup);
+                            },
                           ),
-                        ),
-
-                        RadioListTile(
-                          activeColor: kPinkLight,
-                          value: paymentList[1],
-                          groupValue: uiProvider.paymentGroup,
-                          onChanged: (value) {
-                            uiProviderFalse.setPaymentGroup(value);
-                          },
-                          title: Text(
-                            paymentList[1],
-                            style: kSectionText,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              ContainerCart(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-
-                          child: Text(
-                            'ملاحظة',
-                            style: kSectionText,
-                          ),
-                          onTap: () {
-                            print(uiProvider.paymentGroup);
-                          },
-                        ),
-                      ],
-                    ),
-                    TextField(
-                      maxLines: null,
-                      onChanged: (String txt) {},
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF313A44),
+                        ],
                       ),
-                      cursorColor: Colors.blue,
-                      decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'أدخل ملاحظتك هنا ...'),
-                    ),
-
-                    // Note
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(15),
-              ),
-              bottomNavigationBarCart(
-                widget: Text(
-                  'تأكيد الطلب',
-                  style: kBtnText,
-                ),
-                onTap: () async {
-                    if( apiProvider.addressSelected!=null ){
-                      Provider.of<ApiProvider>(context, listen: false)
-                          .createOrder(
-                        authProvider.showProfileModel.data.displayName,
-                        apiProvider.addressSelected.fullAddress,
-                        apiProvider.addressSelected.houseNumber,
-                        apiProvider.addressSelected.apartment,
-                        allProducts
-                            .map((e) => LineItems(
-                          productId: e.idProduct.toString(),
-                          quantity: e.count.toString(),
-                        ).toJson())
-                            .toList(),
-                      );
-                      uiProvider.paymentGroup == paymentList[0]? kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()))  :showDialog(
-                        context: context,
-                        builder: (context) => DialogConfirmOrder(
-                          onTap: () async {
-                            dbProviderFalse.deleteAllProduct();
-                            kNavigatorPushAndRemoveUntil(context, HomePage());
-                          },
+                      TextField(
+                        maxLines: null,
+                        onChanged: (String txt) {},
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Color(0xFF313A44),
                         ),
-                      );
-                    }else if(deffult.isNotEmpty){
-                      Provider.of<ApiProvider>(context, listen: false)
-                          .createOrder(
-                        authProvider.showProfileModel.data.displayName,
-                        deffult.first.fullAddress,
-                        deffult.first.houseNumber,
-                        deffult.first.apartment,
-                        allProducts
-                            .map((e) => LineItems(
-                          productId: e.idProduct.toString(),
-                          quantity: e.count.toString(),
-                        ).toJson())
-                            .toList(),
-                      );
-                      uiProvider.paymentGroup == paymentList[0]? kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()))  :showDialog(
-                        context: context,
-                        builder: (context) => DialogConfirmOrder(
-                          onTap: () async {
-                            dbProviderFalse.deleteAllProduct();
-                            kNavigatorPushAndRemoveUntil(context, HomePage());
-                          },
-                        ),
-                      );
-                    }
-                    else{
-                      Fluttertoast.showToast(
-                          msg: 'أضف عنوان التوصيل',
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
-                          timeInSecForIosWeb: 1,
-                          gravity:ToastGravity.TOP ,
-                          textColor: Colors.white,
-                          fontSize: 16.0
-                      );
-                    }
+                        cursorColor: Colors.blue,
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: 'أدخل ملاحظتك هنا ...'),
+                      ),
+
+                      // Note
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(15),
+                ),
+                bottomNavigationBarCart(
+                  widget: Text(
+                    'تأكيد الطلب',
+                    style: kBtnText,
+                  ),
+                  onTap: () async {
+                      if( apiProvider.addressSelected!=null ){
+                        Provider.of<ApiProvider>(context, listen: false)
+                            .createOrder(
+                          authProvider.showProfileModel.data.displayName,
+                          apiProvider.addressSelected.fullAddress,
+                          apiProvider.addressSelected.houseNumber,
+                          apiProvider.addressSelected.apartment,
+                          allProducts
+                              .map((e) => LineItems(
+                            productId: e.idProduct.toString(),
+                            quantity: e.count.toString(),
+                          ).toJson())
+                              .toList(),
+                        );
+                        uiProvider.paymentGroup == paymentList[0]? kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()))  :showDialog(
+                          context: context,
+                          builder: (context) => DialogConfirmOrder(
+                            onTap: () async {
+                              dbProviderFalse.deleteAllProduct();
+                              kNavigatorPushAndRemoveUntil(context, HomePage());
+                            },
+                          ),
+                        );
+                      }else if(deffult.isNotEmpty){
+                        Provider.of<ApiProvider>(context, listen: false)
+                            .createOrder(
+                          authProvider.showProfileModel.data.displayName,
+                          deffult.first.fullAddress,
+                          deffult.first.houseNumber,
+                          deffult.first.apartment,
+                          allProducts
+                              .map((e) => LineItems(
+                            productId: e.idProduct.toString(),
+                            quantity: e.count.toString(),
+                          ).toJson())
+                              .toList(),
+                        );
+                        uiProvider.paymentGroup == paymentList[0]? kNavigatorPush(context, Fatoorah(dbProvider.totalPrize.toString()))  :showDialog(
+                          context: context,
+                          builder: (context) => DialogConfirmOrder(
+                            onTap: () async {
+                              dbProviderFalse.deleteAllProduct();
+                              kNavigatorPushAndRemoveUntil(context, HomePage());
+                            },
+                          ),
+                        );
+                      }
+                      else{
+                        Fluttertoast.showToast(
+                            msg: 'أضف عنوان التوصيل',
+                            toastLength: Toast.LENGTH_SHORT,
+                            backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                            timeInSecForIosWeb: 1,
+                            gravity:ToastGravity.TOP ,
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                        );
+                      }
 
 
-                },
-              ),
-            ],
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

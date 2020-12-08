@@ -39,7 +39,8 @@ class Auth {
     Logger().d(  userCredential.user.email);
     Logger().d(  userCredential.user.displayName);
     Logger().d(  userCredential.user.uid);
-    Logger().d( userCredential.user.getIdToken());
+    Logger().d( userCredential.user.phoneNumber);
+    Logger().d( userCredential.user.photoURL);
 
     return  userCredential;
   }
@@ -66,7 +67,8 @@ class Auth {
       Logger().d(  userCredential.user.email);
       Logger().d(  userCredential.user.displayName);
       Logger().d(  userCredential.user.uid);
-      Logger().d( userCredential.user.getIdToken());
+      Logger().d( userCredential.user.phoneNumber);
+      Logger().d( userCredential.user.photoURL);
 
       return userCredential;
     }  catch (e) {

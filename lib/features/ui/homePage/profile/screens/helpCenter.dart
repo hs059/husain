@@ -14,44 +14,46 @@ class HelpCenter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: Scaffold(
-          appBar: appBarCart(title: 'الدعم و المساندة'),
-          body: Padding(
-            padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
-            child: ContainerCart(
-              // height: 160,
-              child: Wrap(
-                children: [
-                  ListTile(
-                    onTap: () =>  UrlLauncher.launch('mailto:$email'),
-                    leading: SvgPicture.asset(
-                      'assets/svg/emailBtn.svg',
-                      fit: BoxFit.contain,
+      child: SafeArea(
+        child: Scaffold(
+            appBar: appBarCart(title: 'الدعم و المساندة'),
+            body: Padding(
+              padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
+              child: ContainerCart(
+                // height: 160,
+                child: Wrap(
+                  children: [
+                    ListTile(
+                      onTap: () =>  UrlLauncher.launch('mailto:$email'),
+                      leading: SvgPicture.asset(
+                        'assets/svg/emailBtn.svg',
+                        fit: BoxFit.contain,
+                      ),
+                      title: Text(
+                        'راسلنا',
+                        style: kProfile,
+                      ),
                     ),
-                    title: Text(
-                      'راسلنا',
-                      style: kProfile,
-                    ),
-                  ),
-                  MyDivider(),
-                  ListTile(
-                    onTap:() => UrlLauncher.launch('tel:+${phone.toString()}'),
+                    MyDivider(),
+                    ListTile(
+                      onTap:() => UrlLauncher.launch('tel:+${phone.toString()}'),
 
-                    leading: Image.asset(
-                      'assets/images/phoneBtn.png',
-                      fit: BoxFit.contain,
-                      height: ScreenUtil().setHeight(35),
-                      width: ScreenUtil().setWidth(35),
+                      leading: Image.asset(
+                        'assets/images/phoneBtn.png',
+                        fit: BoxFit.contain,
+                        height: ScreenUtil().setHeight(35),
+                        width: ScreenUtil().setWidth(35),
+                      ),
+                      title: Text(
+                        'تواصل معنا',
+                        style: kProfile,
+                      ),
                     ),
-                    title: Text(
-                      'تواصل معنا',
-                      style: kProfile,
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )),
+            )),
+      ),
     );
   }
 }

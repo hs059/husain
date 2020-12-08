@@ -39,154 +39,156 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
       textDirection: TextDirection.rtl,
       child: ModalProgressHUD(
         inAsyncCall: uiProvider.spinner,
-        child: Scaffold(
-            appBar: PreferredSize(
-              child: Container(
-                decoration: BoxDecoration(boxShadow: [
-                  BoxShadow(
-                    color: kBorder,
-                    offset: Offset(0, 2.0),
-                    blurRadius: 4.0,
-                  )
-                ]),
-                child: AppBar(
-                  iconTheme: IconThemeData(color: Color(0xff121924)),
-                  backgroundColor: Colors.white,
-                  title: TextField(
-                    autofocus: true,
-                    onChanged: (value) async {
-                      uiProviderFalse.setLoading(true);
-                      await Provider.of<ApiProvider>(context, listen: false)
-                          .getProductSearch(value);
-                      uiProviderFalse.setLoading(false);
-                    },
-                    controller: _controller,
-                    cursorColor: kPinkLight,
-                    decoration: InputDecoration(
-                      // contentPadding: const EdgeInsets.all(20.0),
-                      suffix: IconButton(
-                          onPressed: () => _controller.clear(),
-                          icon: Icon(
-                            Icons.close,
-                            size: 28,
-                          )),
-                      hintText: 'بحث',
-                      hintStyle:
-                          TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                      border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: kGrayLight,
-                        width: ScreenUtil().setWidth(2),
-                      )),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: kPinkDark,
-                        width: ScreenUtil().setWidth(2),
-                      )),
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                        color: kGrayLight,
-                        width: ScreenUtil().setWidth(0.5),
-                      )),
+        child: SafeArea(
+          child: Scaffold(
+              appBar: PreferredSize(
+                child: Container(
+                  decoration: BoxDecoration(boxShadow: [
+                    BoxShadow(
+                      color: kBorder,
+                      offset: Offset(0, 2.0),
+                      blurRadius: 4.0,
+                    )
+                  ]),
+                  child: AppBar(
+                    iconTheme: IconThemeData(color: Color(0xff121924)),
+                    backgroundColor: Colors.white,
+                    title: TextField(
+                      autofocus: true,
+                      onChanged: (value) async {
+                        uiProviderFalse.setLoading(true);
+                        await Provider.of<ApiProvider>(context, listen: false)
+                            .getProductSearch(value);
+                        uiProviderFalse.setLoading(false);
+                      },
+                      controller: _controller,
+                      cursorColor: kPinkLight,
+                      decoration: InputDecoration(
+                        // contentPadding: const EdgeInsets.all(20.0),
+                        suffix: IconButton(
+                            onPressed: () => _controller.clear(),
+                            icon: Icon(
+                              Icons.close,
+                              size: 28,
+                            )),
+                        hintText: 'بحث',
+                        hintStyle:
+                            TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                        border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: kGrayLight,
+                          width: ScreenUtil().setWidth(2),
+                        )),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: kPinkDark,
+                          width: ScreenUtil().setWidth(2),
+                        )),
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                          color: kGrayLight,
+                          width: ScreenUtil().setWidth(0.5),
+                        )),
+                      ),
                     ),
+                    elevation: 0.0,
                   ),
-                  elevation: 0.0,
                 ),
+                preferredSize: Size.fromHeight(kToolbarHeight),
               ),
-              preferredSize: Size.fromHeight(kToolbarHeight),
-            ),
-            body: Consumer<ApiProvider>(
-              builder: (context, value, child) {
-                if (value.productSearch == null) {
-                  return !uiProvider.loading
-                      ? Center(
-                          child: Text(
-                            'ابحث عن كل ما هو رائع لك',
-                            style: kSeeAll.copyWith(
-                                fontFamily: 'Cairo-Regular', fontSize: 18),
-                          ),
-                        )
-                      : Column(
-                          children: [
-                            SizedBox(
-                              height: 3,
-                              child: LinearProgressIndicator(
-                                backgroundColor: Theme.of(context)
-                                    .accentColor
-                                    .withOpacity(0.2),
-                                valueColor: new AlwaysStoppedAnimation<Color>(
-                                    kPinkLight),
-                              ),
+              body: Consumer<ApiProvider>(
+                builder: (context, value, child) {
+                  if (value.productSearch == null) {
+                    return !uiProvider.loading
+                        ? Center(
+                            child: Text(
+                              'ابحث عن كل ما هو رائع لك',
+                              style: kSeeAll.copyWith(
+                                  fontFamily: 'Cairo-Regular', fontSize: 18),
                             ),
-                            Center(
-                              child: Text(
-                                'جاري البحث',
-                                style: kSeeAll.copyWith(
-                                    fontFamily: 'Cairo-Regular', fontSize: 18),
+                          )
+                        : Column(
+                            children: [
+                              SizedBox(
+                                height: 3,
+                                child: LinearProgressIndicator(
+                                  backgroundColor: Theme.of(context)
+                                      .accentColor
+                                      .withOpacity(0.2),
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      kPinkLight),
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                } else if(value.productSearch.data.isEmpty){
-                  return  Center(
-                    child: Text(
-                      'ابحث عن منتج اخر ',
-                      style: kSeeAll.copyWith(
-                          fontFamily: 'Cairo-Regular', fontSize: 18),
-                    ),
-                  );
-                }else{
-                  if (uiProvider.loading) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          height: 3,
-                          child: LinearProgressIndicator(
-                            backgroundColor:
-                                Theme.of(context).accentColor.withOpacity(0.2),
-                            valueColor:
-                                new AlwaysStoppedAnimation<Color>(kPinkLight),
-                          ),
-                        ),
-                        Center(
-                          child: Text(
-                            'جاري البحث',
-                            style: kSeeAll.copyWith(
-                                fontFamily: 'Cairo-Regular', fontSize: 18),
-                          ),
-                        ),
-                      ],
+                              Center(
+                                child: Text(
+                                  'جاري البحث',
+                                  style: kSeeAll.copyWith(
+                                      fontFamily: 'Cairo-Regular', fontSize: 18),
+                                ),
+                              ),
+                            ],
+                          );
+                  } else if(value.productSearch.data.isEmpty){
+                    return  Center(
+                      child: Text(
+                        'ابحث عن منتج اخر ',
+                        style: kSeeAll.copyWith(
+                            fontFamily: 'Cairo-Regular', fontSize: 18),
+                      ),
                     );
-                  } else {
-                    return Padding(
-                        padding: EdgeInsets.only(
-                          top: ScreenUtil().setHeight(10),
-                          left: ScreenUtil().setWidth(5),
-                          right: ScreenUtil().setWidth(5),
-                        ),
-                        child: ListView.builder(
-                          primary: false,
-                          shrinkWrap: true,
-                          itemCount: apiProvider.productSearch.data.length,
-                          itemBuilder: (context, index) => AnimationCart(
-                              Grid: false,
-                              index: index,
-                              count: apiProvider.productSearch.data.length,
-                              duration: 500,
-                              child: SearchItem(
-                                name:
-                                    apiProvider.productSearch.data[index].name,
-                                prize:
-                                    apiProvider.productSearch.data[index].price,
-                                imagePath:
-                                    apiProvider.productSearch.data[index].image,
-                                id: apiProvider.productSearch.data[index].id,
-                              )),
-                        ));
+                  }else{
+                    if (uiProvider.loading) {
+                      return Column(
+                        children: [
+                          SizedBox(
+                            height: 3,
+                            child: LinearProgressIndicator(
+                              backgroundColor:
+                                  Theme.of(context).accentColor.withOpacity(0.2),
+                              valueColor:
+                                  new AlwaysStoppedAnimation<Color>(kPinkLight),
+                            ),
+                          ),
+                          Center(
+                            child: Text(
+                              'جاري البحث',
+                              style: kSeeAll.copyWith(
+                                  fontFamily: 'Cairo-Regular', fontSize: 18),
+                            ),
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Padding(
+                          padding: EdgeInsets.only(
+                            top: ScreenUtil().setHeight(10),
+                            left: ScreenUtil().setWidth(5),
+                            right: ScreenUtil().setWidth(5),
+                          ),
+                          child: ListView.builder(
+                            primary: false,
+                            shrinkWrap: true,
+                            itemCount: apiProvider.productSearch.data.length,
+                            itemBuilder: (context, index) => AnimationCart(
+                                Grid: false,
+                                index: index,
+                                count: apiProvider.productSearch.data.length,
+                                duration: 500,
+                                child: SearchItem(
+                                  name:
+                                      apiProvider.productSearch.data[index].name,
+                                  prize:
+                                      apiProvider.productSearch.data[index].price,
+                                  imagePath:
+                                      apiProvider.productSearch.data[index].image,
+                                  id: apiProvider.productSearch.data[index].id,
+                                )),
+                          ));
+                    }
                   }
-                }
-              },
-            )),
+                },
+              )),
+        ),
       ),
     );
   }

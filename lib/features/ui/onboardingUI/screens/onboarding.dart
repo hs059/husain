@@ -31,92 +31,94 @@ class _OnboardingState extends State<Onboarding> {
     ApiProvider apiProvider = Provider.of<ApiProvider>(context,);
     return WillPopScope(
       onWillPop:onWillPop ,
-      child: Scaffold(
-        body: Container(
-          padding: EdgeInsets.all(15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(
-                height: ScreenUtil().setHeight(100),
-              ),
-              Container(
-                height: ScreenUtil().setHeight(530),
-                width: double.infinity,
-                child: PageView(
-                  physics: ClampingScrollPhysics(),
-                  controller: _pageController,
-                  onPageChanged: (int page) {
-                    setState(() {
-                      _currentPage = page;
-                    });
-                  },
-                  children: <Widget>[
-                    DetailsOnboarding(
-                      image: 'assets/svg/on_boading1.svg',
-                      title: 'تصفح الكثير من المنتجات',
-                      subTitle:
-                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
-                    ),
-                    DetailsOnboarding(
-                      image: 'assets/svg/on_boading2.svg',
-                      title: 'Choose and checkout',
-                      subTitle:
-                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
-                    ),
-                    DetailsOnboarding(
-                      image: 'assets/svg/on_boading3.svg',
-                      title: 'Get it delivered',
-                      subTitle:
-                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
-                    ),
-                  ],
+      child: SafeArea(
+        child: Scaffold(
+          body: Container(
+            padding: EdgeInsets.all(15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                SizedBox(
+                  height: ScreenUtil().setHeight(100),
                 ),
-              ),
-              Button(
-                text:  _currentPage != _numPages - 1 ? 'Next' : 'Get Started ',
-                onTap: () {
-                  if(_currentPage != _numPages - 1){
-                    _pageController.nextPage(
-                      duration: Duration(milliseconds: 500),
-                      curve: Curves.ease,
-                    );
-                  }else{
-                    kNavigatorPushReplacement(context,HomePage());
-                    SPHelper.spHelper.isSeenOnBoardingSet(true);
-                  }
-                },
-              ),
-              SizedBox(height: ScreenUtil().setHeight(55)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IndicatorOnboarding(
-                    currentPage: _currentPage,
-                    numPages: _numPages,
-                  ),
-                  GestureDetector(
-                    onTap: () {
+                Container(
+                  height: ScreenUtil().setHeight(530),
+                  width: double.infinity,
+                  child: PageView(
+                    physics: ClampingScrollPhysics(),
+                    controller: _pageController,
+                    onPageChanged: (int page) {
                       setState(() {
-                        _pageController.animateToPage(_numPages - 1,
-                            duration: Duration(milliseconds: 500),
-                            curve: Curves.ease);
+                        _currentPage = page;
                       });
                     },
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        _currentPage != _numPages - 1 ? 'Skip' : '',
-                        style: TextStyle(
-                          color: kPinkDark,
-                          fontSize: ScreenUtil().setSp(16),
+                    children: <Widget>[
+                      DetailsOnboarding(
+                        image: 'assets/svg/on_boading1.svg',
+                        title: 'تصفح الكثير من المنتجات',
+                        subTitle:
+                            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
+                      ),
+                      DetailsOnboarding(
+                        image: 'assets/svg/on_boading2.svg',
+                        title: 'Choose and checkout',
+                        subTitle:
+                            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
+                      ),
+                      DetailsOnboarding(
+                        image: 'assets/svg/on_boading3.svg',
+                        title: 'Get it delivered',
+                        subTitle:
+                            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
+                      ),
+                    ],
+                  ),
+                ),
+                Button(
+                  text:  _currentPage != _numPages - 1 ? 'Next' : 'Get Started ',
+                  onTap: () {
+                    if(_currentPage != _numPages - 1){
+                      _pageController.nextPage(
+                        duration: Duration(milliseconds: 500),
+                        curve: Curves.ease,
+                      );
+                    }else{
+                      kNavigatorPushReplacement(context,HomePage());
+                      SPHelper.spHelper.isSeenOnBoardingSet(true);
+                    }
+                  },
+                ),
+                SizedBox(height: ScreenUtil().setHeight(55)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IndicatorOnboarding(
+                      currentPage: _currentPage,
+                      numPages: _numPages,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _pageController.animateToPage(_numPages - 1,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease);
+                        });
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          _currentPage != _numPages - 1 ? 'Skip' : '',
+                          style: TextStyle(
+                            color: kPinkDark,
+                            fontSize: ScreenUtil().setSp(16),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),

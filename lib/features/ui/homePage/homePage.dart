@@ -42,6 +42,7 @@ class _HomePageState extends State<HomePage>
       bottomIndex = tabControllerConstant.index;
       setState(() {});
     });
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     super.initState();
   }
   @override
@@ -53,7 +54,6 @@ class _HomePageState extends State<HomePage>
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               controller: tabControllerConstant,
