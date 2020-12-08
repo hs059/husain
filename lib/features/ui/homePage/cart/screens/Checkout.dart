@@ -82,7 +82,7 @@ class CheckOut extends StatelessWidget {
                     : Builder(
                   builder: (context) {
                     addressClass.AllAddressModel allAddress =   apiProvider.allAddressModel ;
-                    deffult  = allAddress.data.where((element) => element.defualtAddress =="true").toList();
+                    deffult  =allAddress!=null ? allAddress.data.where((element) => element.defualtAddress =="true").toList():[];
                     if(deffult.isNotEmpty){
                       return CartAddressWidget(
                         address: deffult.first.fullAddress,

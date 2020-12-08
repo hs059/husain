@@ -27,6 +27,13 @@ List<String>tabIconI = [
   'assets/svg/icon/brandsI.svg',
   'assets/svg/icon/profileI.svg',
 ];
+List<String>tabName = [
+  'الرئيسية',
+  'التصنيفات' ,
+  'السلة',
+  'البراند',
+  'الشخصية',
+];
 List sortUi = [
   'Default sort',
   'Popularity',

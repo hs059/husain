@@ -106,10 +106,9 @@ class ProductRecommended extends StatelessWidget {
                                                   Center(
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        // print(product.id);
                                                         apiProviderFalse.getProductDetails( productModel.data[index].id);
                                                         kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
-                                                      },
+                                                        },
                                                       child: Hero(
                                                         tag: '${productModel.data[index].image}',
                                                         child: CachedNetworkImage(
@@ -166,9 +165,16 @@ class ProductRecommended extends StatelessWidget {
                                                   Column(
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: <Widget>[
-                                                      Text(
-                                                        productModel.data[index].name,
-                                                        style: k15Black,
+                                                      GestureDetector(
+                                                        onTap: () {
+                                                          apiProviderFalse.getProductDetails( productModel.data[index].id);
+                                                          kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
+
+                                                        },
+                                                        child: Text(
+                                                          productModel.data[index].name,
+                                                          style: k15Black,
+                                                        ),
                                                       ),
                                                       SizedBox(
                                                         height: ScreenUtil().setHeight(9),

@@ -86,9 +86,18 @@ class ProductItemList extends StatelessWidget {
                                     section: true,
                                   ));
                             } else {
-                              Get.defaultDialog(
-                                title: 'رسالة تحذير',
-                                middleText: 'لايوجد اتصال بالانترنت',
+                              Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                                titleText:  Text(
+                                  'لا يوجد اتصال بالانترنت',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                messageText: Text(
+                                  'يرجى فحص الاتصال بالشبكة',
+                                  textAlign: TextAlign.center,
+                                ),
                               );
                             }
                           },
@@ -153,9 +162,39 @@ class ProductItemList extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            title,
-                            style: k15Black,
+                          GestureDetector(
+                            onTap: () {
+                              if (ConnectivityService.connectivityStatus ==
+                                  ConnectivityHStatus.online) {
+                                apiProviderFalse.getProductDetails(product.id);
+                                kNavigatorPush(
+                                    context,
+                                    ProductSubScreen(
+                                      productS: product,
+                                      section: true,
+                                    ));
+                              } else {
+
+                                Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                                  titleText:  Text(
+                                    'لا يوجد اتصال بالانترنت',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  messageText: Text(
+                                      'يرجى فحص الاتصال بالشبكة',
+                                    textAlign: TextAlign.center,
+                                  ),
+                                );
+
+                              }
+                            },
+                            child: Text(
+                              title,
+                              style: k15Black,
+                            ),
                           ),
                           SizedBox(
                             height: ScreenUtil().setHeight(9),

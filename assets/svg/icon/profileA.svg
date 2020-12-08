@@ -1,6 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="35" height="44" viewBox="0 0 33 44">
-  <g id="Group_1631" data-name="Group 1631" transform="translate(-324 -753)">
-    <text id="Sign_Up" data-name="Sign Up" transform="translate(324 790)" fill="#daa095" font-size="12" font-family="Cairo-Regular, Cairo"><tspan x="0" y="0">Profile</tspan></text>
-    <path id="Path_2588" data-name="Path 2588" d="M12,6a2,2,0,1,1-2,2,2.006,2.006,0,0,1,2-2m0,10c2.7,0,5.8,1.29,6,2H6c.23-.72,3.31-2,6-2M12,4a4,4,0,1,0,4,4A4,4,0,0,0,12,4Zm0,10c-2.67,0-8,1.34-8,4v2H20V18C20,15.34,14.67,14,12,14Z" transform="translate(327 749)" fill="#daa095"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <path id="Path_2588" data-name="Path 2588" d="M12,6a2,2,0,1,1-2,2,2.006,2.006,0,0,1,2-2m0,10c2.7,0,5.8,1.29,6,2H6c.23-.72,3.31-2,6-2M12,4a4,4,0,1,0,4,4A4,4,0,0,0,12,4Zm0,10c-2.67,0-8,1.34-8,4v2H20V18C20,15.34,14.67,14,12,14Z" transform="translate(-4 -4)" fill="#daa095"/>
 </svg>

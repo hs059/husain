@@ -1,11 +1,3 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="35" height="44" viewBox="0 0 33 44">
-  <g id="Group_1599" data-name="Group 1599" transform="translate(-324 -753)">
-    <g id="Group_1472" data-name="Group 1472" transform="translate(5)">
-      <text id="Sign_Up" data-name="Sign Up" transform="translate(319 790)" fill="#c9c9c9" font-size="12" font-family="Cairo-Regular, Cairo"><tspan x="0" y="0">Profile</tspan></text>
-    </g>
-    <g id="person-24px_2_" data-name="person-24px (2)" transform="translate(329 754)">
-      <path id="Path_2587" data-name="Path 2587" d="M0,0H24V24H0Z" fill="none"/>
-      <path id="Path_2588" data-name="Path 2588" d="M12,6a2,2,0,1,1-2,2,2.006,2.006,0,0,1,2-2m0,10c2.7,0,5.8,1.29,6,2H6c.23-.72,3.31-2,6-2M12,4a4,4,0,1,0,4,4A4,4,0,0,0,12,4Zm0,10c-2.67,0-8,1.34-8,4v2H20V18C20,15.34,14.67,14,12,14Z" transform="translate(-2 -5)" fill="#c9c9c9"/>
-    </g>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <path id="Path_2588" data-name="Path 2588" d="M12,6a2,2,0,1,1-2,2,2.006,2.006,0,0,1,2-2m0,10c2.7,0,5.8,1.29,6,2H6c.23-.72,3.31-2,6-2M12,4a4,4,0,1,0,4,4A4,4,0,0,0,12,4Zm0,10c-2.67,0-8,1.34-8,4v2H20V18C20,15.34,14.67,14,12,14Z" transform="translate(-4 -4)" fill="#c9c9c9"/>
 </svg>

@@ -74,9 +74,7 @@ bool subCat = false ;
 
 
   }
-setSubCategoryNull(){
-  subCategory = null ;
-}
+
   getSlider() async {
     slider1 = await ApiRepository.apiRepository.getSlider(0);
     slider2 = await ApiRepository.apiRepository.getSlider(1);
@@ -123,6 +121,7 @@ setSubCategoryNull(){
 
   getProductDetails(int id) async {
     productM = null;
+
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     Logger().d(productM.data.category.first.parent.name);
     notifyListeners();

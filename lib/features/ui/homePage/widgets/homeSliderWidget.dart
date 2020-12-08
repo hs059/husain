@@ -75,8 +75,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                             padding: EdgeInsets.symmetric(horizontal: 10),
                             height: ScreenUtil().setHeight(200),
                             decoration: BoxDecoration(
-                              //toDo:color
-                              borderRadius: BorderRadius.circular(7),
+                               borderRadius: BorderRadius.circular(7),
                               // image: DecorationImage(
                               //     // image: AssetImage(image[index]),
                               //   image: CachedNetworkImageProvider(
@@ -86,13 +85,62 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                             ),
                             child: Stack(
                               children: [
-                                Container(
-                                  height: ScreenUtil().setHeight(176),
-                                ),
+
                                 Row(
                                   children: [
                                     Expanded(
-                                      child: Container(),
+                                      child:  Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          Text(
+                                            slider.data[index].title,
+                                            style: kBannerTitle,
+                                            textAlign: TextAlign.start,
+                                            overflow: TextOverflow.fade,
+                                            maxLines: 3,
+                                          ),
+                                          // SizedBox(
+                                          //   height: ScreenUtil().setHeight(10),
+                                          // ),
+                                          Container(
+                                            constraints: BoxConstraints(
+                                              maxWidth: ScreenUtil().setWidth(185),
+                                            ),
+                                            child: Text(
+                                              slider.data[index].content,
+                                              style: kBannerSubTitle,
+                                              textAlign: TextAlign.justify,
+                                              overflow: TextOverflow.fade,
+                                            ),
+                                          ),
+                                          // SizedBox(
+                                          //   height: ScreenUtil().setHeight(20),
+                                          // ),
+                                          Row(
+                                            children: [
+                                              //Todo:push with product ID
+                                              Container(
+                                                child: Button(
+                                                    text: '  Shop Now  ',
+                                                    onTap: () async {
+                                                      Provider.of<ApiProvider>(
+                                                          context,
+                                                          listen: false)
+                                                          .getProductDetailsSearch(
+                                                          int.parse(slider
+                                                              .data[index]
+                                                              .prodOrCatId),
+                                                          context);
+                                                      kNavigatorPush(
+                                                          context, ProductMScreen());
+                                                    }),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                       flex: 1,
                                     ),
                                     Expanded(
@@ -111,58 +159,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                     ),
                                   ],
                                 ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Text(
-                                      slider.data[index].title,
-                                      style: kBannerTitle,
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.fade,
-                                      maxLines: 3,
-                                    ),
-                                    // SizedBox(
-                                    //   height: ScreenUtil().setHeight(10),
-                                    // ),
-                                    Container(
-                                      constraints: BoxConstraints(
-                                        maxWidth: ScreenUtil().setWidth(185),
-                                      ),
-                                      child: Text(
-                                        slider.data[index].content,
-                                        style: kBannerSubTitle,
-                                        textAlign: TextAlign.justify,
-                                        overflow: TextOverflow.fade,
-                                      ),
-                                    ),
-                                    // SizedBox(
-                                    //   height: ScreenUtil().setHeight(20),
-                                    // ),
-                                    Row(
-                                      children: [
-                                        //Todo:push with product ID
-                                        Container(
-                                          child: Button(
-                                              text: '  Shop Now  ',
-                                              onTap: () async {
-                                                Provider.of<ApiProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .getProductDetailsSearch(
-                                                        int.parse(slider
-                                                            .data[index]
-                                                            .prodOrCatId),
-                                                        context);
-                                                kNavigatorPush(
-                                                    context, ProductMScreen());
-                                              }),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+
                               ],
                             ),
                           );

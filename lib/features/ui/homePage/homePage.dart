@@ -9,7 +9,9 @@ import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/db_client.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/profileScreen.dart';
 import 'package:beauty/features/ui/homePage/screens/brands.dart';
+import 'package:beauty/services/location.dart';
 import 'package:beauty/services/sp_helper.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'Category/Screens/category.dart';
 import 'package:beauty/features/ui/homePage/screens/home.dart';
@@ -66,13 +68,13 @@ class _HomePageState extends State<HomePage>
               ],
             ),
             bottomNavigationBar: Container(
-              height: ScreenUtil().setHeight(83),
+              height: ScreenUtil().setHeight(85),
               decoration: BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                     blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
               ]),
-              //ToDo:svg icon
-              child: TabBar(onTap: (value) {
+              child: TabBar(
+                  onTap: (value) {
                 if(value == 4){
                   Provider.of<AuthProvider>(context,listen: false).showProfile();
                 }
@@ -81,17 +83,71 @@ class _HomePageState extends State<HomePage>
                   indicatorColor: Colors.transparent,
                   tabs: tabIconA.map((e) {
                     return Tab(
-                      child: SvgPicture.asset(
-                        bottomIndex == tabIconA.indexOf(e)
-                            ? e
-                            : tabIconI[tabIconA.indexOf(e)],
-                        height: ScreenUtil().setHeight(45),
-                        width: ScreenUtil().setWidth(45),
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                            bottomIndex == tabIconA.indexOf(e)
+                                ? e
+                                : tabIconI[tabIconA.indexOf(e)],
+                            height: ScreenUtil().setHeight(18),
+                            width: ScreenUtil().setWidth(18),
+                          ),
+                          SizedBox(
+                            height: ScreenUtil().setHeight(5),
+                          ),
+                          Text(tabName[tabIconA.indexOf(e)],
+                            style: TextStyle(
+                                color: bottomIndex == tabIconA.indexOf(e)
+                                    ? kPinkLight
+                                    : kGrayText,
+                            fontSize: ScreenUtil().setSp(10)
+
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }).toList()
                ),
             ),
+            // bottomNavigationBar: BottomAppBar(
+            //     shape: CircularNotchedRectangle(),
+            //     notchMargin: 6.0,
+            //     color: Colors.transparent,
+            //     elevation: 9.0,
+            //     clipBehavior: Clip.antiAlias,
+            //     child: Container(
+            //         height: ScreenUtil().setHeight(85),
+            //         decoration: BoxDecoration(color: Colors.white, boxShadow: [
+            //           BoxShadow(
+            //               blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
+            //         ]),
+            //         child: Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //             children: [
+            //               Container(
+            //                   height: 50.0,
+            //                   width: MediaQuery.of(context).size.width / 2 - 40.0,
+            //                   child: IconButton(
+            //                       icon: Icon(
+            //                         FontAwesomeIcons.list,
+            //                         color: bottomIndex == 0
+            //                             ? Color(0xFFEF7532)
+            //                             : Color(0xFF676E79),
+            //                       ),
+            //                       onPressed: () {
+            //                       })),
+            //               Container(
+            //                   height: 50.0,
+            //                   width: MediaQuery.of(context).size.width / 2 - 40.0,
+            //                   child: IconButton(
+            //                       icon: Icon(Icons.shopping_basket,
+            //                           color: bottomIndex == 2
+            //                               ? Color(0xFFEF7532)
+            //                               : Color(0xFF676E79)),
+            //                       onPressed: () {
+            //                       })),
+            //             ]))),
           ),
         ),
       ),

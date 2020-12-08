@@ -1,10 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="21" height="43.75" viewBox="0 0 21 43.75">
-  <g id="Group_1474" data-name="Group 1474" transform="translate(-174 -753.25)">
-    <g id="Group_1471" data-name="Group 1471" transform="translate(26.645 -0.47)">
-      <path id="Path_163" data-name="Path 163" d="M100.229,67.828a4.083,4.083,0,0,1,4.083-4.083h0a4.083,4.083,0,0,1,4.083,4.083V68.7" transform="translate(54.122 690.725)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-      <path id="Path_164" data-name="Path 164" d="M104.5,74.187h3.007a1.531,1.531,0,0,1,1.5,1.856l-2.128,9.808a1.751,1.751,0,0,1-1.711,1.38H94.915a1.751,1.751,0,0,1-1.711-1.38l-2.128-9.808a1.531,1.531,0,0,1,1.5-1.856h11.768" transform="translate(58.314 685.239)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-      <line id="Line_15" data-name="Line 15" x2="8" transform="translate(157.092 767.139)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
-    </g>
-    <text id="Sign_Up" data-name="Sign Up" transform="translate(174 790)" fill="#c9c9c9" font-size="12" font-family="Cairo-Regular, Cairo"><tspan x="0" y="0">Cart</tspan></text>
+<svg xmlns="http://www.w3.org/2000/svg" width="19.512" height="19.5" viewBox="0 0 19.512 19.5">
+  <g id="Group_1642" data-name="Group 1642" transform="translate(-148.599 -753.72)">
+    <path id="Path_163" data-name="Path 163" d="M100.229,67.828a4.083,4.083,0,0,1,4.083-4.083h0a4.083,4.083,0,0,1,4.083,4.083V68.7" transform="translate(54.123 690.725)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <path id="Path_164" data-name="Path 164" d="M104.5,74.187h3.007a1.531,1.531,0,0,1,1.5,1.856l-2.128,9.808a1.751,1.751,0,0,1-1.711,1.38H94.915a1.751,1.751,0,0,1-1.711-1.38l-2.128-9.808a1.531,1.531,0,0,1,1.5-1.856h11.768" transform="translate(58.314 685.239)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
+    <line id="Line_15" data-name="Line 15" x2="8" transform="translate(157.092 767.139)" fill="none" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"/>
   </g>
 </svg>

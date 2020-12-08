@@ -37,6 +37,8 @@
             <meta-data
                 android:name="io.flutter.embedding.android.SplashScreenDrawable"
                 android:resource="@drawable/launch_background" />
+<!--            <meta-data android:name="com.google.android.geo.API_KEY"-->
+<!--                android:value="AIzaSyBEAOm8IvUW0vppNpL9xQyTxbZME6cCjBU"/>-->
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />

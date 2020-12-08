@@ -1,5 +1,6 @@
 import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/services/location.dart';
+import 'package:beauty/services/map.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import 'changeDeliveryAddress.dart';
@@ -207,8 +208,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                       ),
                       trailing: GestureDetector(
                         onTap: () async {
-                          await _getAddressFromLatLng();
-                          print(_currentAddress);
+
                         },
                         child: SvgPicture.asset(
                           'assets/svg/locationBtn.svg',
