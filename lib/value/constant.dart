@@ -1,8 +1,10 @@
 
 
+import 'package:beauty/services/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 DateTime currentBackPressTime;
 
@@ -18,8 +20,25 @@ Future<bool> onWillPop() {
   return Future.value(true);
 }
 
-showToast(String title){
-
+void internetCheck ( Function onTap){
+  if (ConnectivityService.connectivityStatus ==
+      ConnectivityHStatus.online) {
+    onTap();
+  }else{
+    Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+      titleText:  Text(
+        'لا يوجد اتصال بالانترنت',
+        style: TextStyle(
+            fontWeight: FontWeight.bold
+        ),
+        textAlign: TextAlign.center,
+      ),
+      messageText: Text(
+        'يرجى فحص الاتصال بالشبكة',
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
 }
 
 TabController tabControllerConstant;

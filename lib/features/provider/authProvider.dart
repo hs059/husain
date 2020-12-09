@@ -10,6 +10,7 @@ import 'package:beauty/features/ui/signUI/screens/VerifyForgetPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/auth.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
@@ -472,42 +473,99 @@ class AuthProvider extends ChangeNotifier {
   }
 
   signInWithTwitter(BuildContext context) async {
-    UserCredential userCredential = await Auth.auth.signInWithTwitter();
-    Logger().d(userCredential.user.email);
-    Logger().d(userCredential.user.displayName);
-    Logger().d(userCredential.user.tenantId);
-    String socialId = userCredential.user.uid;
-    String userName = userCredential.user.displayName;
-    String email = userCredential.user.email;
-    String phoneNumber = userCredential.user.phoneNumber??'';
-    String type = 'twitter';
-    socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
+
+    if (ConnectivityService.connectivityStatus ==
+        ConnectivityHStatus.online) {
+      UserCredential userCredential = await Auth.auth.signInWithTwitter();
+      Logger().d(userCredential.user.email);
+      Logger().d(userCredential.user.displayName);
+      Logger().d(userCredential.user.tenantId);
+      String socialId = userCredential.user.uid;
+      String userName = userCredential.user.displayName;
+      String email = userCredential.user.email;
+      String phoneNumber = userCredential.user.phoneNumber??'';
+      String type = 'twitter';
+      socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
+    }else{
+      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+        titleText:  Text(
+          'لا يوجد اتصال بالانترنت',
+          style: TextStyle(
+              fontWeight: FontWeight.bold
+          ),
+          textAlign: TextAlign.center,
+        ),
+        messageText: Text(
+          'يرجى فحص الاتصال بالشبكة',
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+
   }
 
   loginUsingGoogle(BuildContext context) async {
-    UserCredential userCredential = await Auth.auth.signInWithGoogle();
-    Logger().d(userCredential.user.email);
-    Logger().d(userCredential.user.displayName);
-    Logger().d(userCredential.user.uid);
-    String socialId = userCredential.user.uid;
-    String userName = userCredential.user.displayName;
-    String email = userCredential.user.email;
-    String phoneNumber = userCredential.user.phoneNumber??'';
-    String type = 'gmail';
-    socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
+    if (ConnectivityService.connectivityStatus ==
+        ConnectivityHStatus.online) {
+      UserCredential userCredential = await Auth.auth.signInWithGoogle();
+      Logger().d(userCredential.user.email);
+      Logger().d(userCredential.user.displayName);
+      Logger().d(userCredential.user.uid);
+      String socialId = userCredential.user.uid;
+      String userName = userCredential.user.displayName;
+      String email = userCredential.user.email;
+      String phoneNumber = userCredential.user.phoneNumber??'';
+      String type = 'gmail';
+      socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
+    }else{
+      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+        titleText:  Text(
+          'لا يوجد اتصال بالانترنت',
+          style: TextStyle(
+              fontWeight: FontWeight.bold
+          ),
+          textAlign: TextAlign.center,
+        ),
+        messageText: Text(
+          'يرجى فحص الاتصال بالشبكة',
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
+
   }
 
   signInWithFacebook(BuildContext context) async {
-    Map userData = await Auth.auth.signInWithFacebook();
-    Logger().d(userData);
-    String socialId = userData['id'] ;
-    String userName = userData['name'];
-    String email = userData['email'] ;
-    String type = 'facebook';
-    Logger().d(userData['name']);
-    Logger().d(userData);
-    Logger().d(userData['email']);
-    Logger().d(userData['id']);
-    socialMediaLogin(socialId, userName, '99999999999', email, type,context);
+
+    if (ConnectivityService.connectivityStatus ==
+        ConnectivityHStatus.online) {
+      Map userData = await Auth.auth.signInWithFacebook();
+      Logger().d(userData);
+      String socialId = userData['id'] ;
+      String userName = userData['name'];
+      String email = userData['email'] ;
+      String type = 'facebook';
+      Logger().d(userData['name']);
+      Logger().d(userData);
+      Logger().d(userData['email']);
+      Logger().d(userData['id']);
+      socialMediaLogin(socialId, userName, '99999999999', email, type,context);
+    }else{
+      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+        titleText:  Text(
+          'لا يوجد اتصال بالانترنت',
+          style: TextStyle(
+              fontWeight: FontWeight.bold
+          ),
+          textAlign: TextAlign.center,
+        ),
+        messageText: Text(
+          'يرجى فحص الاتصال بالشبكة',
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
   }
 }

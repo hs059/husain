@@ -13,6 +13,7 @@ import 'package:beauty/features/ui/homePage/profile/screens/myOrder.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
 import 'package:beauty/features/ui/homePage/profile/widgets/listTileProfile.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
@@ -21,6 +22,7 @@ import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
@@ -179,10 +181,30 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 MyDivider(),
                 ListTile(
-                  onTap: () => Share.share(
-                      Platform.isAndroid ?
-                      'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US&gl=US':'https://apps.apple.com/us/app/facebook/id284882215',
-                      subject: 'استمتع باروع التخفيضات'),
+                  onTap: () {
+                    if (ConnectivityService.connectivityStatus ==
+                        ConnectivityHStatus.online) {
+                      Share.share(
+                          Platform.isAndroid ?
+                          'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US&gl=US':'https://apps.apple.com/us/app/facebook/id284882215',
+                          subject: 'استمتع باروع التخفيضات');
+                    }else{
+                      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                        titleText:  Text(
+                          'لا يوجد اتصال بالانترنت',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        messageText: Text(
+                          'يرجى فحص الاتصال بالشبكة',
+                          textAlign: TextAlign.center,
+                        ),
+                      );
+                    }
+
+                  } ,
                   leading: SvgPicture.asset(
                     'assets/svg/shareBtn.svg',
                     fit: BoxFit.contain,
@@ -206,9 +228,27 @@ class ProfileScreen extends StatelessWidget {
               // height: 85,
               child: GestureDetector(
                 onTap: () {
-                  Provider.of<DBProvider>(context,listen: false).deleteAllProduct();
-                  authProviderFalse.signOut();
-                  kNavigatorPush(context, SignIn());
+                  if (ConnectivityService.connectivityStatus ==
+                      ConnectivityHStatus.online) {
+                    Provider.of<DBProvider>(context,listen: false).deleteAllProduct();
+                    authProviderFalse.signOut();
+                    kNavigatorPush(context, SignIn());
+                  }else{
+                    Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                      titleText:  Text(
+                        'لا يوجد اتصال بالانترنت',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      messageText: Text(
+                        'يرجى فحص الاتصال بالشبكة',
+                        textAlign: TextAlign.center,
+                      ),
+                    );
+                  }
+
                 },
                 child: ListTile(
                   leading: SvgPicture.asset(

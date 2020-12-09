@@ -6,12 +6,14 @@ import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class SearchItem extends StatelessWidget {
@@ -24,9 +26,28 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: ()async{
-        ProductM  productM =   await Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(id,context);
-             ProductModel productModel = await  Provider.of<ApiProvider>(context,listen: false).getProductByCategory(id);
-        kNavigatorPush(context, ProductMScreen());
+        if (ConnectivityService.connectivityStatus ==
+            ConnectivityHStatus.online) {
+
+          ProductM  productM =   await Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(id,context);
+          ProductModel productModel = await  Provider.of<ApiProvider>(context,listen: false).getProductByCategory(id);
+          kNavigatorPush(context, ProductMScreen());
+        }else{
+          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+            titleText:  Text(
+              'لا يوجد اتصال بالانترنت',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+            messageText: Text(
+              'يرجى فحص الاتصال بالشبكة',
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+
       },
       child: ContainerCart(
         child: Container(

@@ -97,24 +97,26 @@ class Category extends StatelessWidget {
 
                        return  GestureDetector(
                          onTap: ()async {
-
                            if (ConnectivityService.connectivityStatus ==
                                ConnectivityHStatus.online) {
-                             // kNavigatorPush(context, SubCategoryWait(categor:category.data[index],));
-                             // SubCategoryModel subCategoryModel =    await Provider.of<ApiProvider>(context, listen: false)
-                             //     .getSubCategory(category.data[index].id,context);
-                             // kNavigatorPushReplacement(context, SubCategory(
-                             //   subCategoryModel: subCategoryModel,
-                             //   categor:category.data[index] ,
-                             // ),
-                             // );
                              Provider.of<ApiProvider>(context, listen: false)
                                  .getSubCategory(category.data[index].id,context);
                             kNavigatorPush(context,  subCategory222(category.data[index]));
                            }else{
-                             Get.defaultDialog(title: 'رسالة تحذير',middleText: 'لايوجد اتصال بالانترنت',);
+                             Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                               titleText:  Text(
+                                 'لا يوجد اتصال بالانترنت',
+                                 style: TextStyle(
+                                     fontWeight: FontWeight.bold
+                                 ),
+                                 textAlign: TextAlign.center,
+                               ),
+                               messageText: Text(
+                                 'يرجى فحص الاتصال بالشبكة',
+                                 textAlign: TextAlign.center,
+                               ),
+                             );
                            }
-
                          },
                          child: AnimationCart(
                             Grid: true,

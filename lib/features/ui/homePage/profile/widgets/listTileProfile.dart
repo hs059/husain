@@ -2,10 +2,12 @@
 
 
 import 'package:beauty/features/ui/homePage/profile/screens/myOrder.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class ListTileProfile extends StatelessWidget {
   final String image ;
@@ -24,7 +26,29 @@ class ListTileProfile extends StatelessWidget {
         style: kProfile,
       ),
       trailing: Icon(Icons.arrow_forward_ios),
-      onTap: () => kNavigatorPush(context, route),
+      onTap: () {
+        if (ConnectivityService.connectivityStatus ==
+            ConnectivityHStatus.online) {
+          kNavigatorPush(context, route);
+
+        }else{
+          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+            titleText:  Text(
+              'لا يوجد اتصال بالانترنت',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+            messageText: Text(
+              'يرجى فحص الاتصال بالشبكة',
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+
+      }
+
     );
   }
 }

@@ -9,6 +9,7 @@ import 'package:beauty/features/ui/homePage/cart/screens/addnewAddress.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/bottomNavigationBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartAddressWidget.dart';
+import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
@@ -72,7 +73,9 @@ class ChangeDeliveryAddress extends StatelessWidget {
                          ),
                        ),
                        onDismissed: (direction) {
-                         value.removeAddress(int.parse(address.iD));
+                         internetCheck((){
+                           value.removeAddress(int.parse(address.iD));
+                         });
                          },
                        key: UniqueKey(),
                        child: GestureDetector(

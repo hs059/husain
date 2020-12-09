@@ -3,12 +3,14 @@ import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:beauty/value/constant.dart';
 
@@ -57,8 +59,26 @@ class Brands extends StatelessWidget {
                 itemBuilder: (context, index) =>
                     ListTile(
                       onTap: () {
-                        apiProviderFalse.getProductByBrand(brand.data.brands[index].id);
-                        kNavigatorPush(context, ShowProduct(title: brand.data.brands[index].name,));
+                        if (ConnectivityService.connectivityStatus ==
+                            ConnectivityHStatus.online) {
+                          apiProviderFalse.getProductByBrand(brand.data.brands[index].id);
+                          kNavigatorPush(context, ShowProduct(title: brand.data.brands[index].name,));
+                        }else{
+                          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                            titleText:  Text(
+                              'لا يوجد اتصال بالانترنت',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            messageText: Text(
+                              'يرجى فحص الاتصال بالشبكة',
+                              textAlign: TextAlign.center,
+                            ),
+                          );
+                        }
+
 
                       },
                       leading: CachedNetworkImage(

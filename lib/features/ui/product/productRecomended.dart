@@ -9,6 +9,7 @@ import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 import 'package:beauty/features/ui/product/productSubScreen.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
@@ -19,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
@@ -106,8 +108,27 @@ class ProductRecommended extends StatelessWidget {
                                                   Center(
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        apiProviderFalse.getProductDetails( productModel.data[index].id);
-                                                        kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
+                                                        if (ConnectivityService.connectivityStatus ==
+                                                            ConnectivityHStatus.online) {
+                                                          apiProviderFalse.getProductDetails( productModel.data[index].id);
+                                                          kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
+
+                                                        }else{
+                                                          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                                                            titleText:  Text(
+                                                              'لا يوجد اتصال بالانترنت',
+                                                              style: TextStyle(
+                                                                  fontWeight: FontWeight.bold
+                                                              ),
+                                                              textAlign: TextAlign.center,
+                                                            ),
+                                                            messageText: Text(
+                                                              'يرجى فحص الاتصال بالشبكة',
+                                                              textAlign: TextAlign.center,
+                                                            ),
+                                                          );
+                                                        }
+
                                                         },
                                                       child: Hero(
                                                         tag: '${productModel.data[index].image}',
@@ -167,8 +188,26 @@ class ProductRecommended extends StatelessWidget {
                                                     children: <Widget>[
                                                       GestureDetector(
                                                         onTap: () {
-                                                          apiProviderFalse.getProductDetails( productModel.data[index].id);
-                                                          kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
+                                                          if (ConnectivityService.connectivityStatus ==
+                                                              ConnectivityHStatus.online) {
+                                                            apiProviderFalse.getProductDetails( productModel.data[index].id);
+                                                            kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
+
+                                                          }else{
+                                                            Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                                                              titleText:  Text(
+                                                                'لا يوجد اتصال بالانترنت',
+                                                                style: TextStyle(
+                                                                    fontWeight: FontWeight.bold
+                                                                ),
+                                                                textAlign: TextAlign.center,
+                                                              ),
+                                                              messageText: Text(
+                                                                'يرجى فحص الاتصال بالشبكة',
+                                                                textAlign: TextAlign.center,
+                                                              ),
+                                                            );
+                                                          }
 
                                                         },
                                                         child: Text(

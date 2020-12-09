@@ -1,3 +1,4 @@
+import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
@@ -40,7 +41,11 @@ class CartAddressWidget extends StatelessWidget {
                 style: kSectionText,
               ),
               GestureDetector(
-                onTap: changeBtn ? onTap : null,
+                onTap: changeBtn ?
+                ()=> internetCheck((){
+                      onTap();
+                    })
+                    : null,
                 child: Text(
                   changeBtn ? 'Change' : '',
                   style: kSeeAll,

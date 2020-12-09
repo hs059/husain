@@ -8,10 +8,12 @@ import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/showProductSection.dart';
 import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
 class Section extends StatelessWidget {
@@ -34,7 +36,26 @@ class Section extends StatelessWidget {
                           fontFamily: 'Cairo-Regular'
                   ),),
                   GestureDetector(
-                    onTap: () => kNavigatorPush(context, ShowProductSection(title: section.data.sectionTitle,num: num,)),
+                    onTap: () {
+                      if (ConnectivityService.connectivityStatus ==
+                          ConnectivityHStatus.online) {
+                        kNavigatorPush(context, ShowProductSection(title: section.data.sectionTitle,num: num,));
+                      }else{
+                        Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                          titleText:  Text(
+                            'لا يوجد اتصال بالانترنت',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          messageText: Text(
+                            'يرجى فحص الاتصال بالشبكة',
+                            textAlign: TextAlign.center,
+                          ),
+                        );
+                      }
+                    },
                     child:Text('رؤية الكل',style: kSeeAll.copyWith(
                       fontFamily: 'Cairo-Regular'
                     ),),

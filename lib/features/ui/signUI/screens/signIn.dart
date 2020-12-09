@@ -273,9 +273,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                     Tween(begin: 0.0, end: 1.0).animate(controller),
                                 child: GestureDetector(
                                   onTap: () async{
-                                   // bool result = await Auth.auth.loginUsingGoogle();
-                                   // authProvider.getLogin();
-                                   // authProviderFalse.loginUsingGoogle(context);
+
                                     Auth.auth.signInWithGoogle();
                                   },
                                   child: Container(

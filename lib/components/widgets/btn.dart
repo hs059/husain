@@ -1,7 +1,9 @@
 
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:get/get.dart';
 
 class Button extends StatelessWidget {
   final String text ;
@@ -10,7 +12,26 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: () {
+        if (ConnectivityService.connectivityStatus ==
+            ConnectivityHStatus.online) {
+          onTap();
+        }else{
+          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+            titleText:  Text(
+              'لا يوجد اتصال بالانترنت',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold
+              ),
+              textAlign: TextAlign.center,
+            ),
+            messageText: Text(
+              'يرجى فحص الاتصال بالشبكة',
+              textAlign: TextAlign.center,
+            ),
+          );
+        }
+      },
       child: Container(
         alignment: Alignment.center,
         height: ScreenUtil().setHeight(45),
