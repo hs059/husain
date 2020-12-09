@@ -11,6 +11,7 @@ import 'package:beauty/features/ui/homePage/profile/screens/profileScreen.dart';
 import 'package:beauty/features/ui/homePage/screens/brands.dart';
 import 'package:beauty/services/location.dart';
 import 'package:beauty/services/sp_helper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'Category/Screens/category.dart';
@@ -56,6 +57,9 @@ class _HomePageState extends State<HomePage>
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () => Location.location.getAddressFromLatLng(),
+            // ),
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               controller: tabControllerConstant,
@@ -68,8 +72,14 @@ class _HomePageState extends State<HomePage>
               ],
             ),
             bottomNavigationBar: Container(
-              height: ScreenUtil().setHeight(85),
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              // height: ScreenUtil().setHeight(85),
+              height: ScreenUtil().setHeight(70),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(35),
+                  topRight: Radius.circular(35),
+                ),
+                  color: Colors.white, boxShadow: [
                 BoxShadow(
                     blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
               ]),
@@ -83,31 +93,29 @@ class _HomePageState extends State<HomePage>
                   indicatorColor: Colors.transparent,
                   tabs: tabIconA.map((e) {
                     return Tab(
-                      child: Column(
-                        children: [
-                          SvgPicture.asset(
-                            bottomIndex == tabIconA.indexOf(e)
-                                ? e
-                                : tabIconI[tabIconA.indexOf(e)],
-                            height: ScreenUtil().setHeight(18),
-                            width: ScreenUtil().setWidth(18),
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(5),
-                          ),
-                          Text(tabName[tabIconA.indexOf(e)],
-                            style: TextStyle(
-                                color: bottomIndex == tabIconA.indexOf(e)
-                                    ? kPinkLight
-                                    : kGrayText,
-                            fontSize: ScreenUtil().setSp(10)
-
-                            ),
-                          ),
-                        ],
+                      child: SvgPicture.asset(
+                        bottomIndex == tabIconA.indexOf(e)
+                            ? e
+                            : tabIconI[tabIconA.indexOf(e)],
+                        // height: ScreenUtil().setHeight(18),
+                        // width: ScreenUtil().setWidth(18),
+                        height: ScreenUtil().setHeight(20),
+                        width: ScreenUtil().setWidth(20),
                       ),
                     );
                   }).toList()
+                // SizedBox(
+                //   height: ScreenUtil().setHeight(5),
+                // ),
+                // Text(tabName[tabIconA.indexOf(e)],
+                //   style: TextStyle(
+                //       color: bottomIndex == tabIconA.indexOf(e)
+                //           ? kPinkLight
+                //           : kGrayText,
+                //   fontSize: ScreenUtil().setSp(10)
+                //
+                //   ),
+                // ),
                ),
             ),
             // bottomNavigationBar: BottomAppBar(

@@ -42,6 +42,7 @@ class Brands extends StatelessWidget {
                   fontSize: ScreenUtil().setSp(18),
                   fontFamily: 'Cairo-Regular',
                 ),),
+                centerTitle: true,
                 elevation: 0.0,
               ),
 

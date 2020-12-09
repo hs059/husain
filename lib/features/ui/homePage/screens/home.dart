@@ -31,6 +31,30 @@ class Home extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: SafeArea(
         child: Scaffold(
+          appBar: PreferredSize(
+            child: Container(
+              decoration: BoxDecoration(boxShadow: [
+                BoxShadow(
+                  color: kBorder,
+                  offset: Offset(0, 2.0),
+                  blurRadius: 4.0,
+                )
+              ]),
+              child: AppBar(
+                // iconTheme: IconThemeData(color: Color(0xff121924)),
+                backgroundColor: Colors.white,
+                title: Text(
+                  'الرئيسية',
+                  style: kSubCategoryText.copyWith(
+                    color: kBlack,
+                  ),
+                ),
+                elevation: 0.0,
+                centerTitle: true,
+              ),
+            ),
+            preferredSize: Size.fromHeight(kToolbarHeight),
+          ),
           body: Container(
             color: Colors.white,
             padding: EdgeInsets.symmetric(vertical: 15),

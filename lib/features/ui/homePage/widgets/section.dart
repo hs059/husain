@@ -68,7 +68,7 @@ class Section extends StatelessWidget {
             ),
             Container(
               height: ScreenUtil().setHeight(300),
-              padding:  EdgeInsets.only(right: ScreenUtil().setWidth(15)),
+              padding:  EdgeInsets.only(right: ScreenUtil().setWidth(8)),
               alignment: Alignment.center,
               child: ListView.builder(
                   physics: const BouncingScrollPhysics(),

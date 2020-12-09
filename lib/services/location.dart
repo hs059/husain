@@ -38,20 +38,24 @@ class Location {
     try {
       geolocator =await initGeolocator();
       List<Placemark> p =
-      await geolocator.placemarkFromCoordinates(21.324220, 39.114267);
+      // 40.5237017,-105.0719352
+      await geolocator.placemarkFromCoordinates(40.5237017,-105.0719352);
       // await geolocator.placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
       Placemark place = p[0];
         currentAddress =
         "${place.locality}, ${place.administrativeArea}, ${place.subLocality}";
-        Logger().d(' postalCode ${place.postalCode}');
-        Logger().d(' name ${place.name}');
-        Logger().d(' locality ${place.locality}');
-        Logger().d(' administrativeArea ${place.administrativeArea}');
-        Logger().d(' subAdministrativeArea ${place.subAdministrativeArea}');
-        Logger().d(' subLocality ${place.subLocality}');
+        print(' postalCode :${place.postalCode}');
+      print(' country :${place.country}');
+      print(' isoCountryCode :${place.isoCountryCode}');
+      print(' name :${place.name}');
+      print(' locality :${place.locality}');
+      print(' administrativeArea : ${place.administrativeArea}');
+      print(' subAdministrativeArea :${place.subAdministrativeArea}');
+      print(' subLocality :${place.subLocality}');
+      print(' thoroughfare : ${place.thoroughfare}');
+      print(' subThoroughfare : ${place.subThoroughfare}');
         Logger().d(' address : ${place.subLocality}, ${place.locality}, ${place.administrativeArea} ${place.postalCode}, ${place.country}');
-        Logger().d(' address : ${place.country}, ${place.administrativeArea}, ${place.locality}, ${place.subLocality}');
-
+        Logger().d(' address : ${place.thoroughfare}, ${place.subThoroughfare}, ${place.locality}, ${place.subLocality}');
         return currentAddress ;
     } catch (e) {
       print(e);

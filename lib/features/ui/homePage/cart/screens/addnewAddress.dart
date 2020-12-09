@@ -34,7 +34,7 @@ class AddNewAddress extends StatefulWidget {
 class _AddNewAddressState extends State<AddNewAddress> {
   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   Position _currentPosition;
-  String _currentAddress;
+  String currentAddress;
   String name;
 
   String houseNum;
@@ -43,41 +43,13 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
   String phoneNum;
 
+
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
   }
 
-  _getCurrentLocation() {
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((Position position) {
-      setState(() {
-        _currentPosition = position;
-      });
 
-      _getAddressFromLatLng();
-    }).catchError((e) {
-      print(e);
-    });
-  }
-
-  _getAddressFromLatLng() async {
-    try {
-      List<Placemark> p =
-          await geolocator.placemarkFromCoordinates(21.324220, 39.114267);
-
-      Placemark place = p[0];
-
-      setState(() {
-        _currentAddress =
-            "${place.locality}, ${place.postalCode}, ${place.country}";
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +59,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
     UiProvider uiProviderFalse =
         Provider.of<UiProvider>(context, listen: false);
+      currentAddress = Location.location.currentAddress ?? '' ;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -163,11 +136,13 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           ),
                           child: TextFormField(
                             cursorColor: Colors.grey,
+
                             onChanged: (value) {
                               this.name = value;
                             },
                             decoration: InputDecoration(
-                              hintText: 'الاسم',
+                              hintText: 'اسم المكان',
+
                               hintStyle: TextStyle(
                                   color: Color(0xff8F9BB3), fontSize: 15),
                               border: UnderlineInputBorder(
@@ -191,25 +166,26 @@ class _AddNewAddressState extends State<AddNewAddress> {
                       )
                     ],
                   ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: ScreenUtil().setHeight(20),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: Color(0xffF5F8FD),
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
-                    ),
-                    child: ListTile(
-                      title: Text(
-                        Location.location.currentAddress ?? '',
-                        style: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                      ),
-                      trailing: GestureDetector(
-                        onTap: () async {
+                  SizedBox(
+                    height: ScreenUtil().setHeight(20),
+                  ),
+                  TextFormField(
+                    initialValue:currentAddress ?? '',
 
-                        },
+                    onChanged: (value){
+                      currentAddress = value ;
+                      print(currentAddress);
+                      setState(() {
+                      });
+                    },
+                    obscureText:false,
+                    cursorColor: Colors.grey,
+                    keyboardType:TextInputType.text,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Color(0xffF5F8FD),
+                      suffixIcon: Padding(
+                        padding:  EdgeInsets.all(8.0),
                         child: SvgPicture.asset(
                           'assets/svg/locationBtn.svg',
                           height: ScreenUtil().setHeight(32),
@@ -217,8 +193,96 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           fit: BoxFit.contain,
                         ),
                       ),
+                      labelText: 'اكتب العنوان المناسب',
+                      labelStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                      hintText: currentAddress ?? '',
+                      hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                      border:  OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: BorderSide(
+                              color:Color(0xffedf1f7)
+                          )),
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: ScreenUtil().setWidth(2),
+                          )),
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color:Colors.transparent,
+                            width: ScreenUtil().setWidth(0.5),
+                          )),
                     ),
                   ),
+                  // Container(
+                  //
+                  //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  //   decoration: BoxDecoration(
+                  //     color: Color(0xffF5F8FD),
+                  //     borderRadius: BorderRadius.circular(8.0),
+                  //     border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                  //   ),
+                  //   child: ListTile(
+                  //     title: Column(
+                  //
+                  //       children: [
+                  //         TextFormField(
+                  //           initialValue:Location.location.currentAddress ?? '',
+                  //           onChanged: (value){
+                  //
+                  //           },
+                  //           obscureText:false,
+                  //           cursorColor: Colors.grey,
+                  //           keyboardType:TextInputType.text,
+                  //           decoration: InputDecoration(
+                  //
+                  //             labelText: 'العنوان',
+                  //             hintText: Location.location.currentAddress ?? '',
+                  //             hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                  //             border: UnderlineInputBorder(
+                  //                 borderSide: BorderSide(
+                  //                   color: Colors.transparent,
+                  //                   width: ScreenUtil().setWidth(2),
+                  //                 )),
+                  //             focusedBorder: UnderlineInputBorder(
+                  //                 borderSide: BorderSide(
+                  //                   color: Colors.transparent,
+                  //                   width: ScreenUtil().setWidth(2),
+                  //                 )),
+                  //             enabledBorder: UnderlineInputBorder(
+                  //                 borderSide: BorderSide(
+                  //                   color: Colors.transparent,
+                  //                   width: ScreenUtil().setWidth(0.5),
+                  //                 )),
+                  //           ),
+                  //         ),
+                  //         // CustomTextFormField(
+                  //         //   // textEditingController: myController2,
+                  //         //
+                  //         //   hintText: Location.location.currentAddress ?? '',
+                  //         //   password: false,
+                  //         //   textInputType: TextInputType.text,
+                  //         //   textInitialValue: Location.location.currentAddress ?? '',
+                  //         // ),
+                  //       ],
+                  //     ),
+                  //     // Text(
+                  //     //   Location.location.currentAddress ?? '',
+                  //     //   style: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                  //     // ),
+                  //     trailing: GestureDetector(
+                  //       onTap: () async {
+                  //
+                  //       },
+                  //       child: SvgPicture.asset(
+                  //         'assets/svg/locationBtn.svg',
+                  //         height: ScreenUtil().setHeight(32),
+                  //         width: ScreenUtil().setWidth(32),
+                  //         fit: BoxFit.contain,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     margin: EdgeInsets.only(
                       top: ScreenUtil().setHeight(20),
@@ -343,13 +407,13 @@ class _AddNewAddressState extends State<AddNewAddress> {
                       text: 'حفظ',
                       onTap: () async {
                         print(
-                            'addressDropDown = ${uiProvider.addressDropDown} phoneNum = $phoneNum _currentAddress = $_currentAddress  houseNum =$houseNum  apartment = $apartment isDefault = ${uiProvider.defualtAddress} ');
+                            'addressDropDown = ${uiProvider.addressDropDown} phoneNum = $phoneNum _currentAddress = $currentAddress  houseNum =$houseNum  apartment = $apartment isDefault = ${uiProvider.defualtAddress} ');
                         Provider.of<ApiProvider>(context, listen: false)
                             .addNewAddress(
                             uiProvider
                                     .addressDropDown,
                                 phoneNum,
-                                _currentAddress.toString(),
+                                currentAddress.toString(),
                                 houseNum,
                                 apartment,
                             uiProvider.defualtAddress,

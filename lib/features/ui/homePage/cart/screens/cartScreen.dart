@@ -44,16 +44,6 @@ class Cart extends StatelessWidget {
               child: AppBar(
                 // iconTheme: IconThemeData(color: Color(0xff121924)),
                 backgroundColor: Colors.white,
-
-                // leading:  GestureDetector(
-                //   onTap: () {
-                //     print('no');
-                //   },
-                //   child: Icon(
-                //     Icons.arrow_back,
-                //     color: Colors.white,
-                //   ),
-                // ),
                 title: Text(
                   'السلة',
                   style: kSubCategoryText.copyWith(
@@ -61,7 +51,6 @@ class Cart extends StatelessWidget {
                   ),
                 ),
                 elevation: 0.0,
-
               ),
 
             ),
