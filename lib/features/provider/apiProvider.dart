@@ -175,7 +175,10 @@ setSubCategoryNull(){
   MyOrderModel myOrderModel;
 
   getAllOrder() async {
+    print('aaaaaa');
+
     myOrderModel = await ApiRepository.apiRepository.getAllOrder();
+    print(myOrderModel.toJson());
     notifyListeners();
   }
 
@@ -300,10 +303,6 @@ setSubCategoryNull(){
  productFav =    await ApiRepository.apiRepository.getAllFav();
  notifyListeners();
   }  ///////I use FutureBuilder for this method ////////
-  Future<productModelClass.ProductModel> getAllFavV()async{
- productFav =    await ApiRepository.apiRepository.getAllFav();
- return productFav ;
-  }
 
 
   Future<productModelClass.ProductModel> sortByCategory(int subCategoryId , String type,)async{

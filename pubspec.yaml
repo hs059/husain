@@ -87,7 +87,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/images/3beauty.png"
+  image_path: "assets/images/beautyLOGO.jpg"
 
   flutter_test:
     sdk: flutter

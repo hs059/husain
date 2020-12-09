@@ -39,8 +39,8 @@ class Location {
       geolocator =await initGeolocator();
       List<Placemark> p =
       // 40.5237017,-105.0719352
-      await geolocator.placemarkFromCoordinates(40.5237017,-105.0719352);
-      // await geolocator.placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
+      // await geolocator.placemarkFromCoordinates(40.5237017,-105.0719352);
+      await geolocator.placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
       Placemark place = p[0];
         currentAddress =
         "${place.locality}, ${place.administrativeArea}, ${place.subLocality}";

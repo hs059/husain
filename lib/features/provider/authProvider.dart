@@ -125,12 +125,14 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+
   bool isLogin;
 
   getLogin() async {
     isLogin = await SPHelper.spHelper.getIsLogin() ?? false;
     if (isLogin) {
       showProfile();
+
     }
     notifyListeners();
   }

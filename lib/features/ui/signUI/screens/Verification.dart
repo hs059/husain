@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:beauty/components/widgets/btn.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/resetPassword.dart';
@@ -153,6 +154,7 @@ class _VerificationState extends State<Verification>
                         text: 'أرسل',
                         onTap: () {
                           authProviderFalse.submitVerification(context);
+
                         }),
                   ],
                 ),

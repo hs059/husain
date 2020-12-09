@@ -1,5 +1,6 @@
 import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/components/widgets/customTextField.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
@@ -184,6 +185,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               text: 'تسجيل الدخول',
                               onTap: () {
                                 authProvider.submitlogin(formKeySignIn, context);
+                                Provider.of<ApiProvider>(context,listen: false).getAllFav();
                                 tabControllerConstant.animateTo(0);
                               }),
                         ),
@@ -228,6 +230,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                     // bool result = await Auth.auth.signInWithFacebook();
                                     // result?kNavigatorPush(context,HomePage()):print('do not connect');
                                     authProviderFalse.signInWithFacebook(context);
+                                    Provider.of<ApiProvider>(context,listen: false).getAllFav();
                                   },
                                   child: Container(
                                     alignment: Alignment.center,
@@ -253,6 +256,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                 child: GestureDetector(
                                   onTap: () async{
                                      Auth.auth.signInWithTwitter();
+
                                   },
                                   child: Container(
                                     alignment: Alignment.center,

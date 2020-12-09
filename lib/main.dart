@@ -166,7 +166,7 @@ class MyApp extends StatelessWidget {
       home: Builder(builder: (context) {
         ScreenUtil.init(context,
             designSize: Size(375, 812), allowFontScaling: true);
-        return Onboarding();
+        return Splash(screen);
       }),
 
     );
