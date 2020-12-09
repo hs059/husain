@@ -10,6 +10,7 @@ class DetailsOnboarding extends StatelessWidget {
   DetailsOnboarding({this.image, this.title, this.subTitle});
   @override
   Widget build(BuildContext context) {
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[

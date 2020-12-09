@@ -47,7 +47,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
@@ -73,7 +73,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             },
           ):null,
           hintText: widget.hintText,
-          hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+          hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: ScreenUtil().setSp(15)),
           border: UnderlineInputBorder(
               borderSide: BorderSide(
             color: Colors.transparent,

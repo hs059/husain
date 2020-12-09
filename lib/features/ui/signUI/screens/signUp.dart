@@ -36,7 +36,7 @@ class _SignUpState extends State<SignUp> {
           body: ModalProgressHUD(
             inAsyncCall:uiProvider.spinner,
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
               child: SingleChildScrollView(
                 padding:
                 EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
@@ -48,16 +48,13 @@ class _SignUpState extends State<SignUp> {
                       style: kTitleSign,
                       textAlign: TextAlign.start,
                     ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(20),
-                    ),
                     Text(
                       'الرجاء كتابة المعلومات الخاصة بك أدناه',
                       style: kSubTitleSign,
                       textAlign: TextAlign.start,
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(40),
+                      height: ScreenUtil().setHeight(10),
                     ),
                     Form(
                       key: formKeySignUp,
@@ -70,7 +67,7 @@ class _SignUpState extends State<SignUp> {
                             onSaved: authProvider.saveFullName,
                           ),
                           SizedBox(
-                            height: ScreenUtil().setHeight(15),
+                            height: ScreenUtil().setHeight(10),
                           ),
                           CustomTextFormField(
                             hintText: 'الايميل',
@@ -80,7 +77,7 @@ class _SignUpState extends State<SignUp> {
                             textInputType: TextInputType.emailAddress,
                           ),
                           SizedBox(
-                            height: ScreenUtil().setHeight(15),
+                            height: ScreenUtil().setHeight(10),
                           ),
                           CustomTextFormField(
                             hintText: 'كلمة السر',
@@ -89,7 +86,7 @@ class _SignUpState extends State<SignUp> {
                             onSaved: authProvider.savePassword,
                           ),
                           SizedBox(
-                            height: ScreenUtil().setHeight(15),
+                            height: ScreenUtil().setHeight(10),
                           ),
                           CustomTextFormField(
                             hintText: 'تأكيد كلمة السر',
@@ -98,7 +95,7 @@ class _SignUpState extends State<SignUp> {
                             onSaved: authProvider.saveConfirmPassword,
                           ),
                           SizedBox(
-                            height: ScreenUtil().setHeight(15),
+                            height: ScreenUtil().setHeight(10),
                           ),
                           Container(
                             decoration: BoxDecoration(
@@ -111,7 +108,7 @@ class _SignUpState extends State<SignUp> {
                               decoration: InputDecoration(
                                 hintText: 'رقم الموبايل',
                                 hintStyle:
-                                TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                                TextStyle(color: Color(0xff8F9BB3), fontSize: ScreenUtil().setSp(15)),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: kBorder, width: 1.0),
                                 ),
@@ -129,7 +126,7 @@ class _SignUpState extends State<SignUp> {
                       ),
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(70),
+                      height: ScreenUtil().setHeight(20),
                     ),
                     Builder(
                       builder: (context) =>  Button(
@@ -140,7 +137,7 @@ class _SignUpState extends State<SignUp> {
                           }),
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(50),
+                      height: ScreenUtil().setHeight(10),
                     ),
                     Container(
                       alignment: Alignment.center,

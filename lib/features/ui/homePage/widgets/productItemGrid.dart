@@ -55,8 +55,8 @@ class ProductItemGrid extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             color: Colors.white,
             boxShadow: sCardShadow,),
-          height: ScreenUtil().setHeight(400),
-          width: ScreenUtil().setWidth(165),
+          height: ScreenUtil().setHeight(395),
+          width: ScreenUtil().setWidth(160),
           child: Stack(
             children: [
               Column(

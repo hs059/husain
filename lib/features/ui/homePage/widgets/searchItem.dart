@@ -55,49 +55,41 @@ class SearchItem extends StatelessWidget {
           height: ScreenUtil().setHeight(80),
           child: Row(
             children: [
-              GestureDetector(
-
-                child:imagePath!=''?CachedNetworkImage(
-                    imageUrl:imagePath,
-                    placeholder: (context, url) => LoaderGif1(),
-                    errorWidget: (context, url, error) =>
-                        Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
-                    height: ScreenUtil().setHeight(50),
-                    fit: BoxFit.contain
-                ):Image.asset(
-                  'assets/images/3beauty.png',
-                  fit: BoxFit.contain,
-                ),
+              imagePath!=''?CachedNetworkImage(
+                  imageUrl:imagePath,
+                  placeholder: (context, url) => LoaderGif1(),
+                  errorWidget: (context, url, error) =>
+                      Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+                  height: ScreenUtil().setHeight(50),
+                  fit: BoxFit.contain
+              ):Image.asset(
+                'assets/images/3beauty.png',
+                fit: BoxFit.contain,
               ),
-                SizedBox(
-                  width: 15,
-                ),
-              Wrap(
+
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        constraints: BoxConstraints(
-                          maxWidth: 200,
-                        ),
-                        child: Text(
-                          name,
-                          style: kTitleSign.copyWith(
-                            fontSize: ScreenUtil().setSp(14),
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
+                  Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 200,
+                    ),
+                    child: Text(
+                      name,
+                      overflow: TextOverflow.ellipsis,
+                      style: kTitleSign.copyWith(
+                        fontSize: ScreenUtil().setSp(12),
                       ),
-                      Text(
-                       prize + ' '+ currency,
-                        style: kSubTitleSign.copyWith(
-                          fontSize: ScreenUtil().setSp(12),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ],
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Text(
+                   prize + ' '+ currency,
+                    style: kSubTitleSign.copyWith(
+                      fontSize: ScreenUtil().setSp(10),
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),

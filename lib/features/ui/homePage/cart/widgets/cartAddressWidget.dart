@@ -25,7 +25,21 @@ class CartAddressWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ContainerCart(
+    return Container(
+
+      margin: EdgeInsets.only(
+        top: ScreenUtil().setHeight(20),
+        left: ScreenUtil().setWidth(15),
+        right: ScreenUtil().setWidth(15),
+
+      ),
+      padding: EdgeInsets.symmetric(
+          vertical: ScreenUtil().setHeight(15),
+          horizontal: ScreenUtil().setWidth(15)),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: sCardShadow,
+          borderRadius: BorderRadius.circular(15)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -60,6 +74,8 @@ class CartAddressWidget extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/images/adress$typeAddress.png',
+                  height: ScreenUtil().setHeight(80),
+
                   fit: BoxFit.contain,
                 ),
                 SizedBox(

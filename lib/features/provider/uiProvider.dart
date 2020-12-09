@@ -1,7 +1,10 @@
+import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/sp_helper.dart';
+import 'package:beauty/value/constant.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:beauty/value/string.dart';
+import 'package:get/get.dart';
 
 
 class UiProvider extends ChangeNotifier {
@@ -73,8 +76,16 @@ class UiProvider extends ChangeNotifier {
 
   bool spinner = false;
   toggleSpinner() {
-    spinner = !spinner;
-    notifyListeners();
+    if (ConnectivityService.connectivityStatus ==
+        ConnectivityHStatus.online) {
+      spinner = !spinner;
+      notifyListeners();
+
+    }else{
+      spinner =false ;
+      notifyListeners();
+
+    }
   }
 
 
@@ -84,6 +95,14 @@ class UiProvider extends ChangeNotifier {
     this.timeCheckOut  = timeOfDay ;
     notifyListeners();
   }
+
+  DateTime date ;
+  setTimePicker(DateTime value ){
+    this.date  = value ;
+    notifyListeners();
+  }
+
+
 
   bool loading = false ;
   setLoading(bool value){

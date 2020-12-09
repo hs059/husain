@@ -41,6 +41,12 @@ void internetCheck ( Function onTap){
   }
 }
 
+setHeight(double height,BuildContext context){
+  return (height * MediaQuery.of(context).size.height)/812 ;
+}
+setWidth(double width,BuildContext context){
+  return (width * MediaQuery.of(context).size.width)/375 ;
+}
 TabController tabControllerConstant;
 
 

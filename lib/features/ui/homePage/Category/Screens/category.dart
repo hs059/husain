@@ -163,6 +163,7 @@ class Category extends StatelessWidget {
                             crossAxisCount: 3,
                             childAspectRatio: 1,
                             mainAxisSpacing: 2,
+                            crossAxisSpacing: 2
                           ),
                         );
                       },

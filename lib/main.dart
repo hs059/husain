@@ -154,6 +154,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScreenUtil.init(context,
+        designSize: Size(375, 812), allowFontScaling: true);
     return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
@@ -164,7 +166,7 @@ class MyApp extends StatelessWidget {
       home: Builder(builder: (context) {
         ScreenUtil.init(context,
             designSize: Size(375, 812), allowFontScaling: true);
-        return Splash(screen);
+        return Onboarding();
       }),
 
     );

@@ -24,8 +24,6 @@ class _OnboardingState extends State<Onboarding> {
   final PageController _pageController = PageController(initialPage: 0);
   int _currentPage = 0;
   DateTime currentBackPressTime;
-
-
   @override
   Widget build(BuildContext context) {
     ApiProvider apiProvider = Provider.of<ApiProvider>(context,);
@@ -34,12 +32,12 @@ class _OnboardingState extends State<Onboarding> {
       child: SafeArea(
         child: Scaffold(
           body: Container(
-            padding: EdgeInsets.all(15),
+            padding: EdgeInsets.symmetric(horizontal: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 SizedBox(
-                  height: ScreenUtil().setHeight(100),
+                  height: ScreenUtil().setHeight(50),
                 ),
                 Container(
                   height: ScreenUtil().setHeight(530),
@@ -75,7 +73,7 @@ class _OnboardingState extends State<Onboarding> {
                   ),
                 ),
                 Button(
-                  text:  _currentPage != _numPages - 1 ? 'Next' : 'Get Started ',
+                  text:  _currentPage != _numPages - 1 ? 'التالي' : 'إنطلاق',
                   onTap: () {
                     if(_currentPage != _numPages - 1){
                       _pageController.nextPage(
@@ -107,7 +105,7 @@ class _OnboardingState extends State<Onboarding> {
                       child: Container(
                         alignment: Alignment.center,
                         child: Text(
-                          _currentPage != _numPages - 1 ? 'Skip' : '',
+                          _currentPage != _numPages - 1 ? 'تخطي' : '',
                           style: TextStyle(
                             color: kPinkDark,
                             fontSize: ScreenUtil().setSp(16),

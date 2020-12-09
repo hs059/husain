@@ -237,7 +237,7 @@ class AuthProvider extends ChangeNotifier {
     Map map = await ApiClient.apiClient.forgetPassword(this.email);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
-      await SPHelper.spHelper.setUser(map['data']['user_id']);
+      await SPHelper.spHelper.setUser(map['data']['user_id'].toString());
 
       Fluttertoast.showToast(
           msg: map['message'],
@@ -316,7 +316,7 @@ class AuthProvider extends ChangeNotifier {
             textAlign: TextAlign.right,
           ),
           messageText: Text(
-            map['message'],
+            'ايميل المستخدم غير موجود',
             textAlign: TextAlign.right,
           ));
     }

@@ -50,6 +50,7 @@ class Cart extends StatelessWidget {
                     color: kBlack,
                   ),
                 ),
+                centerTitle: true,
                 elevation: 0.0,
               ),
 

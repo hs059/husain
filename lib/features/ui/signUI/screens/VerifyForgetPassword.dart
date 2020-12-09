@@ -92,7 +92,7 @@ class _VerifyForgetPasswordState extends State<VerifyForgetPassword>
                       height: ScreenUtil().setHeight(20),
                     ),
                     Text(
-                      'لقد أرسلنا للتو بريدك الإلكتروني كود التحقق ، يرجى إدخال أدناه للتحقق',
+                      'لقد أرسلنا للتو كود التحقق إلى بريدك الإلكتروني  ، يرجى إدخاله أدناه للتحقق',
                       style: kSubTitleSign,
                       textAlign: TextAlign.center,
                     ),

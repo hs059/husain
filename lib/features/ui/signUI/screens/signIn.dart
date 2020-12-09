@@ -81,24 +81,25 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
               child: AnimatedBuilder(
                 animation: controller,
                 builder: (context, child) => Container(
-                  padding: EdgeInsets.all(20),
+                  padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
+
                   child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         SizedBox(
-                          height: ScreenUtil().setHeight(25),
+                          height: ScreenUtil().setHeight(10),
                         ),
                         Container(
                           alignment: Alignment.center,
-                          height: 117,
+                          height: ScreenUtil().setHeight(117),
                           child: SvgPicture.asset(
                             'assets/svg/beauty0.svg',
-                            height: animationImage.value * 117,
+                            height: animationImage.value * ScreenUtil().setHeight(117),
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(25),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         Transform(
                           transform: Matrix4.translationValues(
@@ -109,18 +110,18 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(15),
+                          height: ScreenUtil().setHeight(5),
                         ),
                         Transform(
                           transform: Matrix4.translationValues(
                               animation1.value * width, 0.0, 0.0),
                           child: Text(
                             'سجل دخول لتتم عمليات الشراء',
-                            style: kSubTitleOnboarding.copyWith(fontSize: 16),
+                            style: kSubTitleOnboarding.copyWith(fontSize: ScreenUtil().setSp(16)),
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(35),
+                          height: ScreenUtil().setHeight(20),
                         ),
                         Form(
                           key: formKeySignIn,
@@ -138,7 +139,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                 ),
                               ),
                               SizedBox(
-                                height: ScreenUtil().setHeight(16),
+                                height: ScreenUtil().setHeight(10),
                               ),
                               Transform(
                                 transform: Matrix4.translationValues(
@@ -156,7 +157,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(20),
+                          height: ScreenUtil().setHeight(15),
                         ),
                         FadeTransition(
                           opacity: controller,
@@ -174,7 +175,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(35),
+                          height: ScreenUtil().setHeight(20),
                         ),
                         Transform(
                           transform: Matrix4.translationValues(
@@ -187,7 +188,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               }),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(30),
+                          height: ScreenUtil().setHeight(20),
                         ),
                         FadeTransition(
                           opacity: controller,
@@ -211,7 +212,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(30),
+                          height: ScreenUtil().setHeight(10),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -233,6 +234,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                     height: ScreenUtil().setHeight(46),
                                     child: SvgPicture.asset(
                                       'assets/svg/btn.facebook.svg',
+                                      height: ScreenUtil().setHeight(46),
+
                                     ),
                                   ),
                                 ),
@@ -256,6 +259,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                     height: ScreenUtil().setHeight(46),
                                     child: SvgPicture.asset(
                                       'assets/svg/btn.twitter.svg',
+                                      height: ScreenUtil().setHeight(46),
+
                                     ),
                                   ),
                                 ),
@@ -281,6 +286,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                     height: ScreenUtil().setHeight(46),
                                     child: SvgPicture.asset(
                                       'assets/svg/btn.google.svg',
+                                      height: ScreenUtil().setHeight(46),
+
                                     ),
                                   ),
                                 ),
@@ -289,7 +296,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                           ],
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(40),
+                          height: ScreenUtil().setHeight(20),
                         ),
                         FadeTransition(
                           opacity: controller,

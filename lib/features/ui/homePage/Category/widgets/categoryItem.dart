@@ -24,9 +24,9 @@ class CategoryItem extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 5),
-            height: ScreenUtil().setHeight(105),
-            width: ScreenUtil().setWidth(105),
+            margin: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(5)),
+            height: ScreenUtil().setHeight(100),
+            width: ScreenUtil().setWidth(100),
             alignment: Alignment.center,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),

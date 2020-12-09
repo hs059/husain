@@ -366,6 +366,7 @@ class CheckOut extends StatelessWidget {
                     style: kBtnText,
                   ),
                   onTap: () async {
+                    if(uiProvider.paymentGroup!=null){
                       if( apiProvider.addressSelected!=null ){
                         Provider.of<ApiProvider>(context, listen: false)
                             .createOrder(
@@ -389,7 +390,8 @@ class CheckOut extends StatelessWidget {
                             },
                           ),
                         );
-                      }else if(deffult.isNotEmpty){
+                      }else if(deffult.isNotEmpty)
+                      {
                         Provider.of<ApiProvider>(context, listen: false)
                             .createOrder(
                           authProvider.showProfileModel.data.displayName,
@@ -424,6 +426,19 @@ class CheckOut extends StatelessWidget {
                             fontSize: 16.0
                         );
                       }
+                    }else{
+
+                      Fluttertoast.showToast(
+                          msg: 'اختر طريقة الدفع',
+                          toastLength: Toast.LENGTH_SHORT,
+                          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                          timeInSecForIosWeb: 1,
+                          gravity:ToastGravity.TOP ,
+                          textColor: Colors.white,
+                          fontSize: 16.0
+                      );
+                    }
+
 
 
                   },

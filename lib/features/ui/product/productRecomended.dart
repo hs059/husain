@@ -37,7 +37,8 @@ class ProductRecommended extends StatelessWidget {
     return     Padding(
       padding: EdgeInsets.symmetric(
           horizontal: ScreenUtil().setWidth(15),
-          vertical: ScreenUtil().setHeight(5)),
+          vertical: ScreenUtil().setHeight(5)
+      ),
       child:    Column(
         children: [
           FutureBuilder<ProductModel>(

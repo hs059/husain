@@ -25,7 +25,7 @@ class _SortByState extends State<SortBy> {
       children: <Widget>[
         Container(
           padding: EdgeInsets.symmetric(horizontal: 20),
-          height: ScreenUtil().setHeight(50),
+          height: ScreenUtil().setHeight(40),
           child: Row(
             children: [
               GestureDetector(
@@ -72,6 +72,7 @@ class _SortByState extends State<SortBy> {
       radios.add(Row(
         children: [
           Radio(
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             activeColor: kPinkLight,
             value: sort[i],
             groupValue: _character,
@@ -89,7 +90,9 @@ class _SortByState extends State<SortBy> {
                 index = i ;
               });
             },
-              child: Text(sortUi[i]),
+              child: Text(sortUi[i],style: TextStyle(
+                  fontSize: ScreenUtil().setSp(18)
+              ),),
           ),
         ],
       ));
