@@ -134,10 +134,11 @@ class ProfileScreen extends StatelessWidget {
 
                     },
                     child: GestureDetector(
-                      onTap: () async {
 
-                      },
                       child: ListTileProfile(
+                          onTap: () async {
+                            authProviderFalse.setLoadEdit(false);
+                    },
                         title: 'معلومات الحساب ',
                         image: 'assets/svg/personBtn.svg',
                         route: AccountInformations(),
@@ -145,28 +146,25 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   MyDivider(),
-                  GestureDetector(
-                    onTap: () =>
+                  ListTileProfile(
+                    title: 'المفضلة',
+                    image: 'assets/svg/favBtn.svg',
+                    route: Favourite(),
+                      onTap: () {
                         Provider.of<ApiProvider>(context, listen: false)
-                            .getAllFav()
-                    ,
-                    child: ListTileProfile(
-                      title: 'المفضلة',
-                      image: 'assets/svg/favBtn.svg',
-                      route: Favourite(),
-                    ),
+                            .getAllFav();
+                      }
                   ),
                   MyDivider(),
-                  GestureDetector(
-                    onTap: () =>
-                        Provider.of<ApiProvider>(context, listen: false)
-                            .getAllOrder()
+                  ListTileProfile(
+                    title: 'طلباتي',
+                    image: 'assets/svg/shopBtn.svg',
+                    route: MyOrder(),
+                    onTap: () {
+                      Provider.of<ApiProvider>(context, listen: false)
+                          .getAllOrder() ;
+                    }
                     ,
-                    child: ListTileProfile(
-                      title: 'طلباتي',
-                      image: 'assets/svg/shopBtn.svg',
-                      route: MyOrder(),
-                    ),
                   ),
                 ],
               ),

@@ -13,7 +13,8 @@ class ListTileProfile extends StatelessWidget {
   final String image ;
   final String title ;
   final Widget route ;
-  ListTileProfile({this.image, this.title, this.route});
+  Function onTap ;
+  ListTileProfile({this.image, this.title, this.route,this.onTap});
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -30,7 +31,7 @@ class ListTileProfile extends StatelessWidget {
         if (ConnectivityService.connectivityStatus ==
             ConnectivityHStatus.online) {
           kNavigatorPush(context, route);
-
+          onTap();
         }else{
           Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
             titleText:  Text(

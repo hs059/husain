@@ -447,10 +447,10 @@ class _FatoorahState extends State<Fatoorah> {
   Widget build(BuildContext context) {
     DBProvider dbProvider = Provider.of<DBProvider>(context);
 
-    return Scaffold(
+    return SafeArea(
 
-      body: SafeArea(
-        child: Directionality(
+      child: Scaffold(
+        body: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
             margin: EdgeInsets.all(10.0),

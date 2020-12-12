@@ -186,6 +186,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               onTap: () {
                                 authProvider.submitlogin(formKeySignIn, context);
                                 Provider.of<ApiProvider>(context,listen: false).getAllFav();
+                                Provider.of<ApiProvider>(context,listen: false).getAllOrder();
                                 tabControllerConstant.animateTo(0);
                               }),
                         ),
@@ -231,6 +232,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                     // result?kNavigatorPush(context,HomePage()):print('do not connect');
                                     authProviderFalse.signInWithFacebook(context);
                                     Provider.of<ApiProvider>(context,listen: false).getAllFav();
+                                    Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
                                   },
                                   child: Container(
                                     alignment: Alignment.center,

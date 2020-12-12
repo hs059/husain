@@ -12,6 +12,7 @@ import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class MyOrder extends StatelessWidget {
@@ -32,9 +33,6 @@ class MyOrder extends StatelessWidget {
           body: Consumer<ApiProvider>(
             builder: (context, value, child) {
               MyOrderModel myOrders = value.myOrderModel;
-
-              if (myOrders == null || myOrders.data.isEmpty) {
-
                 if(myOrders ==null){
                   return Column(
                     children: [
@@ -51,7 +49,7 @@ class MyOrder extends StatelessWidget {
 
                     ],
                   );
-                }  else{
+                }  else if(myOrders.data.isEmpty){
                   return Center(
                     child: Text(
                       'لا يوجد طلبات ',
@@ -60,7 +58,7 @@ class MyOrder extends StatelessWidget {
                     ),
                   );
                 }
-              } else {
+               else {
                 return ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   itemCount: myOrders.data.length,

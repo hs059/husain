@@ -15,6 +15,7 @@ import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/ui/homePage/profile/screens/myOrder.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ApiRepository {
   ApiRepository._();
@@ -70,8 +71,25 @@ class ApiRepository {
   Future<ProductM> getProductDetails(int id) async {
     String UserId = await SPHelper.spHelper.getUser();
     Map map = await ApiClient.apiClient.getProductDetails(id,UserId);
-    ProductM productM = ProductM.fromJson(map);
-    return productM;
+    if(map['code']){
+      ProductM productM = ProductM.fromJson(map);
+      return productM;
+    }else{
+      Get.snackbar('', '',
+        titleText:  Text(
+          'لم يتم اضافة هذا المنتج',
+          style: TextStyle(
+              fontWeight: FontWeight.bold
+          ),
+          textAlign: TextAlign.center,
+        ),
+        messageText: Text(
+          'سيتم اضافته قريبا',
+          textAlign: TextAlign.center,
+        ),
+      );
+    }
+
   }
 
   Future<ProductModel> getSearch(String search) async {
@@ -133,11 +151,11 @@ class ApiRepository {
 
   Future<ProductModel> getAllFav()async{
    Map map =  await ApiClient.apiClient.getAllFav();
-   if(map['code']){
+
      ProductModel productModel =  ProductModel.fromJson(map);
      // print(productModel.toJson());
      return productModel ;
-   }
+
   }
   Future<ProductModel> sortByCategory(int subCategoryId , String type)async{
     Map map = await ApiClient.apiClient.sortByCategory(subCategoryId, type);

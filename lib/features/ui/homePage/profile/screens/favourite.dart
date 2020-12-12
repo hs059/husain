@@ -2,6 +2,7 @@ import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/components/model/productModel.dart' as productModelClass;
+import 'package:beauty/features/ui/homePage/widgets/productItemFav.dart';
 
 import 'package:beauty/features/ui/homePage/widgets/productItemGrid.dart';
 import 'package:beauty/value/colors.dart';
@@ -9,6 +10,7 @@ import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class Favourite extends StatelessWidget {
@@ -28,6 +30,7 @@ class Favourite extends StatelessWidget {
               child: Consumer<ApiProvider>(
                   builder: (context, value, child) {
                     productModelClass.ProductModel productsFav =value.productFav ;
+
                     if (productsFav !=null) {
                       if(productsFav.data.isEmpty){
                         return Center(
@@ -51,13 +54,14 @@ class Favourite extends StatelessWidget {
                             itemCount: productsFav.data.length,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
-                                child:  ProductItemGrid(
+                                child:  ProductItemFav(
                                   imagePath: productsFav.data[index].image ,
                                   title: productsFav.data[index].name,
                                   rating: 4,
                                   prize: productsFav.data[index].price,
                                   fav: productsFav.data[index].isFavourited,
-                                  product:productsFav.data[index] ,),
+                                  product:productsFav.data[index],
+                                index: index,),
                               );
                             },
                           ),

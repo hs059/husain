@@ -57,6 +57,7 @@ class AuthProvider extends ChangeNotifier {
 
   savePassword(String value) {
     this.password = value;
+    print(password);
     notifyListeners();
   }
 
@@ -375,7 +376,17 @@ class AuthProvider extends ChangeNotifier {
     } else {}
   }
 
+
+
+  bool loadEdit = false ;
+  setLoadEdit(bool value){
+    this.loadEdit = value ;
+    notifyListeners();
+  }
+
   submitEditProfile(BuildContext context, GlobalKey<FormState> globalKey) {
+    Logger().d('submitEditProfile');
+
     if (globalKey.currentState.validate()) {
       globalKey.currentState.save();
       editProfile(context);
@@ -386,13 +397,16 @@ class AuthProvider extends ChangeNotifier {
     String token = await SPHelper.spHelper.getToken();
     String idUser = await SPHelper.spHelper.getUser();
     String id = idUser.toString();
+    setLoadEdit(true);
     Map map1 = await ApiClient.apiClient
         .editProfile(token, id, this.fullName, this.email, this.mobile);
-    Map map2 = await ApiClient.apiClient
+   Map map2 = await ApiClient.apiClient
         .changePassword(token, id, password, newPassword);
+    setLoadEdit(false);
+
     if (map1['code'] && map2['code']) {
       showProfileModel = await ApiRepository.apiRepository.showProfile();
-      Navigator.pop(context);
+      // Navigator.pop(context);
       Fluttertoast.showToast(
           backgroundColor: Color(0xffDAA095).withOpacity(0.8),
           msg: 'تم تعديل بيناتك بنجاح',
@@ -418,6 +432,7 @@ class AuthProvider extends ChangeNotifier {
   }
 
   submitEditProfileSocial(BuildContext context, GlobalKey<FormState> globalKey) {
+    Logger().d('submitEditProfileSocial');
     if (globalKey.currentState.validate()) {
       globalKey.currentState.save();
       editProfileSocial(context);
@@ -428,11 +443,13 @@ class AuthProvider extends ChangeNotifier {
     String token = await SPHelper.spHelper.getToken();
     String idUser = await SPHelper.spHelper.getUser();
     String id = idUser.toString();
+    setLoadEdit(true);
     Map map1 = await ApiClient.apiClient
         .editProfile(token, id, this.fullName, this.email, this.mobile);
+    setLoadEdit(false);
     if (map1['code'] ) {
       showProfileModel = await ApiRepository.apiRepository.showProfile();
-      Navigator.pop(context);
+      // Navigator.pop(context);
       Fluttertoast.showToast(
           msg: 'تم تعديل بيناتك بنجاح',
           gravity: ToastGravity.TOP,

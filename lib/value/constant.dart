@@ -14,6 +14,7 @@ Future<bool> onWillPop() {
       now.difference(currentBackPressTime) > Duration(seconds: 2)) {
     currentBackPressTime = now;
     Fluttertoast.showToast(msg: 'انقر مرة أخرى للمغادرة');
+    tabControllerConstant.animateTo(0);
     return Future.value(false);
   }
   SystemChannels.platform.invokeMethod('SystemNavigator.pop');

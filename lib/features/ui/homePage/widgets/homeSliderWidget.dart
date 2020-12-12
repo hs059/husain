@@ -3,6 +3,7 @@ import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
+import 'package:beauty/features/ui/product/productSLiderScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
@@ -125,16 +126,17 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                                 child: Button(
                                                     text: '  Shop Now  ',
                                                     onTap: () async {
-                                                      Provider.of<ApiProvider>(
-                                                          context,
-                                                          listen: false)
-                                                          .getProductDetailsSearch(
-                                                          int.parse(slider
-                                                              .data[index]
-                                                              .prodOrCatId),
-                                                          context);
-                                                      kNavigatorPush(
-                                                          context, ProductMScreen());
+                                                      // Provider.of<ApiProvider>(
+                                                      //     context,
+                                                      //     listen: false)
+                                                      //     .getProductDetails(
+                                                      //     int.parse(slider
+                                                      //         .data[index]
+                                                      //         .prodOrCatId),
+                                                      //    );
+                                                      // kNavigatorPush(context, ProductMScreen());
+                                                      kNavigatorPush(context, ProductSliderScreen(int.parse(slider.data[index].prodOrCatId)));
+                                                      
                                                     }),
                                               ),
                                             ],

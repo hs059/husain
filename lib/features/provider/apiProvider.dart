@@ -11,7 +11,9 @@ import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/api_repo.dart';
+import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/value/constant.dart';
+import 'package:beauty/value/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -119,13 +121,27 @@ setSubCategoryNull(){
         await ApiRepository.apiRepository.getProductByCategory(id);
     return productByCategory;
   }
+  Future<productClass.ProductM> getProductDetailsSearch(
+      int id, BuildContext context) async {
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+    getProductByCategory(id);
+    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
+    kNavigatorPush(context, ProductMScreen());
+    notifyListeners();
+    return productM;
+  }
 
 
-  getProductDetails(int id) async {
-    productM = null;
+  getProductDetails(int id,) async {
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     Logger().d(productM.data.category.first.parent.name);
     notifyListeners();
+  }
+
+  Future<productClass.ProductM> getProductDetailsSlider(int id) async {
+    productClass.ProductM pro = await ApiRepository.apiRepository.getProductDetails(id);
+    return pro ;
   }
 
   Future<List<productClass.Reviews>> getProductRev(int id) async {
@@ -137,14 +153,6 @@ setSubCategoryNull(){
    notifyListeners();
   }
 
-  Future<productClass.ProductM> getProductDetailsSearch(
-      int id, BuildContext context) async {
-    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    productM = await ApiRepository.apiRepository.getProductDetails(id);
-    Provider.of<UiProvider>(context, listen: false).toggleSpinner();
-    notifyListeners();
-    return productM;
-  }
 
   getProductSearch(String search) async {
     productSearch = await ApiRepository.apiRepository.getSearch(search);
@@ -175,8 +183,7 @@ setSubCategoryNull(){
   MyOrderModel myOrderModel;
 
   getAllOrder() async {
-    print('aaaaaa');
-
+    Logger().d('aaaaaa');
     myOrderModel = await ApiRepository.apiRepository.getAllOrder();
     print(myOrderModel.toJson());
     notifyListeners();
@@ -268,20 +275,23 @@ setSubCategoryNull(){
       return map;
     }
   }
-
   addFav(int productId) async {
     Map map = await ApiClient.apiClient.addFav(productId);
+    Logger().d(map);
     getAllFav();
     notifyListeners();
   }
 
   removeFav(int productId) async {
     Map map = await ApiClient.apiClient.removeFav(productId);
+    Logger().d(map);
     getAllFav();
     notifyListeners();
   }
 
+
   toggleFavUIS(sectionClass.Products product) {
+    Logger().d('toggleFavUIS');
     product.toggle();
     product.isFavourited ? addFav(product.id) : removeFav(product.id);
     notifyListeners();
@@ -290,17 +300,21 @@ setSubCategoryNull(){
     product.toggle();
     product.isFavourited ? addFav(product.id) : removeFav(product.id);
     notifyListeners();
-  }  toggleFavUIM(productClass.Data product) {
-
+  }
+  toggleFavUIM(productClass.Data product) {
     product.toggle();
     product.isFavourited ? addFav(int.parse( product.id )) : removeFav(int.parse( product.id ));
-
+    notifyListeners();
+  }
+  remove(index){
+    productFav.data.removeAt(index) ;
     notifyListeners();
   }
 
   ///////I use ConsumerBuilder for this method ////////
- getAllFav()async{
- productFav =    await ApiRepository.apiRepository.getAllFav();
+
+  getAllFav()async{
+ productFav = await ApiRepository.apiRepository.getAllFav();
  notifyListeners();
   }  ///////I use FutureBuilder for this method ////////
 

@@ -59,8 +59,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
 
     UiProvider uiProviderFalse =
         Provider.of<UiProvider>(context, listen: false);
-      currentAddress = Location.location.currentAddress ?? '' ;
-
     return Directionality(
       textDirection: TextDirection.rtl,
       child:SafeArea(
@@ -170,32 +168,31 @@ class _AddNewAddressState extends State<AddNewAddress> {
                     height: ScreenUtil().setHeight(20),
                   ),
                   TextFormField(
-                    initialValue:currentAddress ?? '',
-
-                    onChanged: (value){
-                      currentAddress = value ;
-                      print(currentAddress);
-                      setState(() {
-                      });
-                    },
+                    initialValue:uiProvider.address ?? '',
+                    onChanged: uiProvider.setNewAddress,
                     obscureText:false,
                     cursorColor: Colors.grey,
                     keyboardType:TextInputType.text,
                     decoration: InputDecoration(
                       filled: true,
                       fillColor: Color(0xffF5F8FD),
-                      suffixIcon: Padding(
-                        padding:  EdgeInsets.all(8.0),
-                        child: SvgPicture.asset(
-                          'assets/svg/locationBtn.svg',
-                          height: ScreenUtil().setHeight(32),
-                          width: ScreenUtil().setWidth(32),
-                          fit: BoxFit.contain,
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          uiProviderFalse.setNewAddress(Location.location.currentAddress.toString());
+                        },
+                        child: Padding(
+                          padding:  EdgeInsets.all(8.0),
+                          child: SvgPicture.asset(
+                            'assets/svg/locationBtn.svg',
+                            height: ScreenUtil().setHeight(32),
+                            width: ScreenUtil().setWidth(32),
+                            fit: BoxFit.contain,
+                          ),
                         ),
                       ),
                       labelText: 'اكتب العنوان المناسب',
                       labelStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                      hintText: currentAddress ?? '',
+                      hintText: uiProvider.address ?? '',
                       hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
                       border:  OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -214,75 +211,6 @@ class _AddNewAddressState extends State<AddNewAddress> {
                           )),
                     ),
                   ),
-                  // Container(
-                  //
-                  //   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                  //   decoration: BoxDecoration(
-                  //     color: Color(0xffF5F8FD),
-                  //     borderRadius: BorderRadius.circular(8.0),
-                  //     border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
-                  //   ),
-                  //   child: ListTile(
-                  //     title: Column(
-                  //
-                  //       children: [
-                  //         TextFormField(
-                  //           initialValue:Location.location.currentAddress ?? '',
-                  //           onChanged: (value){
-                  //
-                  //           },
-                  //           obscureText:false,
-                  //           cursorColor: Colors.grey,
-                  //           keyboardType:TextInputType.text,
-                  //           decoration: InputDecoration(
-                  //
-                  //             labelText: 'العنوان',
-                  //             hintText: Location.location.currentAddress ?? '',
-                  //             hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                  //             border: UnderlineInputBorder(
-                  //                 borderSide: BorderSide(
-                  //                   color: Colors.transparent,
-                  //                   width: ScreenUtil().setWidth(2),
-                  //                 )),
-                  //             focusedBorder: UnderlineInputBorder(
-                  //                 borderSide: BorderSide(
-                  //                   color: Colors.transparent,
-                  //                   width: ScreenUtil().setWidth(2),
-                  //                 )),
-                  //             enabledBorder: UnderlineInputBorder(
-                  //                 borderSide: BorderSide(
-                  //                   color: Colors.transparent,
-                  //                   width: ScreenUtil().setWidth(0.5),
-                  //                 )),
-                  //           ),
-                  //         ),
-                  //         // CustomTextFormField(
-                  //         //   // textEditingController: myController2,
-                  //         //
-                  //         //   hintText: Location.location.currentAddress ?? '',
-                  //         //   password: false,
-                  //         //   textInputType: TextInputType.text,
-                  //         //   textInitialValue: Location.location.currentAddress ?? '',
-                  //         // ),
-                  //       ],
-                  //     ),
-                  //     // Text(
-                  //     //   Location.location.currentAddress ?? '',
-                  //     //   style: TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                  //     // ),
-                  //     trailing: GestureDetector(
-                  //       onTap: () async {
-                  //
-                  //       },
-                  //       child: SvgPicture.asset(
-                  //         'assets/svg/locationBtn.svg',
-                  //         height: ScreenUtil().setHeight(32),
-                  //         width: ScreenUtil().setWidth(32),
-                  //         fit: BoxFit.contain,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   Container(
                     margin: EdgeInsets.only(
                       top: ScreenUtil().setHeight(20),
@@ -406,6 +334,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                   Button(
                       text: 'حفظ',
                       onTap: () async {
+                        print(uiProvider.address);
                         print(
                             'addressDropDown = ${uiProvider.addressDropDown} phoneNum = $phoneNum _currentAddress = $currentAddress  houseNum =$houseNum  apartment = $apartment isDefault = ${uiProvider.defualtAddress} ');
                         Provider.of<ApiProvider>(context, listen: false)
@@ -413,7 +342,7 @@ class _AddNewAddressState extends State<AddNewAddress> {
                             uiProvider
                                     .addressDropDown,
                                 phoneNum,
-                                currentAddress.toString(),
+                            uiProvider.address.toString(),
                                 houseNum,
                                 apartment,
                             uiProvider.defualtAddress,

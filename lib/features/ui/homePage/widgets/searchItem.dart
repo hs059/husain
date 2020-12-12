@@ -29,9 +29,8 @@ class SearchItem extends StatelessWidget {
         if (ConnectivityService.connectivityStatus ==
             ConnectivityHStatus.online) {
 
-          ProductM  productM =   await Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(id,context);
-          ProductModel productModel = await  Provider.of<ApiProvider>(context,listen: false).getProductByCategory(id);
-          kNavigatorPush(context, ProductMScreen());
+            Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(id,context);
+
         }else{
           Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
             titleText:  Text(

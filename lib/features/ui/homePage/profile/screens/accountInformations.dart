@@ -55,6 +55,9 @@ class AccountInformations extends StatelessWidget {
                   actions: [
                     GestureDetector(
                       onTap:  () {
+                        authProviderFalse.saveConfirmPassword('');
+                        authProviderFalse.savePassword('');
+                        authProviderFalse.setLoadEdit(false);
                           showDialog(
                               context: context,
                               builder: (context) {
@@ -89,7 +92,6 @@ class AccountInformations extends StatelessWidget {
                                             ),
                                             CustomTextFormField(
                                               // textEditingController: myController2,
-
                                               hintText: 'الايميل',
                                               password: false,
                                               validator: authProvider.validateEmail,
@@ -102,35 +104,82 @@ class AccountInformations extends StatelessWidget {
                                               visible: !authProvider.isLoginSocial,
                                               child: Column(
                                                 children: [
-
                                                   SizedBox(
                                                     height: ScreenUtil().setHeight(15),
                                                   ),
-
-                                                  CustomTextFormField(
-                                                    // textEditingController: myController3,
-                                                    hintText: 'كلمة السر القديمة',
-                                                    password: true,
-                                                    validator: authProvider.validatePassword,
-                                                    onSaved: authProvider.savePassword,
-
+                                                  Container(
+                                                    padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10)),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(8.0),
+                                                      border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                                                    ),
+                                                    child: TextField(
+                                                      onChanged: authProvider.savePassword,
+                                                      cursorColor: Colors.grey,
+                                                      decoration: InputDecoration(
+                                                        hintText: 'كلمة السر القديمة',
+                                                        hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: ScreenUtil().setSp(15)),
+                                                        border: UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                              color: Colors.transparent,
+                                                              width: ScreenUtil().setWidth(2),
+                                                            )),
+                                                        focusedBorder: UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                              color: Colors.transparent,
+                                                              width: ScreenUtil().setWidth(2),
+                                                            )),
+                                                        enabledBorder: UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                              color: Colors.transparent,
+                                                              width: ScreenUtil().setWidth(0.5),
+                                                            )),
+                                                      ),
+                                                    ),
                                                   ),
                                                   SizedBox(
                                                     height: ScreenUtil().setHeight(15),
                                                   ),
-                                                  CustomTextFormField(
-                                                    // textEditingController: myController4,
-                                                    hintText: 'كلمة المرور الجديدة',
-                                                    password: true,
-                                                    validator: authProvider.validatePassword,
-                                                    onSaved: authProvider.saveNewPassword,
+                                                  Container(
+                                                    padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(10)),
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(8.0),
+                                                      border: Border.all(width: 1.0, color: Color(0xffedf1f7)),
+                                                    ),
+                                                    child: TextField(
+                                                      onChanged: authProvider.saveNewPassword,
+                                                      cursorColor: Colors.grey,
+                                                      decoration: InputDecoration(
+                                                        hintText: 'كلمة المرور الجديدة',
+                                                        hintStyle: TextStyle(color: Color(0xff8F9BB3), fontSize: ScreenUtil().setSp(15)),
+                                                        border: UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                              color: Colors.transparent,
+                                                              width: ScreenUtil().setWidth(2),
+                                                            )),
+                                                        focusedBorder: UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                              color: Colors.transparent,
+                                                              width: ScreenUtil().setWidth(2),
+                                                            )),
+                                                        enabledBorder: UnderlineInputBorder(
+                                                            borderSide: BorderSide(
+                                                              color: Colors.transparent,
+                                                              width: ScreenUtil().setWidth(0.5),
+                                                            )),
+                                                      ),
+                                                    ),
                                                   ),
+                                                  // CustomTextFormField(
+                                                  //   // textEditingController: myController4,
+                                                  //   hintText: 'كلمة المرور الجديدة',
+                                                  //   password: true,
+                                                  //   validator: authProvider.validatePassword,
+                                                  //   onSaved: authProvider.saveNewPassword,
+                                                  // ),
                                                 ],
                                               ),
                                             ),
-
-
-
                                             SizedBox(
                                               height: ScreenUtil().setHeight(15),
                                             ),
@@ -191,7 +240,8 @@ class AccountInformations extends StatelessWidget {
                                               ),
                                             ),
                                             onTap: () {
-                                              authProvider.isLoginSocial?authProviderFalse.submitEditProfileSocial(context, formAccountInformations) :authProviderFalse.submitEditProfile(context, formAccountInformations);
+                                              authProvider.isLoginSocial || authProvider.password == ''?authProviderFalse.submitEditProfileSocial(context, formAccountInformations) :authProviderFalse.submitEditProfile(context, formAccountInformations);
+                                              Navigator.pop(context);
                                             },
                                           ),
                                         ),
@@ -228,8 +278,32 @@ class AccountInformations extends StatelessWidget {
               ),
             ):Column(
               children: [
+                Visibility(
+                  visible: authProvider.loadEdit,
+                  child:  Column(
+                    children: [
+                      SizedBox(
+                        height: 3,
+                        child: LinearProgressIndicator(
+                          backgroundColor: Theme.of(context)
+                              .accentColor
+                              .withOpacity(0.2),
+                          valueColor: new AlwaysStoppedAnimation<Color>(
+                              kPinkLight),
+                        ),
+                      ),
+                      Center(
+                        child: Text(
+                          'جاري تعديل بيانات المستخدم',
+                          style: kSeeAll.copyWith(
+                              fontFamily: 'Cairo-Regular', fontSize: 12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 SizedBox(
-                  height: ScreenUtil().setHeight(25),
+                  height: ScreenUtil().setHeight(15),
                 ),
                 ContainerCart(
                   // height: 60,

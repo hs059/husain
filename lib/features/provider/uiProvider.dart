@@ -1,4 +1,5 @@
 import 'package:beauty/services/connectivity.dart';
+import 'package:beauty/services/location.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:flutter/material.dart';
@@ -116,5 +117,9 @@ class UiProvider extends ChangeNotifier {
     notifyListeners() ;
   }
 
-
+String  address = Location.location.currentAddress??'' ;
+  setNewAddress(String value){
+    this.address = value ;
+    notifyListeners();
+  }
 }

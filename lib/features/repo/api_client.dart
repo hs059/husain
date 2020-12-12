@@ -156,6 +156,7 @@ class ApiClient {
         'token': token,
       });
       Response response = await dio.post(baseUrl + show_profile, data: data);
+      Logger().d(response.data);
       print(response.data);
       return response.data;
     } catch (e) {
