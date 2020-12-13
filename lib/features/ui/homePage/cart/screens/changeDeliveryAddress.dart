@@ -63,10 +63,22 @@ class ChangeDeliveryAddress extends StatelessWidget {
                      ShowProfileModel profile = Provider.of<AuthProvider>(context).showProfileModel;
                      return Dismissible(
                        background: Container(
+                         margin: EdgeInsets.only(
+                           top: ScreenUtil().setHeight(20),
+                           left: ScreenUtil().setWidth(15),
+                           right: ScreenUtil().setWidth(15),
+
+                         ),
+                         padding: EdgeInsets.symmetric(
+                             vertical: ScreenUtil().setHeight(15),
+                             horizontal: ScreenUtil().setWidth(15)),
+                         decoration: BoxDecoration(
+                             color: Colors.red,
+                             borderRadius: BorderRadius.circular(15)),
                          alignment: AlignmentDirectional.centerEnd,
-                         color: Colors.red,
+
                          child: Padding(
-                           padding: EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                           padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
                            child: Icon(Icons.delete,
                              color: Colors.white,
                            ),

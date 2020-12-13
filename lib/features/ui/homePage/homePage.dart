@@ -58,7 +58,7 @@ class _HomePageState extends State<HomePage>
 
     return SafeArea(
       child: WillPopScope(
-        onWillPop: onWillPopSubCategory,
+        onWillPop: onWillPop,
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
