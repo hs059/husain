@@ -61,7 +61,7 @@ class CartAddressWidget extends StatelessWidget {
                     })
                     : null,
                 child: Text(
-                  changeBtn ? 'Change' : '',
+                  changeBtn ? 'تغيير' : '',
                   style: kSeeAll,
                 ),
               )

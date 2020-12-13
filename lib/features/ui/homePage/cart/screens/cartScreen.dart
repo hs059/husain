@@ -27,6 +27,7 @@ class Cart extends StatelessWidget {
   double totalPrize = 0.0 ;
   @override
   Widget build(BuildContext context) {
+    DBProvider dbProvider = Provider.of<DBProvider>(context);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SafeArea(
@@ -114,19 +115,20 @@ class Cart extends StatelessWidget {
                   Provider.of<AuthProvider>(context,listen: false).showProfile();
                   kNavigatorPush(context, CheckOut());
                 }
-
               },
               widget: Row(
                 children: [
                   Text(
-                    'Cart price',
+                    dbProvider.totalPrize.toStringAsFixed(2) +
+                        ' ' +
+                        currency,
                     style: kBtnText,
                   ),
                   SizedBox(
                     width: ScreenUtil().setWidth(100),
                   ),
                   Text(
-                    'Check Out',
+                    'إتمام الطلب',
                     style: kBtnText,
                   ),
                   SizedBox(

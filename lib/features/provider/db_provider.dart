@@ -7,6 +7,7 @@ class DBProvider extends ChangeNotifier {
   List<ProductSql> allProducts = [];
   double totalPrize = 0.0;
 
+
   setAllProducts() async {
     this.allProducts = await DBRepository.dbRepository.getAllProduct();
     totalPrize = 0.0;

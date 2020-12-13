@@ -95,7 +95,7 @@ class AddCartSheet extends StatelessWidget {
               children: [
                 Expanded(
                     child: Button(
-                        text: 'Checkout',
+                        text: 'إتمام الطلب',
                         onTap: () async{
                           bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
                           if(!isLogin){
@@ -130,7 +130,7 @@ class AddCartSheet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(color: kPinkLight, width: 1)),
                     child: Text(
-                      'Continue shopping',
+                      'إكمال الشراء',
                       style: kBtnText.copyWith(
                         color: kPinkLight,
                       ),

@@ -20,7 +20,6 @@ class CategoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return GestureDetector(
-
       child: Row(
         children: [
           Container(

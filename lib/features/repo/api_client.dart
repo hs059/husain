@@ -685,5 +685,24 @@ getAllFav()async{
     }
   }
 
+  getCoupon(String coupon)async{
+    try {
+      await initApi() ;
+
+      Response response =await dio.get(
+          baseUrl+'get_coupon?code=$coupon'
+      );
+      Logger().d(response.data);
+      return response.data ;
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
+    }
+  }
+
 
 }

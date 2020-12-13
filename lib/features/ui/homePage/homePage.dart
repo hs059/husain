@@ -48,12 +48,17 @@ class _HomePageState extends State<HomePage>
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     super.initState();
   }
+  Future<bool> onWillPopSubCategory() {
+
+
+    return Future.value(true);
+  }
   @override
   Widget build(BuildContext context) {
 
     return SafeArea(
       child: WillPopScope(
-        onWillPop: onWillPop,
+        onWillPop: onWillPopSubCategory,
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(

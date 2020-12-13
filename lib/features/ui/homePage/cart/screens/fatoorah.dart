@@ -1,6 +1,7 @@
 import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class Fatoorah extends StatefulWidget {
 class _FatoorahState extends State<Fatoorah> {
   String _response = '';
   String _loading = "Loading...";
-
+  String charcater = " ";
   List<PaymentMethods> paymentMethods = List();
   List<bool> isSelected = List();
   int selectedPaymentMethodIndex = -1;
@@ -450,6 +451,30 @@ class _FatoorahState extends State<Fatoorah> {
     return SafeArea(
 
       child: Scaffold(
+        appBar: PreferredSize(
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: kBorder,
+                offset: Offset(0, 2.0),
+                blurRadius: 4.0,
+              )
+            ]),
+            child: AppBar(
+
+              backgroundColor: Colors.white,
+              title: Text(
+                "الشراء أونلاين", style: kSectionText.copyWith(
+                fontSize: ScreenUtil().setSp(18),
+                fontFamily: 'Cairo-Regular',
+              ),),
+              centerTitle: true,
+              elevation: 0.0,
+            ),
+
+          ),
+          preferredSize: Size.fromHeight(kToolbarHeight),
+        ),
         body: Directionality(
           textDirection: TextDirection.rtl,
           child: Container(
@@ -468,7 +493,7 @@ class _FatoorahState extends State<Fatoorah> {
                         style: kSeeAll,
                       ),
                       Text(
-                        dbProvider.totalPrize.toString() +
+                        double.parse(widget.amount).toStringAsFixed(2)+
                             ' ' +
                             currency,
                         style: kSeeAll,
@@ -486,24 +511,53 @@ class _FatoorahState extends State<Fatoorah> {
                 padding: EdgeInsets.all(5.0),
               ),
               Expanded(
-                flex: 10,
-                  child: ListView.builder(
-                      itemCount: paymentMethods.length,
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (BuildContext ctxt, int index) {
-                        return ListTile(
-                          leading: Image.network(paymentMethods[index].imageUrl,
-                              width: 40.0, height: 40.0),
-                          title: Text(paymentMethods[index].paymentMethodAr),
-                          trailing: Checkbox(
-                              value: isSelected[index],
-                              onChanged: (bool value) {
+                flex: 15,
+                  child: Builder(
+                    builder: (context) {
+                      paymentMethods.removeWhere((element) =>
+                      element.paymentMethodAr=="البطاقات المدينة - الامارات"||
+                      element.paymentMethodAr=="اميكس"||
+                      element.paymentMethodAr=="بنفت"||
+                      element.paymentMethodAr=="البطاقات المدينة - قطر"||
+                      element.paymentMethodAr=="كي نت"
+                      );
+                      return ListView.builder(
+                          itemCount: paymentMethods.length,
+                          scrollDirection: Axis.vertical,
+                          itemBuilder: (BuildContext ctxt, int index) {
+                            return ListTile(
+                              onTap: () {
+                                charcater = paymentMethods[index].paymentMethodAr;
                                 setState(() {
-                                  setPaymentMethodSelected(index, value);
+
                                 });
-                              }),
-                        );
-                      })),
+                              },
+                              leading: Image.network(paymentMethods[index].imageUrl,
+                                  width: 40.0, height: 40.0),
+                              title: Text(paymentMethods[index].paymentMethodAr),
+                              trailing: Column(
+                                children: [
+                                  Radio(
+                                      value: paymentMethods[index].paymentMethodAr,
+                                      groupValue: charcater,
+                                    activeColor: kPinkLight,
+                                      hoverColor:kPinkLight ,
+                                      focusColor:kPinkLight ,
+                                      onChanged: (value) {
+                                        charcater = value;
+                                        setState(() {
+
+                                        });
+                                      },
+                                  ),
+
+                                ],
+                              ),
+                            );
+                          });
+                    },
+
+                  )),
               // visibilityObs
               //     ? Container(
               //     child: Column(
@@ -598,31 +652,3 @@ class _FatoorahState extends State<Fatoorah> {
     );
   }
 }
-// var ww =          showDialog(
-//     context: context,
-//     builder: (context) {
-//       return Directionality(
-//         textDirection: TextDirection.rtl,
-//         child: SimpleDialog(
-//           contentPadding: EdgeInsets.all(
-//               15),
-//           titlePadding: EdgeInsets
-//               .symmetric(
-//               horizontal: 15, vertical: 20),
-//           title: Row(
-//             children: <Widget>[
-//               Icon(Icons.category),
-//               SizedBox(width: 10),
-//               Text(
-//                 'جميع الطلبات',
-//               )
-//             ],
-//           ),
-//           children: myOrder.products.map((
-//               e) =>
-//               CartItemMyOrder(
-//                 product: e,
-//               ),).toList(),
-//         ),
-//       );
-//     });

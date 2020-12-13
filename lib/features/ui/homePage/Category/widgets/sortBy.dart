@@ -6,6 +6,7 @@ import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:beauty/value/string.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 class SortBy extends StatefulWidget {
@@ -14,13 +15,14 @@ class SortBy extends StatefulWidget {
 }
 
 class _SortByState extends State<SortBy> {
-  int index;
+  int index =0;
   String _character;
 
   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
-    index= Provider.of<ApiProvider>(context,).typeSelected ??0;
+    ApiProvider apiProvider = Provider.of<ApiProvider>(context);
+    // index= Provider.of<ApiProvider>(context,).typeSelected ??0;
     return Column(
       children: <Widget>[
         Container(
@@ -39,7 +41,7 @@ class _SortByState extends State<SortBy> {
                 height: ScreenUtil().setHeight(56),
                 alignment: Alignment.center,
                 child: Text(
-                  'Sort by',
+                  'التصنيف ',
                   style:
                       kSectionText.copyWith(fontSize: ScreenUtil().setSp(18)),
                 ),
@@ -51,14 +53,17 @@ class _SortByState extends State<SortBy> {
           thickness: 1,
           color: kBorder,
         ),
-        ...radio(),
+        ...radio(context),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Button(
-              text: 'Save',
+              text: 'حفظ',
               onTap: () {
+                print(_character);
                 Provider.of<ApiProvider>(context,listen: false).nullProductSort();
-                Provider.of<ApiProvider>(context,listen: false).setTypeSelected(index);
+                apiProvider.setIsSort(true);
+                apiProvider.setLoadingSort();
+                Provider.of<ApiProvider>(context,listen: false).setTypeSelected(sort.indexOf(apiProvider.character));
                 Navigator.pop(context);
               }),
         ),
@@ -66,7 +71,9 @@ class _SortByState extends State<SortBy> {
     );
   }
 
-  List<Widget> radio() {
+  List<Widget> radio(BuildContext context) {
+    ApiProvider apiProviderFalse = Provider.of<ApiProvider>(context,listen: false);
+    ApiProvider apiProvider = Provider.of<ApiProvider>(context);
     List<Widget> radios = [];
     for (int i = 0; i <= 4; i++) {
       radios.add(Row(
@@ -75,20 +82,25 @@ class _SortByState extends State<SortBy> {
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             activeColor: kPinkLight,
             value: sort[i],
-            groupValue: _character,
+            groupValue: apiProvider.character,
             onChanged: (value) {
-              setState(() {
-                _character = value;
-                index = i ;
-              });
+              apiProvider.setCharacter(value);
+              Logger().d(sort.indexOf(apiProvider.character));
+              index = sort.indexOf(apiProvider.character) ;
+              // setState(() {
+              //   _character = value;
+              //   index = i ;
+              // });
             },
           ),
           GestureDetector(
             onTap: () {
-              setState(() {
-                _character = sort[i];
-                index = i ;
-              });
+         // setState(() {
+         //   _character = sort[i];
+         //   index = i ;
+         // });
+                apiProvider.setCharacter(sort[i]);
+                index = sort.indexOf(apiProvider.character) ;
             },
               child: Text(sortUi[i],style: TextStyle(
                   fontSize: ScreenUtil().setSp(18)

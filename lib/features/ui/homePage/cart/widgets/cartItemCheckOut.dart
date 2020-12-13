@@ -26,69 +26,67 @@ class CartItemCheckOut extends StatelessWidget {
         boxShadow: sCardShadow,
         color: Colors.white,
       ),
-      child: Expanded(
-        child: Row(
-          children: [
-            Expanded(
-              child: CachedNetworkImage(
-                  imageUrl: productSql.image,
-                  placeholder: (context, url) => LoaderGif1(),
-                  errorWidget: (context, url, error) =>
-                      Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,
-                        height: ScreenUtil().setHeight(80),
-                        width: ScreenUtil().setWidth(80),
-                      ),
-                  height: ScreenUtil().setHeight(80),
-                  width: ScreenUtil().setWidth(80),
-                  fit: BoxFit.contain
-              ),
-            ),
-            SizedBox(
-              width: ScreenUtil().setWidth(12),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: ScreenUtil().setHeight(12),
-                  bottom: ScreenUtil().setHeight(12)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    constraints: BoxConstraints(
-                      maxWidth: ScreenUtil().setWidth(170),
+      child: Row(
+        children: [
+          Expanded(
+            child: CachedNetworkImage(
+                imageUrl: productSql.image,
+                placeholder: (context, url) => LoaderGif1(),
+                errorWidget: (context, url, error) =>
+                    Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,
+                      height: ScreenUtil().setHeight(80),
+                      width: ScreenUtil().setWidth(80),
                     ),
-                    child: Text(
-                      productSql.name,
-                      style: kReviews.copyWith(
-                        // color: kGray2,
-                      ),
+                height: ScreenUtil().setHeight(80),
+                width: ScreenUtil().setWidth(80),
+                fit: BoxFit.contain
+            ),
+          ),
+          SizedBox(
+            width: ScreenUtil().setWidth(12),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+                top: ScreenUtil().setHeight(12),
+                bottom: ScreenUtil().setHeight(12)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  constraints: BoxConstraints(
+                    maxWidth: ScreenUtil().setWidth(170),
+                  ),
+                  child: Text(
+                    productSql.name,
+                    style: kReviews.copyWith(
+                      // color: kGray2,
                     ),
                   ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(22),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        productSql.price.toString() +' '+ currency,
-                        style: kReviews,
-                      ),
-                      SizedBox(
-                        width: ScreenUtil().setWidth(50),
-                      ),
-                      Text(
-                       'الكمية : ${productSql.count.toString()}',
-                        style: kReviews,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: ScreenUtil().setHeight(22),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      productSql.price.toString() +' '+ currency,
+                      style: kReviews,
+                    ),
+                    SizedBox(
+                      width: ScreenUtil().setWidth(50),
+                    ),
+                    Text(
+                     'الكمية : ${productSql.count.toString()}',
+                      style: kReviews,
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

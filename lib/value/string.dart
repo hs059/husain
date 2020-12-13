@@ -35,11 +35,11 @@ List<String>tabName = [
   'الشخصية',
 ];
 List sortUi = [
-  'Default sort',
-  'Popularity',
-  'Latest',
-  'Low to high',
-  'High to low',
+  'الافتراضي',
+  'أكثر مبيعا',
+  'أحدث المنتجات',
+  'الاقل للاعلى سعرا',
+  'الاعلى للأقل',
 ];
 List sort = [
   'default',
@@ -50,7 +50,7 @@ List sort = [
 ];
 List<String> paymentList = [
   'الدفع أونلاين',
-  'الدفع كاش'
+  'الدفع عند الاستلام'
 ];
 String home = 'assets/svg/home.svg';
 String work = 'assets/svg/work.svg';

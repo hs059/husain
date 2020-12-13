@@ -97,29 +97,32 @@ class _SignUpState extends State<SignUp> {
                           SizedBox(
                             height: ScreenUtil().setHeight(10),
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(width: 1.0, color: kBorder),
-                            ),
-                            child: IntlPhoneField(
-                              validator: authProvider.validatePhone,
-                              autoValidate: false,
-                              decoration: InputDecoration(
-                                hintText: 'رقم الموبايل',
-                                hintStyle:
-                                TextStyle(color: Color(0xff8F9BB3), fontSize: ScreenUtil().setSp(15)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: kBorder, width: 1.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: kBorder, width: 1.0),
-                                ),
+                          Directionality(
+                            textDirection: TextDirection.ltr,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.0),
+                                border: Border.all(width: 1.0, color: kBorder),
                               ),
-                              initialCountryCode: 'SA',
-                              showDropdownIcon: false,
-                              onChanged: (phone) {
-                              },
+                              child: IntlPhoneField(
+                                validator: authProvider.validatePhone,
+                                autoValidate: false,
+                                decoration: InputDecoration(
+                                  hintText: 'رقم الموبايل',
+                                  hintStyle:
+                                  TextStyle(color: Color(0xff8F9BB3), fontSize: ScreenUtil().setSp(15)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: kBorder, width: 1.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: kBorder, width: 1.0),
+                                  ),
+                                ),
+                                initialCountryCode: 'SA',
+                                showDropdownIcon: false,
+                                onChanged: (phone) {
+                                },
+                              ),
                             ),
                           ),
                         ],

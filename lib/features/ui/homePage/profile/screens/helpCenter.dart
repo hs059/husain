@@ -1,15 +1,39 @@
+import 'dart:io';
+
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HelpCenter extends StatelessWidget {
   String phone = '0546873286';
   String email = 'info@3beauty.net';
+
+  void launchWhatsApp({
+    @required String phone,
+    @required String message,
+  }) async {
+    String url() {
+      if (Platform.isIOS) {
+        return "whatsapp://wa.me/$phone/?text=${Uri.parse(message)}";
+      } else {
+        return "whatsapp://send?   phone=$phone&text=${Uri.parse(message)}";
+      }
+    }
+
+    if (await canLaunch(url())) {
+      await launch(url());
+    } else {
+      throw 'Could not launch ${url()}';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -24,10 +48,12 @@ class HelpCenter extends StatelessWidget {
                 child: Wrap(
                   children: [
                     ListTile(
-                      onTap: () =>  UrlLauncher.launch('mailto:$email'),
+                      onTap: () => launch('mailto:$email'),
                       leading: SvgPicture.asset(
                         'assets/svg/emailBtn.svg',
                         fit: BoxFit.contain,
+                        height: ScreenUtil().setHeight(35),
+                        width: ScreenUtil().setWidth(35),
                       ),
                       title: Text(
                         'راسلنا',
@@ -36,8 +62,7 @@ class HelpCenter extends StatelessWidget {
                     ),
                     MyDivider(),
                     ListTile(
-                      onTap:() => UrlLauncher.launch('tel:+${phone.toString()}'),
-
+                      onTap: () => launch('tel:+${phone.toString()}'),
                       leading: Image.asset(
                         'assets/images/phoneBtn.png',
                         fit: BoxFit.contain,
@@ -46,6 +71,26 @@ class HelpCenter extends StatelessWidget {
                       ),
                       title: Text(
                         'تواصل معنا',
+                        style: kProfile,
+                      ),
+                    ),
+                    MyDivider(),
+                    ListTile(
+                      onTap: () => launch("https://wa.me/+972595581943?text="),
+                      leading: Container(
+                        height: ScreenUtil().setHeight(35),
+                        width: ScreenUtil().setWidth(35),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: kPinkLight,
+                        ),
+                        child: Icon(
+                          FontAwesomeIcons.whatsapp,
+                          color: Colors.white,
+                        ),
+                      ),
+                      title: Text(
+                        ' تواصل معنا عبر الواتس اب',
                         style: kProfile,
                       ),
                     ),

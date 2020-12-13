@@ -1,4 +1,5 @@
 import 'package:beauty/components/model/allAddressModel.dart';
+import 'package:beauty/components/model/couponModel.dart';
 import 'package:beauty/components/model/createOrderGet.dart';
 import 'package:beauty/components/model/lineItems.dart';
 import 'package:beauty/components/model/myOrderModel.dart';
@@ -174,4 +175,10 @@ class ApiRepository {
     }
   }
 
+
+  Future<CouponModel> getCoupon(String coupon)async{
+    Map map = await ApiClient.apiClient.getCoupon(coupon);
+      CouponModel couponModel = CouponModel.fromJson(map);
+      return couponModel ;
+  }
 }

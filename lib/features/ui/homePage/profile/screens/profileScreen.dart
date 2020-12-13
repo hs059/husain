@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:beauty/components/widgets/btn.dart';
+import 'package:beauty/components/widgets/customDialog.dart';
 import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
@@ -19,6 +20,7 @@ import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -26,7 +28,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-
+import 'package:sweetalert/sweetalert.dart';
 import 'favourite.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -56,12 +58,16 @@ class ProfileScreen extends StatelessWidget {
                       width: ScreenUtil().setWidth(95),
                       padding: EdgeInsets.all(8),
                       decoration: BoxDecoration(
+                        boxShadow: sCardShadow2,
                         borderRadius: BorderRadius.circular(100),
-                        color: kBorder.withOpacity(0.8),
+                        color: kPinkLight.withOpacity(0.8),
+                          gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [Colors.white,kPinkLight, kPinkDark,kBorder])
                       ),
-                      child: SvgPicture.asset(
-                        'assets/svg/person.svg',
-                        fit: BoxFit.contain,
+                      child:SvgPicture.asset(
+                        'assets/svg/beauty0.svg',color:Colors.white,
                       ),
                     ),
                     onTap: () async {
@@ -73,7 +79,7 @@ class ProfileScreen extends StatelessWidget {
                     height: ScreenUtil().setHeight(10),
                   ),
                   Text(
-                    '3Beauty',
+                    authProvider.showProfileModel.data.displayName,
                     style: kName,
                     textAlign: TextAlign.center,
                   ),
@@ -81,7 +87,7 @@ class ProfileScreen extends StatelessWidget {
                     height: ScreenUtil().setHeight(5),
                   ),
                   Text(
-                    'https://3beauty.net',
+                    authProvider.showProfileModel.data.email,
                     style: kSubTitleSign.copyWith(
                       fontSize: ScreenUtil().setSp(13),
                     ),
@@ -181,12 +187,14 @@ class ProfileScreen extends StatelessWidget {
                 // ),
                 // MyDivider(),
                 ListTileProfile(
+                  onTap: ()=>print(''),
                   title: 'الدعم و المساندة',
                   image: 'assets/svg/soundBtn.svg',
                   route: HelpCenter(),
                 ),
                 MyDivider(),
                 ListTileProfile(
+                  onTap: ()=>print(''),
                   title: 'من نحن',
                   image: 'assets/svg/aboutBtn.svg',
                   route: AboutUs(),
@@ -243,10 +251,21 @@ class ProfileScreen extends StatelessWidget {
                 onTap: () {
                   if (ConnectivityService.connectivityStatus ==
                       ConnectivityHStatus.online) {
-                    Provider.of<DBProvider>(context, listen: false)
-                        .deleteAllProduct();
-                    authProviderFalse.signOut();
-                    kNavigatorPush(context, SignIn());
+
+                    showDialog(context: context,
+                        builder: (BuildContext context){
+                      return CustomDialogBox(
+                        title: "هل تريد تسجيل الخروج",
+                        descriptions: "نتمنى لكم ان تكونو مسرورين بما نقدمه من منتجات و عروض و نسعد بزيارتكم",
+                        text: "خروج",
+                        onTap: (){
+                          Provider.of<DBProvider>(context, listen: false)
+                              .deleteAllProduct();
+                          authProviderFalse.signOut();
+                          kNavigatorPush(context, SignIn());
+                        },
+                      );
+                    });
                   } else {
                     Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
                       titleText: Text(

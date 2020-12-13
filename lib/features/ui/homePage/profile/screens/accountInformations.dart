@@ -183,35 +183,38 @@ class AccountInformations extends StatelessWidget {
                                             SizedBox(
                                               height: ScreenUtil().setHeight(15),
                                             ),
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8.0),
-                                                border: Border.all(width: 1.0, color: kBorder),
-                                              ),
-                                              child: IntlPhoneField(
-                                                // controller: myController5,
-                                                validator: authProvider.validatePhone,
-                                                onSaved:  (newValue) {
-                                                  authProvider.saveMobile(newValue.completeNumber);
-                                                },
-                                                autoValidate: false,
-                                                decoration: InputDecoration(
-                                                  hintText: 'رقم الهاتف',
-                                                  hintStyle:
-                                                  TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
-                                                  enabledBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: kBorder, width: 1.0),
-                                                  ),
-                                                  focusedBorder: OutlineInputBorder(
-                                                    borderSide: BorderSide(color: kBorder, width: 1.0),
-                                                  ),
+                                            Directionality(
+                                              textDirection: TextDirection.ltr,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8.0),
+                                                  border: Border.all(width: 1.0, color: kBorder),
                                                 ),
-                                                initialCountryCode: 'SA',
-                                                showDropdownIcon: false,
-                                                initialValue:authProvider.showProfileModel.data.mobileNumber ==null || authProvider.showProfileModel.data.mobileNumber.length<4?'7777777777' :authProvider.showProfileModel.data.mobileNumber.substring(4),
-                                                onChanged: (phone) {
-                                                  Provider.of<AuthProvider>(context,listen: false).saveMobile(phone.completeNumber);
-                                                },
+                                                child:IntlPhoneField(
+                                                  // controller: myController5,
+                                                  validator: authProvider.validatePhone,
+                                                  onSaved:  (newValue) {
+                                                    authProvider.saveMobile(newValue.completeNumber);
+                                                  },
+                                                  autoValidate: false,
+                                                  decoration: InputDecoration(
+                                                    hintText: 'رقم الهاتف',
+                                                    hintStyle:
+                                                    TextStyle(color: Color(0xff8F9BB3), fontSize: 15),
+                                                    enabledBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: kBorder, width: 1.0),
+                                                    ),
+                                                    focusedBorder: OutlineInputBorder(
+                                                      borderSide: BorderSide(color: kBorder, width: 1.0),
+                                                    ),
+                                                  ),
+                                                  initialCountryCode: 'SA',
+                                                  showDropdownIcon: false,
+                                                  initialValue:authProvider.showProfileModel.data.mobileNumber ==null || authProvider.showProfileModel.data.mobileNumber.length<4?'7777777777' :authProvider.showProfileModel.data.mobileNumber.substring(4),
+                                                  onChanged: (phone) {
+                                                    Provider.of<AuthProvider>(context,listen: false).saveMobile(phone.completeNumber);
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -257,10 +260,9 @@ class AccountInformations extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(10),
                         child: Text(
-                          'edit',
+                          'تعديل',
                           style: kSeeAll.copyWith(
                             fontSize: ScreenUtil().setSp(18),
-
                           ),
                         ),
                       ),

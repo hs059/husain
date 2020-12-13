@@ -22,7 +22,7 @@ class AboutUs extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: SafeArea(
         child: Scaffold(
-            appBar: appBarCart(title: '3beauty'),
+            appBar: appBarCart(title: 'من نحن'),
             body: Padding(
               padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
               child: Column(
@@ -37,7 +37,7 @@ class AboutUs extends StatelessWidget {
                             fit: BoxFit.contain,
                           ),
                           title: Text(
-                            'Privacy Policy',
+                            'سياسة الخصوصية',
                             style: kProfile,
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -45,7 +45,7 @@ class AboutUs extends StatelessWidget {
                             kNavigatorPush(
                                 context,
                                 WebSite(
-                                  title: 'privacyPolicy',
+                                  title: 'سياسة الخصوصية',
                                   link: Provider.of<ApiProvider>(context,
                                           listen: false)
                                       .privacyPolicy['data']['url'],
@@ -59,7 +59,7 @@ class AboutUs extends StatelessWidget {
                             fit: BoxFit.contain,
                           ),
                           title: Text(
-                            'Terms and Conditions',
+                            'الأحكام والشروط',
                             style: kProfile,
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -77,7 +77,7 @@ class AboutUs extends StatelessWidget {
                             width: ScreenUtil().setWidth(35),
                           ),
                           title: Text(
-                            'Facebook ',
+                            'فيس بوك ',
                             style: kProfile,
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -104,7 +104,7 @@ class AboutUs extends StatelessWidget {
                             fit: BoxFit.contain,
                           ),
                           title: Text(
-                            'Instagram ',
+                            'انستقرام ',
                             style: kProfile,
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),
@@ -119,7 +119,7 @@ class AboutUs extends StatelessWidget {
                             fit: BoxFit.contain,
                           ),
                           title: Text(
-                            'Twitter',
+                            'تويتر',
                             style: kProfile,
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),

@@ -13,6 +13,7 @@ import 'package:beauty/features/ui/homePage/screens/search.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -65,6 +66,7 @@ class Category extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         kNavigatorPush(context, Search());
+
                       },
                       child: Column(
                         children:[
@@ -127,6 +129,7 @@ class Category extends StatelessWidget {
                                    ConnectivityHStatus.online) {
                                  Provider.of<ApiProvider>(context, listen: false)
                                      .getSubCategory(category.data[index].id,context);
+                                 Provider.of<ApiProvider>(context,listen: false).initialSort();
                                 kNavigatorPush(context,  subCategory222(category.data[index]));
                                }else{
                                  Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',

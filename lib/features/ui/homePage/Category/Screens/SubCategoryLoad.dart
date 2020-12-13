@@ -1,4 +1,5 @@
 
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/Category/widgets/sortBy.dart';
 import 'package:beauty/features/ui/homePage/screens/search.dart';
 import 'package:beauty/value/colors.dart';
@@ -6,12 +7,14 @@ import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:beauty/components/model/categoryModel.dart' as cat;
+import 'package:provider/provider.dart';
 
 class SubCategoryWait extends StatelessWidget {
   final  cat.Data  categor ;
   SubCategoryWait({ this.categor, });
   @override
   Widget build(BuildContext context) {
+    ApiProvider apiProviderFalse =  Provider.of<ApiProvider>(context,listen: false) ;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SafeArea(
@@ -19,7 +22,11 @@ class SubCategoryWait extends StatelessWidget {
           appBar:  AppBar(
           backgroundColor: Colors.white,
            leading: GestureDetector(
-            onTap: () => Navigator.pop(context),
+            onTap: () {
+              Navigator.pop(context);
+              apiProviderFalse.setTypeSelected(0);
+
+            } ,
             child: Icon(
               Icons.arrow_back,
               color: Colors.black,

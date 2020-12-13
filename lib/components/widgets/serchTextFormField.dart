@@ -1,4 +1,6 @@
 
+import 'package:beauty/features/provider/apiProvider.dart';
+import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/screens/search.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
@@ -6,13 +8,18 @@ import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:provider/provider.dart';
 
 
 class SearchText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => kNavigatorPush(context, Search()),
+      onTap: () {
+        kNavigatorPush(context, Search());
+
+      },
+
       child: Column(
         children: [
           Container(

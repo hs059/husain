@@ -27,7 +27,7 @@ class MyOrder extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: SafeArea(
         child: Scaffold(
-          appBar: appBarCart(title: 'My Order'),
+          appBar: appBarCart(title: 'طلباتي'),
 
 
           body: Consumer<ApiProvider>(

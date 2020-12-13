@@ -25,7 +25,6 @@ class _SearchState extends State<Search> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     Provider.of<ApiProvider>(context, listen: false).nullSearch();
-    Provider.of<UiProvider>(context, listen: false).setLoading(false);
     super.initState();
   }
 

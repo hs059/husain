@@ -1,6 +1,7 @@
 import 'package:beauty/components/model/allAddressModel.dart' as addressClass;
 import 'package:beauty/components/model/brandModel.dart';
 import 'package:beauty/components/model/categoryModel.dart';
+import 'package:beauty/components/model/couponModel.dart';
 import 'package:beauty/components/model/createOrderGet.dart';
 import 'package:beauty/components/model/myOrderModel.dart';
 import 'package:beauty/components/model/productM.dart' as productClass;
@@ -14,6 +15,7 @@ import 'package:beauty/features/repo/api_repo.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/string.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -185,7 +187,6 @@ setSubCategoryNull(){
   getAllOrder() async {
     Logger().d('aaaaaa');
     myOrderModel = await ApiRepository.apiRepository.getAllOrder();
-    print(myOrderModel.toJson());
     notifyListeners();
   }
 
@@ -201,7 +202,7 @@ setSubCategoryNull(){
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     Map map = await ApiClient.apiClient
         .addNewAddress(type, phone, address, houseNumber, apartment, IsDefault);
-    getAllAddress();
+    await  getAllAddress();
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
 
     if (map['code']) {
@@ -318,10 +319,29 @@ setSubCategoryNull(){
  notifyListeners();
   }  ///////I use FutureBuilder for this method ////////
 
+  bool loadingSort =false ;
+  setLoadingSort(){
+    loadingSort =true ;
+    Duration duration =Duration(seconds: 3) ;
+    Future.delayed(duration,(){
+      this.loadingSort = false ;
+      notifyListeners();
+    });
+    notifyListeners();
+
+    print(loadingSort);
+  }
 
   Future<productModelClass.ProductModel> sortByCategory(int subCategoryId , String type,)async{
-    productSort = await ApiRepository.apiRepository.sortByCategory(subCategoryId, type);
-  print(productSort.toJson());
+    // setSubCat(true);
+    if(isSort){
+      productSort = await ApiRepository.apiRepository.sortByCategory(subCategoryId, type) ;
+
+    }else{
+      productSort = productSort ;
+    }
+
+    // setSubCat(false);
     return productSort ;
   }
  nullProductSort(){
@@ -335,8 +355,20 @@ setSubCategoryNull(){
   }
   int typeSelected = 0 ;
   setTypeSelected(int value){
-    this.typeSelected = value ;
-    print('typeSelected $typeSelected');
+    this.typeSelected =isSort? value:this.typeSelected ;
+    Logger().d('typeSelected $typeSelected');
+    notifyListeners();
+  }
+  String  character = sort[0] ;
+  setCharacter(String value){
+    this.character = value ;
+    Logger().d('character $character');
+    notifyListeners();
+  }
+  initialSort(){
+    setCharacter(sort[0]);
+    this.typeSelected =0 ;
+    setTypeSelected(0);
     notifyListeners();
   }
   Map onbourding ;
@@ -357,5 +389,52 @@ Map privacyPolicy ;
     }
   }
 
+  String coupon ;
+  setCoupon(String value)async{
+    print(coupon);
+    this.coupon = value ;
+    notifyListeners();
+  }
+
+  bool loadCoupon =false;
+  toggleLoadCoupon(){
+    this.loadCoupon =!this.loadCoupon;
+    notifyListeners();
+  }
+
+  CouponModel couponModel ;
+  getCoupon()async{
+    print(coupon);
+    toggleLoadCoupon();
+    couponModel = await ApiRepository.apiRepository.getCoupon(coupon);
+    toggleLoadCoupon();
+    if(couponModel.status){
+      setCheckCoupon(true);
+
+    }else{
+      Fluttertoast.showToast(
+          msg: "كود كوبون غير صالح",
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          textColor: Colors.white,
+          gravity:ToastGravity.CENTER ,
+          fontSize: 16.0);
+
+    }
+    notifyListeners();
+  }
+
+  bool checkCoupon = false ;
+  setCheckCoupon(bool value){
+    this.checkCoupon = value ;
+    notifyListeners();
+  }
+  double totalPrizeOrder = 0.0;
+
+  changeTotalPrizeOrder(double value){
+    this.totalPrizeOrder = value ;
+    notifyListeners();
+  }
 
 }

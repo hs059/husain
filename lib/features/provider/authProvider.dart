@@ -84,7 +84,7 @@ class AuthProvider extends ChangeNotifier {
   ///////////////////validate/////////////////////////////////////////
   validateEmail(String value) {
     if (value == null || value == '') {
-      return ' this field is required ';
+      return 'هذه الخانة مطلوبه';
     } else if (!isEmail(value)) {
       return 'invalid Email ';
     }
@@ -92,40 +92,54 @@ class AuthProvider extends ChangeNotifier {
 
   validatePassword(String value) {
     if (value == null || value == '') {
-      return ' this field is required ';
+      return 'هذه الخانة مطلوبه';
     } else if (!isAlphanumeric(value)) {
-      return 'invalid Password ';
+      return 'رمز مرور غير مقبول ';
+    } else if (value.length < 6) {
+      return 'كلمة السر على الأقل 6 ';
     }
   }
 
   validateConfirmPassword(String value) {
     if (value == null || value == '') {
-      return ' this field is required ';
+      return ' هذه الخانة مطلوبه ';
     } else if (!isAlphanumeric(value)) {
-      return 'invalid Password ';
+      return 'رمز مرور غير مقبول ';
     } else if (password != value) {
       return 'not matched';
     }
   }
 
-  validateName(String value) {
+  String validateName(String value) {
     if (value == null || value == '') {
-      return ' this field is required ';
+      return ' هذه الخانة مطلوبه';
     } else if (value.length < 4) {
-      return 'name at least 4 Letters';
+      return 'اسم على الأقل 4 أحرف';
     }
   }
 
   String validatePhone(String value) {
     if (value == null || value == '') {
-      return ' this field is required ';
+      return ' هذه الخانة مطلوبه';
     } else if (!isNumeric(value)) {
       return 'invalid number ';
     } else if (value.length != 9) {
-      return 'phone number must be equal 9 numbers';
+      return 'يجب ان تحتوي هذه الخانة على 9 ارقام';
+    }
+  }
+  String validateNumber(String value) {
+    if (value == null || value == '') {
+      return ' هذه الخانة مطلوبه';
+    } else if (!isNumeric(value)) {
+      return 'يرجى ادخال ارقام ';
     }
   }
 
+  String validateText(String value) {
+    if (value == null || value == '') {
+      return ' هذه الخانة مطلوبه';
+    }
+  }
 
   bool isLogin;
 
