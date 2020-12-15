@@ -28,15 +28,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:sweetalert/sweetalert.dart';
 import 'favourite.dart';
 
 class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    AuthProvider authProviderFalse = Provider.of<AuthProvider>(
-        context, listen: false);
+    AuthProvider authProviderFalse =
+        Provider.of<AuthProvider>(context, listen: false);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -48,103 +47,118 @@ class ProfileScreen extends StatelessWidget {
             children: [
               authProvider.isLogin
                   ? Column(
-                children: [
-                  SizedBox(
-                    height: ScreenUtil().setHeight(25),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      height: ScreenUtil().setHeight(95),
-                      width: ScreenUtil().setWidth(95),
-                      padding: EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        boxShadow: sCardShadow2,
-                        borderRadius: BorderRadius.circular(100),
-                        color: kPinkLight.withOpacity(0.8),
-                          gradient: LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [Colors.white,kPinkLight, kPinkDark,kBorder])
-                      ),
-                      child:SvgPicture.asset(
-                        'assets/svg/beauty0.svg',color:Colors.white,
-                      ),
-                    ),
-                    onTap: () async {
-                      print(await SPHelper.spHelper.getToken());
-                      print(await SPHelper.spHelper.getUser());
-                    },
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(10),
-                  ),
-                  Text(
-                    authProvider.showProfileModel.data.displayName,
-                    style: kName,
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(5),
-                  ),
-                  Text(
-                    authProvider.showProfileModel.data.email,
-                    style: kSubTitleSign.copyWith(
-                      fontSize: ScreenUtil().setSp(13),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(25),
-                  ),
-                ],
-              )
+                      children: [
+                        SizedBox(
+                          height: ScreenUtil().setHeight(25),
+                        ),
+                        GestureDetector(
+                          child: Container(
+                            height: ScreenUtil().setHeight(95),
+                            width: ScreenUtil().setWidth(95),
+                            padding: EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                                boxShadow: sCardShadow2,
+                                borderRadius: BorderRadius.circular(100),
+                                color: kPinkLight.withOpacity(0.8),
+                                gradient: LinearGradient(
+                                    begin: Alignment.topRight,
+                                    end: Alignment.bottomLeft,
+                                    colors: [
+                                      Colors.white,
+                                      kPinkLight,
+                                      kPinkDark,
+                                      kBorder
+                                    ])),
+                            child: SvgPicture.asset(
+                              'assets/svg/beauty0.svg',
+                              color: Colors.white,
+                            ),
+                          ),
+                          onTap: () async {
+                            print(await SPHelper.spHelper.getToken());
+                            print(await SPHelper.spHelper.getUser());
+                          },
+                        ),
+                        authProvider.showProfileModel == null
+                            ? Center(
+                                child: Text(
+                                'هناك خطأ بالتسجيل\n يرجى تسجيل الخروج',
+                                style: kSeeAll.copyWith(
+                                    fontFamily: 'Cairo-Regular', fontSize: 18),
+                              ))
+                            : Column(
+                                children: [
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(10),
+                                  ),
+                                  Text(
+                                    authProvider.showProfileModel.data
+                                            .displayName ??
+                                        '3beauty',
+                                    style: kName,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(5),
+                                  ),
+                                  Text(
+                                    authProvider.showProfileModel.data.email ??
+                                        '3beauty',
+                                    style: kSubTitleSign.copyWith(
+                                      fontSize: ScreenUtil().setSp(13),
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(
+                                    height: ScreenUtil().setHeight(25),
+                                  ),
+                                ],
+                              ),
+                      ],
+                    )
                   : Column(
-                children: [
-                  SizedBox(
-                    height: ScreenUtil().setHeight(50),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        'يرجى منك ',
-                        style: kSeeAll.copyWith(
-                            fontFamily: 'Cairo-Regular', fontSize: 18),
-                      ),
-                      Button(
-                          text: 'تسجيل الدخول',
-                          onTap: () {
-                            tabControllerConstant.animateTo(0);
-                            kNavigatorPush(context, SignIn());
-                          }
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: ScreenUtil().setHeight(50),
-                  ),
-                ],
-              ),
+                      children: [
+                        SizedBox(
+                          height: ScreenUtil().setHeight(50),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'يرجى منك ',
+                              style: kSeeAll.copyWith(
+                                  fontFamily: 'Cairo-Regular', fontSize: 18),
+                            ),
+                            Button(
+                                text: 'تسجيل الدخول',
+                                onTap: () {
+                                  tabControllerConstant.animateTo(0);
+                                  kNavigatorPush(context, SignIn());
+                                }),
+                          ],
+                        ),
+                        SizedBox(
+                          height: ScreenUtil().setHeight(50),
+                        ),
+                      ],
+                    ),
             ],
           ),
           MyDivider(),
           Visibility(
-            visible: authProvider.isLogin,
+            visible: authProvider.isLogin && authProvider.showProfileModel != null,
             child: ContainerCart(
               // height: 250,
               child: Column(
                 children: [
                   GestureDetector(
-                    onTap: () async {
-
-                    },
+                    onTap: () async {},
                     child: GestureDetector(
-
                       child: ListTileProfile(
-                          onTap: () async {
-                            authProviderFalse.setLoadEdit(false);
-                    },
+                        onTap: () async {
+                          authProviderFalse.setLoadEdit(false);
+                        },
                         title: 'معلومات الحساب ',
                         image: 'assets/svg/personBtn.svg',
                         route: AccountInformations(),
@@ -153,14 +167,13 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   MyDivider(),
                   ListTileProfile(
-                    title: 'المفضلة',
-                    image: 'assets/svg/favBtn.svg',
-                    route: Favourite(),
+                      title: 'المفضلة',
+                      image: 'assets/svg/favBtn.svg',
+                      route: Favourite(),
                       onTap: () {
                         Provider.of<ApiProvider>(context, listen: false)
                             .getAllFav();
-                      }
-                  ),
+                      }),
                   MyDivider(),
                   ListTileProfile(
                     title: 'طلباتي',
@@ -168,9 +181,8 @@ class ProfileScreen extends StatelessWidget {
                     route: MyOrder(),
                     onTap: () {
                       Provider.of<ApiProvider>(context, listen: false)
-                          .getAllOrder() ;
-                    }
-                    ,
+                          .getAllOrder();
+                    },
                   ),
                 ],
               ),
@@ -187,14 +199,14 @@ class ProfileScreen extends StatelessWidget {
                 // ),
                 // MyDivider(),
                 ListTileProfile(
-                  onTap: ()=>print(''),
+                  onTap: () => print(''),
                   title: 'الدعم و المساندة',
                   image: 'assets/svg/soundBtn.svg',
                   route: HelpCenter(),
                 ),
                 MyDivider(),
                 ListTileProfile(
-                  onTap: ()=>print(''),
+                  onTap: () => print(''),
                   title: 'من نحن',
                   image: 'assets/svg/aboutBtn.svg',
                   route: AboutUs(),
@@ -206,17 +218,16 @@ class ProfileScreen extends StatelessWidget {
                         ConnectivityHStatus.online) {
                       Share.share(
                           Platform.isAndroid
-                              ?
-                          'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US&gl=US'
+                              ? 'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US&gl=US'
                               : 'https://apps.apple.com/us/app/facebook/id284882215',
                           subject: 'استمتع باروع التخفيضات');
                     } else {
-                      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                      Get.snackbar(
+                        'رسالة تحذير',
+                        'لايوجد اتصال بالانترنت',
                         titleText: Text(
                           'لا يوجد اتصال بالانترنت',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold
-                          ),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         messageText: Text(
@@ -244,35 +255,35 @@ class ProfileScreen extends StatelessWidget {
           ),
           Visibility(
             visible: authProvider.isLogin,
-
             child: ContainerCart(
               // height: 85,
               child: GestureDetector(
                 onTap: () {
                   if (ConnectivityService.connectivityStatus ==
                       ConnectivityHStatus.online) {
-
-                    showDialog(context: context,
-                        builder: (BuildContext context){
-                      return CustomDialogBox(
-                        title: "هل تريد تسجيل الخروج",
-                        descriptions: "نتمنى لكم ان تكونو مسرورين بما نقدمه من منتجات و عروض و نسعد بزيارتكم",
-                        text: "خروج",
-                        onTap: (){
-                          Provider.of<DBProvider>(context, listen: false)
-                              .deleteAllProduct();
-                          authProviderFalse.signOut();
-                          kNavigatorPush(context, SignIn());
-                        },
-                      );
-                    });
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CustomDialogBox(
+                            title: "هل تريد تسجيل الخروج",
+                            descriptions:
+                                "نتمنى لكم ان تكونو مسرورين بما نقدمه من منتجات و عروض و نسعد بزيارتكم",
+                            text: "خروج",
+                            onTap: () {
+                              Provider.of<DBProvider>(context, listen: false)
+                                  .deleteAllProduct();
+                              authProviderFalse.signOut();
+                              kNavigatorPush(context, SignIn());
+                            },
+                          );
+                        });
                   } else {
-                    Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+                    Get.snackbar(
+                      'رسالة تحذير',
+                      'لايوجد اتصال بالانترنت',
                       titleText: Text(
                         'لا يوجد اتصال بالانترنت',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold
-                        ),
+                        style: TextStyle(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                       messageText: Text(

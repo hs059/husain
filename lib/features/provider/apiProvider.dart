@@ -260,7 +260,14 @@ setSubCategoryNull(){
     notifyListeners();
   }
 
+  bool revBool = false ;
+  setRevBool(bool value){
+    this.revBool =value ;
+    Logger().d(revBool);
+    notifyListeners();
+  }
   Future<Map> addRev(int productId) async {
+    setRevBool(true);
     Map map = await ApiClient.apiClient.addRev(productId, rating, comment);
     if (map['code']) {
       Fluttertoast.showToast(
@@ -272,7 +279,7 @@ setSubCategoryNull(){
           fontSize: 16.0
       );
       getProductRevCon(productId);
-
+      setRevBool(false);
       return map;
     }
   }
@@ -410,7 +417,7 @@ Map privacyPolicy ;
     toggleLoadCoupon();
     if(couponModel.status){
       setCheckCoupon(true);
-
+      setInitialPrizeCoupon(true);
     }else{
       Fluttertoast.showToast(
           msg: "كود كوبون غير صالح",
@@ -437,4 +444,9 @@ Map privacyPolicy ;
     notifyListeners();
   }
 
+  bool initialPrizeCoupon =false ;
+  setInitialPrizeCoupon(bool value){
+    this.initialPrizeCoupon = value ;
+    notifyListeners() ;
+  }
 }

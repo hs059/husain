@@ -53,6 +53,8 @@ class CheckOut extends StatelessWidget {
     DBProvider dbProvider = Provider.of<DBProvider>(context);
     DBProvider dbProviderFalse =
         Provider.of<DBProvider>(context, listen: false);
+    ApiProvider apiProviderFalse =
+        Provider.of<ApiProvider>(context, listen: false);
     UiProvider uiProviderFalse =
         Provider.of<UiProvider>(context, listen: false);
     List<ProductSql> allProducts = Provider.of<DBProvider>(context).allProducts;
@@ -397,7 +399,7 @@ class CheckOut extends StatelessWidget {
                               Consumer<ApiProvider>(
                                 builder: (context, value, child) {
                                           if(value.couponModel !=null){
-                                            return   Column(
+                                            return  apiProvider.initialPrizeCoupon? Column(
                                               children: [
                                                 apiProvider.couponModel.data !=null?
                                                 Column(
@@ -457,7 +459,7 @@ class CheckOut extends StatelessWidget {
                                                 ),
 
                                               ],
-                                            );
+                                            ) :Container();
                                           }else{
                                             return Container() ;
                                           }
@@ -593,7 +595,7 @@ class CheckOut extends StatelessWidget {
                         );
                         uiProvider.paymentGroup == paymentList[0]
                             ? kNavigatorPush(context,
-                                Fatoorah(prizeCoupon ==0.0 || prizeCoupon ==null?
+                                Fatoorah(prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
                                     dbProvider.totalPrize.toString():prizeCoupon.toString())
                         )
                             : showDialog(
@@ -606,6 +608,7 @@ class CheckOut extends StatelessWidget {
                                   },
                                 ),
                               );
+                        apiProviderFalse.setInitialPrizeCoupon(false);
                       } else if (deffult.isNotEmpty) {
                         Provider.of<ApiProvider>(context, listen: false)
                             .createOrder(
@@ -623,7 +626,7 @@ class CheckOut extends StatelessWidget {
                         uiProvider.paymentGroup == paymentList[0]
                             ? kNavigatorPush(context,
                                 Fatoorah(
-                                    prizeCoupon ==0.0 || prizeCoupon ==null?
+                                    prizeCoupon ==0.0 || prizeCoupon ==null||apiProvider.initialPrizeCoupon ==false?
                                     dbProvider.totalPrize.toString():prizeCoupon.toString())
                         )
                             : showDialog(
@@ -636,6 +639,7 @@ class CheckOut extends StatelessWidget {
                                   },
                                 ),
                               );
+                        apiProviderFalse.setInitialPrizeCoupon(false);
                       } else {
                         Fluttertoast.showToast(
                             msg: 'أضف عنوان التوصيل',

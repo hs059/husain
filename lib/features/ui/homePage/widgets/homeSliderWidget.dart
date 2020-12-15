@@ -124,7 +124,7 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                               //Todo:push with product ID
                                               Container(
                                                 child: Button(
-                                                    text: '  Shop Now  ',
+                                                    text: '  شراء الآن ',
                                                     onTap: () async {
                                                       // Provider.of<ApiProvider>(
                                                       //     context,

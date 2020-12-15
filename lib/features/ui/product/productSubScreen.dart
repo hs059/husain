@@ -313,7 +313,15 @@ class ProductSubScreen extends StatelessWidget {
                         List<productClass.Reviews> reviews =
                             productM.data.reviews;
                         if (productM.data.reviews.isNotEmpty) {
-                          return ListView.builder(
+                          return apiProvider.revBool?SizedBox(
+                            height: 3,
+                            child: LinearProgressIndicator(
+                              backgroundColor:
+                              Theme.of(context).accentColor.withOpacity(0.2),
+                              valueColor:
+                              new AlwaysStoppedAnimation<Color>(kPinkLight),
+                            ),
+                          ) :ListView.builder(
                             shrinkWrap: true,
                             primary: false,
                             itemCount: reviews.length,
@@ -378,7 +386,7 @@ class ProductSubScreen extends StatelessWidget {
                               );
                             },
                           );
-                        } else {
+                        } else{
                           return Center(
                               child: Text('لا يوجد تعليقات أضف تعليقك ...',
                                   style: TextStyle(

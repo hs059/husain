@@ -503,10 +503,33 @@ class _FatoorahState extends State<Fatoorah> {
                   ),
                 ),
               ),
+            _response.length<12 &&_response.isNotEmpty ?Column(
+                children: [
+                  SizedBox(
+                    height: 3,
+                    child: LinearProgressIndicator(
+                      backgroundColor: Theme.of(context)
+                          .accentColor
+                          .withOpacity(0.2),
+                      valueColor: new AlwaysStoppedAnimation<Color>(
+                          kPinkLight),
+                    ),
+                  ),
+                  Center(
+                    child: Text(
+                      'جاري تحضير بوابات الدفع',
+                      style: kSeeAll.copyWith(
+                          fontFamily: 'Cairo-Regular', fontSize: 18),
+                    ),
+                  ),
+                ],
+              ):Container(),
               Padding(
                 padding: EdgeInsets.all(5.0),
               ),
-              Text("اختار بوابة الدفع"),
+              Text("إختار طريقة الدفع",style: TextStyle(
+                  fontWeight: FontWeight.bold
+              ),),
               Padding(
                 padding: EdgeInsets.all(5.0),
               ),

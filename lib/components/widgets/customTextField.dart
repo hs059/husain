@@ -59,6 +59,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         onSaved: (newValue) => widget.onSaved(newValue),
        onChanged: (value){widget.onSaved(value);},
         obscureText:widget.password?toggleEye:false,
+
         cursorColor: Colors.grey,
         keyboardType: widget.textInputType,
         decoration: InputDecoration(
