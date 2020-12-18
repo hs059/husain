@@ -102,6 +102,20 @@
     <string>This app needs access to location when open.</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>This app needs access to location when in the background.</string>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>twitterkit-bsrsIrms09tBGoMGq4WkI1oUE</string>
+        </array>
+      </dict>
+    </array>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>twitter</string>
+        <string>twitterauth</string>
+    </array>
 
 
 </dict>

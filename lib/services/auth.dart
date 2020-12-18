@@ -53,6 +53,8 @@ class Auth {
 
       // Get the Logged In session
       final TwitterSession twitterSession = loginResult.session;
+      Logger().d(twitterSession.token);
+      Logger().d(twitterSession.secret);
       // Create a credential from the access token
       final AuthCredential twitterAuthCredential =
       TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);

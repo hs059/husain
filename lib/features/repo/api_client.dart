@@ -200,6 +200,14 @@ class ApiClient {
     await initApi() ;
     FormData data = FormData.fromMap({
       "id":socialId,
+      "userName":'hussein',
+      "displayName":displayName,
+      "mobileNumber":mobileNumber,
+      "email":email,
+      "type":type
+    });
+    Logger().d({
+      "id":socialId,
       "userName":email,
       "displayName":displayName,
       "mobileNumber":mobileNumber,

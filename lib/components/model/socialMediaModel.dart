@@ -45,7 +45,7 @@ class Data {
         this.notificationStatus});
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    id = json['id'].toString();
     socialId = json['social_id'];
     email = json['email'];
     userName = json['user_name'];
