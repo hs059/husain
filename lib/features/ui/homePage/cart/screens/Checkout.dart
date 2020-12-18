@@ -5,7 +5,6 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemCheckOut.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/cartItemWidget.dart';
-import 'package:beauty/features/ui/homePage/cart/widgets/date&time.dart';
 import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/services/location.dart';
 import 'package:beauty/value/constant.dart';
@@ -21,7 +20,6 @@ import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/navigator.dart';
-import 'package:day_night_time_picker/lib/daynight_timepicker.dart';
 
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/bottomNavigationBarCart.dart';
@@ -32,7 +30,6 @@ import 'package:beauty/features/ui/homePage/cart/widgets/dialogConfirmOrder.dart
 import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
-import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';

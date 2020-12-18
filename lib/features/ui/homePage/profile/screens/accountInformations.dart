@@ -1,15 +1,12 @@
 
-import 'package:beauty/components/widgets/btn.dart';
+
 import 'package:beauty/components/widgets/customTextField.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
-import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
-import 'package:beauty/features/ui/signUI/screens/signIn.dart';
-import 'package:beauty/services/sp_helper.dart';
+
 import 'package:beauty/value/colors.dart';
-import 'package:beauty/value/navigator.dart';
-import 'package:beauty/value/shadow.dart';
+
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';

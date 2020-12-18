@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>com.a7seen.3beauty</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -53,25 +53,11 @@
     		<array>
     			<!-- TODO Replace this value: -->
     			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-    			<string>com.googleusercontent.apps.55748411856-d5idvpts5fjqvephr4hioj78cq0nmmgl</string>
+    			<string>com.googleusercontent.apps.55748411856-f8st6nnbbrtekn3jolrdqp1hmnphqhn0</string>
     		</array>
     	</dict>
     </array>
     <!-- End of the Google Sign-in Section -->
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>twitterkit-<consumerKey></string>
-        </array>
-      </dict>
-    </array>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>twitter</string>
-        <string>twitterauth</string>
-    </array>
     <key>FirebaseAppDelegateProxyEnabled</key>
     <false/>
 
@@ -112,6 +98,10 @@
     <array>
       <string>whatsapp</string>
     </array>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>This app needs access to location when in the background.</string>
 
 
 </dict>

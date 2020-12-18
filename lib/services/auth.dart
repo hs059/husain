@@ -1,7 +1,6 @@
 import 'package:beauty/services/sp_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,7 +14,6 @@ class Auth {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   GoogleSignIn googleSignIn = GoogleSignIn();
-  FacebookLogin facebookLogin = FacebookLogin();
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
@@ -58,6 +56,7 @@ class Auth {
       // Create a credential from the access token
       final AuthCredential twitterAuthCredential =
       TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);
+      Logger().d(  twitterAuthCredential.signInMethod);
       // Once signed in, return the UserCredential
       UserCredential userCredential  = await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
       Logger().d(  userCredential.user.email);

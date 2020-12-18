@@ -196,11 +196,12 @@ class ApiClient {
   }
   ///////////////////////////////////////////////////////////////////////////////////////
 
-  Future<Map> socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type  )async{
+  Future<Map> socialMediaLogin(String socialId ,String displayName,String mobileNumber ,String email,String type  )async{
     await initApi() ;
     FormData data = FormData.fromMap({
       "id":socialId,
-      "userName":userName,
+      "userName":email,
+      "displayName":displayName,
       "mobileNumber":mobileNumber,
       "email":email,
       "type":type

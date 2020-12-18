@@ -4,7 +4,6 @@ import 'package:beauty/components/model/categoryModel.dart';
 import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/components/widgets/LoaderGif.dart';
 import 'package:beauty/components/widgets/animationCart.dart';
-import 'package:beauty/components/widgets/serchTextFormField.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/ui/homePage/Category/Screens/subCategory.dart';

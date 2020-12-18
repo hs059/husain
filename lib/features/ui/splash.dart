@@ -83,7 +83,10 @@ class _SplashState extends State<Splash> {
     }, onLaunch: (Map<String, dynamic> message) async {
       print('on launch  $message');
       setState(() {});
-    });
+    },
+
+    );
+
   }
 
   @override

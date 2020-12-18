@@ -237,6 +237,7 @@ class _AddNewAddressState extends State<AddNewAddress> with SingleTickerProvider
                               fillColor: Color(0xffF5F8FD),
                               suffixIcon: GestureDetector(
                                 onTap: () {
+                                  Location.location.getCurrentLocation();
                                   uiProviderFalse.setNewAddress(Location.location.currentAddress==null?'':Location.location.currentAddress.toString());
                                   _controller.forward();
                                 },

@@ -1,28 +1,14 @@
-import 'package:beauty/components/model/brandModel.dart';
-import 'package:beauty/components/model/ProductModel.dart';
-import 'package:beauty/components/model/productsSQL.dart';
-import 'package:beauty/components/widgets/myDivider.dart';
-import 'package:beauty/features/provider/apiProvider.dart';
-import 'package:beauty/features/provider/authProvider.dart';
-import 'package:beauty/features/provider/db_provider.dart';
-import 'package:beauty/features/repo/api_client.dart';
-import 'package:beauty/features/repo/api_repo.dart';
-import 'package:beauty/features/repo/db_client.dart';
-import 'package:beauty/features/ui/homePage/profile/screens/showProduct.dart';
+
 import 'package:beauty/features/ui/homePage/screens/search.dart';
 import 'package:beauty/features/ui/homePage/widgets/brandSection.dart';
 import 'package:beauty/features/ui/homePage/widgets/homeSliderWidget.dart';
-import 'package:beauty/features/ui/homePage/widgets/productItemList.dart';
 import 'package:beauty/features/ui/homePage/widgets/section.dart';
-import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
-import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
-import 'package:beauty/value/shadow.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:provider/provider.dart';
+
 
 class Home extends StatelessWidget {
   @override

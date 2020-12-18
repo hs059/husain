@@ -166,8 +166,8 @@ class ApiRepository {
     return productModel ;
     }
   }
-  Future<SocialMedia> socialMediaLogin(String socialId ,String userName,String mobileNumber ,String email,String type )async{
-    Map map = await ApiClient.apiClient.socialMediaLogin(socialId, userName, mobileNumber, email, type);
+  Future<SocialMedia> socialMediaLogin(String socialId ,String displayName,String mobileNumber ,String email,String type )async{
+    Map map = await ApiClient.apiClient.socialMediaLogin(socialId, displayName, mobileNumber, email, type);
     if(map['code']){
       SocialMedia socialMediaData  = SocialMedia.fromJson(map);
       print(socialMediaData.message);

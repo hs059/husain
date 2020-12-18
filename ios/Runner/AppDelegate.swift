@@ -11,6 +11,9 @@ import Flutter
     UIApplication.shared.isStatusBarHidden = false
     GMSServices.provideAPIKey("AIzaSyBf42fWF7gncQQJn_mOsmPX6NJqyeFJWrY")
     GeneratedPluginRegistrant.register(with: self)
+    if #available(iOS 10.0, *) {
+      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+    }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

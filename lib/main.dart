@@ -24,11 +24,7 @@ import 'features/ui/homePage/cart/screens/addnewAddress.dart';
 import 'features/ui/homePage/homePage.dart';
 import 'features/ui/onboardingUI/screens/onboarding.dart';
 
-import 'features/ui/signUI/screens/Verification.dart';
-import 'features/ui/signUI/screens/resetPassword.dart';
-import 'features/ui/signUI/screens/signIn.dart';
-import 'features/ui/signUI/screens/signUp.dart';
-import 'package:flutter/material.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 
 import 'features/ui/splash.dart';

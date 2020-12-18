@@ -488,18 +488,19 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  socialMediaLogin(String socialId, String userName, String mobileNumber,
+  socialMediaLogin(String socialId, String displayName, String mobileNumber,
       String email, String type,BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
 
     SocialMedia socialMedia = await ApiRepository.apiRepository
-        .socialMediaLogin(socialId, userName, mobileNumber, email, type);
+        .socialMediaLogin(socialId, displayName, mobileNumber, email, type);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
 
     SPHelper.spHelper.setToken(socialMedia.data.token);
     SPHelper.spHelper.setUser(socialMedia.data.id);
     SPHelper.spHelper.setIsLogin(true);
     SPHelper.spHelper.setIsLoginSocial(true);
+    Logger().d(socialMedia.toJson());
     getLogin();
     getLoginSocial();
     kNavigatorPush(context, HomePage());
@@ -514,11 +515,11 @@ class AuthProvider extends ChangeNotifier {
       Logger().d(userCredential.user.displayName);
       Logger().d(userCredential.user.tenantId);
       String socialId = userCredential.user.uid;
-      String userName = userCredential.user.displayName;
+      String displayName = userCredential.user.displayName;
       String email = userCredential.user.email;
       String phoneNumber = userCredential.user.phoneNumber??'';
       String type = 'twitter';
-      socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
+      socialMediaLogin(socialId, displayName, phoneNumber, email, type,context);
     }else{
       Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
         titleText:  Text(
@@ -546,11 +547,11 @@ class AuthProvider extends ChangeNotifier {
       Logger().d(userCredential.user.displayName);
       Logger().d(userCredential.user.uid);
       String socialId = userCredential.user.uid;
-      String userName = userCredential.user.displayName;
+      String displayName = userCredential.user.displayName;
       String email = userCredential.user.email;
       String phoneNumber = userCredential.user.phoneNumber??'';
       String type = 'gmail';
-      socialMediaLogin(socialId, userName, phoneNumber, email, type,context);
+      socialMediaLogin(socialId, displayName, phoneNumber, email, type,context);
     }else{
       Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
         titleText:  Text(
@@ -577,14 +578,14 @@ class AuthProvider extends ChangeNotifier {
       Map userData = await Auth.auth.signInWithFacebook();
       Logger().d(userData);
       String socialId = userData['id'] ;
-      String userName = userData['name'];
+      String displayName = userData['name'];
       String email = userData['email'] ;
       String type = 'facebook';
       Logger().d(userData['name']);
       Logger().d(userData);
       Logger().d(userData['email']);
       Logger().d(userData['id']);
-      socialMediaLogin(socialId, userName, '99999999999', email, type,context);
+      socialMediaLogin(socialId, displayName, '', email, type,context);
     }else{
       Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
         titleText:  Text(
