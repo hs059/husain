@@ -94,8 +94,7 @@ class ProductItemGrid extends StatelessWidget {
                                     errorWidget: (context, url, error) =>
                                         Image.asset('assets/images/3beauty.png',
                                           fit: BoxFit.contain,),
-                                    height: ScreenUtil().setHeight(50),
-                                    fit: BoxFit.contain
+                                    fit: BoxFit.fill
                                 ),
                               ) : Image.asset(
                                 'assets/images/3beauty.png',

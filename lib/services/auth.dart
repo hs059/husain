@@ -38,6 +38,8 @@ class Auth {
 
     return  userCredential;
   }
+
+
   Future<UserCredential> signInWithTwitter() async {
     // Create a TwitterLogin instance
     try {
@@ -53,19 +55,15 @@ class Auth {
 
       // Get the Logged In session
       final TwitterSession twitterSession = loginResult.session;
-      Logger().d(twitterSession.token);
-      Logger().d(twitterSession.secret);
+      Logger().e(twitterSession.token);
+      Logger().e(twitterSession.secret);
       // Create a credential from the access token
       final AuthCredential twitterAuthCredential =
       TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);
-      Logger().d(  twitterAuthCredential.signInMethod);
+      Logger().e(  twitterAuthCredential.signInMethod);
       // Once signed in, return the UserCredential
       UserCredential userCredential  = await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
-      Logger().d(  userCredential.user.email);
-      Logger().d(  userCredential.user.displayName);
-      Logger().d(  userCredential.user.uid);
-      Logger().d( userCredential.user.phoneNumber);
-      Logger().d( userCredential.user.photoURL);
+      Logger().e( await userCredential.user.getIdToken());
 
       return userCredential;
     }  catch (e) {

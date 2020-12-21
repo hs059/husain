@@ -7,8 +7,6 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    var flutter_native_splash = 1
-    UIApplication.shared.isStatusBarHidden = false
     GMSServices.provideAPIKey("AIzaSyBf42fWF7gncQQJn_mOsmPX6NJqyeFJWrY")
     GeneratedPluginRegistrant.register(with: self)
     if #available(iOS 10.0, *) {

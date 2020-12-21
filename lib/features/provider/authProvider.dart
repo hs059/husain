@@ -511,9 +511,7 @@ class AuthProvider extends ChangeNotifier {
     if (ConnectivityService.connectivityStatus ==
         ConnectivityHStatus.online) {
       UserCredential userCredential = await Auth.auth.signInWithTwitter();
-      Logger().d(userCredential.user.email);
-      Logger().d(userCredential.user.displayName);
-      Logger().d(userCredential.user.tenantId);
+
       String socialId = userCredential.user.uid;
       String displayName = userCredential.user.displayName;
       String email = userCredential.user.email;
