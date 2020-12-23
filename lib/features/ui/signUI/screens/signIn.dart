@@ -257,7 +257,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                     Tween(begin: 0.0, end: 1.0).animate(controller),
                                 child: GestureDetector(
                                   onTap: () async{
-                                    authProviderFalse.signInWithTwitter(context);
+                                  //  authProviderFalse.signInWithTwitter(context);
                                     Provider.of<ApiProvider>(context,listen: false).getAllFav();
                                     Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
 

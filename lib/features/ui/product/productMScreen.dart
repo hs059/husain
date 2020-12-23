@@ -20,6 +20,7 @@ import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -152,11 +153,11 @@ class ProductMScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.0),
                             color: Colors.white,
                           ),
-                          child: image!= ''?CachedNetworkImage(
-                              imageUrl: image,
+                          child: image!= ''&&!(rejectImg.where((element) =>element ==image).toList().length ==1)?CachedNetworkImage(
+                              imageUrl: (rejectImg.where((element) =>element ==image).toList().length ==1)?'': image,
                               placeholder: (context, url) => LoaderGif1(),
                               errorWidget: (context, url, error) =>
-                                  Icon(Icons.image),
+                                  Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
                               height: ScreenUtil().setHeight(50),
                               fit: BoxFit.contain
                           ):Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),

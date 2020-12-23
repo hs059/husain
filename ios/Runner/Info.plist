@@ -53,7 +53,7 @@
     		<array>
     			<!-- TODO Replace this value: -->
     			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
-    			<string>com.googleusercontent.apps.55748411856-f8st6nnbbrtekn3jolrdqp1hmnphqhn0</string>
+    			<string>com.googleusercontent.apps.55748411856-o672n937fhg89uiq5ecs6aej1ncks0su</string>
     		</array>
     	</dict>
     </array>
@@ -102,20 +102,7 @@
     <string>This app needs access to location when open.</string>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>This app needs access to location when in the background.</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-      <dict>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>twitterkit-bsrsIrms09tBGoMGq4WkI1oUE</string>
-        </array>
-      </dict>
-    </array>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>twitter</string>
-        <string>twitterauth</string>
-    </array>
+
 
 
 </dict>

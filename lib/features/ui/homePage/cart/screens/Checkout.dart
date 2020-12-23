@@ -431,12 +431,16 @@ class CheckOut extends StatelessWidget {
                                                         ),
                                                         Builder(
                                                           builder: (context) {
-                                                            prizeCoupon =  dbProvider.totalPrize - (
-                                                                dbProvider.totalPrize *double.parse(
-                                                                    apiProvider.couponModel.data ==null?'0': apiProvider.couponModel.data.amount
-                                                                )/100);
+                                                            if(apiProvider.couponModel.data.type == 'percent'){
+                                                              prizeCoupon =  dbProvider.totalPrize - (
+                                                                  dbProvider.totalPrize *double.parse(
+                                                                      apiProvider.couponModel.data ==null?'0': apiProvider.couponModel.data.amount
+                                                                  )/100);
 
-                                                            return Text(
+                                                            }else{
+                                                              prizeCoupon =  dbProvider.totalPrize - double.parse(apiProvider.couponModel.data.amount);
+                                                            }
+                                                             return Text(
                                                               prizeCoupon.toStringAsFixed(2) +
                                                                   ' ' +
                                                                   currency,

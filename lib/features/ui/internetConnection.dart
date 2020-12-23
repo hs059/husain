@@ -43,3 +43,6 @@ class InternetConnection extends StatelessWidget {
     );
   }
 }
+// https://3beauty.net/wp-content/uploads/2020/11/43-150x150.jpg
+// https://3beauty.net/wp-content/uploads/2020/11/35.jpg
+// https://3beauty.net/wp-content/uploads/2020/11/42.jpg

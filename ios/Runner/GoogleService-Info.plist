@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>55748411856-f8st6nnbbrtekn3jolrdqp1hmnphqhn0.apps.googleusercontent.com</string>
+	<string>55748411856-o672n937fhg89uiq5ecs6aej1ncks0su.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.55748411856-f8st6nnbbrtekn3jolrdqp1hmnphqhn0</string>
+	<string>com.googleusercontent.apps.55748411856-o672n937fhg89uiq5ecs6aej1ncks0su</string>
 	<key>ANDROID_CLIENT_ID</key>
 	<string>55748411856-u1qgednabjp7m6ff4cccvqj622280fns.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
@@ -15,7 +15,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.a7seen.3beauty</string>
+	<string>com.a7seen.beauty</string>
 	<key>PROJECT_ID</key>
 	<string>beauty-39590</string>
 	<key>STORAGE_BUCKET</key>
@@ -31,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:55748411856:ios:8f369e2005eb75d527f9d5</string>
+	<string>1:55748411856:ios:3ea037a2ec047b7a27f9d5</string>
 	<key>DATABASE_URL</key>
 	<string>https://beauty-39590.firebaseio.com</string>
 </dict>

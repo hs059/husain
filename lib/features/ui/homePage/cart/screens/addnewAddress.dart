@@ -34,7 +34,7 @@ class AddNewAddress extends StatefulWidget {
 }
 
 class _AddNewAddressState extends State<AddNewAddress> with SingleTickerProviderStateMixin {
-  final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+ // final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
   GlobalKey<FormState> formKeyAddNewAddress = GlobalKey<FormState>();
   String currentAddress;
   String name;

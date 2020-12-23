@@ -20,6 +20,7 @@ import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
+import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ class ProductSliderScreen extends StatelessWidget {
                   String sizePerUnit  = product.data.sizePerUnit??'';
                   bool isFavourited  =product.data.isFavourited??false;
                   String image =product.data.images[0].imageUrl;
+                  (rejectImg.where((element) =>element ==image).toList().length ==1)?image ='' :image =image;
                   String categoryName = product.data.category.isEmpty ? 'سيتم تصنيفه قريبا':product.data.category.first.parent.name;
                   List<Reviews > reviews =product.data.reviews??[];
                   getproduct(){
@@ -137,8 +139,8 @@ class ProductSliderScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.0),
                             color: Colors.white,
                           ),
-                          child: image!= ''?CachedNetworkImage(
-                              imageUrl: image,
+                          child: image!= ''&&!(rejectImg.where((element) =>element ==image).toList().length ==1)?CachedNetworkImage(
+                              imageUrl: (rejectImg.where((element) =>element ==image).toList().length ==1)?'':image,
                               placeholder: (context, url) => LoaderGif1(),
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.image),

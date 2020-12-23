@@ -13,6 +13,7 @@ import 'package:beauty/services/location.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'Category/Screens/category.dart';
 import 'package:beauty/features/ui/homePage/screens/home.dart';
@@ -62,9 +63,6 @@ class _HomePageState extends State<HomePage>
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: Scaffold(
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: () => Location.location.getAddressFromLatLng(),
-            // ),
             body: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               controller: tabControllerConstant,

@@ -1,22 +1,21 @@
-//
-//
+
+
 // import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 // import 'package:geocoder/geocoder.dart';
 // import 'package:geocoder/model.dart';
 // import 'package:geolocator/geolocator.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-//
+
 // class MyMap extends StatefulWidget {
 //   @override
 //   _MyMapState createState() => _MyMapState();
 // }
-//
+
 // class _MyMapState extends State<MyMap> {
 //   final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-//
+
 //   static LatLng flutterCoffee = LatLng(31.509557, 34.421466);
-//
+
 //   Set<Marker> myMarkers = {
 //     Marker(
 //       infoWindow: InfoWindow(title: 'flutterCoffee'),
@@ -25,10 +24,10 @@
 //     ),
 //   };
 //   GoogleMapController controller;
-//
+
 //   LatLng myLocation;
 //   String locationName;
-//
+
 //   Future<LatLng> getCurrentLocation() async {
 //     Geolocator geolocator = Geolocator();
 //     Position position = await geolocator.getCurrentPosition(
@@ -36,7 +35,7 @@
 //     myLocation = LatLng(position.latitude, position.longitude);
 //     return myLocation;
 //   }
-//
+
 //   AnimateCamera(LatLng location) {
 //     controller.animateCamera(
 //       CameraUpdate.newCameraPosition(
@@ -45,7 +44,7 @@
 //     );
 //     setState(() {});
 //   }
-//
+
 //   getPlaceName(LatLng position) async {
 //     try {
 //       List<Address> addresses = await Geocoder.local
@@ -59,7 +58,7 @@
 //       print(e);
 //     }
 //   }
-//
+
 //   @override
 //   Widget build(BuildContext context) {
 //     return Scaffold(

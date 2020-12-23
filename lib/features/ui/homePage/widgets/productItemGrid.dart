@@ -13,6 +13,7 @@ import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
+import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -86,7 +87,7 @@ class ProductItemGrid extends StatelessWidget {
                             child: Container(
                               height: ScreenUtil().setHeight(127),
                               width: ScreenUtil().setWidth(162),
-                              child: imagePath != '' ? Hero(
+                              child: imagePath != ''  &&!(rejectImg.where((element) =>element ==imagePath).toList().length ==1) ? Hero(
                                 tag:'$imagePath' ,
                                 child: CachedNetworkImage(
                                     imageUrl: imagePath,
@@ -165,6 +166,8 @@ class ProductItemGrid extends StatelessWidget {
                               child: Text(
                                 title,
                                 style: k15Black,
+                                maxLines: 3,
+                                overflow:TextOverflow.ellipsis ,
                               ),
                             ),
                             SizedBox(

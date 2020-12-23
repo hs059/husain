@@ -506,36 +506,36 @@ class AuthProvider extends ChangeNotifier {
     kNavigatorPush(context, HomePage());
   }
 
-  signInWithTwitter(BuildContext context) async {
+  // signInWithTwitter(BuildContext context) async {
 
-    if (ConnectivityService.connectivityStatus ==
-        ConnectivityHStatus.online) {
-      UserCredential userCredential = await Auth.auth.signInWithTwitter();
+  //   if (ConnectivityService.connectivityStatus ==
+  //       ConnectivityHStatus.online) {
+  //     // UserCredential userCredential = await Auth.auth.signInWithTwitter();
 
-      String socialId = userCredential.user.uid;
-      String displayName = userCredential.user.displayName;
-      String email = userCredential.user.email;
-      String phoneNumber = userCredential.user.phoneNumber??'';
-      String type = 'twitter';
-      socialMediaLogin(socialId, displayName, phoneNumber, email, type,context);
-    }else{
-      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-        titleText:  Text(
-          'لا يوجد اتصال بالانترنت',
-          style: TextStyle(
-              fontWeight: FontWeight.bold
-          ),
-          textAlign: TextAlign.center,
-        ),
-        messageText: Text(
-          'يرجى فحص الاتصال بالشبكة',
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
+  //     String socialId = userCredential.user.uid;
+  //     String displayName = userCredential.user.displayName;
+  //     String email = userCredential.user.email;
+  //     String phoneNumber = userCredential.user.phoneNumber??'';
+  //     String type = 'twitter';
+  //     socialMediaLogin(socialId, displayName, phoneNumber, email, type,context);
+  //   }else{
+  //     Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
+  //       titleText:  Text(
+  //         'لا يوجد اتصال بالانترنت',
+  //         style: TextStyle(
+  //             fontWeight: FontWeight.bold
+  //         ),
+  //         textAlign: TextAlign.center,
+  //       ),
+  //       messageText: Text(
+  //         'يرجى فحص الاتصال بالشبكة',
+  //         textAlign: TextAlign.center,
+  //       ),
+  //     );
+  //   }
 
 
-  }
+  // }
 
   loginUsingGoogle(BuildContext context) async {
     if (ConnectivityService.connectivityStatus ==
@@ -549,7 +549,7 @@ class AuthProvider extends ChangeNotifier {
       String email = userCredential.user.email;
       String phoneNumber = userCredential.user.phoneNumber??'';
       String type = 'gmail';
-      socialMediaLogin(socialId, displayName, phoneNumber, email, type,context);
+      socialMediaLogin(socialId, displayName, '', email, type,context);
     }else{
       Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
         titleText:  Text(

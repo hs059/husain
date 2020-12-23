@@ -1,5 +1,6 @@
 
-import 'package:beauty/features/repo/db_client.dart';
+
+import '../../features/repo/db_client.dart';
 
 class ProductSql {
   String image;

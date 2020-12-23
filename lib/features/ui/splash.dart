@@ -33,9 +33,7 @@ class _SplashState extends State<Splash> {
     _firebaseMessaging.subscribeToTopic('all');
     String token = await _firebaseMessaging.getToken();
     _firebaseMessaging.subscribeToTopic(token);
-
     print(token);
-
   }
 
   @override
@@ -71,12 +69,12 @@ class _SplashState extends State<Splash> {
   }
   void getMessage() {
     _firebaseMessaging.configure(
-        onMessage: (Map<String, dynamic> message) async {
-          print('received message');
-          showNotification(message['notification']['title'],message['notification']['body']);
-          print(message);
-          setState(() {});
-        }, onResume: (Map<String, dynamic> message) async {
+      onMessage: (Map<String, dynamic> message) async {
+        print('received message');
+        showNotification(message['notification']['title'],message['notification']['body']);
+        print(message);
+        setState(() {});
+      }, onResume: (Map<String, dynamic> message) async {
       print('on resume $message');
 
       setState(() {});
@@ -93,44 +91,65 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: StreamBuilder<ConnectivityStatus>(stream: ConnectivityService.connectionStatusController.stream,
-            builder: (context, snapshot) {
-              if(snapshot.hasData){
+          body: StreamBuilder<ConnectivityStatus>(stream: ConnectivityService.connectionStatusController.stream,
+              builder: (context, snapshot) {
+                if(snapshot.hasData){
 
-                if( snapshot.data ==ConnectivityStatus.WiFi || snapshot.data ==ConnectivityStatus.Cellular  ){
-                  Provider.of<AuthProvider>(context, listen: false).getLogin();
-                  Provider.of<AuthProvider>(context, listen: false).getLoginSocial();
-                  Provider.of<ApiProvider>(context, listen: false).getSlider();
-                  Provider.of<ApiProvider>(context, listen: false).getSection();
-                  Provider.of<ApiProvider>(context, listen: false).getBrand();
-                  Location.location.getCurrentLocation();
-                  Provider.of<ApiProvider>(context,listen: false).getCategory();
-                  Provider.of<ApiProvider>(context,listen: false).getPrivacyPolicy();
-                  Provider.of<ApiProvider>(context,listen: false).getAllOrder();
-                  Provider.of<DBProvider>(context,listen: false).setAllProducts();
-                  Provider.of<ApiProvider>(context,listen: false).getAllAddress();
-                  Provider.of<ApiProvider>(context,listen: false).getAllFav();
+                  if( snapshot.data ==ConnectivityStatus.WiFi || snapshot.data ==ConnectivityStatus.Cellular  ){
+                    Provider.of<AuthProvider>(context, listen: false).getLogin();
+                    Provider.of<AuthProvider>(context, listen: false).getLoginSocial();
+                    Provider.of<ApiProvider>(context, listen: false).getSlider();
+                    Provider.of<ApiProvider>(context, listen: false).getSection();
+                    Provider.of<ApiProvider>(context, listen: false).getBrand();
+                    Location.location.getCurrentLocation();
+                    Provider.of<ApiProvider>(context,listen: false).getCategory();
+                    Provider.of<ApiProvider>(context,listen: false).getPrivacyPolicy();
+                    Provider.of<ApiProvider>(context,listen: false).getAllOrder();
+                    Provider.of<DBProvider>(context,listen: false).setAllProducts();
+                    Provider.of<ApiProvider>(context,listen: false).getAllAddress();
+                    Provider.of<ApiProvider>(context,listen: false).getAllFav();
 
-                  var delay = Duration(seconds: 4);
-                  Future.delayed(delay, () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(
-                      builder: (context) {
-                        return widget.screen;
-                      },
-                    ));
-                  });
-                  return  JelloIn(
-                    duration : Duration(milliseconds: 1500),
-                    animate: true,
-                    child: Center(
-                      child: SvgPicture.asset(
-                        'assets/svg/beauty0.svg',
-                        height: ScreenUtil().setHeight(350),
-                        fit: BoxFit.contain,
+                    var delay = Duration(seconds: 4);
+                    Future.delayed(delay, () {
+                      Navigator.pushReplacement(context, MaterialPageRoute(
+                        builder: (context) {
+                          return widget.screen;
+                        },
+                      ));
+                    });
+                    return  JelloIn(
+                      duration : Duration(milliseconds: 1500),
+                      animate: true,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/svg/beauty0.svg',
+                          height: ScreenUtil().setHeight(350),
+                          fit: BoxFit.contain,
+                        ),
                       ),
-                    ),
-                  );
-                }else{
+                    );
+                  }else{
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/svg/beauty0.svg',
+                            height: ScreenUtil().setHeight(350),
+                            fit: BoxFit.contain,
+                          ),
+                          Text(
+                            'لا يوجد اتصال بالانترنت',
+                            style:
+                            kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
+                          ),
+
+                        ],
+                      ),
+                    );
+                  }
+                }
+                else{
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -150,30 +169,9 @@ class _SplashState extends State<Splash> {
                     ),
                   );
                 }
-              }
-              else{
-                return Center(
-                  child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/svg/beauty0.svg',
-                      height: ScreenUtil().setHeight(350),
-                      fit: BoxFit.contain,
-                    ),
-                    Text(
-                      'لا يوجد اتصال بالانترنت',
-                      style:
-                      kSeeAll.copyWith(fontFamily: 'Cairo-Regular', fontSize: 18),
-                    ),
 
-                  ],
-                ),
-                );
               }
-
-            }
-        )
+          )
 
       ),
     );

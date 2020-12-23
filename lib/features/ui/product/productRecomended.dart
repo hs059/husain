@@ -14,6 +14,7 @@ import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/shadow.dart';
+import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -131,16 +132,16 @@ class ProductRecommended extends StatelessWidget {
                                                         }
 
                                                         },
-                                                      child: Hero(
+                                                      child:productModel.data[index].image != '' &&!(rejectImg.where((element) =>element ==productModel.data[index].image).toList().length ==1)? Hero(
                                                         tag: '${productModel.data[index].image}',
                                                         child: CachedNetworkImage(
-                                                            imageUrl: productModel.data[index].image,
+                                                            imageUrl: (rejectImg.where((element) =>element ==productModel.data[index].image).toList().length ==1)?'':productModel.data[index].image,
                                                             placeholder: (context, url) => LoaderGif1(),
                                                             errorWidget: (context, url, error) =>
                                                                 Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
                                                             height: ScreenUtil().setHeight(101),
                                                             fit: BoxFit.contain),
-                                                      ),
+                                                      ):Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
                                                     ),
                                                   ),
                                                   Align(

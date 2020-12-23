@@ -68,3 +68,24 @@ const  String   endOrder = 'assets/svg/endOrder.svg' ;
 // latest
 // low_to_high
 // high_to_low
+
+
+// https://3beauty.net/wp-content/uploads/2020/11/43-150x150.jpg
+// https://3beauty.net/wp-content/uploads/2020/11/35.jpg
+// https://3beauty.net/wp-content/uploads/2020/11/42.jpg
+// 'https://3beauty.net/wp-content/uploads/2020/11/40.jpg'
+
+String rejectImg1 = 'https://3beauty.net/wp-content/uploads/2020/11/43-150x150.jpg';
+String rejectImg2 = 'https://3beauty.net/wp-content/uploads/2020/11/35.jpg';
+String rejectImg3 = 'https://3beauty.net/wp-content/uploads/2020/11/42.jpg';
+String rejectImg4 = 'https://3beauty.net/wp-content/uploads/2020/11/40.jpg';
+String rejectImg5 = 'https://3beauty.net/wp-content/uploads/2020/11/68-150x150.jpg';
+
+
+List<String> rejectImg = [
+  rejectImg1,
+  rejectImg2,
+  rejectImg3,
+  rejectImg4,
+  rejectImg5,
+];

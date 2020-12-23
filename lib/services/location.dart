@@ -1,6 +1,9 @@
 
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
+import 'package:geocoder/geocoder.dart';
+
 
 
 class Location {
@@ -15,7 +18,7 @@ class Location {
 
   Future<Geolocator> initGeolocator() async {
     if (geolocator == null) {
-      geolocator = Geolocator()..forceAndroidLocationManager;
+     // geolocator = Geolocator()..forceAndroidLocationManager;
       return geolocator;
     } else {
       return geolocator;
@@ -24,8 +27,7 @@ class Location {
 
   getCurrentLocation()async{
     geolocator =await initGeolocator();
-    geolocator
-        .getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((Position position) {
         currentPosition = position;
       getAddressFromLatLng();
@@ -37,11 +39,13 @@ class Location {
   getAddressFromLatLng() async {
     try {
       geolocator =await initGeolocator();
-      List<Placemark> p =
-      // 40.5237017,-105.0719352
-      // await geolocator.placemarkFromCoordinates(40.5237017,-105.0719352);
-      await geolocator.placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
-      Placemark place = p[0];
+      List<Placemark> placemarks = await placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
+
+      // List<Placemark> p =
+      // // 40.5237017,-105.0719352
+      // // await geolocator.placemarkFromCoordinates(40.5237017,-105.0719352);
+      // await geolocator.placemarkFromCoordinates(currentPosition.latitude, currentPosition.longitude);
+      Placemark place = placemarks[0];
         currentAddress =
         "${place.locality}, ${place.administrativeArea}, ${place.subLocality}";
         print(' postalCode :${place.postalCode}');

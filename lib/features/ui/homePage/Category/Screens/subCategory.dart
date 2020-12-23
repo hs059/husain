@@ -132,7 +132,7 @@ class SubCategory extends StatelessWidget {
                       padding: const EdgeInsets.all(5.0),
                       child: Icon(
                         Icons.filter_list,
-                        color: Colors.black,
+                        color: apiProvider.typeSelected ==0? Colors.black:kPinkLight,
                       ),
                     ),
                   ),

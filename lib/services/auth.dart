@@ -1,7 +1,6 @@
 import 'package:beauty/services/sp_helper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:flutter_twitter_login/flutter_twitter_login.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:logger/logger.dart';
@@ -40,36 +39,36 @@ class Auth {
   }
 
 
-  Future<UserCredential> signInWithTwitter() async {
-    // Create a TwitterLogin instance
-    try {
-      final TwitterLogin twitterLogin = new TwitterLogin(
-        consumerKey: 'bsrsIrms09tBGoMGq4WkI1oUE',
-        consumerSecret:'HGh7K6V7xNteVGDnHQWA9KA2ggkgOfJ8qlChfVxFg6ohoCwb33',
-      );
+  // Future<UserCredential> signInWithTwitter() async {
+  //   // Create a TwitterLogin instance
+  //   try {
+  //     final TwitterLogin twitterLogin = new TwitterLogin(
+  //       consumerKey: 'bsrsIrms09tBGoMGq4WkI1oUE',
+  //       consumerSecret:'HGh7K6V7xNteVGDnHQWA9KA2ggkgOfJ8qlChfVxFg6ohoCwb33',
+  //     );
 
-      // Trigger the sign-in flow
-      final TwitterLoginResult loginResult = await twitterLogin.authorize();
-      TwitterLoginStatus twitterLoginStatus = loginResult.status ;
-      Logger().d(twitterLoginStatus);
+  //     // Trigger the sign-in flow
+  //     final TwitterLoginResult loginResult = await twitterLogin.authorize();
+  //     TwitterLoginStatus twitterLoginStatus = loginResult.status ;
+  //     Logger().d(twitterLoginStatus);
 
-      // Get the Logged In session
-      final TwitterSession twitterSession = loginResult.session;
-      Logger().e(twitterSession.token);
-      Logger().e(twitterSession.secret);
-      // Create a credential from the access token
-      final AuthCredential twitterAuthCredential =
-      TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);
-      Logger().e(  twitterAuthCredential.signInMethod);
-      // Once signed in, return the UserCredential
-      UserCredential userCredential  = await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
-      Logger().e( await userCredential.user.getIdToken());
+  //     // Get the Logged In session
+  //     final TwitterSession twitterSession = loginResult.session;
+  //     Logger().e(twitterSession.token);
+  //     Logger().e(twitterSession.secret);
+  //     // Create a credential from the access token
+  //     final AuthCredential twitterAuthCredential =
+  //     TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);
+  //     Logger().e(  twitterAuthCredential.signInMethod);
+  //     // Once signed in, return the UserCredential
+  //     UserCredential userCredential  = await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
+  //     Logger().e( await userCredential.user.getIdToken());
 
-      return userCredential;
-    }  catch (e) {
-      Get.snackbar('رسالة تحذير', 'هناك خطأ بالتسجيل باستخدام التويتر');
-    }
-  }
+  //     return userCredential;
+  //   }  catch (e) {
+  //     Get.snackbar('رسالة تحذير', 'هناك خطأ بالتسجيل باستخدام التويتر');
+  //   }
+  // }
 
 Future<Map> signInWithFacebook() async {
     try {

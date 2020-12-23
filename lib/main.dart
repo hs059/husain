@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
+import 'fatooora.dart';
 import 'features/provider/apiProvider.dart';
 import 'features/provider/authProvider.dart';
 import 'features/provider/db_provider.dart';
@@ -96,13 +97,13 @@ class _AppState extends State<App> {
     isSeen = isSeen ==null?false:isSeen;
     screen = isSeen ? HomePage() : Onboarding();
   }
-@override
+  @override
   void initState() {
     // TODO: implement initState
-  super.initState();
-  setVariables();
+    super.initState();
+    setVariables();
 
-}
+  }
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -120,7 +121,7 @@ class _AppState extends State<App> {
         if (snapshot.connectionState == ConnectionState.done) {
           ScreenUtil.init(context,
               designSize: Size(375, 812), allowFontScaling: true);
-        SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark,
             statusBarBrightness:
