@@ -77,16 +77,10 @@ class UiProvider extends ChangeNotifier {
 
   bool spinner = false;
   toggleSpinner() {
-    if (ConnectivityService.connectivityStatus ==
-        ConnectivityHStatus.online) {
+
       spinner = !spinner;
       notifyListeners();
 
-    }else{
-      spinner =false ;
-      notifyListeners();
-
-    }
   }
 
 

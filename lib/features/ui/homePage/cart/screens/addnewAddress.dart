@@ -1,7 +1,7 @@
 import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/services/auth.dart';
 import 'package:beauty/services/location.dart';
-import 'package:beauty/services/map.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 

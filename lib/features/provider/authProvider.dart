@@ -538,8 +538,7 @@ class AuthProvider extends ChangeNotifier {
   // }
 
   loginUsingGoogle(BuildContext context) async {
-    if (ConnectivityService.connectivityStatus ==
-        ConnectivityHStatus.online) {
+
       UserCredential userCredential = await Auth.auth.signInWithGoogle();
       Logger().d(userCredential.user.email);
       Logger().d(userCredential.user.displayName);
@@ -550,29 +549,14 @@ class AuthProvider extends ChangeNotifier {
       String phoneNumber = userCredential.user.phoneNumber??'';
       String type = 'gmail';
       socialMediaLogin(socialId, displayName, '', email, type,context);
-    }else{
-      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-        titleText:  Text(
-          'لا يوجد اتصال بالانترنت',
-          style: TextStyle(
-              fontWeight: FontWeight.bold
-          ),
-          textAlign: TextAlign.center,
-        ),
-        messageText: Text(
-          'يرجى فحص الاتصال بالشبكة',
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
+
 
 
   }
 
   signInWithFacebook(BuildContext context) async {
 
-    if (ConnectivityService.connectivityStatus ==
-        ConnectivityHStatus.online) {
+
       Map userData = await Auth.auth.signInWithFacebook();
       Logger().d(userData);
       String socialId = userData['id'] ;
@@ -584,20 +568,5 @@ class AuthProvider extends ChangeNotifier {
       Logger().d(userData['email']);
       Logger().d(userData['id']);
       socialMediaLogin(socialId, displayName, '', email, type,context);
-    }else{
-      Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-        titleText:  Text(
-          'لا يوجد اتصال بالانترنت',
-          style: TextStyle(
-              fontWeight: FontWeight.bold
-          ),
-          textAlign: TextAlign.center,
-        ),
-        messageText: Text(
-          'يرجى فحص الاتصال بالشبكة',
-          textAlign: TextAlign.center,
-        ),
-      );
-    }
   }
 }

@@ -20,24 +20,9 @@ Widget bottomNavigationBarCart ({Function onTap ,Widget widget}){
           alignment: Alignment.center,
           child: GestureDetector(
             onTap: (){
-              if (ConnectivityService.connectivityStatus ==
-                  ConnectivityHStatus.online) {
+
             onTap();
-              }else{
-                Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                  titleText:  Text(
-                    'لا يوجد اتصال بالانترنت',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  messageText: Text(
-                    'يرجى فحص الاتصال بالشبكة',
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }
+
             },
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10),

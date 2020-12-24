@@ -85,9 +85,9 @@ class ChangeDeliveryAddress extends StatelessWidget {
                          ),
                        ),
                        onDismissed: (direction) {
-                         internetCheck((){
+
                            value.removeAddress(int.parse(address.iD));
-                         });
+
                          },
                        key: UniqueKey(),
                        child: GestureDetector(

@@ -110,27 +110,8 @@ class ProductRecommended extends StatelessWidget {
                                                   Center(
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        if (ConnectivityService.connectivityStatus ==
-                                                            ConnectivityHStatus.online) {
                                                           apiProviderFalse.getProductDetails( productModel.data[index].id);
                                                           kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
-
-                                                        }else{
-                                                          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                                                            titleText:  Text(
-                                                              'لا يوجد اتصال بالانترنت',
-                                                              style: TextStyle(
-                                                                  fontWeight: FontWeight.bold
-                                                              ),
-                                                              textAlign: TextAlign.center,
-                                                            ),
-                                                            messageText: Text(
-                                                              'يرجى فحص الاتصال بالشبكة',
-                                                              textAlign: TextAlign.center,
-                                                            ),
-                                                          );
-                                                        }
-
                                                         },
                                                       child:productModel.data[index].image != '' &&!(rejectImg.where((element) =>element ==productModel.data[index].image).toList().length ==1)? Hero(
                                                         tag: '${productModel.data[index].image}',
@@ -190,26 +171,11 @@ class ProductRecommended extends StatelessWidget {
                                                     children: <Widget>[
                                                       GestureDetector(
                                                         onTap: () {
-                                                          if (ConnectivityService.connectivityStatus ==
-                                                              ConnectivityHStatus.online) {
+
                                                             apiProviderFalse.getProductDetails( productModel.data[index].id);
                                                             kNavigatorPush(context, ProductSubScreen(product: productModel.data[index],section: false,));
 
-                                                          }else{
-                                                            Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                                                              titleText:  Text(
-                                                                'لا يوجد اتصال بالانترنت',
-                                                                style: TextStyle(
-                                                                    fontWeight: FontWeight.bold
-                                                                ),
-                                                                textAlign: TextAlign.center,
-                                                              ),
-                                                              messageText: Text(
-                                                                'يرجى فحص الاتصال بالشبكة',
-                                                                textAlign: TextAlign.center,
-                                                              ),
-                                                            );
-                                                          }
+
 
                                                         },
                                                         child: Text(

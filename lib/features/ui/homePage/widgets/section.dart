@@ -37,24 +37,9 @@ class Section extends StatelessWidget {
                   ),),
                   GestureDetector(
                     onTap: () {
-                      if (ConnectivityService.connectivityStatus ==
-                          ConnectivityHStatus.online) {
+
                         kNavigatorPush(context, ShowProductSection(title: section.data.sectionTitle,num: num,));
-                      }else{
-                        Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                          titleText:  Text(
-                            'لا يوجد اتصال بالانترنت',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                          messageText: Text(
-                            'يرجى فحص الاتصال بالشبكة',
-                            textAlign: TextAlign.center,
-                          ),
-                        );
-                      }
+
                     },
                     child:Text('رؤية الكل',style: kSeeAll.copyWith(
                       fontFamily: 'Cairo-Regular'

@@ -41,7 +41,7 @@ class AboutUs extends StatelessWidget {
                             style: kProfile,
                           ),
                           trailing: Icon(Icons.arrow_forward_ios),
-                          onTap: () => internetCheck(() {
+                          onTap: () =>
                             kNavigatorPush(
                                 context,
                                 WebSite(
@@ -49,8 +49,8 @@ class AboutUs extends StatelessWidget {
                                   link: Provider.of<ApiProvider>(context,
                                           listen: false)
                                       .privacyPolicy['data']['url'],
-                                ));
-                          }),
+                                )),
+
                         ),
                         MyDivider(),
                         ListTile(
@@ -66,10 +66,9 @@ class AboutUs extends StatelessWidget {
                         ),
                         MyDivider(),
                         ListTile(
-                          onTap: () => internetCheck(() {
+                          onTap: () =>
                             _launchSocial('fb://profile/100009400440404',
-                                'https://www.facebook.com/dorockxl');
-                          }),
+                                'https://www.facebook.com/dorockxl'),
                           leading: Image.asset(
                             'assets/images/faceBookBtn.png',
                             fit: BoxFit.contain,
@@ -84,21 +83,19 @@ class AboutUs extends StatelessWidget {
                         ),
                         MyDivider(),
                         ListTile(
-                          onTap: () => internetCheck(
-                            () async {
-                              var url =
-                                  'https://www.instagram.com/mohammed.alabadlah/';
+                          onTap: ()async {
+                            var url =
+                                'https://www.instagram.com/mohammed.alabadlah/';
 
-                              if (await canLaunch(url)) {
-                                await launch(
-                                  url,
-                                  universalLinksOnly: true,
-                                );
-                              } else {
-                                throw 'There was a problem to open the url: $url';
-                              }
-                            },
-                          ),
+                            if (await canLaunch(url)) {
+                              await launch(
+                                url,
+                                universalLinksOnly: true,
+                              );
+                            } else {
+                              throw 'There was a problem to open the url: $url';
+                            }
+                          },
                           leading: SvgPicture.asset(
                             'assets/svg/instgramBtn.svg',
                             fit: BoxFit.contain,
@@ -111,9 +108,8 @@ class AboutUs extends StatelessWidget {
                         ),
                         MyDivider(),
                         ListTile(
-                          onTap: () => internetCheck(() {
-                            _launchSocial('https://twitter.com/7seen1997', '');
-                          }),
+                          onTap: () =>
+                            _launchSocial('https://twitter.com/7seen1997', ''),
                           leading: SvgPicture.asset(
                             'assets/svg/twitter.svg',
                             fit: BoxFit.contain,

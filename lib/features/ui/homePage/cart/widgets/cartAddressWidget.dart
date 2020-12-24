@@ -56,9 +56,9 @@ class CartAddressWidget extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: changeBtn ?
-                ()=> internetCheck((){
-                      onTap();
-                    })
+                ()=>
+                      onTap()
+
                     : null,
                 child: Text(
                   changeBtn ? 'تغيير' : '',

@@ -21,26 +21,7 @@ Future<bool> onWillPop() {
   return Future.value(true);
 }
 
-void internetCheck ( Function onTap){
-  if (ConnectivityService.connectivityStatus ==
-      ConnectivityHStatus.online) {
-    onTap();
-  }else{
-    Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-      titleText:  Text(
-        'لا يوجد اتصال بالانترنت',
-        style: TextStyle(
-            fontWeight: FontWeight.bold
-        ),
-        textAlign: TextAlign.center,
-      ),
-      messageText: Text(
-        'يرجى فحص الاتصال بالشبكة',
-        textAlign: TextAlign.center,
-      ),
-    );
-  }
-}
+
 
 setHeight(double height,BuildContext context){
   return (height * MediaQuery.of(context).size.height)/812 ;

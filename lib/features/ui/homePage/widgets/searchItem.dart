@@ -26,26 +26,10 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: ()async{
-        if (ConnectivityService.connectivityStatus ==
-            ConnectivityHStatus.online) {
+
 
             Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(id,context);
 
-        }else{
-          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-            titleText:  Text(
-              'لا يوجد اتصال بالانترنت',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),
-              textAlign: TextAlign.center,
-            ),
-            messageText: Text(
-              'يرجى فحص الاتصال بالشبكة',
-              textAlign: TextAlign.center,
-            ),
-          );
-        }
 
       },
       child: ContainerCart(

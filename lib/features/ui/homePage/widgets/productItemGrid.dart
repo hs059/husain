@@ -68,8 +68,7 @@ class ProductItemGrid extends StatelessWidget {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            if (ConnectivityService.connectivityStatus ==
-                                ConnectivityHStatus.online) {
+
                               apiProviderFalse.getProductDetails( product.id);
                               kNavigatorPush(
                                   context,
@@ -77,9 +76,7 @@ class ProductItemGrid extends StatelessWidget {
                                     product: product,
                                     section: false,
                                   ));
-                            }else{
-                              Get.defaultDialog(title: 'رسالة تحذير',middleText: 'لايوجد اتصال بالانترنت',);
-                            }
+
 
 
                           },
@@ -150,8 +147,7 @@ class ProductItemGrid extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
-                                if (ConnectivityService.connectivityStatus ==
-                                    ConnectivityHStatus.online) {
+
                                   apiProviderFalse.getProductDetails( product.id);
                                   kNavigatorPush(
                                       context,
@@ -159,9 +155,7 @@ class ProductItemGrid extends StatelessWidget {
                                         product: product,
                                         section: false,
                                       ));
-                                }else{
-                                  Get.defaultDialog(title: 'رسالة تحذير',middleText: 'لايوجد اتصال بالانترنت',);
-                                }
+
                               },
                               child: Text(
                                 title,

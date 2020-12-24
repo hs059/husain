@@ -1,5 +1,6 @@
 import UIKit
 import Flutter
+import Firebase
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -7,9 +8,9 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-//    GMSServices.provideAPIKey("AIzaSyBf42fWF7gncQQJn_mOsmPX6NJqyeFJWrY")
-   GeneratedPluginRegistrant.register(with: self)
-   FirebaseApp.configure()
+
+    FirebaseApp.configure()
+    GeneratedPluginRegistrant.register(with: self)
     if #available(iOS 10.0, *) {
       UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
     }

@@ -76,8 +76,7 @@ class ProductItemList extends StatelessWidget {
                       Center(
                         child: GestureDetector(
                           onTap: () {
-                            if (ConnectivityService.connectivityStatus ==
-                                ConnectivityHStatus.online) {
+
                               apiProviderFalse.getProductDetails(product.id);
                               kNavigatorPush(
                                   context,
@@ -85,21 +84,7 @@ class ProductItemList extends StatelessWidget {
                                     productS: product,
                                     section: true,
                                   ));
-                            } else {
-                              Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                                titleText:  Text(
-                                  'لا يوجد اتصال بالانترنت',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                                messageText: Text(
-                                  'يرجى فحص الاتصال بالشبكة',
-                                  textAlign: TextAlign.center,
-                                ),
-                              );
-                            }
+
                           },
                           child: Hero(
                             tag: '$imagePath',
@@ -174,8 +159,7 @@ class ProductItemList extends StatelessWidget {
                         children: <Widget>[
                           GestureDetector(
                             onTap: () {
-                              if (ConnectivityService.connectivityStatus ==
-                                  ConnectivityHStatus.online) {
+
                                 apiProviderFalse.getProductDetails(product.id);
                                 kNavigatorPush(
                                     context,
@@ -183,23 +167,7 @@ class ProductItemList extends StatelessWidget {
                                       productS: product,
                                       section: true,
                                     ));
-                              } else {
 
-                                Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                                  titleText:  Text(
-                                    'لا يوجد اتصال بالانترنت',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  messageText: Text(
-                                      'يرجى فحص الاتصال بالشبكة',
-                                    textAlign: TextAlign.center,
-                                  ),
-                                );
-
-                              }
                             },
                             child: Text(
                               title,

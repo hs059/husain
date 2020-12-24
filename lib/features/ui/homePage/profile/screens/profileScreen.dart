@@ -214,28 +214,13 @@ class ProfileScreen extends StatelessWidget {
                 MyDivider(),
                 ListTile(
                   onTap: () {
-                    if (ConnectivityService.connectivityStatus ==
-                        ConnectivityHStatus.online) {
+
                       Share.share(
                           Platform.isAndroid
                               ? 'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US&gl=US'
                               : 'https://apps.apple.com/us/app/facebook/id284882215',
                           subject: 'استمتع باروع التخفيضات');
-                    } else {
-                      Get.snackbar(
-                        'رسالة تحذير',
-                        'لايوجد اتصال بالانترنت',
-                        titleText: Text(
-                          'لا يوجد اتصال بالانترنت',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
-                        messageText: Text(
-                          'يرجى فحص الاتصال بالشبكة',
-                          textAlign: TextAlign.center,
-                        ),
-                      );
-                    }
+
                   },
                   leading: SvgPicture.asset(
                     'assets/svg/shareBtn.svg',
@@ -259,8 +244,7 @@ class ProfileScreen extends StatelessWidget {
               // height: 85,
               child: GestureDetector(
                 onTap: () {
-                  if (ConnectivityService.connectivityStatus ==
-                      ConnectivityHStatus.online) {
+
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -277,21 +261,7 @@ class ProfileScreen extends StatelessWidget {
                             },
                           );
                         });
-                  } else {
-                    Get.snackbar(
-                      'رسالة تحذير',
-                      'لايوجد اتصال بالانترنت',
-                      titleText: Text(
-                        'لا يوجد اتصال بالانترنت',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                        textAlign: TextAlign.center,
-                      ),
-                      messageText: Text(
-                        'يرجى فحص الاتصال بالشبكة',
-                        textAlign: TextAlign.center,
-                      ),
-                    );
-                  }
+
                 },
                 child: ListTile(
                   leading: SvgPicture.asset(

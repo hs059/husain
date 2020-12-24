@@ -124,27 +124,11 @@ class Category extends StatelessWidget {
 
                            return  GestureDetector(
                              onTap: ()async {
-                               if (ConnectivityService.connectivityStatus ==
-                                   ConnectivityHStatus.online) {
+
                                  Provider.of<ApiProvider>(context, listen: false)
                                      .getSubCategory(category.data[index].id,context);
                                  Provider.of<ApiProvider>(context,listen: false).initialSort();
                                 kNavigatorPush(context,  subCategory222(category.data[index]));
-                               }else{
-                                 Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                                   titleText:  Text(
-                                     'لا يوجد اتصال بالانترنت',
-                                     style: TextStyle(
-                                         fontWeight: FontWeight.bold
-                                     ),
-                                     textAlign: TextAlign.center,
-                                   ),
-                                   messageText: Text(
-                                     'يرجى فحص الاتصال بالشبكة',
-                                     textAlign: TextAlign.center,
-                                   ),
-                                 );
-                               }
                              },
                              child: AnimationCart(
                                 Grid: true,

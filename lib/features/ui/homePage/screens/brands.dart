@@ -60,25 +60,10 @@ class Brands extends StatelessWidget {
                 itemBuilder: (context, index) =>
                     ListTile(
                       onTap: () {
-                        if (ConnectivityService.connectivityStatus ==
-                            ConnectivityHStatus.online) {
+
                           apiProviderFalse.getProductByBrand(brand.data.brands[index].id);
                           kNavigatorPush(context, ShowProduct(title: brand.data.brands[index].name,));
-                        }else{
-                          Get.snackbar('رسالة تحذير', 'لايوجد اتصال بالانترنت',
-                            titleText:  Text(
-                              'لا يوجد اتصال بالانترنت',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            messageText: Text(
-                              'يرجى فحص الاتصال بالشبكة',
-                              textAlign: TextAlign.center,
-                            ),
-                          );
-                        }
+
 
 
                       },
