@@ -121,6 +121,7 @@ class _AppState extends State<App> {
         if (snapshot.connectionState == ConnectionState.done) {
           ScreenUtil.init(context,
               designSize: Size(375, 812), allowFontScaling: true);
+
           SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark,
@@ -130,7 +131,6 @@ class _AppState extends State<App> {
             systemNavigationBarDividerColor: Colors.grey,
             systemNavigationBarIconBrightness: Brightness.dark,
           ));
-
           return MyApp(screen);
         }
         return  Center(

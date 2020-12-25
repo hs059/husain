@@ -581,7 +581,7 @@ class CheckOut extends StatelessWidget {
                   onTap: () async {
                     if (uiProvider.paymentGroup != null) {
                       if (apiProvider.addressSelected != null) {
-                        Provider.of<ApiProvider>(context, listen: false)
+                        apiProviderFalse
                             .createOrder(
                           authProvider.showProfileModel.data.displayName,
                           apiProvider.addressSelected.fullAddress,
@@ -596,8 +596,8 @@ class CheckOut extends StatelessWidget {
                         );
                         uiProvider.paymentGroup == paymentList[0]
                             ? kNavigatorPush(context,
-                                Fatoorah(prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
-                                    dbProvider.totalPrize.toString():prizeCoupon.toString())
+                                Fatoorah((prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
+                                dbProvider.totalPrize.toString():prizeCoupon.toString()),)
                         )
                             : showDialog(
                                 context: context,
@@ -611,7 +611,7 @@ class CheckOut extends StatelessWidget {
                               );
                         apiProviderFalse.setInitialPrizeCoupon(false);
                       } else if (deffult.isNotEmpty) {
-                        Provider.of<ApiProvider>(context, listen: false)
+                        apiProviderFalse
                             .createOrder(
                           authProvider.showProfileModel.data.displayName,
                           deffult.first.fullAddress,

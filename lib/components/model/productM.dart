@@ -42,6 +42,7 @@ class Data {
   List<Category> category;
   toggle(){
     this.isFavourited = !this.isFavourited ;
+    print(this.isFavourited);
   }
 
   Data(

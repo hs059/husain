@@ -126,14 +126,14 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                                                 child: Button(
                                                     text: '  شراء الآن ',
                                                     onTap: () async {
-                                                      // Provider.of<ApiProvider>(
-                                                      //     context,
-                                                      //     listen: false)
-                                                      //     .getProductDetails(
-                                                      //     int.parse(slider
-                                                      //         .data[index]
-                                                      //         .prodOrCatId),
-                                                      //    );
+                                                      Provider.of<ApiProvider>(
+                                                          context,
+                                                          listen: false)
+                                                          .getProductDetails(
+                                                          int.parse(slider
+                                                              .data[index]
+                                                              .prodOrCatId),
+                                                         );
                                                       // kNavigatorPush(context, ProductMScreen());
                                                       kNavigatorPush(context, ProductSliderScreen(int.parse(slider.data[index].prodOrCatId)));
                                                       

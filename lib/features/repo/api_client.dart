@@ -72,8 +72,7 @@ class ApiClient {
   }
 
 //////////////////////////////////////////////////////////////////////////////////
-  Future<Map> resetPassword(
-      String id, String token,String newPassword) async {
+  Future<Map> resetPassword(String id, String token, String newPassword) async {
     await initApi();
     FormData data = FormData.fromMap({
       'user_id': id,
@@ -94,7 +93,6 @@ class ApiClient {
       baseUrl + sign_out,
       data: data,
     );
-
 
     return response.data;
   }
@@ -117,7 +115,6 @@ class ApiClient {
       baseUrl + change_password,
       data: data,
     );
-
 
     return response.data;
   }
@@ -163,6 +160,7 @@ class ApiClient {
       print(e);
     }
   }
+
   ////////////////////////////////////////////
   Future<Map> verifyForgetPassword(String id, int verificationCode) async {
     await initApi();
@@ -178,6 +176,7 @@ class ApiClient {
     print(response.data);
     return response.data;
   }
+
 ///////////////////////////////////////////////////////
 
   Future<Map> verification(String id, String verificationCode) async {
@@ -194,25 +193,27 @@ class ApiClient {
     print(response.data);
     return response.data;
   }
+
   ///////////////////////////////////////////////////////////////////////////////////////
 
-  Future<Map> socialMediaLogin(String socialId ,String displayName,String mobileNumber ,String email,String type  )async{
-    await initApi() ;
+  Future<Map> socialMediaLogin(String socialId, String displayName,
+      String mobileNumber, String email, String type) async {
+    await initApi();
     FormData data = FormData.fromMap({
-      "id":socialId,
-      "userName":'hussein',
-      "displayName":displayName,
-      "mobileNumber":mobileNumber,
-      "email":email,
-      "type":type
+      "id": socialId,
+      "userName": 'hussein',
+      "displayName": displayName,
+      "mobileNumber": mobileNumber,
+      "email": email,
+      "type": type
     });
     Logger().d({
-      "id":socialId,
-      "userName":email,
-      "displayName":displayName,
-      "mobileNumber":mobileNumber,
-      "email":email,
-      "type":type
+      "id": socialId,
+      "userName": email,
+      "displayName": displayName,
+      "mobileNumber": mobileNumber,
+      "email": email,
+      "type": type
     });
     Response response = await dio.post(
       baseUrl + register_by_social_media,
@@ -221,6 +222,7 @@ class ApiClient {
     Logger().d(response.data);
     return response.data;
   }
+
 ///////////////////////////////////////////////////////////////////////////////////////
   Future<Map> getCategory() async {
     try {
@@ -269,7 +271,7 @@ class ApiClient {
       await initApi();
       String idUser = await SPHelper.spHelper.getUser();
       Response response = await dio.get(
-        baseUrl + title +'?user_id=$idUser',
+        baseUrl + title + '?user_id=$idUser',
       );
       print(response.data);
       // print(response.statusCode==200);
@@ -293,7 +295,10 @@ class ApiClient {
     }
   }
 
-  Future getSubProduct(int id, String userId,) async {
+  Future getSubProduct(
+    int id,
+    String userId,
+  ) async {
     try {
       await initApi();
       Response response = await dio.get(
@@ -354,7 +359,10 @@ class ApiClient {
     }
   }
 
-  Future getProductByBrand(int id,String userId,) async {
+  Future getProductByBrand(
+    int id,
+    String userId,
+  ) async {
     try {
       await initApi();
       Response response = await dio
@@ -370,11 +378,14 @@ class ApiClient {
     }
   }
 
-  Future getProductDetails(int id,String userId,
-      ) async {
+  Future getProductDetails(
+    int id,
+    String userId,
+  ) async {
     try {
       await initApi();
-      Response response = await dio.get(baseUrl + 'get_product?id=$id&user_id=$userId');
+      Response response =
+          await dio.get(baseUrl + 'get_product?id=$id&user_id=$userId');
       Logger().d(response.data);
       return response.data;
     } on DioError catch (e) {
@@ -419,14 +430,12 @@ class ApiClient {
   }
 
   Future createOrder(
-      String userId,
+    String userId,
     String token,
     String name,
     String address1,
-
     String houseNum,
     String apartment,
-
     List<Map> product,
   ) async {
     try {
@@ -491,6 +500,18 @@ class ApiClient {
       }
     } catch (e) {
       print(e);
+    }
+  }
+
+  updateOrder(int orderId) async {
+    String token = await SPHelper.spHelper.getToken();
+    String idUser = await SPHelper.spHelper.getUser();
+    String id = idUser.toString();
+    FormData data =
+        FormData.fromMap({"user_id": id, "token": token, "order_id": orderId});
+    Response response = await dio.post(baseUrl +update_order_to_paid , data: data);
+    if (response.statusCode == 200) {
+      return response.data;
     }
   }
 
@@ -564,20 +585,21 @@ class ApiClient {
       "comment": comment,
     });
 
-    Response response =await dio.post(
-        baseUrl + add_reviews,
-        data: data ,
+    Response response = await dio.post(
+      baseUrl + add_reviews,
+      data: data,
     );
     if (response.statusCode == 200) {
       print(response.data);
       return response.data;
     }
   }
+
   Future<Map> getTermsAndConditions() async {
     try {
       await initApi();
       Response response = await dio.get(baseUrl + get_terms_and_conditions);
-      if(response.statusCode == 200 ){
+      if (response.statusCode == 200) {
         return response.data;
       }
     } on DioError catch (e) {
@@ -589,21 +611,20 @@ class ApiClient {
       }
     }
   }
-Future<Map> addFav(int productId)async{
+
+  Future<Map> addFav(int productId) async {
     try {
-      await initApi() ;
+      await initApi();
       String idUser = await SPHelper.spHelper.getUser();
 
-      FormData data  = FormData.fromMap({
-        "user_id":idUser,
-        "product_id":productId,
+      FormData data = FormData.fromMap({
+        "user_id": idUser,
+        "product_id": productId,
       });
-      Response response = await dio.post(
-        baseUrl + add_product_to_wishlist ,
-        data:data
-      );
+      Response response =
+          await dio.post(baseUrl + add_product_to_wishlist, data: data);
 
-      if(response.statusCode == 200 ){
+      if (response.statusCode == 200) {
         return response.data;
       }
     } on DioError catch (e) {
@@ -614,27 +635,23 @@ Future<Map> addFav(int productId)async{
         print(e.request);
       }
     }
+  }
 
-}
-Future<Map> removeFav(int productId)async{
+  Future<Map> removeFav(int productId) async {
     try {
-      await initApi() ;
+      await initApi();
       String idUser = await SPHelper.spHelper.getUser();
 
-      FormData data  = FormData.fromMap({
-        "user_id":idUser,
-        "products":[
-          {
-            "id":productId
-          }
+      FormData data = FormData.fromMap({
+        "user_id": idUser,
+        "products": [
+          {"id": productId}
         ]
       });
-      Response response = await dio.post(
-        baseUrl + remove_product_from_wishlist ,
-        data:data
-      );
+      Response response =
+          await dio.post(baseUrl + remove_product_from_wishlist, data: data);
 
-      if(response.statusCode == 200 ){
+      if (response.statusCode == 200) {
         return response.data;
       }
     } on DioError catch (e) {
@@ -645,45 +662,40 @@ Future<Map> removeFav(int productId)async{
         print(e.request);
       }
     }
+  }
 
-}
+  getAllFav() async {
+    try {
+      await initApi();
+      String idUser = await SPHelper.spHelper.getUser();
 
-getAllFav()async{
-  try {
-    await initApi() ;
-    String idUser = await SPHelper.spHelper.getUser();
+      FormData data = FormData.fromMap({"user_id": idUser});
+      Response response =
+          await dio.post(baseUrl + get_favourite_products, data: data);
 
-    FormData data  = FormData.fromMap({
-      "user_id":idUser
-    });
-    Response response = await dio.post(
-        baseUrl + get_favourite_products ,
-        data:data
-    );
-
-    if(response.statusCode == 200 ){
-      return response.data;
-    }
-  } on DioError catch (e) {
-    if (e.response.statusCode != 200) {
-      print(e.response.statusCode);
-    } else {
-      print(e.message);
-      print(e.request);
+      if (response.statusCode == 200) {
+        return response.data;
+      }
+    } on DioError catch (e) {
+      if (e.response.statusCode != 200) {
+        print(e.response.statusCode);
+      } else {
+        print(e.message);
+        print(e.request);
+      }
     }
   }
-}
 
-  Future<Map> sortByCategory(int subCategoryId , String type)async{
+  Future<Map> sortByCategory(int subCategoryId, String type) async {
     try {
-      await initApi() ;
+      await initApi();
       print('subCategoryId $subCategoryId type $type');
-      Response response =await dio.get(
-       baseUrl+'sort_products_by?type=$type&category_id=$subCategoryId'
-       // baseUrl+'sort_products_by?type=low_to_high&category_id=63'
-      );
+      Response response = await dio.get(
+          baseUrl + 'sort_products_by?type=$type&category_id=$subCategoryId'
+          // baseUrl+'sort_products_by?type=low_to_high&category_id=63'
+          );
 
-      return response.data ;
+      return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {
         print(e.response.statusCode);
@@ -694,15 +706,13 @@ getAllFav()async{
     }
   }
 
-  getCoupon(String coupon)async{
+  getCoupon(String coupon) async {
     try {
-      await initApi() ;
+      await initApi();
 
-      Response response =await dio.get(
-          baseUrl+'get_coupon?code=$coupon'
-      );
+      Response response = await dio.get(baseUrl + 'get_coupon?code=$coupon');
       Logger().d(response.data);
-      return response.data ;
+      return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {
         print(e.response.statusCode);
@@ -712,6 +722,4 @@ getAllFav()async{
       }
     }
   }
-
-
 }

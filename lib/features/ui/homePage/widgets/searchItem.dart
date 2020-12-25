@@ -26,11 +26,7 @@ class SearchItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: ()async{
-
-
             Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(id,context);
-
-
       },
       child: ContainerCart(
         child: Container(

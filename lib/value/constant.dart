@@ -64,6 +64,7 @@ String add_product_to_wishlist = 'add_product_to_wishlist';
 String remove_product_from_wishlist = 'remove_product_from_wishlist';
 String get_favourite_products = 'get_favourite_products';
 String register_by_social_media = 'register_by_social_media';
+String update_order_to_paid = 'update_order_to_paid';
 
 List<String> getSliderIndex = [
   'get_first_slider',

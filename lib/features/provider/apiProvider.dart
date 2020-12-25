@@ -134,9 +134,15 @@ setSubCategoryNull(){
     return productM;
   }
 
-
+  bool productDetailsBool =false;
+  setProductDetailsBool(bool value){
+    this.productDetailsBool = value ;
+    notifyListeners() ;
+  }
   getProductDetails(int id,) async {
+    setProductDetailsBool(true);
     productM = await ApiRepository.apiRepository.getProductDetails(id);
+    setProductDetailsBool(false);
     Logger().d(productM.data.category.first.parent.name);
     notifyListeners();
   }
@@ -166,7 +172,12 @@ setSubCategoryNull(){
   }
 
 
-
+bool orderBool =false ;
+  setOrderBool(bool value){
+    this.orderBool = value ;
+    print(orderBool);
+    notifyListeners() ;
+  }
   CreateOrderGet createOrderGet;
 
   createOrder(
@@ -177,17 +188,46 @@ setSubCategoryNull(){
 
     List<Map> product,
   ) async {
+    setOrderBool(true);
     createOrderGet = await ApiRepository.apiRepository
         .createOrder(name, address1,houseNum, apartment, product);
+    setOrderBool(false);
+    Logger().d(createOrderGet.toJson());
     getAllOrder();
   }
 
   MyOrderModel myOrderModel;
 
   getAllOrder() async {
-    Logger().d('aaaaaa');
     myOrderModel = await ApiRepository.apiRepository.getAllOrder();
+
     notifyListeners();
+  }
+
+  Future<MyOrderModel> updateOrder()async {
+    Map map = await ApiClient.apiClient.updateOrder(createOrderGet.data.orderId);
+    Logger().d(map);
+    if (map['code']) {
+      Fluttertoast.showToast(
+          msg:'تم تحديث الطلب لحالة مدفوع',
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        gravity: ToastGravity.TOP
+      );
+    }else{
+      Fluttertoast.showToast(
+          msg:'الطلب غير معرف',
+          toastLength: Toast.LENGTH_SHORT,
+          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+          timeInSecForIosWeb: 1,
+          textColor: Colors.white,
+          fontSize: 16.0,
+          gravity: ToastGravity.TOP
+      );
+    }
   }
 
   addNewAddress(

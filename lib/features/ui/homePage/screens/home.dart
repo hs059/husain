@@ -45,7 +45,7 @@ class Home extends StatelessWidget {
             color: Colors.white,
             padding: EdgeInsets.symmetric(vertical: 15),
             child: ListView(
-              physics: const BouncingScrollPhysics(),
+              physics: ClampingScrollPhysics(),
               primary: false,
               children: [
                 Container(

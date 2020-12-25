@@ -343,8 +343,7 @@ class ProductSubScreen extends StatelessWidget {
                                       Row(
                                         children: [
                                           SmoothStarRating(
-                                            rating:
-                                                double.parse(review.reviewCount),
+                                            rating:5,
                                             color: kStar,
                                             isReadOnly: true,
                                             size: 15,

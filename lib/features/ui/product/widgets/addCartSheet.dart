@@ -34,7 +34,7 @@ class AddCartSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(
                 horizontal: ScreenUtil().setWidth(20),
                 vertical: ScreenUtil().setHeight(30)),
-            height: ScreenUtil().setHeight(135),
+
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -66,6 +66,7 @@ class AddCartSheet extends StatelessWidget {
                       style: kSubTitleSign,
                       textAlign: TextAlign.start,
                     ),
+
                   ],
                 ),
               ],
@@ -129,7 +130,7 @@ class AddCartSheet extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(color: kPinkLight, width: 1)),
-                    child: Text(
+                        child: Text(
                       'إكمال الشراء',
                       style: kBtnText.copyWith(
                         color: kPinkLight,

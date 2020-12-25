@@ -1,4 +1,5 @@
 import 'package:beauty/components/widgets/btn.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/value/colors.dart';
@@ -6,6 +7,7 @@ import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:myfatoorah_flutter/myfatoorah_flutter.dart';
 import 'package:provider/provider.dart';
@@ -19,16 +21,19 @@ TODO: The following data are using for demo (testing) only, so that when you go 
 */
 
 // Base Url
-final String baseUrl = "https://apitest.myfatoorah.com";
+final String baseUrl = "https://api.myfatoorah.com/";
+final String mAPIKey ="lPjFxhC0yOA0UbnE0vFldoCuArr-bgk1L9spr2Bw1vszgDhMD9XEmRR805JdvYVvSst11Lx25QYe9aE_hljHsLuluI8fJ8xaian--Sy503jQ3g24FPP79q6uI4UxOTyOWueU8hyThXdSBrsk0tgwOZQQFbMiJI5CDFOuOv_PZm4yr9dxY3O7Y5Qw1cB0goBeG7kZAygWjAef9kYsDbHZ_Dfyt5qWmGDoCaqHnvLohQ-PcWFuDIjYI7yt7dK99aoeR_ZvS8rvX68NvbbRUobgv9-yTLl2DOgxdEms4irRmZnkW8lR4AvSDlHhh8UcDnALaAjbjdtqtxcTD5egd3wpG4eRRXw96ZvSWC5MEMAzCkSSle_mmvpHbvg400deps2NUDNkYQmsHok2tpXjrZc9kKp9TaxzE7MpmqT76WOj0yzsE_6Mo2B6GNtBSPUJiVUxlcR1zHIqfkI64nml6y1PdUW6cLnsJDnoR152IYOQVj0o3WHRUv9gEgAJDa7kO5eEoOKnbU8TgX3FrYWJu9_Z1Qnl29xGE5E7CWrcWuMj2F8H7uqzxcv7NbGWTl3NKK1dGEHj-ceE89lVfSOj1JsUH8INFBZwGPO1cK7O6_YtNy03HAYq1AHtpD7UFpYqV85Nr7NMsSn-fQP9zHGzn0Hvug7g6nZHc2XNXJXnAcbvPPy3wV1Xek5ifNQbHZCuTiVvLztdZSyAA9GgzfvKkml2lP53y5c-jdxyMI676jxSDkNXS5Py";
 
 // You can get the API Key for regular payment or direct payment and recurring from here:
 // https://myfatoorah.readme.io/docs/demo-information
-final String mAPIKey = "bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL";
-// final String mAPIKey = "lPjFxhC0yOA0UbnE0vFldoCuArr-bgk1L9spr2Bw1vszgDhMD9XEmRR805JdvYVvSst11Lx25QYe9aE_hljHsLuluI8fJ8xaian--Sy503jQ3g24FPP79q6uI4UxOTyOWueU8hyThXdSBrsk0tgwOZQQFbMiJI5CDFOuOv_PZm4yr9dxY3O7Y5Qw1cB0goBeG7kZAygWjAef9kYsDbHZ_Dfyt5qWmGDoCaqHnvLohQ-PcWFuDIjYI7yt7dK99aoeR_ZvS8rvX68NvbbRUobgv9-yTLl2DOgxdEms4irRmZnkW8lR4AvSDlHhh8UcDnALaAjbjdtqtxcTD5egd3wpG4eRRXw96ZvSWC5MEMAzCkSSle_mmvpHbvg400deps2NUDNkYQmsHok2tpXjrZc9kKp9TaxzE7MpmqT76WOj0yzsE_6Mo2B6GNtBSPUJiVUxlcR1zHIqfkI64nml6y1PdUW6cLnsJDnoR152IYOQVj0o3WHRUv9gEgAJDa7kO5eEoOKnbU8TgX3FrYWJu9_Z1Qnl29xGE5E7CWrcWuMj2F8H7uqzxcv7NbGWTl3NKK1dGEHj-ceE89lVfSOj1JsUH8INFBZwGPO1cK7O6_YtNy03HAYq1AHtpD7UFpYqV85Nr7NMsSn-fQP9zHGzn0Hvug7g6nZHc2XNXJXnAcbvPPy3wV1Xek5ifNQbHZCuTiVvLztdZSyAA9GgzfvKkml2lP53y5c-jdxyMI676jxSDkNXS5Py";
+// final String baseUrl = "https://apitest.myfatoorah.com";
+// final String mAPIKey ="bearer rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL";
 
 class Fatoorah extends StatefulWidget {
-   String amount ;
-  Fatoorah (this.amount);
+  String amount;
+
+  Fatoorah(this.amount);
+
   @override
   _FatoorahState createState() => _FatoorahState();
 }
@@ -51,10 +56,10 @@ class _FatoorahState extends State<Fatoorah> {
   void initState() {
     super.initState();
 
-    if(mAPIKey.isEmpty) {
+    if (mAPIKey.isEmpty) {
       setState(() {
-        _response = "Missing API Key.. You can get it from here: https://myfatoorah.readme.io/docs/demo-information";
-
+        _response =
+            "Missing API Key.. You can get it from here: https://myfatoorah.readme.io/docs/demo-information";
       });
       return;
     }
@@ -64,62 +69,18 @@ class _FatoorahState extends State<Fatoorah> {
 
     // (Optional) un comment the following lines if you want to set up properties of AppBar.
 
-//    MFSDK.setUpAppBar(
-//      title: "MyFatoorah Payment",
-//      titleColor: Colors.white,  // Color(0xFFFFFFFF)
-//      backgroundColor: Colors.black, // Color(0xFF000000)
-//      isShowAppBar: true); // For Android platform only
+    MFSDK.setUpAppBar(
+        title: "MyFatoorah Payment",
+        titleColor: Colors.white, // Color(0xFFFFFFFF)
+        backgroundColor: Colors.black, // Color(0xFF000000)
+        isShowAppBar: true); // For Android platform only
 
-    // (Optional) un comment this line, if you want to hide the AppBar.
-    // Note, if the platform is iOS, this line will not affected
-
-//    MFSDK.setUpAppBar(isShowAppBar: false);
+    MFSDK.setUpAppBar(isShowAppBar: false);
 
     initiatePayment();
   }
 
-  /*
-    Send Payment
-   */
-  // void sendPayment() {
-  //   var request = MFSendPaymentRequest(
-  //       invoiceValue: double.parse(widget.amount),
-  //       customerName: "Customer name",
-  //       notificationOption: MFNotificationOption.LINK);
-  //
-  //   var invoiceItem = new InvoiceItem(itemName:"item1", quantity:3, unitPrice:3.5);
-  //   var listItems = new List<InvoiceItem>();
-  //   listItems.add(invoiceItem);
-  //   request.invoiceItems = listItems;
-  //
-  //   MFSDK.sendPayment(
-  //       MFAPILanguage.AR,
-  //       request,
-  //           (MFResult<MFSendPaymentResponse> result) => {
-  //         if (result.isSuccess())
-  //           {
-  //             setState(() {
-  //               print(result.response.toJson());
-  //               _response = result.response.toJson().toString();
-  //             })
-  //           }
-  //         else
-  //           {
-  //             setState(() {
-  //               print(result.error.toJson());
-  //               _response = result.error.message;
-  //             })
-  //           }
-  //       });
-  //
-  //   setState(() {
-  //     _response = _loading;
-  //   });
-  // }
 
-  /*
-    Initiate Payment
-   */
   void initiatePayment() {
     var request = new MFInitiatePaymentRequest(
         double.parse(widget.amount), MFCurrencyISO.SAUDI_ARABIA_SAR);
@@ -127,25 +88,25 @@ class _FatoorahState extends State<Fatoorah> {
     MFSDK.initiatePayment(
         request,
         MFAPILanguage.AR,
-            (MFResult<MFInitiatePaymentResponse> result) => {
-          if (result.isSuccess())
-            {
-              setState(() {
-                Logger().d(result.response.toJson());
-                _response = ""; //result.response.toJson().toString();
-                paymentMethods.addAll(result.response.paymentMethods);
-                for (int i = 0; i < paymentMethods.length; i++)
-                  isSelected.add(false);
-              })
-            }
-          else
-            {
-              setState(() {
-                Logger().d(result.error.toJson());
-                _response = result.error.message;
-              })
-            }
-        });
+        (MFResult<MFInitiatePaymentResponse> result) => {
+              if (result.isSuccess())
+                {
+                  setState(() {
+                    Logger().d(result.response.toJson());
+                    _response = ""; //result.response.toJson().toString();
+                    paymentMethods.addAll(result.response.paymentMethods);
+                    for (int i = 0; i < paymentMethods.length; i++)
+                      isSelected.add(false);
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    Logger().d(result.error.toJson());
+                    _response = result.error.message;
+                  })
+                }
+            });
 
     setState(() {
       _response = _loading;
@@ -155,6 +116,9 @@ class _FatoorahState extends State<Fatoorah> {
   /*
     Execute Regular Payment
    */
+
+  MFPaymentStatusResponse mfPaymentStatusResponse;
+
   void executeRegularPayment(String paymentMethodId) {
     var request = new MFExecutePaymentRequest(paymentMethodId, widget.amount);
 
@@ -162,24 +126,37 @@ class _FatoorahState extends State<Fatoorah> {
         context,
         request,
         MFAPILanguage.AR,
-            (String invoiceId, MFResult<MFPaymentStatusResponse> result) => {
-          if (result.isSuccess())
-            {
-              setState(() {
-                Logger().d(invoiceId);
-                print(result.response.toJson());
-                _response = result.response.toJson().toString();
-              })
-            }
-          else
-            {
-              setState(() {
-                Logger().d(invoiceId);
-                print(result.error.toJson());
-                _response = result.error.message;
-              })
-            }
-        });
+        (String invoiceId, MFResult<MFPaymentStatusResponse> result) => {
+              if (result.isSuccess())
+                {
+                  setState(() {
+                    Logger().d(invoiceId);
+                    Logger().d(result.response.toJson());
+                    mfPaymentStatusResponse = result.response;
+                    if (mfPaymentStatusResponse
+                            .invoiceTransactions[0].transactionStatus ==
+                        "Failed") {
+                      Get.snackbar('رسالة تحذير', 'هناك خطأ بإدخالك للبيانات');
+                    }else if(mfPaymentStatusResponse
+                        .invoiceTransactions[0].transactionStatus ==
+                        "InProgress" ||mfPaymentStatusResponse
+                        .invoiceTransactions[0].transactionStatus == "Succss"){
+                            Provider.of<ApiProvider>(context,listen: false).updateOrder();
+                    }else{
+                      Get.snackbar('رسالة تحذير', 'هناك خطأ بإدخالك للبيانات');
+                    }
+                    _response = result.response.toJson().toString();
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    Logger().d(invoiceId);
+                    print(result.error.toJson());
+                    _response = result.error.message;
+                  })
+                }
+            });
 
     setState(() {
       _response = _loading;
@@ -208,24 +185,25 @@ class _FatoorahState extends State<Fatoorah> {
         request,
         mfCardInfo,
         MFAPILanguage.AR,
-            (String invoiceId, MFResult<MFDirectPaymentResponse> result) => {
-          if (result.isSuccess())
-            {
-              setState(() {
-                Logger().d(invoiceId);
-                print(result.response.toJson());
-                _response = result.response.toJson().toString();
-              })
-            }
-          else
-            {
-              setState(() {
-                Logger().d(invoiceId);
-                print(result.error.toJson());
-                _response = result.error.message;
-              })
-            }
-        });
+        (String invoiceId, MFResult<MFDirectPaymentResponse> result) => {
+              if (result.isSuccess())
+                {
+                  setState(() {
+                    print(result.response.toJson());
+                    Logger().d(result.response);
+                    Logger().d(result.response.toJson());
+                    _response = result.response.toJson().toString();
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    Logger().d(invoiceId);
+                    print(result.error.toJson());
+                    _response = result.error.message;
+                  })
+                }
+            });
 
     setState(() {
       _response = _loading;
@@ -258,30 +236,29 @@ class _FatoorahState extends State<Fatoorah> {
         mfCardInfo,
         intervalDays,
         MFAPILanguage.AR,
-            (String invoiceId, MFResult<MFDirectPaymentResponse> result) => {
-          if (result.isSuccess())
-            {
-              setState(() {
-                Logger().d(invoiceId);
-                print(result.response.toJson());
-                _response = result.response.toJson().toString();
-              })
-            }
-          else
-            {
-              setState(() {
-                Logger().d(invoiceId);
-                print(result.error.toJson());
-                _response = result.error.message;
-              })
-            }
-        });
+        (String invoiceId, MFResult<MFDirectPaymentResponse> result) => {
+              if (result.isSuccess())
+                {
+                  setState(() {
+                    Logger().d(result.response);
+                    Logger().d(result.response.toJson());
+                    _response = result.response.toJson().toString();
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    Logger().d(invoiceId);
+                    print(result.error.toJson());
+                    _response = result.error.message;
+                  })
+                }
+            });
 
     setState(() {
       _response = _loading;
     });
   }
-
 
   void getPaymentStatus() {
     var request = MFPaymentStatusRequest(invoiceId: "12345");
@@ -289,22 +266,22 @@ class _FatoorahState extends State<Fatoorah> {
     MFSDK.getPaymentStatus(
         MFAPILanguage.AR,
         request,
-            (MFResult<MFPaymentStatusResponse> result) => {
-          if (result.isSuccess())
-            {
-              setState(() {
-                Logger().d(result.response.toJson());
-                _response = result.response.toJson().toString();
-              })
-            }
-          else
-            {
-              setState(() {
-                Logger().d(result.error.toJson());
-                _response = result.error.message;
-              })
-            }
-        });
+        (MFResult<MFPaymentStatusResponse> result) => {
+              if (result.isSuccess())
+                {
+                  setState(() {
+                    Logger().d(result.response.toJson());
+                    _response = result.response.toJson().toString();
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    Logger().d(result.error.toJson());
+                    _response = result.error.message;
+                  })
+                }
+            });
 
     setState(() {
       _response = _loading;
@@ -318,22 +295,22 @@ class _FatoorahState extends State<Fatoorah> {
     MFSDK.cancelToken(
         "Put your token here",
         MFAPILanguage.AR,
-            (MFResult<bool> result) => {
-          if (result.isSuccess())
-            {
-              setState(() {
-                Logger().d(result.response.toString());
-                _response = result.response.toString();
-              })
-            }
-          else
-            {
-              setState(() {
-                Logger().d(result.error.toJson());
-                _response = result.error.message;
-              })
-            }
-        });
+        (MFResult<bool> result) => {
+              if (result.isSuccess())
+                {
+                  setState(() {
+                    Logger().d(result.response.toString());
+                    _response = result.response.toString();
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    Logger().d(result.error.toJson());
+                    _response = result.error.message;
+                  })
+                }
+            });
 
     setState(() {
       _response = _loading;
@@ -347,22 +324,22 @@ class _FatoorahState extends State<Fatoorah> {
     MFSDK.cancelRecurringPayment(
         "Put RecurringId here",
         MFAPILanguage.AR,
-            (MFResult<bool> result) => {
-          if (result.isSuccess())
-            {
-              setState(() {
-                Logger().d(result.response.toString());
-                _response = result.response.toString();
-              })
-            }
-          else
-            {
-              setState(() {
-                Logger().d(result.error.toJson());
-                _response = result.error.message;
-              })
-            }
-        });
+        (MFResult<bool> result) => {
+              if (result.isSuccess())
+                {
+                  setState(() {
+                    Logger().d(result.response.toString());
+                    _response = result.response.toString();
+                  })
+                }
+              else
+                {
+                  setState(() {
+                    Logger().d(result.error.toJson());
+                    _response = result.error.message;
+                  })
+                }
+            });
 
     setState(() {
       _response = _loading;
@@ -384,19 +361,18 @@ class _FatoorahState extends State<Fatoorah> {
         isSelected[i] = false;
     }
   }
-  void dialog (){
-    if(_response.isNotEmpty){
+
+  void dialog() {
+    if (_response.isNotEmpty) {
       showDialog(
           context: context,
           builder: (context) {
             return Directionality(
               textDirection: TextDirection.rtl,
               child: SimpleDialog(
-                  contentPadding: EdgeInsets.all(
-                      15),
-                  titlePadding: EdgeInsets
-                      .symmetric(
-                      horizontal: 15, vertical: 20),
+                  contentPadding: EdgeInsets.all(15),
+                  titlePadding:
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 20),
                   title: Row(
                     children: <Widget>[
                       Icon(Icons.category),
@@ -406,17 +382,14 @@ class _FatoorahState extends State<Fatoorah> {
                       )
                     ],
                   ),
-                  children:[]
-              ),
+                  children: []),
             );
           });
     }
 
-
-    setState(() {
-
-    });
+    setState(() {});
   }
+
   void pay() {
     if (selectedPaymentMethodIndex == -1) {
       Toast.show("Please select payment method first", context,
@@ -448,7 +421,6 @@ class _FatoorahState extends State<Fatoorah> {
     DBProvider dbProvider = Provider.of<DBProvider>(context);
 
     return SafeArea(
-
       child: Scaffold(
         appBar: PreferredSize(
           child: Container(
@@ -460,17 +432,17 @@ class _FatoorahState extends State<Fatoorah> {
               )
             ]),
             child: AppBar(
-
               backgroundColor: Colors.white,
               title: Text(
-                "الشراء أونلاين", style: kSectionText.copyWith(
-                fontSize: ScreenUtil().setSp(18),
-                fontFamily: 'Cairo-Regular',
-              ),),
+                "الشراء أونلاين",
+                style: kSectionText.copyWith(
+                  fontSize: ScreenUtil().setSp(18),
+                  fontFamily: 'Cairo-Regular',
+                ),
+              ),
               centerTitle: true,
               elevation: 0.0,
             ),
-
           ),
           preferredSize: Size.fromHeight(kToolbarHeight),
         ),
@@ -492,7 +464,7 @@ class _FatoorahState extends State<Fatoorah> {
                         style: kSeeAll,
                       ),
                       Text(
-                        double.parse(widget.amount).toStringAsFixed(2)+
+                        double.parse(widget.amount).toStringAsFixed(2) +
                             ' ' +
                             currency,
                         style: kSeeAll,
@@ -502,134 +474,84 @@ class _FatoorahState extends State<Fatoorah> {
                   ),
                 ),
               ),
-            _response.length<12 &&_response.isNotEmpty ?Column(
-                children: [
-                  SizedBox(
-                    height: 3,
-                    child: LinearProgressIndicator(
-                      backgroundColor: Theme.of(context)
-                          .accentColor
-                          .withOpacity(0.2),
-                      valueColor: new AlwaysStoppedAnimation<Color>(
-                          kPinkLight),
-                    ),
-                  ),
-                  Center(
-                    child: Text(
-                      'جاري تحضير بوابات الدفع',
-                      style: kSeeAll.copyWith(
-                          fontFamily: 'Cairo-Regular', fontSize: 18),
-                    ),
-                  ),
-                ],
-              ):Container(),
+              _response.length < 12 && _response.isNotEmpty
+                  ? Column(
+                      children: [
+                        SizedBox(
+                          height: 3,
+                          child: LinearProgressIndicator(
+                            backgroundColor:
+                                Theme.of(context).accentColor.withOpacity(0.2),
+                            valueColor:
+                                new AlwaysStoppedAnimation<Color>(kPinkLight),
+                          ),
+                        ),
+                        Center(
+                          child: Text(
+                            'جاري تحضير بوابات الدفع',
+                            style: kSeeAll.copyWith(
+                                fontFamily: 'Cairo-Regular', fontSize: 18),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
               Padding(
                 padding: EdgeInsets.all(5.0),
               ),
-              Text("إختار طريقة الدفع",style: TextStyle(
-                  fontWeight: FontWeight.bold
-              ),),
+              Text(
+                "إختار طريقة الدفع",
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               Padding(
                 padding: EdgeInsets.all(5.0),
               ),
               Expanded(
-                flex: 15,
+                  flex: 15,
                   child: Builder(
                     builder: (context) {
                       paymentMethods.removeWhere((element) =>
-                      element.paymentMethodAr=="البطاقات المدينة - الامارات"||
-                      element.paymentMethodAr=="اميكس"||
-                      element.paymentMethodAr=="بنفت"||
-                      element.paymentMethodAr=="البطاقات المدينة - قطر"||
-                      element.paymentMethodAr=="كي نت"
-                      );
+                          element.paymentMethodAr ==
+                              "البطاقات المدينة - الامارات" ||
+                          element.paymentMethodAr == "اميكس" ||
+                          element.paymentMethodAr == "بنفت" ||
+                          element.paymentMethodAr == "البطاقات المدينة - قطر" ||
+                          element.paymentMethodAr == "كي نت");
                       return ListView.builder(
                           itemCount: paymentMethods.length,
                           scrollDirection: Axis.vertical,
                           itemBuilder: (BuildContext ctxt, int index) {
                             return ListTile(
                               onTap: () {
-                                charcater = paymentMethods[index].paymentMethodAr;
-                                setState(() {
-
-                                });
+                                charcater =
+                                    paymentMethods[index].paymentMethodAr;
+                                selectedPaymentMethodIndex = index;
+                                setState(() {});
                               },
-                              leading: Image.network(paymentMethods[index].imageUrl,
-                                  width: 40.0, height: 40.0),
-                              title: Text(paymentMethods[index].paymentMethodAr),
-                              trailing: Column(
-                                children: [
-                                  Radio(
-                                      value: paymentMethods[index].paymentMethodAr,
-                                      groupValue: charcater,
-                                    activeColor: kPinkLight,
-                                      hoverColor:kPinkLight ,
-                                      focusColor:kPinkLight ,
-                                      onChanged: (value) {
-                                        charcater = value;
-                                        setState(() {
-
-                                        });
-                                      },
-                                  ),
-
-                                ],
+                              leading: Image.network(
+                                  paymentMethods[index].imageUrl,
+                                  width: 40.0,
+                                  height: 40.0),
+                              title:
+                                  Text(paymentMethods[index].paymentMethodAr),
+                              trailing: Radio(
+                                value:
+                                    paymentMethods[index].paymentMethodAr,
+                                groupValue: charcater,
+                                activeColor: kPinkLight,
+                                hoverColor: kPinkLight,
+                                focusColor: kPinkLight,
+                                onChanged: (value) {
+                                  charcater = value;
+                                  selectedPaymentMethodIndex = index;
+                                  print(selectedPaymentMethodIndex);
+                                  setState(() {});
+                                },
                               ),
                             );
                           });
                     },
-
                   )),
-              // visibilityObs
-              //     ? Container(
-              //     child: Column(
-              //       children: <Widget>[
-              //         Padding(
-              //           padding: EdgeInsets.all(5.0),
-              //         ),
-              //         TextField(
-              //           keyboardType: TextInputType.number,
-              //           decoration: InputDecoration(labelText: "Card Number"),
-              //           controller: TextEditingController(text: cardNumber),
-              //           onChanged: (value) {
-              //             cardNumber = value;
-              //           },
-              //         ),
-              //         TextField(
-              //           keyboardType: TextInputType.number,
-              //           decoration: InputDecoration(labelText: "Expiry Month"),
-              //           controller: TextEditingController(text: expiryMonth),
-              //           onChanged: (value) {
-              //             expiryMonth = value;
-              //           },
-              //         ),
-              //         TextField(
-              //           keyboardType: TextInputType.number,
-              //           decoration: InputDecoration(labelText: "Expiry Year"),
-              //           controller: TextEditingController(text: expiryYear),
-              //           onChanged: (value) {
-              //             expiryYear = value;
-              //           },
-              //         ),
-              //         TextField(
-              //           keyboardType: TextInputType.number,
-              //           decoration: InputDecoration(labelText: "Security Code"),
-              //           controller: TextEditingController(text: securityCode),
-              //           onChanged: (value) {
-              //             securityCode = value;
-              //           },
-              //         ),
-              //         TextField(
-              //           keyboardType: TextInputType.name,
-              //           decoration: InputDecoration(labelText: "Card Holder Name"),
-              //           controller: TextEditingController(text: cardHolderName),
-              //           onChanged: (value) {
-              //             cardHolderName = value;
-              //           },
-              //         ),
-              //       ],
-              //     ))
-              //     : Container(),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -641,13 +563,6 @@ class _FatoorahState extends State<Fatoorah> {
                     onTap: pay,
                     text: 'شراء',
                   ),
-
-                  // RaisedButton(
-                  //   color: Colors.lightBlue,
-                  //   textColor: Colors.white,
-                  //   child: Text('Send Payment'),
-                  //   onPressed: sendPayment,
-                  // ),
                   Padding(
                     padding: EdgeInsets.all(8.0),
                   ),
@@ -658,15 +573,47 @@ class _FatoorahState extends State<Fatoorah> {
                   flex: 1,
                   child: SingleChildScrollView(
                     child: GestureDetector(
-                        child: Text(_response),
+                      child: mfPaymentStatusResponse != null
+                          ? Column(
+                              children: [
+                                if (mfPaymentStatusResponse
+                                        .invoiceTransactions[0]
+                                        .transactionStatus ==
+                                    "Failed")
+                                  Text('خطأ: يرجى ادخال بيانات صحيحة'),
+                              ],
+                            )
+                          : Text(_response),
                       onTap: () {
-                        Logger().d(_response);
+                        setState(() {
+                          Logger().d(_response);
+                          String res = json.encode(_response);
+                          Logger().d(res);
+
+                          // Logger().d(InvoiceTransactionsList.length);
+                          // bool check = false;
+                          // setCheck(bool value) {
+                          //   check = value;
+                          //   setState(() {});
+                          // }
+                          //   String myRes = '';
+                          // int count = 0;
+                          // for (int i = 0; i < _response.length; i++) {
+                          //   if (_response[i] == ',') {
+                          //     count++;
+                          //   }
+                          //   if(count  >=15){
+                          //     myRes = myRes +_response[i] ;
+                          //   }
+                          // }
+                          // print(count);
+                          // print(myRes.rem);
+                        });
                       },
                     ),
                   ),
                 ),
               ),
-
             ]),
           ),
         ),
