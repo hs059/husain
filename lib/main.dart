@@ -15,7 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
-import 'fatoooraTest.dart';
+
 import 'features/provider/apiProvider.dart';
 import 'features/provider/authProvider.dart';
 import 'features/provider/db_provider.dart';

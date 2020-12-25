@@ -2,8 +2,10 @@ import 'package:beauty/components/widgets/btn.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
+import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
+import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
@@ -142,8 +144,10 @@ class _FatoorahState extends State<Fatoorah> {
                         "InProgress" ||mfPaymentStatusResponse
                         .invoiceTransactions[0].transactionStatus == "Succss"){
                             Provider.of<ApiProvider>(context,listen: false).updateOrder();
-                            Navigator.pop(context);
-                            Navigator.pop(context);
+                            Provider.of<DBProvider>(context, listen: false).deleteAllProduct();
+                            tabControllerConstant.animateTo(0);
+                            kNavigatorPushAndRemoveUntil(
+                                context, HomePage());
                     }else{
                       Get.snackbar('رسالة تحذير', 'هناك خطأ بإدخالك للبيانات');
                     }

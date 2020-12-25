@@ -13,6 +13,7 @@ import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/api_repo.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/string.dart';
@@ -208,15 +209,6 @@ bool orderBool =false ;
     Map map = await ApiClient.apiClient.updateOrder(createOrderGet.data.orderId);
     Logger().d(map);
     if (map['code']) {
-      Fluttertoast.showToast(
-          msg:'تم تحديث الطلب لحالة مدفوع',
-          toastLength: Toast.LENGTH_SHORT,
-          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
-          timeInSecForIosWeb: 1,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        gravity: ToastGravity.TOP
-      );
       Get.snackbar('', '',
           snackPosition: SnackPosition.TOP,
           titleText: Text(
@@ -226,10 +218,33 @@ bool orderBool =false ;
           messageText: Text(
             'بامكانك زيارة خانة طلباتي في صفحة البيانات الشخصية',
             textAlign: TextAlign.right,
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: kBlack
+            ),
           ),
-      duration: Duration(seconds: 2)
+          duration: Duration(seconds: 4)
       );
     }else{
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'رسالة تحذير',
+            textAlign: TextAlign.right,
+          ),
+          messageText: Text(
+            'الطلب غير معرف',
+            textAlign: TextAlign.right,
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: kBlack
+            ),
+          ),
+          duration: Duration(seconds: 4)
+      );
+
       Fluttertoast.showToast(
           msg:'الطلب غير معرف',
           toastLength: Toast.LENGTH_SHORT,
