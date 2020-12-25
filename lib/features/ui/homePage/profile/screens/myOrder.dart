@@ -167,7 +167,8 @@ class MyOrder extends StatelessWidget {
                                   style: kSeeAll,
                                 ),
                                 Text(
-                                  220.toString() + ' ' + currency,
+                                  // 220.toString() + ' ' + currency,
+                                  myOrder.total.toString() + ' ' + currency,
                                   style: kSeeAll,
                                   textAlign: TextAlign.center,
                                 ),

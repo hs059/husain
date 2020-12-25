@@ -217,6 +217,18 @@ bool orderBool =false ;
           fontSize: 16.0,
         gravity: ToastGravity.TOP
       );
+      Get.snackbar('', '',
+          snackPosition: SnackPosition.TOP,
+          titleText: Text(
+            'تم تحديث الطلب لحالة مدفوع',
+            textAlign: TextAlign.right,
+          ),
+          messageText: Text(
+            'بامكانك زيارة خانة طلباتي في صفحة البيانات الشخصية',
+            textAlign: TextAlign.right,
+          ),
+      duration: Duration(seconds: 2)
+      );
     }else{
       Fluttertoast.showToast(
           msg:'الطلب غير معرف',

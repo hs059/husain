@@ -142,6 +142,8 @@ class _FatoorahState extends State<Fatoorah> {
                         "InProgress" ||mfPaymentStatusResponse
                         .invoiceTransactions[0].transactionStatus == "Succss"){
                             Provider.of<ApiProvider>(context,listen: false).updateOrder();
+                            Navigator.pop(context);
+                            Navigator.pop(context);
                     }else{
                       Get.snackbar('رسالة تحذير', 'هناك خطأ بإدخالك للبيانات');
                     }
