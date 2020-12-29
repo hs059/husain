@@ -203,6 +203,7 @@ class AuthProvider extends ChangeNotifier {
     if (globalKey.currentState.validate()) {
       globalKey.currentState.save();
       loginUser(context);
+      showProfile();
       notifyListeners();
     } else {
       notifyListeners();
@@ -358,6 +359,7 @@ class AuthProvider extends ChangeNotifier {
           backgroundColor: Color(0xffDAA095).withOpacity(0.8),
           textColor: Colors.white,
           fontSize: 16.0);
+      showProfile();
       kNavigatorPushAndRemoveUntil(context, HomePage());
     } else {
       Get.snackbar('', '',
@@ -384,6 +386,7 @@ class AuthProvider extends ChangeNotifier {
   ShowProfileModel showProfileModel;
 
   showProfile() async {
+    print('showProfile');
     if (isLogin) {
       showProfileModel = await ApiRepository.apiRepository.showProfile();
       notifyListeners();

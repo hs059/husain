@@ -180,7 +180,7 @@ class ProductMScreen extends StatelessWidget {
                                 height: ScreenUtil().setHeight(24),
                               ),
                               Button(
-                                text: 'إضافة إلى العربة',
+                                text: 'إضافة إلى السلة',
                                 onTap: () {
                                   Provider.of<DBProvider>(context,listen: false).insertNewProduct(
                                       getproduct()
@@ -242,209 +242,209 @@ class ProductMScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        ExpansionTile(
-                          title: Text(
-                            'التعليقات',
-                            style: kReviews.copyWith(
-                              fontSize: ScreenUtil().setSp(14),
-                            ),
-                          ),
-                          children: [
-                            reviews.isNotEmpty?ListView.builder(
-                              shrinkWrap: true,
-                              primary: false,
-                              itemCount: reviews.length,
-                              scrollDirection: Axis.vertical,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder:(context, index) {
-                               Reviews  review = reviews[index];
-                                return Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: ScreenUtil().setWidth(15),
-                                  ),
-                                  child: Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SmoothStarRating(
-                                              rating: 5,
-                                              color: kStar,
-                                              isReadOnly: true,
-                                              size: 15,
-                                              borderColor: kBorder,
-                                              filledIconData: Icons.star,
-                                              halfFilledIconData: Icons.star_half,
-                                              defaultIconData: Icons.star_border,
-                                              starCount: 5,
-                                              allowHalfRating: true,
-                                              spacing: 1.0,
-                                              onRated: (value) {
-                                                print("rating value -> $value");
-                                              },
-                                            ),
-                                            Text(
-                                              review.user.userName,
-                                              style: kGrayTextStyle,
-                                              textAlign: TextAlign.start,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: ScreenUtil().setHeight(10),
-                                        ),
-                                        Container(
-                                          constraints: BoxConstraints(
-                                            maxWidth: ScreenUtil().setWidth(280),
-                                          ),
-                                          child: Text(
-                                              review.comment,
-                                              style: kReviews.copyWith(
-                                                fontSize: ScreenUtil().setSp(14),
-                                              )),
-                                        ),
-                                        SizedBox(
-                                          height: ScreenUtil().setHeight(40),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              }  ,
-                            ):
-                            Center(
-                                child: Text(
-                                    'لا يوجد تعليقات أضف تعليقك ...',
-                                    style:TextStyle(
-                                        fontFamily: 'Cairo-Regular',
-                                        fontSize: 18,
-                                        color: kGray
-                                    )
-
-                                )) ,
-                            ListTile(
-                              trailing: GestureDetector(
-                                onTap: () async{
-                                  bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
-                                  if(isLogen == false){
-                                    Fluttertoast.showToast(
-                                        msg: 'يجب عليك تسجيل الدخول',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        backgroundColor: Color(0xffDAA095).withOpacity(0.8),
-                                        timeInSecForIosWeb: 1,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
-                                    kNavigatorPush(context, SignIn());
-                                  }else{
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.all(Radius.circular(10.0))),
-                                        content: Container(
-                                          child: Wrap(
-                                            children: [
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  TitleSubTitle(
-                                                    title: 'قيم و أضف تعليقك',
-                                                    subTitle:
-                                                    'يسرنا الاخذ بتقييمك و تعليقك',
-                                                  ),
-                                                  SizedBox(
-                                                    height: ScreenUtil().setHeight(10),
-                                                  ),
-
-                                                  SmoothStarRating(
-                                                    rating: 2,
-                                                    color: kStar,
-                                                    borderColor: kStar,
-                                                    isReadOnly: false,
-                                                    size: 30,
-                                                    filledIconData: Icons.star,
-                                                    halfFilledIconData: Icons.star_half,
-                                                    defaultIconData: Icons.star_border,
-                                                    starCount: 5,
-                                                    allowHalfRating: true,
-                                                    spacing: 1.0,
-                                                    onRated: (value) {
-                                                      print("rating value -> $value");
-                                                    },
-                                                  ),
-                                                  ContainerCart(
-                                                    child: Directionality(
-                                                      textDirection: TextDirection.rtl,
-                                                      child: Column(
-                                                        children: [
-                                                          Row(
-                                                            children: [
-                                                              Text(
-                                                                'التعليق',
-                                                                style: kSectionText,
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          Directionality(
-                                                            textDirection: TextDirection.rtl,
-                                                            child: TextField(
-                                                              maxLines: null,
-                                                              onChanged: (String txt) {},
-                                                              style: TextStyle(
-                                                                fontSize: 16,
-                                                                color: Color(0xFF313A44),
-                                                              ),
-                                                              cursorColor: Colors.blue,
-                                                              decoration: InputDecoration(
-                                                                  border: InputBorder.none,
-                                                                  hintText: 'أضف تعليق ...'),
-                                                            ),
-                                                          ),
-
-                                                          // Note
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: EdgeInsets.symmetric(
-                                                        horizontal: ScreenUtil().setWidth(50),
-                                                        vertical: ScreenUtil().setHeight(10)
-                                                    ),
-                                                    child: Button(text: 'تم',
-                                                      onTap: (){
-                                                        Navigator.pop(context);
-                                                      },
-                                                    ),),
-
-                                                ],
-                                              ),
-                                            ],
-
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                child: Text(
-                                  'أضف تعليقك',
-                                  style: kSeeAll.copyWith(
-                                    fontSize: ScreenUtil().setSp(16),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: ScreenUtil().setHeight(10),
-                            ),
-                          ],
-                        ),
+                        // ExpansionTile(
+                        //   title: Text(
+                        //     'التعليقات',
+                        //     style: kReviews.copyWith(
+                        //       fontSize: ScreenUtil().setSp(14),
+                        //     ),
+                        //   ),
+                        //   children: [
+                        //     reviews.isNotEmpty?ListView.builder(
+                        //       shrinkWrap: true,
+                        //       primary: false,
+                        //       itemCount: reviews.length,
+                        //       scrollDirection: Axis.vertical,
+                        //       physics: const BouncingScrollPhysics(),
+                        //       itemBuilder:(context, index) {
+                        //        Reviews  review = reviews[index];
+                        //         return Padding(
+                        //           padding: EdgeInsets.symmetric(
+                        //             horizontal: ScreenUtil().setWidth(15),
+                        //           ),
+                        //           child: Align(
+                        //             alignment: Alignment.topLeft,
+                        //             child: Column(
+                        //               crossAxisAlignment: CrossAxisAlignment.start,
+                        //               mainAxisSize: MainAxisSize.min,
+                        //               children: [
+                        //                 Row(
+                        //                   children: [
+                        //                     SmoothStarRating(
+                        //                       rating: 5,
+                        //                       color: kStar,
+                        //                       isReadOnly: true,
+                        //                       size: 15,
+                        //                       borderColor: kBorder,
+                        //                       filledIconData: Icons.star,
+                        //                       halfFilledIconData: Icons.star_half,
+                        //                       defaultIconData: Icons.star_border,
+                        //                       starCount: 5,
+                        //                       allowHalfRating: true,
+                        //                       spacing: 1.0,
+                        //                       onRated: (value) {
+                        //                         print("rating value -> $value");
+                        //                       },
+                        //                     ),
+                        //                     Text(
+                        //                       review.user.userName,
+                        //                       style: kGrayTextStyle,
+                        //                       textAlign: TextAlign.start,
+                        //                     ),
+                        //                   ],
+                        //                 ),
+                        //                 SizedBox(
+                        //                   height: ScreenUtil().setHeight(10),
+                        //                 ),
+                        //                 Container(
+                        //                   constraints: BoxConstraints(
+                        //                     maxWidth: ScreenUtil().setWidth(280),
+                        //                   ),
+                        //                   child: Text(
+                        //                       review.comment,
+                        //                       style: kReviews.copyWith(
+                        //                         fontSize: ScreenUtil().setSp(14),
+                        //                       )),
+                        //                 ),
+                        //                 SizedBox(
+                        //                   height: ScreenUtil().setHeight(40),
+                        //                 ),
+                        //               ],
+                        //             ),
+                        //           ),
+                        //         );
+                        //       }  ,
+                        //     ):
+                        //     Center(
+                        //         child: Text(
+                        //             'لا يوجد تعليقات أضف تعليقك ...',
+                        //             style:TextStyle(
+                        //                 fontFamily: 'Cairo-Regular',
+                        //                 fontSize: 18,
+                        //                 color: kGray
+                        //             )
+                        //
+                        //         )) ,
+                        //     ListTile(
+                        //       trailing: GestureDetector(
+                        //         onTap: () async{
+                        //           bool    isLogen =Provider.of<AuthProvider>(context,listen: false).isLogin;
+                        //           if(isLogen == false){
+                        //             Fluttertoast.showToast(
+                        //                 msg: 'يجب عليك تسجيل الدخول',
+                        //                 toastLength: Toast.LENGTH_SHORT,
+                        //                 backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                        //                 timeInSecForIosWeb: 1,
+                        //                 textColor: Colors.white,
+                        //                 fontSize: 16.0
+                        //             );
+                        //             kNavigatorPush(context, SignIn());
+                        //           }else{
+                        //             showDialog(
+                        //               context: context,
+                        //               builder: (context) => AlertDialog(
+                        //                 shape: RoundedRectangleBorder(
+                        //                     borderRadius:
+                        //                     BorderRadius.all(Radius.circular(10.0))),
+                        //                 content: Container(
+                        //                   child: Wrap(
+                        //                     children: [
+                        //                       Column(
+                        //                         mainAxisAlignment: MainAxisAlignment.center,
+                        //                         children: [
+                        //                           TitleSubTitle(
+                        //                             title: 'قيم و أضف تعليقك',
+                        //                             subTitle:
+                        //                             'يسرنا الاخذ بتقييمك و تعليقك',
+                        //                           ),
+                        //                           SizedBox(
+                        //                             height: ScreenUtil().setHeight(10),
+                        //                           ),
+                        //
+                        //                           SmoothStarRating(
+                        //                             rating: 2,
+                        //                             color: kStar,
+                        //                             borderColor: kStar,
+                        //                             isReadOnly: false,
+                        //                             size: 30,
+                        //                             filledIconData: Icons.star,
+                        //                             halfFilledIconData: Icons.star_half,
+                        //                             defaultIconData: Icons.star_border,
+                        //                             starCount: 5,
+                        //                             allowHalfRating: true,
+                        //                             spacing: 1.0,
+                        //                             onRated: (value) {
+                        //                               print("rating value -> $value");
+                        //                             },
+                        //                           ),
+                        //                           ContainerCart(
+                        //                             child: Directionality(
+                        //                               textDirection: TextDirection.rtl,
+                        //                               child: Column(
+                        //                                 children: [
+                        //                                   Row(
+                        //                                     children: [
+                        //                                       Text(
+                        //                                         'التعليق',
+                        //                                         style: kSectionText,
+                        //                                       ),
+                        //                                     ],
+                        //                                   ),
+                        //                                   Directionality(
+                        //                                     textDirection: TextDirection.rtl,
+                        //                                     child: TextField(
+                        //                                       maxLines: null,
+                        //                                       onChanged: (String txt) {},
+                        //                                       style: TextStyle(
+                        //                                         fontSize: 16,
+                        //                                         color: Color(0xFF313A44),
+                        //                                       ),
+                        //                                       cursorColor: Colors.blue,
+                        //                                       decoration: InputDecoration(
+                        //                                           border: InputBorder.none,
+                        //                                           hintText: 'أضف تعليق ...'),
+                        //                                     ),
+                        //                                   ),
+                        //
+                        //                                   // Note
+                        //                                 ],
+                        //                               ),
+                        //                             ),
+                        //                           ),
+                        //                           Padding(
+                        //                             padding: EdgeInsets.symmetric(
+                        //                                 horizontal: ScreenUtil().setWidth(50),
+                        //                                 vertical: ScreenUtil().setHeight(10)
+                        //                             ),
+                        //                             child: Button(text: 'تم',
+                        //                               onTap: (){
+                        //                                 Navigator.pop(context);
+                        //                               },
+                        //                             ),),
+                        //
+                        //                         ],
+                        //                       ),
+                        //                     ],
+                        //
+                        //                   ),
+                        //                 ),
+                        //               ),
+                        //             );
+                        //           }
+                        //         },
+                        //         child: Text(
+                        //           'أضف تعليقك',
+                        //           style: kSeeAll.copyWith(
+                        //             fontSize: ScreenUtil().setSp(16),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(
+                        //       height: ScreenUtil().setHeight(10),
+                        //     ),
+                        //   ],
+                        // ),
                         Column(
                           children: [
                             Padding(

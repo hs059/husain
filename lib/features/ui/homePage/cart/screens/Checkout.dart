@@ -471,7 +471,7 @@ class CheckOut extends StatelessWidget {
                                 MainAxisAlignment.center,
                                 children: [
 
-                                  Button(text: 'فحص الكود',  onTap: () {
+                                  Button(text: 'تنفيذ',  onTap: () {
                                     Provider.of<ApiProvider>(context,listen: false).getCoupon();
                                     Provider.of<ApiProvider>(context,listen: false).setCoupon('');
                                     _controller.clear();

@@ -258,11 +258,7 @@ class _AddNewAddressState extends State<AddNewAddress> with SingleTickerProvider
                                           color: animation2.value,
                                         ),
                                       ),
-                                      // SvgPicture.asset(
-                                      //   'assets/svg/locationBtn.svg',
 
-                                      //   fit: BoxFit.contain,
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -379,7 +375,6 @@ class _AddNewAddressState extends State<AddNewAddress> with SingleTickerProvider
                                 },
                                 autoValidate: false,
                                 decoration: InputDecoration(
-
                                   hintText: 'رقم الهاتف',
                                   hintStyle:
                                       TextStyle(color: Color(0xff8F9BB3), fontSize: 15),

@@ -25,6 +25,7 @@ class _SignUpState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    AuthProvider authProviderFalse = Provider.of<AuthProvider>(context,listen: false);
     UiProvider uiProvider = Provider.of<UiProvider>(context);
 
     return Directionality(
@@ -107,6 +108,7 @@ class _SignUpState extends State<SignUp> {
                               child: IntlPhoneField(
                                 validator: authProvider.validatePhone,
                                 autoValidate: false,
+
                                 decoration: InputDecoration(
                                   hintText: 'رقم الموبايل',
                                   hintStyle:
@@ -121,6 +123,10 @@ class _SignUpState extends State<SignUp> {
                                 initialCountryCode: 'SA',
                                 showDropdownIcon: false,
                                 onChanged: (phone) {
+                                  authProviderFalse.saveMobile(phone.completeNumber);
+                              },
+                                onSaved:(phone) {
+                                  authProviderFalse.saveMobile(phone.completeNumber);
                                 },
                               ),
                             ),

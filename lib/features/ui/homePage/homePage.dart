@@ -49,10 +49,11 @@ class _HomePageState extends State<HomePage>
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     super.initState();
   }
-  Future<bool> onWillPopSubCategory() {
 
-
-    return Future.value(true);
+  @override
+  void dispose() {
+    tabControllerConstant.dispose() ;
+    super.dispose();
   }
   @override
   Widget build(BuildContext context) {

@@ -23,6 +23,8 @@ class AddCartSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    AuthProvider authProviderFalse = Provider.of<AuthProvider>(context,listen: false);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Wrap(
@@ -57,12 +59,12 @@ class AddCartSheet extends StatelessWidget {
                       height: ScreenUtil().setHeight(15),
                     ),
                     Text(
-                      'تمت إضافة المنتج إلى عربة التسوق',
+                      'تمت إضافة المنتج إلى سلة التسوق',
                       style: kSubTitleProduct,
                       textAlign: TextAlign.start,
                     ),
                     Text(
-                      'سعر العربة: ' + prize + ' ' + currency,
+                      'سعر المنتج: ' + prize + ' ' + currency,
                       style: kSubTitleSign,
                       textAlign: TextAlign.start,
                     ),
@@ -99,7 +101,24 @@ class AddCartSheet extends StatelessWidget {
                         text: 'إتمام الطلب',
                         onTap: () async{
                           bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
-                          if(!isLogin){
+                          if(isLogin){
+                            if(authProvider.showProfileModel == null){
+                              authProviderFalse.signOut();
+                              Fluttertoast.showToast(
+                                  msg: 'يجب عليك تسجيل الدخول',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                  timeInSecForIosWeb: 1,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              );
+                              kNavigatorPush(context, SignIn());
+                            }else{
+                              Provider.of<ApiProvider>(context,listen: false).getAllAddress();
+                              Provider.of<AuthProvider>(context,listen: false).showProfile();
+                              kNavigatorPush(context, CheckOut());
+                            }
+                          }else{
                             Fluttertoast.showToast(
                                 msg: 'يجب عليك تسجيل الدخول',
                                 toastLength: Toast.LENGTH_SHORT,
@@ -109,10 +128,6 @@ class AddCartSheet extends StatelessWidget {
                                 fontSize: 16.0
                             );
                             kNavigatorPush(context, SignIn());
-                          }else{
-                            Provider.of<ApiProvider>(context,listen: false).getAllAddress();
-                            Provider.of<AuthProvider>(context,listen: false).showProfile();
-                            kNavigatorPush(context, CheckOut());
                           }
 
                         })),
@@ -131,7 +146,7 @@ class AddCartSheet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(6),
                         border: Border.all(color: kPinkLight, width: 1)),
                         child: Text(
-                      'إكمال الشراء',
+                      'إكمال التسوق',
                       style: kBtnText.copyWith(
                         color: kPinkLight,
                       ),

@@ -53,7 +53,7 @@ class ProductRecommended extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('شاهد أيضا',style: kSectionText.copyWith(
+                          Text('تسوق أيضاً',style: kSectionText.copyWith(
                               fontSize: ScreenUtil().setSp(18),
                               fontFamily: 'Cairo-Regular'
                           ),),

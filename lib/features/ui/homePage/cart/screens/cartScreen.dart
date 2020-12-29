@@ -28,6 +28,8 @@ class Cart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DBProvider dbProvider = Provider.of<DBProvider>(context);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+    AuthProvider authProviderFalse = Provider.of<AuthProvider>(context,listen: false);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: SafeArea(
@@ -100,7 +102,24 @@ class Cart extends StatelessWidget {
             child: bottomNavigationBarCart(
               onTap: () async{
                 bool isLogin =await SPHelper.spHelper.getIsLogin()??false;
-                if(!isLogin){
+                if(isLogin){
+                  if(authProvider.showProfileModel == null){
+                    authProviderFalse.signOut();
+                    Fluttertoast.showToast(
+                        msg: 'يجب عليك تسجيل الدخول',
+                        toastLength: Toast.LENGTH_SHORT,
+                        backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                        timeInSecForIosWeb: 1,
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
+                    kNavigatorPush(context, SignIn());
+                  }else{
+                    Provider.of<ApiProvider>(context,listen: false).getAllAddress();
+                    Provider.of<AuthProvider>(context,listen: false).showProfile();
+                    kNavigatorPush(context, CheckOut());
+                  }
+                }else{
                   Fluttertoast.showToast(
                       msg: 'يجب عليك تسجيل الدخول',
                       toastLength: Toast.LENGTH_SHORT,
@@ -110,10 +129,6 @@ class Cart extends StatelessWidget {
                       fontSize: 16.0
                   );
                   kNavigatorPush(context, SignIn());
-                }else{
-                  Provider.of<ApiProvider>(context,listen: false).getAllAddress();
-                  Provider.of<AuthProvider>(context,listen: false).showProfile();
-                  kNavigatorPush(context, CheckOut());
                 }
               },
               widget: Row(

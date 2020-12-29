@@ -187,6 +187,7 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                 authProvider.submitlogin(formKeySignIn, context);
                                 Provider.of<ApiProvider>(context,listen: false).getAllFav();
                                 Provider.of<ApiProvider>(context,listen: false).getAllOrder();
+
                                 tabControllerConstant.animateTo(0);
                               }),
                         ),

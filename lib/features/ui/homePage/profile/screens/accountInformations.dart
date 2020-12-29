@@ -84,19 +84,19 @@ class AccountInformations extends StatelessWidget {
                                               onSaved: authProvider.saveFullName,
                                               textInitialValue: authProvider.showProfileModel.data.displayName,
                                             ),
-                                            SizedBox(
-                                              height: ScreenUtil().setHeight(15),
-                                            ),
-                                            CustomTextFormField(
-                                              // textEditingController: myController2,
-                                              hintText: 'الايميل',
-                                              password: false,
-                                              validator: authProvider.validateEmail,
-                                              onSaved: authProvider.saveEmail,
-                                              textInputType: TextInputType.emailAddress,
-                                              textInitialValue: authProvider.showProfileModel.data.email,
-
-                                            ),
+                                            // SizedBox(
+                                            //   height: ScreenUtil().setHeight(15),
+                                            // ),
+                                            // CustomTextFormField(
+                                            //   // textEditingController: myController2,
+                                            //   hintText: 'الايميل',
+                                            //   password: false,
+                                            //   validator: authProvider.validateEmail,
+                                            //   onSaved: authProvider.saveEmail,
+                                            //   textInputType: TextInputType.emailAddress,
+                                            //   textInitialValue: authProvider.showProfileModel.data.email,
+                                            //
+                                            // ),
                                             Visibility(
                                               visible: !authProvider.isLoginSocial,
                                               child: Column(
@@ -167,13 +167,6 @@ class AccountInformations extends StatelessWidget {
                                                       ),
                                                     ),
                                                   ),
-                                                  // CustomTextFormField(
-                                                  //   // textEditingController: myController4,
-                                                  //   hintText: 'كلمة المرور الجديدة',
-                                                  //   password: true,
-                                                  //   validator: authProvider.validatePassword,
-                                                  //   onSaved: authProvider.saveNewPassword,
-                                                  // ),
                                                 ],
                                               ),
                                             ),
