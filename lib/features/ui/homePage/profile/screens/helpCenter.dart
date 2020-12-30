@@ -38,67 +38,65 @@ class HelpCenter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-            appBar: appBarCart(title: 'الدعم و المساندة'),
-            body: Padding(
-              padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
-              child: ContainerCart(
-                // height: 160,
-                child: Wrap(
-                  children: [
-                    ListTile(
-                      onTap: () => launch('mailto:$email'),
-                      leading: SvgPicture.asset(
-                        'assets/svg/emailBtn.svg',
-                        fit: BoxFit.contain,
-                        height: ScreenUtil().setHeight(35),
-                        width: ScreenUtil().setWidth(35),
+      child: Scaffold(
+          appBar: appBarCart(title: 'الدعم و المساندة'),
+          body: Padding(
+            padding: EdgeInsets.only(top: ScreenUtil().setHeight(25)),
+            child: ContainerCart(
+              // height: 160,
+              child: Wrap(
+                children: [
+                  ListTile(
+                    onTap: () => launch('mailto:$email'),
+                    leading: SvgPicture.asset(
+                      'assets/svg/emailBtn.svg',
+                      fit: BoxFit.contain,
+                      height: ScreenUtil().setHeight(35),
+                      width: ScreenUtil().setWidth(35),
+                    ),
+                    title: Text(
+                      'راسلنا',
+                      style: kProfile,
+                    ),
+                  ),
+                  MyDivider(),
+                  ListTile(
+                    onTap: () => launch('tel:+${phone.toString()}'),
+                    leading: Image.asset(
+                      'assets/images/phoneBtn.png',
+                      fit: BoxFit.contain,
+                      height: ScreenUtil().setHeight(35),
+                      width: ScreenUtil().setWidth(35),
+                    ),
+                    title: Text(
+                      'تواصل معنا',
+                      style: kProfile,
+                    ),
+                  ),
+                  MyDivider(),
+                  ListTile(
+                    onTap: () => launch("https://wa.me/+972595581943?text="),
+                    leading: Container(
+                      height: ScreenUtil().setHeight(35),
+                      width: ScreenUtil().setWidth(35),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: kPinkLight,
                       ),
-                      title: Text(
-                        'راسلنا',
-                        style: kProfile,
+                      child: Icon(
+                        FontAwesomeIcons.whatsapp,
+                        color: Colors.white,
                       ),
                     ),
-                    MyDivider(),
-                    ListTile(
-                      onTap: () => launch('tel:+${phone.toString()}'),
-                      leading: Image.asset(
-                        'assets/images/phoneBtn.png',
-                        fit: BoxFit.contain,
-                        height: ScreenUtil().setHeight(35),
-                        width: ScreenUtil().setWidth(35),
-                      ),
-                      title: Text(
-                        'تواصل معنا',
-                        style: kProfile,
-                      ),
+                    title: Text(
+                      ' تواصل معنا عبر الواتس اب',
+                      style: kProfile,
                     ),
-                    MyDivider(),
-                    ListTile(
-                      onTap: () => launch("https://wa.me/+972595581943?text="),
-                      leading: Container(
-                        height: ScreenUtil().setHeight(35),
-                        width: ScreenUtil().setWidth(35),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: kPinkLight,
-                        ),
-                        child: Icon(
-                          FontAwesomeIcons.whatsapp,
-                          color: Colors.white,
-                        ),
-                      ),
-                      title: Text(
-                        ' تواصل معنا عبر الواتس اب',
-                        style: kProfile,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            )),
-      ),
+            ),
+          )),
     );
   }
 }

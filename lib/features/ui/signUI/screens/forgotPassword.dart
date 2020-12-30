@@ -24,50 +24,48 @@ class ForgetPassword extends StatelessWidget {
       inAsyncCall:Provider.of<UiProvider>(context).spinner,
       child: Directionality(
         textDirection: TextDirection.rtl,
-        child: SafeArea(
-          child: Scaffold(
-            key: scaffoldKey,
-            appBar: appBarAuth(context),
-            body: Container(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SizedBox(
-                      height: ScreenUtil().setHeight(50),
+        child: Scaffold(
+          key: scaffoldKey,
+          appBar: appBarAuth(context),
+          body: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  SizedBox(
+                    height: ScreenUtil().setHeight(50),
+                  ),
+                  TitleSubTitle(
+                    title: 'إعادة تعيين كلمة المرور',
+                    subTitle:
+                        'يرجى كتابة بريدك الإلكتروني أدناه ويمكننا مساعدتك في إعادة تعيين كلمة المرور',
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(60),
+                  ),
+                  Form(
+                    key: formKeyForgetPassword,
+                    child: CustomTextFormField(
+                      hintText: 'الايميل',
+                      validator: authProvider.validateEmail,
+                      onSaved: authProvider.saveEmail,
+                      textInputType: TextInputType.emailAddress,
                     ),
-                    TitleSubTitle(
-                      title: 'إعادة تعيين كلمة المرور',
-                      subTitle:
-                          'يرجى كتابة بريدك الإلكتروني أدناه ويمكننا مساعدتك في إعادة تعيين كلمة المرور',
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(60),
-                    ),
-                    Form(
-                      key: formKeyForgetPassword,
-                      child: CustomTextFormField(
-                        hintText: 'الايميل',
-                        validator: authProvider.validateEmail,
-                        onSaved: authProvider.saveEmail,
-                        textInputType: TextInputType.emailAddress,
-                      ),
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(70),
-                    ),
-                    Builder(
-                      builder: (context) =>
-                      Button(
-                          text: 'أرسل',
-                          onTap: () {
-                            authProvider.submitForgetPassword(
-                                formKeyForgetPassword, context);
-                          }),
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: ScreenUtil().setHeight(70),
+                  ),
+                  Builder(
+                    builder: (context) =>
+                    Button(
+                        text: 'أرسل',
+                        onTap: () {
+                          authProvider.submitForgetPassword(
+                              formKeyForgetPassword, context);
+                        }),
+                  ),
+                ],
               ),
             ),
           ),

@@ -73,269 +73,267 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
     double width = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-          body: WillPopScope(
-            onWillPop: onWillPopLogin,
-            child: ModalProgressHUD(
-              inAsyncCall:Provider.of<UiProvider>(context).spinner,
-              child: AnimatedBuilder(
-                animation: controller,
-                builder: (context, child) => Container(
-                  padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
+      child: Scaffold(
+        body: WillPopScope(
+          onWillPop: onWillPopLogin,
+          child: ModalProgressHUD(
+            inAsyncCall:Provider.of<UiProvider>(context).spinner,
+            child: AnimatedBuilder(
+              animation: controller,
+              builder: (context, child) => Container(
+                padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
 
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        SizedBox(
-                          height: ScreenUtil().setHeight(10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        height: ScreenUtil().setHeight(45),
+                      ),
+                      Container(
+                        alignment: Alignment.center,
+                        height: ScreenUtil().setHeight(117),
+                        child: SvgPicture.asset(
+                          'assets/svg/beauty0.svg',
+                          height: animationImage.value * ScreenUtil().setHeight(117),
                         ),
-                        Container(
-                          alignment: Alignment.center,
-                          height: ScreenUtil().setHeight(117),
-                          child: SvgPicture.asset(
-                            'assets/svg/beauty0.svg',
-                            height: animationImage.value * ScreenUtil().setHeight(117),
-                          ),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(15),
+                      ),
+                      Transform(
+                        transform: Matrix4.translationValues(
+                            animation1.value * width, 0.0, 0.0),
+                        child: Text(
+                          'مرحباَ بك ',
+                          style: kTitleSign,
                         ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(15),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(5),
+                      ),
+                      Transform(
+                        transform: Matrix4.translationValues(
+                            animation1.value * width, 0.0, 0.0),
+                        child: Text(
+                          'سجل دخول لتتم عمليات الشراء',
+                          style: kSubTitleOnboarding.copyWith(fontSize: ScreenUtil().setSp(16)),
                         ),
-                        Transform(
-                          transform: Matrix4.translationValues(
-                              animation1.value * width, 0.0, 0.0),
-                          child: Text(
-                            'مرحباَ بك ',
-                            style: kTitleSign,
-                          ),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(5),
-                        ),
-                        Transform(
-                          transform: Matrix4.translationValues(
-                              animation1.value * width, 0.0, 0.0),
-                          child: Text(
-                            'سجل دخول لتتم عمليات الشراء',
-                            style: kSubTitleOnboarding.copyWith(fontSize: ScreenUtil().setSp(16)),
-                          ),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(20),
-                        ),
-                        Form(
-                          key: formKeySignIn,
-                          child: Column(
-                            children: <Widget>[
-                              Transform(
-                                transform: Matrix4.translationValues(
-                                    animation2.value * width, 0.0, 0.0),
-                                child: CustomTextFormField(
-                                  hintText: 'الإيميل',
-                                  validator: authProvider.validateEmail,
-                                  onSaved: authProvider.saveEmail,
-                                  textInputType: TextInputType.emailAddress,
-                                  password: false,
-                                ),
-                              ),
-                              SizedBox(
-                                height: ScreenUtil().setHeight(10),
-                              ),
-                              Transform(
-                                transform: Matrix4.translationValues(
-                                    animation2.value * width, 0.0, 0.0),
-                                child: CustomTextFormField(
-                                  iconData: uiProvider.iconData,
-                                  hintText: 'كلمة السر',
-                                  password: uiProvider.toggleEye,
-                                  validator: authProvider.validatePassword,
-                                  onSaved: authProvider.savePassword,
-
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(15),
-                        ),
-                        FadeTransition(
-                          opacity: controller,
-                          child: GestureDetector(
-                            onTap: () => kNavigatorPush(context, ForgetPassword()),
-                            child: Container(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                'نسيت كلمة السر',
-                                style: kSubTitleSign.copyWith(
-                                  color: kPinkLight,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(20),
-                        ),
-                        Transform(
-                          transform: Matrix4.translationValues(
-                              animation3.value * width, 0.0, 0.0),
-                          child: Button(
-                              text: 'تسجيل الدخول',
-                              onTap: () {
-                                authProvider.submitlogin(formKeySignIn, context);
-                                Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                                Provider.of<ApiProvider>(context,listen: false).getAllOrder();
-
-                                tabControllerConstant.animateTo(0);
-                              }),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(20),
-                        ),
-                        FadeTransition(
-                          opacity: controller,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: Divider(
-                                color: Color(0xffEDF1F7),
-                                thickness: 1,
-                              )),
-                              Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Text('أو'),
-                              ),
-                              Expanded(
-                                  child: Divider(
-                                color: Color(0xffEDF1F7),
-                                thickness: 1,
-                              )),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(10),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(20),
+                      ),
+                      Form(
+                        key: formKeySignIn,
+                        child: Column(
+                          children: <Widget>[
                             Transform(
                               transform: Matrix4.translationValues(
-                                  animation1.value * width, 0.0, 0.0),
-                              child: RotationTransition(
-                                turns:
-                                    Tween(begin: 0.0, end: 1.0).animate(controller),
-                                child: GestureDetector(
-                                  onTap: () async{
-                                    // bool result = await Auth.auth.signInWithFacebook();
-                                    // result?kNavigatorPush(context,HomePage()):print('do not connect');
-                                    authProviderFalse.signInWithFacebook(context);
-                                    Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                                    Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: ScreenUtil().setHeight(46),
-                                    child: SvgPicture.asset(
-                                      'assets/svg/btn.facebook.svg',
-                                      height: ScreenUtil().setHeight(46),
-
-                                    ),
-                                  ),
-                                ),
+                                  animation2.value * width, 0.0, 0.0),
+                              child: CustomTextFormField(
+                                hintText: 'الإيميل',
+                                validator: authProvider.validateEmail,
+                                onSaved: authProvider.saveEmail,
+                                textInputType: TextInputType.emailAddress,
+                                password: false,
                               ),
                             ),
                             SizedBox(
-                              width: ScreenUtil().setWidth(30),
+                              height: ScreenUtil().setHeight(10),
                             ),
                             Transform(
                               transform: Matrix4.translationValues(
                                   animation2.value * width, 0.0, 0.0),
-                              child: RotationTransition(
-                                turns:
-                                    Tween(begin: 0.0, end: 1.0).animate(controller),
-                                child: GestureDetector(
-                                  onTap: () async{
-                                  //  authProviderFalse.signInWithTwitter(context);
-                                    Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                                    Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
+                              child: CustomTextFormField(
+                                iconData: uiProvider.iconData,
+                                hintText: 'كلمة السر',
+                                password: uiProvider.toggleEye,
+                                validator: authProvider.validatePassword,
+                                onSaved: authProvider.savePassword,
 
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: ScreenUtil().setHeight(46),
-                                    child: SvgPicture.asset(
-                                      'assets/svg/btn.twitter.svg',
-                                      height: ScreenUtil().setHeight(46),
-
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: ScreenUtil().setWidth(30),
-                            ),
-                            ////////google SignIn///////
-                            Transform(
-                              transform: Matrix4.translationValues(
-                                  animation3.value * width, 0.0, 0.0),
-                              child: RotationTransition(
-                                turns:
-                                    Tween(begin: 0.0, end: 1.0).animate(controller),
-                                child: GestureDetector(
-                                  onTap: () async{
-                                    authProviderFalse.loginUsingGoogle(context);
-                                    Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                                    Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
-                                  },
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: ScreenUtil().setHeight(46),
-                                    child: SvgPicture.asset(
-                                      'assets/svg/btn.google.svg',
-                                      height: ScreenUtil().setHeight(46),
-
-                                    ),
-                                  ),
-                                ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: ScreenUtil().setHeight(20),
-                        ),
-                        FadeTransition(
-                          opacity: controller,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(15),
+                      ),
+                      FadeTransition(
+                        opacity: controller,
+                        child: GestureDetector(
+                          onTap: () => kNavigatorPush(context, ForgetPassword()),
                           child: Container(
-                            alignment: Alignment.center,
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                      text: 'لا تمتلك حساب ؟ ',
-                                      style: kSubTitleSign),
-                                  TextSpan(
-                                    text: '   سجل اشتراك  ',
-                                    style: TextStyle(
-                                      color: kPinkLight,
-                                      fontSize: ScreenUtil().setSp(16),
-                                    ),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        kNavigatorPush(context, SignUp());
-                                      },
-                                  ),
-                                ],
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              'نسيت كلمة السر',
+                              style: kSubTitleSign.copyWith(
+                                color: kPinkLight,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(20),
+                      ),
+                      Transform(
+                        transform: Matrix4.translationValues(
+                            animation3.value * width, 0.0, 0.0),
+                        child: Button(
+                            text: 'تسجيل الدخول',
+                            onTap: () {
+                              authProvider.submitlogin(formKeySignIn, context);
+                              Provider.of<ApiProvider>(context,listen: false).getAllFav();
+                              Provider.of<ApiProvider>(context,listen: false).getAllOrder();
+
+                              tabControllerConstant.animateTo(0);
+                            }),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(20),
+                      ),
+                      FadeTransition(
+                        opacity: controller,
+                        child: Row(
+                          children: [
+                            Expanded(
+                                child: Divider(
+                              color: Color(0xffEDF1F7),
+                              thickness: 1,
+                            )),
+                            Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text('أو'),
+                            ),
+                            Expanded(
+                                child: Divider(
+                              color: Color(0xffEDF1F7),
+                              thickness: 1,
+                            )),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Transform(
+                            transform: Matrix4.translationValues(
+                                animation1.value * width, 0.0, 0.0),
+                            child: RotationTransition(
+                              turns:
+                                  Tween(begin: 0.0, end: 1.0).animate(controller),
+                              child: GestureDetector(
+                                onTap: () async{
+                                  // bool result = await Auth.auth.signInWithFacebook();
+                                  // result?kNavigatorPush(context,HomePage()):print('do not connect');
+                                  authProviderFalse.signInWithFacebook(context);
+                                  Provider.of<ApiProvider>(context,listen: false).getAllFav();
+                                  Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: ScreenUtil().setHeight(46),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/btn.facebook.svg',
+                                    height: ScreenUtil().setHeight(46),
+
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: ScreenUtil().setWidth(30),
+                          ),
+                          Transform(
+                            transform: Matrix4.translationValues(
+                                animation2.value * width, 0.0, 0.0),
+                            child: RotationTransition(
+                              turns:
+                                  Tween(begin: 0.0, end: 1.0).animate(controller),
+                              child: GestureDetector(
+                                onTap: () async{
+                                //  authProviderFalse.signInWithTwitter(context);
+                                  Provider.of<ApiProvider>(context,listen: false).getAllFav();
+                                  Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
+
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: ScreenUtil().setHeight(46),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/btn.twitter.svg',
+                                    height: ScreenUtil().setHeight(46),
+
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: ScreenUtil().setWidth(30),
+                          ),
+                          ////////google SignIn///////
+                          Transform(
+                            transform: Matrix4.translationValues(
+                                animation3.value * width, 0.0, 0.0),
+                            child: RotationTransition(
+                              turns:
+                                  Tween(begin: 0.0, end: 1.0).animate(controller),
+                              child: GestureDetector(
+                                onTap: () async{
+                                  authProviderFalse.loginUsingGoogle(context);
+                                  Provider.of<ApiProvider>(context,listen: false).getAllFav();
+                                  Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: ScreenUtil().setHeight(46),
+                                  child: SvgPicture.asset(
+                                    'assets/svg/btn.google.svg',
+                                    height: ScreenUtil().setHeight(46),
+
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(20),
+                      ),
+                      FadeTransition(
+                        opacity: controller,
+                        child: Container(
+                          alignment: Alignment.center,
+                          child: RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                    text: 'لا تمتلك حساب ؟ ',
+                                    style: kSubTitleSign),
+                                TextSpan(
+                                  text: '   سجل اشتراك  ',
+                                  style: TextStyle(
+                                    color: kPinkLight,
+                                    fontSize: ScreenUtil().setSp(16),
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      kNavigatorPush(context, SignUp());
+                                    },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

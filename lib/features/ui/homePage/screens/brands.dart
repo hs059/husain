@@ -23,78 +23,76 @@ class Brands extends StatelessWidget {
     ApiProvider apiProviderFalse =    Provider.of<ApiProvider>(context,listen: false);
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: PreferredSize(
-            child: Container(
-              decoration: BoxDecoration(boxShadow: [
-                BoxShadow(
-                  color: kBorder,
-                  offset: Offset(0, 2.0),
-                  blurRadius: 4.0,
-                )
-              ]),
-              child: AppBar(
-
-                backgroundColor: Colors.white,
-                title: Text(
-                  "أحدث الماركات العالمية", style: kSectionText.copyWith(
-                  fontSize: ScreenUtil().setSp(18),
-                  fontFamily: 'Cairo-Regular',
-                ),),
-                centerTitle: true,
-                elevation: 0.0,
-              ),
-
+      child: Scaffold(
+        appBar: PreferredSize(
+          child: Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                color: kBorder,
+                offset: Offset(0, 2.0),
+                blurRadius: 4.0,
+              )
+            ]),
+            child: AppBar(
+              brightness: Brightness.light,
+              backgroundColor: Colors.white,
+              title: Text(
+                "أحدث الماركات العالمية", style: kSectionText.copyWith(
+                fontSize: ScreenUtil().setSp(18),
+                fontFamily: 'Cairo-Regular',
+              ),),
+              centerTitle: true,
+              elevation: 0.0,
             ),
-            preferredSize: Size.fromHeight(kToolbarHeight),
+
           ),
-          body: Consumer<ApiProvider>(
-            builder: (context, value, child) {
-              BrandModel brand = value.brand;
-              return brand != null ? ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                separatorBuilder: (context, index) => MyDivider(),
-                itemCount: brand.data.brands.length,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) =>
-                    ListTile(
-                      onTap: () {
+          preferredSize: Size.fromHeight(kToolbarHeight),
+        ),
+        body: Consumer<ApiProvider>(
+          builder: (context, value, child) {
+            BrandModel brand = value.brand;
+            return brand != null ? ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              separatorBuilder: (context, index) => MyDivider(),
+              itemCount: brand.data.brands.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) =>
+                  ListTile(
+                    onTap: () {
 
-                          apiProviderFalse.getProductByBrand(brand.data.brands[index].id);
-                          kNavigatorPush(context, ShowProduct(title: brand.data.brands[index].name,));
+                        apiProviderFalse.getProductByBrand(brand.data.brands[index].id);
+                        kNavigatorPush(context, ShowProduct(title: brand.data.brands[index].name,));
 
 
 
-                      },
-                      leading: CachedNetworkImage(
-                          imageUrl: brand.data.brands[index].image,
-                          placeholder: (context, url) => LoaderGif1(),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                          height: ScreenUtil().setHeight(50),
-                          fit: BoxFit.contain
-                      ),
-                      title: Text(
-                        brand.data.brands[index].name,
-                        style: kReviews.copyWith(
-                          fontSize: ScreenUtil().setSp(16),
-                        ),
+                    },
+                    leading: CachedNetworkImage(
+                        imageUrl: brand.data.brands[index].image,
+                        placeholder: (context, url) => LoaderGif1(),
+                        errorWidget: (context, url, error) =>
+                            Icon(Icons.error),
+                        height: ScreenUtil().setHeight(50),
+                        fit: BoxFit.contain
+                    ),
+                    title: Text(
+                      brand.data.brands[index].name,
+                      style: kReviews.copyWith(
+                        fontSize: ScreenUtil().setSp(16),
                       ),
                     ),
-              ) : ListView.separated(
-                physics: const BouncingScrollPhysics(),
-                separatorBuilder: (context, index) => MyDivider(),
-                itemCount: 7,
-                scrollDirection: Axis.vertical,
-                itemBuilder: (context, index) =>
-                    SizedBox(
-                      height: 80,
-                      child: LoaderGif1(),
-                    ),
-              );
-            },
-          ),
+                  ),
+            ) : ListView.separated(
+              physics: const BouncingScrollPhysics(),
+              separatorBuilder: (context, index) => MyDivider(),
+              itemCount: 7,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) =>
+                  SizedBox(
+                    height: 80,
+                    child: LoaderGif1(),
+                  ),
+            );
+          },
         ),
       ),
     );

@@ -17,55 +17,53 @@ class SubCategoryWait extends StatelessWidget {
     ApiProvider apiProviderFalse =  Provider.of<ApiProvider>(context,listen: false) ;
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-          appBar:  AppBar(
-          backgroundColor: Colors.white,
-           leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-              apiProviderFalse.setTypeSelected(0);
+      child: Scaffold(
+        appBar:  AppBar( brightness: Brightness.light,
+        backgroundColor: Colors.white,
+         leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+            apiProviderFalse.setTypeSelected(0);
 
-            } ,
+          } ,
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.black,
+          ),
+        ),
+        title: Text(
+         categor.name,
+          style: kSubCategoryText,
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(5.0),
             child: Icon(
-              Icons.arrow_back,
+              Icons.search,
               color: Colors.black,
             ),
           ),
-          title: Text(
-           categor.name,
-            style: kSubCategoryText,
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                Icons.search,
-                color: Colors.black,
-              ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Icon(
+              Icons.filter_list,
+              color: Colors.black,
             ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                Icons.filter_list,
-                color: Colors.black,
+          ),
+        ],
+      ),
+        body: Column(
+          children: [
+            SizedBox(
+              height: 3,
+              child: LinearProgressIndicator(
+                backgroundColor:
+                Theme.of(context).accentColor.withOpacity(0.2),
+                valueColor:
+                new AlwaysStoppedAnimation<Color>(kPinkLight),
               ),
             ),
           ],
-        ),
-          body: Column(
-            children: [
-              SizedBox(
-                height: 3,
-                child: LinearProgressIndicator(
-                  backgroundColor:
-                  Theme.of(context).accentColor.withOpacity(0.2),
-                  valueColor:
-                  new AlwaysStoppedAnimation<Color>(kPinkLight),
-                ),
-              ),
-            ],
-          ),
         ),
       ),
     );

@@ -17,7 +17,7 @@ return PreferredSize(
         )
       ]),
       child: AppBar(iconTheme: IconThemeData(color: Color(0xff121924)),
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.white, brightness: Brightness.light,
         title: Text(
           title,
           style: kSubCategoryText.copyWith(

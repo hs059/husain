@@ -24,26 +24,24 @@ class _WebSiteState extends State<WebSite> {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: SafeArea(
-        child: Scaffold(
-          appBar: appBarCart(title:widget.title ),
-          body: Stack(
-            children: [
-              WebView(
-                key: _key,
-                javascriptMode: JavascriptMode.unrestricted,
-                initialUrl:
-                widget.link,
-                onPageFinished: (finish) {
-                  setState(() {
-                    isLoading = false;
-                  });
-                },
-              ),
-              isLoading ? Center( child: CircularProgressIndicator(),)
-                  : Stack(),
-            ],
-          ),
+      child: Scaffold(
+        appBar: appBarCart(title:widget.title ),
+        body: Stack(
+          children: [
+            WebView(
+              key: _key,
+              javascriptMode: JavascriptMode.unrestricted,
+              initialUrl:
+              widget.link,
+              onPageFinished: (finish) {
+                setState(() {
+                  isLoading = false;
+                });
+              },
+            ),
+            isLoading ? Center( child: CircularProgressIndicator(),)
+                : Stack(),
+          ],
         ),
       ),
     );

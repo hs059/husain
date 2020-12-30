@@ -114,17 +114,15 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: JelloIn(
-          duration: Duration(milliseconds: 1500),
-          animate: true,
-          child: Center(
-            child: SvgPicture.asset(
-              'assets/svg/beauty0.svg',
-              height: ScreenUtil().setHeight(350),
-              fit: BoxFit.contain,
-            ),
+    return Scaffold(
+      body: JelloIn(
+        duration: Duration(milliseconds: 1500),
+        animate: true,
+        child: Center(
+          child: SvgPicture.asset(
+            'assets/svg/beauty0.svg',
+            height: ScreenUtil().setHeight(350),
+            fit: BoxFit.contain,
           ),
         ),
       ),

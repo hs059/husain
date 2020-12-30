@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 Widget appBarAuth(BuildContext context) {
   return AppBar(
+    brightness: Brightness.light,
     backgroundColor: Colors.transparent,
     elevation: 0,
     leading: GestureDetector(

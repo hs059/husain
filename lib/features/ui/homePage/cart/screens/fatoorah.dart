@@ -426,202 +426,200 @@ class _FatoorahState extends State<Fatoorah> {
   Widget build(BuildContext context) {
     DBProvider dbProvider = Provider.of<DBProvider>(context);
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: PreferredSize(
-          child: Container(
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: kBorder,
-                offset: Offset(0, 2.0),
-                blurRadius: 4.0,
-              )
-            ]),
-            child: AppBar(
-              backgroundColor: Colors.white,
-              title: Text(
-                "الشراء أونلاين",
-                style: kSectionText.copyWith(
-                  fontSize: ScreenUtil().setSp(18),
-                  fontFamily: 'Cairo-Regular',
+    return Scaffold(
+      appBar: PreferredSize(
+        child: Container(
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: kBorder,
+              offset: Offset(0, 2.0),
+              blurRadius: 4.0,
+            )
+          ]),
+          child: AppBar( brightness: Brightness.light,
+            backgroundColor: Colors.white,
+            title: Text(
+              "الشراء أونلاين",
+              style: kSectionText.copyWith(
+                fontSize: ScreenUtil().setSp(18),
+                fontFamily: 'Cairo-Regular',
+              ),
+            ),
+            centerTitle: true,
+            elevation: 0.0,
+          ),
+        ),
+        preferredSize: Size.fromHeight(kToolbarHeight),
+      ),
+      body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: Container(
+          margin: EdgeInsets.all(10.0),
+          child: Column(children: [
+            ContainerCart(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: ScreenUtil().setWidth(15),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'السعر الكلي',
+                      style: kSeeAll,
+                    ),
+                    Text(
+                      double.parse(widget.amount).toStringAsFixed(2) +
+                          ' ' +
+                          currency,
+                      style: kSeeAll,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
-              centerTitle: true,
-              elevation: 0.0,
             ),
-          ),
-          preferredSize: Size.fromHeight(kToolbarHeight),
-        ),
-        body: Directionality(
-          textDirection: TextDirection.rtl,
-          child: Container(
-            margin: EdgeInsets.all(10.0),
-            child: Column(children: [
-              ContainerCart(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: ScreenUtil().setWidth(15),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            _response.length < 12 && _response.isNotEmpty
+                ? Column(
                     children: [
-                      Text(
-                        'السعر الكلي',
-                        style: kSeeAll,
+                      SizedBox(
+                        height: 3,
+                        child: LinearProgressIndicator(
+                          backgroundColor:
+                              Theme.of(context).accentColor.withOpacity(0.2),
+                          valueColor:
+                              new AlwaysStoppedAnimation<Color>(kPinkLight),
+                        ),
                       ),
-                      Text(
-                        double.parse(widget.amount).toStringAsFixed(2) +
-                            ' ' +
-                            currency,
-                        style: kSeeAll,
-                        textAlign: TextAlign.center,
+                      Center(
+                        child: Text(
+                          'جاري تحضير بوابات الدفع',
+                          style: kSeeAll.copyWith(
+                              fontFamily: 'Cairo-Regular', fontSize: 18),
+                        ),
                       ),
                     ],
-                  ),
-                ),
-              ),
-              _response.length < 12 && _response.isNotEmpty
-                  ? Column(
-                      children: [
-                        SizedBox(
-                          height: 3,
-                          child: LinearProgressIndicator(
-                            backgroundColor:
-                                Theme.of(context).accentColor.withOpacity(0.2),
-                            valueColor:
-                                new AlwaysStoppedAnimation<Color>(kPinkLight),
-                          ),
-                        ),
-                        Center(
-                          child: Text(
-                            'جاري تحضير بوابات الدفع',
-                            style: kSeeAll.copyWith(
-                                fontFamily: 'Cairo-Regular', fontSize: 18),
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Padding(
-                padding: EdgeInsets.all(5.0),
-              ),
-              Text(
-                "إختار طريقة الدفع",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Padding(
-                padding: EdgeInsets.all(5.0),
-              ),
-              Expanded(
-                  flex: 15,
-                  child: Builder(
-                    builder: (context) {
-                      paymentMethods.removeWhere((element) =>
-                          element.paymentMethodAr ==
-                              "البطاقات المدينة - الامارات" ||
-                          element.paymentMethodAr == "اميكس" ||
-                          element.paymentMethodAr == "بنفت" ||
-                          element.paymentMethodAr == "البطاقات المدينة - قطر" ||
-                          element.paymentMethodAr == "كي نت");
-                      return ListView.builder(
-                          itemCount: paymentMethods.length,
-                          scrollDirection: Axis.vertical,
-                          itemBuilder: (BuildContext ctxt, int index) {
-                            return ListTile(
-                              onTap: () {
-                                charcater =
-                                    paymentMethods[index].paymentMethodAr;
+                  )
+                : Container(),
+            Padding(
+              padding: EdgeInsets.all(5.0),
+            ),
+            Text(
+              "إختار طريقة الدفع",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            Padding(
+              padding: EdgeInsets.all(5.0),
+            ),
+            Expanded(
+                flex: 15,
+                child: Builder(
+                  builder: (context) {
+                    paymentMethods.removeWhere((element) =>
+                        element.paymentMethodAr ==
+                            "البطاقات المدينة - الامارات" ||
+                        element.paymentMethodAr == "اميكس" ||
+                        element.paymentMethodAr == "بنفت" ||
+                        element.paymentMethodAr == "البطاقات المدينة - قطر" ||
+                        element.paymentMethodAr == "كي نت");
+                    return ListView.builder(
+                        itemCount: paymentMethods.length,
+                        scrollDirection: Axis.vertical,
+                        itemBuilder: (BuildContext ctxt, int index) {
+                          return ListTile(
+                            onTap: () {
+                              charcater =
+                                  paymentMethods[index].paymentMethodAr;
+                              selectedPaymentMethodIndex = index;
+                              setState(() {});
+                            },
+                            leading: Image.network(
+                                paymentMethods[index].imageUrl,
+                                width: 40.0,
+                                height: 40.0),
+                            title:
+                                Text(paymentMethods[index].paymentMethodAr),
+                            trailing: Radio(
+                              value:
+                                  paymentMethods[index].paymentMethodAr,
+                              groupValue: charcater,
+                              activeColor: kPinkLight,
+                              hoverColor: kPinkLight,
+                              focusColor: kPinkLight,
+                              onChanged: (value) {
+                                charcater = value;
                                 selectedPaymentMethodIndex = index;
+                                print(selectedPaymentMethodIndex);
                                 setState(() {});
                               },
-                              leading: Image.network(
-                                  paymentMethods[index].imageUrl,
-                                  width: 40.0,
-                                  height: 40.0),
-                              title:
-                                  Text(paymentMethods[index].paymentMethodAr),
-                              trailing: Radio(
-                                value:
-                                    paymentMethods[index].paymentMethodAr,
-                                groupValue: charcater,
-                                activeColor: kPinkLight,
-                                hoverColor: kPinkLight,
-                                focusColor: kPinkLight,
-                                onChanged: (value) {
-                                  charcater = value;
-                                  selectedPaymentMethodIndex = index;
-                                  print(selectedPaymentMethodIndex);
-                                  setState(() {});
-                                },
-                              ),
-                            );
-                          });
-                    },
-                  )),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(5.0),
-                  ),
-                  Button(
-                    onTap: pay,
-                    text: 'شراء',
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                  ),
-                ],
-              ),
-              Container(
-                child: Expanded(
-                  flex: 1,
-                  child: SingleChildScrollView(
-                    child: GestureDetector(
-                      child: mfPaymentStatusResponse != null
-                          ? Column(
-                              children: [
-                                if (mfPaymentStatusResponse
-                                        .invoiceTransactions[0]
-                                        .transactionStatus ==
-                                    "Failed")
-                                  Text('خطأ: يرجى ادخال بيانات صحيحة'),
-                              ],
-                            )
-                          : Text(_response),
-                      onTap: () {
-                        setState(() {
-                          Logger().d(_response);
-                          String res = json.encode(_response);
-                          Logger().d(res);
-
-                          // Logger().d(InvoiceTransactionsList.length);
-                          // bool check = false;
-                          // setCheck(bool value) {
-                          //   check = value;
-                          //   setState(() {});
-                          // }
-                          //   String myRes = '';
-                          // int count = 0;
-                          // for (int i = 0; i < _response.length; i++) {
-                          //   if (_response[i] == ',') {
-                          //     count++;
-                          //   }
-                          //   if(count  >=15){
-                          //     myRes = myRes +_response[i] ;
-                          //   }
-                          // }
-                          // print(count);
-                          // print(myRes.rem);
+                            ),
+                          );
                         });
-                      },
-                    ),
+                  },
+                )),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(5.0),
+                ),
+                Button(
+                  onTap: pay,
+                  text: 'شراء',
+                ),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                ),
+              ],
+            ),
+            Container(
+              child: Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  child: GestureDetector(
+                    child: mfPaymentStatusResponse != null
+                        ? Column(
+                            children: [
+                              if (mfPaymentStatusResponse
+                                      .invoiceTransactions[0]
+                                      .transactionStatus ==
+                                  "Failed")
+                                Text('خطأ: يرجى ادخال بيانات صحيحة'),
+                            ],
+                          )
+                        : Text(_response),
+                    onTap: () {
+                      setState(() {
+                        Logger().d(_response);
+                        String res = json.encode(_response);
+                        Logger().d(res);
+
+                        // Logger().d(InvoiceTransactionsList.length);
+                        // bool check = false;
+                        // setCheck(bool value) {
+                        //   check = value;
+                        //   setState(() {});
+                        // }
+                        //   String myRes = '';
+                        // int count = 0;
+                        // for (int i = 0; i < _response.length; i++) {
+                        //   if (_response[i] == ',') {
+                        //     count++;
+                        //   }
+                        //   if(count  >=15){
+                        //     myRes = myRes +_response[i] ;
+                        //   }
+                        // }
+                        // print(count);
+                        // print(myRes.rem);
+                      });
+                    },
                   ),
                 ),
               ),
-            ]),
-          ),
+            ),
+          ]),
         ),
       ),
     );

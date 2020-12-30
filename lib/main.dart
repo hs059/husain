@@ -121,15 +121,9 @@ class _AppState extends State<App> {
         if (snapshot.connectionState == ConnectionState.done) {
           ScreenUtil.init(context,
               designSize: Size(375, 812), allowFontScaling: true);
-
-          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-            statusBarColor: Colors.white,
-            statusBarIconBrightness: Brightness.dark,
-            statusBarBrightness:
-            Platform.isAndroid ? Brightness.dark : Brightness.light,
-            systemNavigationBarColor: kBlack,
-            systemNavigationBarDividerColor: Colors.grey,
-            systemNavigationBarIconBrightness: Brightness.dark,
+          SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+            statusBarColor: Colors.white, // Color for Android
+            statusBarBrightness: Brightness.light,
           ));
           return MyApp(screen);
         }
