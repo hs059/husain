@@ -438,6 +438,18 @@ class _FatoorahState extends State<Fatoorah> {
           ]),
           child: AppBar( brightness: Brightness.light,
             backgroundColor: Colors.white,
+            actions: [
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Icon(
+                    Icons.arrow_forward,
+                    color: Color(0xff121924),
+                  ),
+                ),
+              ),
+            ],
             title: Text(
               "الشراء أونلاين",
               style: kSectionText.copyWith(

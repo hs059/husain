@@ -28,20 +28,20 @@ class ProductPrize extends StatelessWidget {
             SizedBox(
               width: ScreenUtil().setWidth(25),
             ),
-            Container(
-              width: ScreenUtil().setWidth(52),
-              height: ScreenUtil().setHeight(20),
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  color: kPink2,
-                  borderRadius: BorderRadius.circular(20)),
-              child: Text(
-                '-${((100*(double.parse(oldPrize)-double.parse(prize)))/double.parse(oldPrize)).toStringAsFixed(2)}%',
-                style: kReviews.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xffE63A38)),
-              ),
-            ),
+            // Container(
+            //   width: ScreenUtil().setWidth(52),
+            //   height: ScreenUtil().setHeight(20),
+            //   alignment: Alignment.center,
+            //   decoration: BoxDecoration(
+            //       color: kPink2,
+            //       borderRadius: BorderRadius.circular(20)),
+            //   child: Text(
+            //     '-${((100*(double.parse(oldPrize)-double.parse(prize)))/double.parse(oldPrize)).toStringAsFixed(2)}%',
+            //     style: kReviews.copyWith(
+            //         fontWeight: FontWeight.bold,
+            //         color: Color(0xffE63A38)),
+            //   ),
+            // ),
           ],
         ),
       ],
