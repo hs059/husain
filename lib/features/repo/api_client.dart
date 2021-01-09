@@ -209,7 +209,7 @@ class ApiClient {
     });
     Logger().d({
       "id": socialId,
-      "userName": email,
+      "userName": socialId,
       "displayName": displayName,
       "mobileNumber": mobileNumber,
       "email": email,
@@ -219,6 +219,8 @@ class ApiClient {
       baseUrl + register_by_social_media,
       data: data,
     );
+
+
     Logger().d(response.data);
     return response.data;
   }
