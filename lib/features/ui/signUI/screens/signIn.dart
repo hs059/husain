@@ -22,6 +22,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'dart:io';
 
 class SignIn extends StatefulWidget {
   @override
@@ -61,15 +64,18 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
     controller.dispose();
     super.dispose();
   }
+
   Future<bool> onWillPopLogin() {
-    Provider.of<DBProvider>(context,listen: false).setAllProducts();
+    Provider.of<DBProvider>(context, listen: false).setAllProducts();
     return Future.value(true);
   }
+
   @override
   Widget build(BuildContext context) {
     UiProvider uiProvider = Provider.of<UiProvider>(context);
     AuthProvider authProvider = Provider.of<AuthProvider>(context);
-    AuthProvider authProviderFalse = Provider.of<AuthProvider>(context,listen: false);
+    AuthProvider authProviderFalse =
+        Provider.of<AuthProvider>(context, listen: false);
     double width = MediaQuery.of(context).size.width;
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -77,12 +83,12 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
         body: WillPopScope(
           onWillPop: onWillPopLogin,
           child: ModalProgressHUD(
-            inAsyncCall:Provider.of<UiProvider>(context).spinner,
+            inAsyncCall: Provider.of<UiProvider>(context).spinner,
             child: AnimatedBuilder(
               animation: controller,
               builder: (context, child) => Container(
-                padding: EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
-
+                padding:
+                    EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(20)),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,7 +101,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                         height: ScreenUtil().setHeight(117),
                         child: SvgPicture.asset(
                           'assets/svg/beauty0.svg',
-                          height: animationImage.value * ScreenUtil().setHeight(117),
+                          height: animationImage.value *
+                              ScreenUtil().setHeight(117),
                         ),
                       ),
                       SizedBox(
@@ -117,7 +124,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             animation1.value * width, 0.0, 0.0),
                         child: Text(
                           'سجل دخول لتتم عمليات الشراء',
-                          style: kSubTitleOnboarding.copyWith(fontSize: ScreenUtil().setSp(16)),
+                          style: kSubTitleOnboarding.copyWith(
+                              fontSize: ScreenUtil().setSp(16)),
                         ),
                       ),
                       SizedBox(
@@ -150,7 +158,6 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                 password: uiProvider.toggleEye,
                                 validator: authProvider.validatePassword,
                                 onSaved: authProvider.savePassword,
-
                               ),
                             ),
                           ],
@@ -162,7 +169,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                       FadeTransition(
                         opacity: controller,
                         child: GestureDetector(
-                          onTap: () => kNavigatorPush(context, ForgetPassword()),
+                          onTap: () =>
+                              kNavigatorPush(context, ForgetPassword()),
                           child: Container(
                             alignment: Alignment.centerRight,
                             child: Text(
@@ -184,8 +192,10 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             text: 'تسجيل الدخول',
                             onTap: () {
                               authProvider.submitlogin(formKeySignIn, context);
-                              Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                              Provider.of<ApiProvider>(context,listen: false).getAllOrder();
+                              Provider.of<ApiProvider>(context, listen: false)
+                                  .getAllFav();
+                              Provider.of<ApiProvider>(context, listen: false)
+                                  .getAllOrder();
 
                               tabControllerConstant.animateTo(0);
                             }),
@@ -224,15 +234,19 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             transform: Matrix4.translationValues(
                                 animation1.value * width, 0.0, 0.0),
                             child: RotationTransition(
-                              turns:
-                                  Tween(begin: 0.0, end: 1.0).animate(controller),
+                              turns: Tween(begin: 0.0, end: 1.0)
+                                  .animate(controller),
                               child: GestureDetector(
-                                onTap: () async{
+                                onTap: () async {
                                   // bool result = await Auth.auth.signInWithFacebook();
                                   // result?kNavigatorPush(context,HomePage()):print('do not connect');
                                   authProviderFalse.signInWithFacebook(context);
-                                  Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                                  Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
+                                  Provider.of<ApiProvider>(context,
+                                          listen: false)
+                                      .getAllFav();
+                                  Provider.of<ApiProvider>(context,
+                                          listen: false)
+                                      .getAllOrder();
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -240,38 +254,62 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                   child: SvgPicture.asset(
                                     'assets/svg/btn.facebook.svg',
                                     height: ScreenUtil().setHeight(46),
-
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(
-                            width: ScreenUtil().setWidth(30),
-                          ),
-                          Transform(
-                            transform: Matrix4.translationValues(
-                                animation2.value * width, 0.0, 0.0),
-                            child: RotationTransition(
-                              turns:
-                                  Tween(begin: 0.0, end: 1.0).animate(controller),
-                              child: GestureDetector(
-                                onTap: () async{
-                                  authProviderFalse.signInWithApple(context);
-                                  Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                                  Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
-
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: ScreenUtil().setHeight(46),
-                                  child: SvgPicture.asset(
-                                    'assets/svg/btn.twitter.svg',
-                                    height: ScreenUtil().setHeight(46),
-
+                          Visibility(
+                            visible: Platform.isIOS,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: ScreenUtil().setWidth(30),
+                                ),
+                                Transform(
+                                  transform: Matrix4.translationValues(
+                                      animation2.value * width, 0.0, 0.0),
+                                  child: RotationTransition(
+                                    turns: Tween(begin: 0.0, end: 1.0)
+                                        .animate(controller),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        authProviderFalse
+                                            .signInWithApple(context);
+                                        Provider.of<ApiProvider>(context,
+                                                listen: false)
+                                            .getAllFav();
+                                        Provider.of<ApiProvider>(context,
+                                                listen: false)
+                                            .getAllOrder();
+                                      },
+                                      child: Container(
+                                        // padding: const EdgeInsets.all(5.0),
+                                        alignment: Alignment.center,
+                                        height: ScreenUtil().setHeight(46),
+                                        width: ScreenUtil().setWidth(46),
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                              width: 1.0,
+                                              color: Color(0xffedf1f7)),
+                                          color: kBorder,
+                                        ),
+                                        child: Icon(
+                                          FontAwesomeIcons.apple,
+                                          size: 34,
+                                        ),
+                                        // child: SvgPicture.asset(
+                                        //   'assets/svg/apple.svg',
+                                        //   height: ScreenUtil().setHeight(46),
+                                        //   width: ScreenUtil().setWidth(46),
+                                        //
+                                        // ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                           SizedBox(
@@ -282,13 +320,17 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                             transform: Matrix4.translationValues(
                                 animation3.value * width, 0.0, 0.0),
                             child: RotationTransition(
-                              turns:
-                                  Tween(begin: 0.0, end: 1.0).animate(controller),
+                              turns: Tween(begin: 0.0, end: 1.0)
+                                  .animate(controller),
                               child: GestureDetector(
-                                onTap: () async{
+                                onTap: () async {
                                   authProviderFalse.loginUsingGoogle(context);
-                                  Provider.of<ApiProvider>(context,listen: false).getAllFav();
-                                  Provider.of<ApiProvider>(context,listen: false).getAllOrder() ;
+                                  Provider.of<ApiProvider>(context,
+                                          listen: false)
+                                      .getAllFav();
+                                  Provider.of<ApiProvider>(context,
+                                          listen: false)
+                                      .getAllOrder();
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -296,7 +338,6 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                   child: SvgPicture.asset(
                                     'assets/svg/btn.google.svg',
                                     height: ScreenUtil().setHeight(46),
-
                                   ),
                                 ),
                               ),
