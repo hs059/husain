@@ -3,14 +3,17 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/services/connectivity.dart';
+import 'package:beauty/services/firebase_dynamic_links.dart';
 import 'package:beauty/services/location.dart';
 import 'package:beauty/value/style.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import 'homePage/homePage.dart';
@@ -36,9 +39,53 @@ class _SplashState extends State<Splash> {
     print(token);
   }
 
+
+  void initDynamicLinks() async {
+    FirebaseDynamicLinks.instance.onLink(
+        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+          final Uri deepLink = dynamicLink?.link;
+          if (deepLink != null) {
+            Logger().d(deepLink.path);
+            var delay = Duration(seconds: 4);
+            Future.delayed(delay, () {
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                builder: (context) {
+                  return HomePage();
+                },
+              ));
+              Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(int.parse(deepLink.path.split('/').last),context);
+            });
+          }
+        }, onError: (OnLinkErrorException e) async {
+      print('onLinkError');
+      print(e.message);
+    });
+
+    final PendingDynamicLinkData data =
+    await FirebaseDynamicLinks.instance.getInitialLink();
+    final Uri deepLink = data?.link;
+
+    if (deepLink != null) {
+      print(deepLink.path);
+      Logger().d(deepLink.path);
+      var delay = Duration(seconds: 4);
+      Future.delayed(delay, () {
+        Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) {
+            return HomePage();
+          },
+        ));
+        Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(393,context);
+      });
+    }
+  }
+
+
+
   @override
   void initState() {
     super.initState();
+    initDynamicLinks();
     Provider.of<ApiProvider>(context, listen: false).getOnbourding();
 
     Provider.of<AuthProvider>(context, listen: false).getLogin();
@@ -53,6 +100,7 @@ class _SplashState extends State<Splash> {
     Provider.of<DBProvider>(context, listen: false).setAllProducts();
     Provider.of<ApiProvider>(context, listen: false).getAllAddress();
     Provider.of<ApiProvider>(context, listen: false).getAllFav();
+    DynamicLinkService.dynamicLinkService.handleDynamicLinks();
 
     var delay = Duration(seconds: 4);
     Future.delayed(delay, () {
@@ -97,16 +145,16 @@ class _SplashState extends State<Splash> {
         print('received message');
         showNotification(
             message['notification']['title'], message['notification']['body']);
-        print(message);
+        Logger().d(message);
         setState(() {});
       },
       onResume: (Map<String, dynamic> message) async {
-        print('on resume $message');
+        Logger().d('on resume $message');
 
         setState(() {});
       },
       onLaunch: (Map<String, dynamic> message) async {
-        print('on launch  $message');
+        Logger().d('on launch  $message');
         setState(() {});
       },
     );

@@ -77,7 +77,7 @@ class _FatoorahState extends State<Fatoorah> {
         backgroundColor: Colors.black, // Color(0xFF000000)
         isShowAppBar: true); // For Android platform only
 
-    MFSDK.setUpAppBar(isShowAppBar: false);
+    MFSDK.setUpAppBar(isShowAppBar: true);
 
     initiatePayment();
   }

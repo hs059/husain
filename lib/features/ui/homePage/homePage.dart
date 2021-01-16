@@ -87,11 +87,7 @@ class _HomePageState extends State<HomePage>
                   blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
             ]),
             child: TabBar(
-                onTap: (value) {
-              if(value == 4){
-                Provider.of<AuthProvider>(context,listen: false).showProfile();
-              }
-            },
+
                 controller: tabControllerConstant,
                 indicatorColor: Colors.transparent,
                 tabs: tabIconA.map((e) {

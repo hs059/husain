@@ -25,9 +25,11 @@ import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logger/logger.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -126,7 +128,31 @@ class ProductSubScreen extends StatelessWidget {
           ),
           actions: [
             GestureDetector(
-              onTap: () => Share.share(permalink, subject: 'Look what I made!'),
+              onTap: () async {
+                final DynamicLinkParameters parameters = DynamicLinkParameters(
+                  uriPrefix: 'https://3beauty.page.link',
+                  link: Uri.parse('https://3beauty.page.link/$id'),
+                  androidParameters: AndroidParameters(
+                    packageName: 'com.a7seen.beauty',
+                    minimumVersion: 0,
+                  ),
+                  dynamicLinkParametersOptions: DynamicLinkParametersOptions(
+                    shortDynamicLinkPathLength:
+                        ShortDynamicLinkPathLength.short,
+                  ),
+                  iosParameters: IosParameters(
+                    bundleId: 'com.a7seen.3beauty',
+                    minimumVersion: '0',
+                  ),
+                );
+
+                Uri url;
+                final ShortDynamicLink shortLink =
+                    await parameters.buildShortLink();
+                url = shortLink.shortUrl;
+                Logger().d(url.toString());
+                Share.share(url.toString(), subject: 'Look what I made!');
+              },
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Icon(
@@ -179,16 +205,30 @@ class ProductSubScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 color: Colors.white,
               ),
-              child: image != '' &&!(rejectImg.where((element) =>element ==image).toList().length ==1)
+              child: image != '' &&
+                      !(rejectImg
+                              .where((element) => element == image)
+                              .toList()
+                              .length ==
+                          1)
                   ? Hero(
-                tag: '$image',
-                    child: CachedNetworkImage(
-                        imageUrl:(rejectImg.where((element) =>element ==image).toList().length ==1)?'': image,
-                        placeholder: (context, url) => LoaderGif1(),
-                        errorWidget: (context, url, error) => Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
-                        height: ScreenUtil().setHeight(50),
-                        fit: BoxFit.contain),
-                  )
+                      tag: '$image',
+                      child: CachedNetworkImage(
+                          imageUrl: (rejectImg
+                                      .where((element) => element == image)
+                                      .toList()
+                                      .length ==
+                                  1)
+                              ? ''
+                              : image,
+                          placeholder: (context, url) => LoaderGif1(),
+                          errorWidget: (context, url, error) => Image.asset(
+                                'assets/images/3beauty.png',
+                                fit: BoxFit.contain,
+                              ),
+                          height: ScreenUtil().setHeight(50),
+                          fit: BoxFit.contain),
+                    )
                   : Image.asset(
                       'assets/images/3beauty.png',
                       fit: BoxFit.contain,
@@ -274,24 +314,23 @@ class ProductSubScreen extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Consumer<ApiProvider>(
                         builder: (context, value, child) {
-                          if(value.productM !=null){
-                            if(value.productM.data.category.isNotEmpty){
-                              String categoryName = value.productM.data.category.first.parent.name ;
+                          if (value.productM != null) {
+                            if (value.productM.data.category.isNotEmpty) {
+                              String categoryName = value
+                                  .productM.data.category.first.parent.name;
                               return Text(
                                 categoryName,
                                 style: kGrayTextStyle,
                               );
-                            }else{
+                            } else {
                               return Text(
-                               'سيتم تصنيفه قريبا',
+                                'سيتم تصنيفه قريبا',
                                 style: kGrayTextStyle,
                               );
                             }
-
-                          }else{
-                            return   Container();
+                          } else {
+                            return Container();
                           }
-
                         },
                       ),
                     ),
@@ -299,8 +338,6 @@ class ProductSubScreen extends StatelessWidget {
                 ),
               ],
             ),
-
-
 
             // ExpansionTile(
             //   title: Text(

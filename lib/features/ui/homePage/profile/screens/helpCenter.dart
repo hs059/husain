@@ -12,29 +12,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelpCenter extends StatelessWidget {
-  String phone = '0546873286';
+  String phone = '+9660503214127';
   String email = 'info@3beauty.net';
 
-  void launchWhatsApp({
-    @required String phone,
-    @required String message,
-  }) async {
-    String url() {
-      if (Platform.isIOS) {
-        return "whatsapp://wa.me/$phone/?text=${Uri.parse(message)}";
-      } else {
-        return "whatsapp://send?   phone=$phone&text=${Uri.parse(message)}";
-      }
-    }
-
-    if (await canLaunch(url())) {
-      await launch(url());
-    } else {
-      throw 'Could not launch ${url()}';
-    }
-  }
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -75,7 +56,7 @@ class HelpCenter extends StatelessWidget {
                   ),
                   MyDivider(),
                   ListTile(
-                    onTap: () => launch("https://wa.me/+972595581943?text="),
+                    onTap: () => launch("https://wa.me/$phone?text="),
                     leading: Container(
                       height: ScreenUtil().setHeight(35),
                       width: ScreenUtil().setWidth(35),

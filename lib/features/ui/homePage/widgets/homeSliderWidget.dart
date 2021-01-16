@@ -11,6 +11,7 @@ import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
@@ -168,16 +169,19 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
                         }).toList(),
                       ),
                       Container(
+
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: image.map((url) {
-                              int index = image.indexOf(url);
+                            children: slider.data.map((url) {
+                              int index = slider.data.indexOf(url);
                               return _current == index
                                   ? Container(
                                       width: 12.0,
                                       height: 6.0,
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 2.0),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         color: kPinkLight,

@@ -8,7 +8,7 @@ import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
-import 'package:beauty/components/model/sectionModel.dart' as sectionP ;
+import 'package:beauty/components/model/sectionModel.dart' as sectionP;
 import 'package:beauty/features/ui/product/productRecomended.dart';
 import 'package:beauty/features/ui/product/widgets/addCartSheet.dart';
 import 'package:beauty/features/ui/product/widgets/brandProduct.dart';
@@ -23,10 +23,12 @@ import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logger/logger.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -35,15 +37,16 @@ import 'package:smooth_star_rating/smooth_star_rating.dart';
 class ProductMScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    ApiProvider apiProvider =   Provider.of<ApiProvider>(context) ;
-    ApiProvider apiProviderFalse =   Provider.of<ApiProvider>(context,listen: false) ;
-    AuthProvider authProvider =    Provider.of<AuthProvider>(context);
+    ApiProvider apiProvider = Provider.of<ApiProvider>(context);
+    ApiProvider apiProviderFalse =
+        Provider.of<ApiProvider>(context, listen: false);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: Consumer<ApiProvider>(
           builder: (context, value, child) {
-            if(value.productM == null){
+            if (value.productM == null) {
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [
@@ -53,31 +56,31 @@ class ProductMScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                       color: Colors.white,
                     ),
-                    child:LoaderGif1(),
+                    child: LoaderGif1(),
                   ),
                   MyDivider(),
-
-
                 ],
               );
-            }else{
-              if(value.productM.data == null){
+            } else {
+              if (value.productM.data == null) {
                 return Center(child: CircularProgressIndicator());
-              }else{
-                String name = value.productM.data.name??'';
-                String id = value.productM.data.id??'125';
-                String permalink= value.productM.data.permalink??'';
-                String price = value.productM.data.price??'';
-                String regularPrice = value.productM.data.regularPrice??'';
-                String salePrice = value.productM.data.salePrice??'';
-                String description = value.productM.data.description??'';
-                String sizePerUnit  = value.productM.data.sizePerUnit??'';
-                bool isFavourited  = value.productM.data.isFavourited??false;
+              } else {
+                String name = value.productM.data.name ?? '';
+                String id = value.productM.data.id ?? '125';
+                String permalink = value.productM.data.permalink ?? '';
+                String price = value.productM.data.price ?? '';
+                String regularPrice = value.productM.data.regularPrice ?? '';
+                String salePrice = value.productM.data.salePrice ?? '';
+                String description = value.productM.data.description ?? '';
+                String sizePerUnit = value.productM.data.sizePerUnit ?? '';
+                bool isFavourited = value.productM.data.isFavourited ?? false;
                 String image = value.productM.data.images[0].imageUrl;
-                String categoryName = value.productM.data.category.isEmpty ? 'سيتم تصنيفه قريبا':value.productM.data.category.first.parent.name;
-                List<Reviews > reviews =value.productM.data.reviews??[];
-                getproduct(){
-                  return  ProductSql(
+                String categoryName = value.productM.data.category.isEmpty
+                    ? 'سيتم تصنيفه قريبا'
+                    : value.productM.data.category.first.parent.name;
+                List<Reviews> reviews = value.productM.data.reviews ?? [];
+                getproduct() {
+                  return ProductSql(
                     idProduct: int.parse(id),
                     price: regularPrice,
                     image: image,
@@ -85,9 +88,10 @@ class ProductMScreen extends StatelessWidget {
                   );
                 }
 
-                return  Scaffold(
+                return Scaffold(
                   backgroundColor: Colors.white,
-                  appBar: AppBar( brightness: Brightness.light,
+                  appBar: AppBar(
+                    brightness: Brightness.light,
                     backgroundColor: Colors.white,
                     elevation: 0,
                     leading: GestureDetector(
@@ -99,9 +103,34 @@ class ProductMScreen extends StatelessWidget {
                     ),
                     actions: [
                       GestureDetector(
-                        onTap: () => Share.share(
-                            permalink,
-                            subject: 'Look what I made!'),
+                        onTap: () async {
+                          final DynamicLinkParameters parameters =
+                              DynamicLinkParameters(
+                            uriPrefix: 'https://3beauty.page.link',
+                            link: Uri.parse('https://3beauty.page.link/$id'),
+                            androidParameters: AndroidParameters(
+                              packageName: 'com.a7seen.beauty',
+                              minimumVersion: 0,
+                            ),
+                            dynamicLinkParametersOptions:
+                                DynamicLinkParametersOptions(
+                              shortDynamicLinkPathLength:
+                                  ShortDynamicLinkPathLength.short,
+                            ),
+                            iosParameters: IosParameters(
+                              bundleId: 'com.a7seen.3beauty',
+                              minimumVersion: '0',
+                            ),
+                          );
+
+                          Uri url;
+                          final ShortDynamicLink shortLink =
+                              await parameters.buildShortLink();
+                          url = shortLink.shortUrl;
+                          Logger().d(url.toString());
+                          Share.share(url.toString(),
+                              subject: 'Look what I made!');
+                        },
                         child: Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: Icon(
@@ -110,35 +139,39 @@ class ProductMScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-
-                     GestureDetector(
+                      GestureDetector(
                         onTap: () {
-                          if(authProvider.isLogin){
-                            apiProviderFalse.toggleFavUIM(apiProvider.productM.data);
-                          }else{
+                          if (authProvider.isLogin) {
+                            apiProviderFalse
+                                .toggleFavUIM(apiProvider.productM.data);
+                          } else {
                             Fluttertoast.showToast(
                                 msg: 'يجب عليك تسجيل الدخول',
                                 toastLength: Toast.LENGTH_SHORT,
-                                backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+                                backgroundColor:
+                                    Color(0xffDAA095).withOpacity(0.8),
                                 timeInSecForIosWeb: 1,
                                 textColor: Colors.white,
-                                fontSize: 16.0
-                            );
+                                fontSize: 16.0);
                             kNavigatorPush(context, SignIn());
                           }
                         },
                         child: Padding(
                           padding: EdgeInsets.all(5),
                           //ToDo:Check Token
-                          child:authProvider.isLogin ?Icon(
-                            isFavourited ? Icons.favorite : Icons.favorite_border,
-                            color: isFavourited ? kRed : Colors.black,
-                            size: 30,
-                          ):Icon(
-                           Icons.favorite_border,
-                            color: Colors.black,
-                            size: 30,
-                          ),
+                          child: authProvider.isLogin
+                              ? Icon(
+                                  isFavourited
+                                      ? Icons.favorite
+                                      : Icons.favorite_border,
+                                  color: isFavourited ? kRed : Colors.black,
+                                  size: 30,
+                                )
+                              : Icon(
+                                  Icons.favorite_border,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
                         ),
                       ),
                     ],
@@ -152,38 +185,61 @@ class ProductMScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                           color: Colors.white,
                         ),
-                        child: image!= ''&&!(rejectImg.where((element) =>element ==image).toList().length ==1)?CachedNetworkImage(
-                            imageUrl: (rejectImg.where((element) =>element ==image).toList().length ==1)?'': image,
-                            placeholder: (context, url) => LoaderGif1(),
-                            errorWidget: (context, url, error) =>
-                                Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
-                            height: ScreenUtil().setHeight(50),
-                            fit: BoxFit.contain
-                        ):Image.asset('assets/images/3beauty.png',fit: BoxFit.contain,),
+                        child: image != '' &&
+                                !(rejectImg
+                                        .where((element) => element == image)
+                                        .toList()
+                                        .length ==
+                                    1)
+                            ? CachedNetworkImage(
+                                imageUrl: (rejectImg
+                                            .where(
+                                                (element) => element == image)
+                                            .toList()
+                                            .length ==
+                                        1)
+                                    ? ''
+                                    : image,
+                                placeholder: (context, url) => LoaderGif1(),
+                                errorWidget: (context, url, error) =>
+                                    Image.asset(
+                                      'assets/images/3beauty.png',
+                                      fit: BoxFit.contain,
+                                    ),
+                                height: ScreenUtil().setHeight(50),
+                                fit: BoxFit.contain)
+                            : Image.asset(
+                                'assets/images/3beauty.png',
+                                fit: BoxFit.contain,
+                              ),
                       ),
                       MyDivider(),
                       Padding(
-                        padding:
-                        EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: ScreenUtil().setWidth(15)),
                         child: Column(
                           children: [
                             BrandProduct(),
-
                             ProductName(
                               name: name,
-                              reviews:reviews.length,
+                              reviews: reviews.length,
                             ),
                             MyDivider(),
-                            ProductPrize(prize: price==null || price==''?'0':price,oldPrize:  regularPrice==null || regularPrice==''?'0':regularPrice,),
+                            ProductPrize(
+                              prize: price == null || price == '' ? '0' : price,
+                              oldPrize:
+                                  regularPrice == null || regularPrice == ''
+                                      ? '0'
+                                      : regularPrice,
+                            ),
                             SizedBox(
                               height: ScreenUtil().setHeight(24),
                             ),
                             Button(
                               text: 'إضافة إلى السلة',
                               onTap: () {
-                                Provider.of<DBProvider>(context,listen: false).insertNewProduct(
-                                    getproduct()
-                                );
+                                Provider.of<DBProvider>(context, listen: false)
+                                    .insertNewProduct(getproduct());
                                 showMaterialModalBottomSheet(
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
@@ -192,7 +248,9 @@ class ProductMScreen extends StatelessWidget {
                                     ),
                                   ),
                                   context: context,
-                                  builder: (context) => AddCartSheet(prize:price,),
+                                  builder: (context) => AddCartSheet(
+                                    prize: price,
+                                  ),
                                 );
                               },
                             ),
@@ -209,7 +267,7 @@ class ProductMScreen extends StatelessWidget {
                         ),
                         children: [
                           ProductDescription(
-                            name:name,
+                            name: name,
                             description: description,
                           ),
                         ],
@@ -224,7 +282,8 @@ class ProductMScreen extends StatelessWidget {
                         ),
                         children: [
                           ListTile(
-                            onTap: () => print(value.productM.data.category.isEmpty),
+                            onTap: () =>
+                                print(value.productM.data.category.isEmpty),
                             title: Text('الصنف الرئيسي'),
                             trailing: Container(
                               constraints: BoxConstraints(
@@ -450,7 +509,9 @@ class ProductMScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(
                                 horizontal: ScreenUtil().setWidth(15),
                                 vertical: ScreenUtil().setHeight(5)),
-                            child: ProductRecommended(id:int.parse(id),),
+                            child: ProductRecommended(
+                              id: int.parse(id),
+                            ),
                           ),
                           SizedBox(
                             height: ScreenUtil().setHeight(10),
@@ -465,7 +526,6 @@ class ProductMScreen extends StatelessWidget {
           },
         ),
       ),
-
     );
   }
 }

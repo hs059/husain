@@ -23,10 +23,12 @@ import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/string.dart';
 import 'package:beauty/value/style.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:logger/logger.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -126,8 +128,32 @@ class ProductSliderScreen extends StatelessWidget {
                       ),
                       actions: [
                         GestureDetector(
-                          onTap: () => Share.share(permalink,
-                              subject: 'Look what I made!'),
+                          onTap: () async{
+                            final DynamicLinkParameters parameters = DynamicLinkParameters(
+                              uriPrefix: 'https://3beauty.page.link',
+                              link: Uri.parse('https://3beauty.page.link/$id'),
+                              androidParameters: AndroidParameters(
+                                packageName: 'com.a7seen.beauty',
+                                minimumVersion: 0,
+                              ),
+                              dynamicLinkParametersOptions: DynamicLinkParametersOptions(
+                                shortDynamicLinkPathLength:
+                                ShortDynamicLinkPathLength.short,
+                              ),
+                              iosParameters: IosParameters(
+                                bundleId: 'com.a7seen.3beauty',
+                                minimumVersion: '0',
+                              ),
+                            );
+
+                            Uri url;
+                            final ShortDynamicLink shortLink =
+                                await parameters.buildShortLink();
+                            url = shortLink.shortUrl;
+                            Logger().d(url.toString());
+                            Share.share(url.toString(), subject: 'Look what I made!');
+                  },
+
                           child: Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: Icon(

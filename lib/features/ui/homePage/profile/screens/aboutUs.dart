@@ -4,6 +4,7 @@ import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
 import 'package:beauty/features/ui/homePage/profile/widgets/webView.dart';
 import 'package:beauty/services/connectivity.dart';
+import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
 import 'package:beauty/value/navigator.dart';
 import 'package:beauty/value/style.dart';
@@ -63,19 +64,44 @@ class AboutUs extends StatelessWidget {
                         ),
                         trailing: Icon(Icons.arrow_forward_ios),
                       ),
+                      // MyDivider(),
+                      // ListTile(
+                      //   onTap: () =>
+                      //     _launchSocial('fb://profile/100009400440404',
+                      //         'https://www.facebook.com/dorockxl'),
+                      //   leading: Image.asset(
+                      //     'assets/images/faceBookBtn.png',
+                      //     fit: BoxFit.contain,
+                      //     height: ScreenUtil().setHeight(35),
+                      //     width: ScreenUtil().setWidth(35),
+                      //   ),
+                      //   title: Text(
+                      //     'فيس بوك ',
+                      //     style: kProfile,
+                      //   ),
+                      //   trailing: Icon(Icons.arrow_forward_ios),
+                      // ),
                       MyDivider(),
                       ListTile(
                         onTap: () =>
-                          _launchSocial('fb://profile/100009400440404',
-                              'https://www.facebook.com/dorockxl'),
-                        leading: Image.asset(
-                          'assets/images/faceBookBtn.png',
-                          fit: BoxFit.contain,
-                          height: ScreenUtil().setHeight(35),
-                          width: ScreenUtil().setWidth(35),
+                        launchURL('https://3beauty.net'),
+                        leading: Container(
+                          height: ScreenUtil().setHeight(30),
+                          width: ScreenUtil().setWidth(30),
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: kPinkLight,
+                          ),
+                          child: SvgPicture.asset(
+                            'assets/svg/globe.svg',
+                            fit: BoxFit.contain,
+
+                            color: Colors.white,
+                          ),
                         ),
                         title: Text(
-                          'فيس بوك ',
+                          'موقعنا',
                           style: kProfile,
                         ),
                         trailing: Icon(Icons.arrow_forward_ios),
@@ -84,7 +110,7 @@ class AboutUs extends StatelessWidget {
                       ListTile(
                         onTap: ()async {
                           var url =
-                              'https://www.instagram.com/mohammed.alabadlah/';
+                              'https://www.instagram.com/3ibeauty/';
 
                           if (await canLaunch(url)) {
                             await launch(
@@ -108,7 +134,7 @@ class AboutUs extends StatelessWidget {
                       MyDivider(),
                       ListTile(
                         onTap: () =>
-                          _launchSocial('https://twitter.com/7seen1997', ''),
+                          _launchSocial('https://twitter.com/threebeauty3', ''),
                         leading: SvgPicture.asset(
                           'assets/svg/twitter.svg',
                           fit: BoxFit.contain,
@@ -138,6 +164,13 @@ class AboutUs extends StatelessWidget {
       }
     } catch (e) {
       await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
+    }
+  }
+  launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 }
