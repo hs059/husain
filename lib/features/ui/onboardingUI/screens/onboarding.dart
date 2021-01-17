@@ -54,19 +54,19 @@ class _OnboardingState extends State<Onboarding> {
                       image: 'assets/svg/on_boading1.svg',
                       title: 'تصفح الكثير من المنتجات',
                       subTitle:
-                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
+                          'يوفر لك متجر ثري بيوتي خدمة تصفح معظم منتجات المكياج والعطور',
                     ),
                     DetailsOnboarding(
                       image: 'assets/svg/on_boading2.svg',
-                      title: 'Choose and checkout',
+                      title: 'طرق دفع مختلفة ',
                       subTitle:
-                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
+                          ' يوفر لك متجر ثري بيوتي خدمة الدفع الالكتروني عبر العديد من الطرق الحديثة والآمنة',
                     ),
                     DetailsOnboarding(
                       image: 'assets/svg/on_boading3.svg',
-                      title: 'Get it delivered',
+                      title: 'خدمة توصيل الطلبات',
                       subTitle:
-                          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna',
+                          'تمتع بخدمة الشحن لكافة مناطق المملكة باسعار واوقات منافسة',
                     ),
                   ],
                 ),

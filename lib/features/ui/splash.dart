@@ -5,6 +5,7 @@ import 'package:beauty/features/provider/db_provider.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/firebase_dynamic_links.dart';
 import 'package:beauty/services/location.dart';
+import 'package:beauty/services/notification_firebase.dart';
 import 'package:beauty/value/style.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -28,41 +29,31 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-
-  _registerOnFirebase() async {
-    _firebaseMessaging.subscribeToTopic('all');
-    String token = await _firebaseMessaging.getToken();
-    _firebaseMessaging.subscribeToTopic(token);
-    print(token);
-  }
-
-
   void initDynamicLinks() async {
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
-          final Uri deepLink = dynamicLink?.link;
-          if (deepLink != null) {
-            Logger().d(deepLink.path);
-            var delay = Duration(seconds: 4);
-            Future.delayed(delay, () {
-              Navigator.pushReplacement(context, MaterialPageRoute(
-                builder: (context) {
-                  return HomePage();
-                },
-              ));
-              Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(int.parse(deepLink.path.split('/').last),context);
-            });
-          }
-        }, onError: (OnLinkErrorException e) async {
+      final Uri deepLink = dynamicLink?.link;
+      if (deepLink != null) {
+        Logger().d(deepLink.path);
+        var delay = Duration(seconds: 4);
+        Future.delayed(delay, () {
+          Navigator.pushReplacement(context, MaterialPageRoute(
+            builder: (context) {
+              return HomePage();
+            },
+          ));
+          Provider.of<ApiProvider>(context, listen: false)
+              .getProductDetailsSearch(
+                  int.parse(deepLink.path.split('/').last), context);
+        });
+      }
+    }, onError: (OnLinkErrorException e) async {
       print('onLinkError');
       print(e.message);
     });
 
     final PendingDynamicLinkData data =
-    await FirebaseDynamicLinks.instance.getInitialLink();
+        await FirebaseDynamicLinks.instance.getInitialLink();
     final Uri deepLink = data?.link;
 
     if (deepLink != null) {
@@ -75,12 +66,11 @@ class _SplashState extends State<Splash> {
             return HomePage();
           },
         ));
-        Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(393,context);
+        Provider.of<ApiProvider>(context, listen: false)
+            .getProductDetailsSearch(393, context);
       });
     }
   }
-
-
 
   @override
   void initState() {
@@ -111,53 +101,8 @@ class _SplashState extends State<Splash> {
       ));
     });
 
-    _registerOnFirebase();
-    getMessage();
-    var initializationSettingsAndroid =
-        AndroidInitializationSettings('flutter_devs');
-    var initializationSettingsIOs = IOSInitializationSettings();
-    var initSetttings = InitializationSettings(
-        android: initializationSettingsAndroid, iOS: initializationSettingsIOs);
-
-    flutterLocalNotificationsPlugin.initialize(initSetttings,
-        onSelectNotification: onSelectNotification);
-  }
-
-  Future onSelectNotification(String payload) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-      return HomePage();
-    }));
-  }
-
-  showNotification(String title, String body) async {
-    var android = new AndroidNotificationDetails(
-        'id', 'channel ', 'description',
-        priority: Priority.high, importance: Importance.max);
-    var iOS = new IOSNotificationDetails();
-    var platform = new NotificationDetails(android: android, iOS: iOS);
-    await flutterLocalNotificationsPlugin.show(0, title, body, platform,
-        payload: 'Welcome to the Local Notification demo ');
-  }
-
-  void getMessage() {
-    _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print('received message');
-        showNotification(
-            message['notification']['title'], message['notification']['body']);
-        Logger().d(message);
-        setState(() {});
-      },
-      onResume: (Map<String, dynamic> message) async {
-        Logger().d('on resume $message');
-
-        setState(() {});
-      },
-      onLaunch: (Map<String, dynamic> message) async {
-        Logger().d('on launch  $message');
-        setState(() {});
-      },
-    );
+    NotificationFirebaseHelper(context).registerOnFirebase();
+    NotificationFirebaseHelper(context).getMessage();
   }
 
   @override
