@@ -2,6 +2,7 @@ import 'package:beauty/components/animate_do.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/provider/authProvider.dart';
 import 'package:beauty/features/provider/db_provider.dart';
+import 'package:beauty/features/ui/testScreen.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/services/firebase_dynamic_links.dart';
 import 'package:beauty/services/location.dart';
@@ -39,7 +40,8 @@ class _SplashState extends State<Splash> {
         Future.delayed(delay, () {
           Navigator.pushReplacement(context, MaterialPageRoute(
             builder: (context) {
-              return HomePage();
+              return TestScreen(deepLink.toString());
+              // return HomePage();
             },
           ));
           Provider.of<ApiProvider>(context, listen: false)
@@ -63,7 +65,7 @@ class _SplashState extends State<Splash> {
       Future.delayed(delay, () {
         Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) {
-            return HomePage();
+               return TestScreen(deepLink.toString());
           },
         ));
         Provider.of<ApiProvider>(context, listen: false)

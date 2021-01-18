@@ -54,10 +54,12 @@ class NotificationFirebaseHelper {
         Logger().d(message);
       },
       onResume: (Map<String, dynamic> message) async {
-        Logger().d('on resume $message');
+        showNotification(
+            message['notification']['title'], message['notification']['body']);
       },
       onLaunch: (Map<String, dynamic> message) async {
-        Logger().d('on launch  $message');
+        showNotification(
+            message['notification']['title'], message['notification']['body']);
       },
     );
   }

@@ -17,6 +17,7 @@ import 'package:beauty/features/ui/product/widgets/productName.dart';
 import 'package:beauty/features/ui/product/widgets/productPrize.dart';
 import 'package:beauty/features/ui/signUI/screens/signIn.dart';
 import 'package:beauty/features/ui/signUI/widgets/title&subTitleAuth.dart';
+import 'package:beauty/services/dl_service.dart';
 import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/navigator.dart';
@@ -129,29 +130,8 @@ class ProductSliderScreen extends StatelessWidget {
                       actions: [
                         GestureDetector(
                           onTap: () async{
-                            final DynamicLinkParameters parameters = DynamicLinkParameters(
-                              uriPrefix: 'https://3beauty.page.link',
-                              link: Uri.parse('https://3beauty.page.link/$id'),
-                              androidParameters: AndroidParameters(
-                                packageName: 'com.a7seen.beauty',
-                                minimumVersion: 0,
-                              ),
-                              dynamicLinkParametersOptions: DynamicLinkParametersOptions(
-                                shortDynamicLinkPathLength:
-                                ShortDynamicLinkPathLength.short,
-                              ),
-                              iosParameters: IosParameters(
-                                bundleId: 'com.a7seen.3beauty',
-                                minimumVersion: '0',
-                              ),
-                            );
-
-                            Uri url;
-                            final ShortDynamicLink shortLink =
-                                await parameters.buildShortLink();
-                            url = shortLink.shortUrl;
-                            Logger().d(url.toString());
-                            Share.share(url.toString(), subject: 'Look what I made!');
+                            final DynamicLinkService _dynamicLinkService = DynamicLinkService();
+                            _dynamicLinkService.createDynamicLink(id.toString());
                   },
 
                           child: Padding(
