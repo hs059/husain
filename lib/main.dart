@@ -58,6 +58,7 @@ class Husain extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<UiProvider>(
@@ -88,7 +89,7 @@ class App extends StatefulWidget {
   _AppState createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with WidgetsBindingObserver {
 
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
 
@@ -97,19 +98,45 @@ class _AppState extends State<App> {
   Widget screen;
 
   setVariables() async{
-    Logger().d('asasasasasasas');
+
     isSeen = await SPHelper.spHelper.isSeenOnBoardingGet();
-    Logger().d(isSeen);
+
     isSeen = isSeen ==null?false:isSeen;
     screen = isSeen ? HomePage() : Onboarding();
   }
+
+  final DynamicLinkService _dynamicLinkService = DynamicLinkService();
+  Timer _timerLink;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     setVariables();
 
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _timerLink = new Timer(
+        const Duration(milliseconds: 1000),
+            () {
+          _dynamicLinkService.retrieveDynamicLink(context);
+        },
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    if (_timerLink != null) {
+      _timerLink.cancel();
+    }
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context,
@@ -163,7 +190,7 @@ class MyApp extends StatelessWidget {
       home: Builder(builder: (context) {
         ScreenUtil.init(context,
             designSize: Size(375, 812), allowFontScaling: true);
-        return DynamicPage(screen);
+        return Splash(screen);
 
       }),
 
@@ -171,46 +198,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-class DynamicPage extends StatefulWidget {
-  Widget screen ;
-  DynamicPage(this.screen);
-  @override
-  _DynamicPageState createState() => _DynamicPageState();
-}
-
-class _DynamicPageState extends State<DynamicPage>with WidgetsBindingObserver {
-  final DynamicLinkService _dynamicLinkService = DynamicLinkService();
-  Timer _timerLink;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _timerLink = new Timer(
-        const Duration(milliseconds: 1000),
-            () {
-          _dynamicLinkService.retrieveDynamicLink(context);
-        },
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    if (_timerLink != null) {
-      _timerLink.cancel();
-    }
-    super.dispose();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Splash(widget.screen);
-  }
-}

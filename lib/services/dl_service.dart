@@ -8,19 +8,30 @@ class DynamicLinkService {
 
   Future<void> retrieveDynamicLink(BuildContext context) async {
     try {
+
       final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
       final Uri deepLink = data?.link;
 
       if (deepLink != null) {
+        Logger().d('hmamamamam');
+        Logger().d(deepLink.path);
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductMScreen()));
       }
 
-      FirebaseDynamicLinks.instance.onLink(onSuccess: (PendingDynamicLinkData dynamicLink) async {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductMScreen()));
+      FirebaseDynamicLinks.instance.onLink(
+          onSuccess: (PendingDynamicLinkData dynamicLink) async {
+
+
+            Logger().d('qwqwf');
+            Logger().e(deepLink.path);
+            Logger().d(deepLink==null);
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductMScreen()));
+
       });
 
     } catch (e) {
       print(e.toString());
+      Logger().e(e);
     }
   }
 
@@ -47,5 +58,4 @@ class DynamicLinkService {
     Share.share(url.toString(), subject: 'Look what I made!');
     return dynamicUrl;
   }
-///createDynamicLink()
 }
