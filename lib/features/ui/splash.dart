@@ -26,13 +26,13 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
 
-  final DynamicLinkService _dynamicLinkService = DynamicLinkService();
+  // final DynamicLinkService _dynamicLinkService = DynamicLinkService();
   @override
   void initState() {
     super.initState();
 
     Provider.of<ApiProvider>(context, listen: false).getOnbourding();
-    _dynamicLinkService.retrieveDynamicLink(context);
+    // _dynamicLinkService.retrieveDynamicLink(context);
     Provider.of<AuthProvider>(context, listen: false).getLogin();
     Provider.of<AuthProvider>(context, listen: false).getLoginSocial();
     Provider.of<ApiProvider>(context, listen: false).getSlider();

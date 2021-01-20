@@ -47,7 +47,7 @@ class ProductMScreen extends StatelessWidget {
       child: Scaffold(
         body: Consumer<ApiProvider>(
           builder: (context, value, child) {
-            if (value.productM == null) {
+            if (value.productM == null || value.productDetailsBool) {
               return ListView(
                 physics: const BouncingScrollPhysics(),
                 children: [

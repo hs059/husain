@@ -3,6 +3,8 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:share/share.dart';
+import 'package:provider/provider.dart';
+import 'package:beauty/features/provider/apiProvider.dart';
 
 class DynamicLinkService {
 
@@ -15,18 +17,17 @@ class DynamicLinkService {
       if (deepLink != null) {
         Logger().d('hmamamamam');
         Logger().d(deepLink.path);
+        Provider.of<ApiProvider>(context, listen: false).getProductDetails(int.parse(deepLink.path.split('/').last));
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductMScreen()));
       }
 
       FirebaseDynamicLinks.instance.onLink(
           onSuccess: (PendingDynamicLinkData dynamicLink) async {
-
-
             Logger().d('qwqwf');
             Logger().e(deepLink.path);
             Logger().d(deepLink==null);
+            Provider.of<ApiProvider>(context, listen: false).getProductDetails(int.parse(deepLink.path.split('/').last));
             Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductMScreen()));
-
       });
 
     } catch (e) {

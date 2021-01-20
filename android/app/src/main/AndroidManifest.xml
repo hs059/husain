@@ -17,7 +17,12 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="3beauty"
         android:icon="@mipmap/launcher_icon">
-
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/flutter_devs" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -28,6 +33,7 @@
             android:showWhenLocked="true"
 
             android:turnScreenOn="true">
+
             <intent-filter>
                 <action android:name="FLUTTER_NOTIFICATION_CLICK" />
                 <category android:name="android.intent.category.DEFAULT" />

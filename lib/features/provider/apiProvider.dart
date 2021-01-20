@@ -141,6 +141,7 @@ setSubCategoryNull(){
     notifyListeners() ;
   }
   getProductDetails(int id,) async {
+    Logger().d('getProductDetails');
     setProductDetailsBool(true);
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     setProductDetailsBool(false);
