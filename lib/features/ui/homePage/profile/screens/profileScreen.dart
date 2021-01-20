@@ -206,7 +206,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 MyDivider(),
                 ListTileProfile(
-                  onTap: () => print(''),
+                  onTap: () => print('aa'),
                   title: 'من نحن',
                   image: 'assets/svg/aboutBtn.svg',
                   route: AboutUs(),
@@ -217,8 +217,8 @@ class ProfileScreen extends StatelessWidget {
 
                       Share.share(
                           Platform.isAndroid
-                              ? 'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US&gl=US'
-                              : 'https://apps.apple.com/us/app/facebook/id284882215',
+                              ? 'https://play.google.com/store/apps/details?id=com.a7seen.3beauty'
+                              : 'https://apps.apple.com/us/app/3beauty/id1545471952',
                           subject: 'استمتع باروع التخفيضات');
 
                   },

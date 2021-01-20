@@ -603,8 +603,10 @@ class CheckOut extends StatelessWidget {
                               builder: (context) => DialogConfirmOrder(
                                 onTap: () async {
                                   dbProviderFalse.deleteAllProduct();
-                                  kNavigatorPushAndRemoveUntil(
-                                      context, HomePage());
+                                  // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                                  //   builder: (context) => HomePage(),
+                                  // ), (route) => false);
+                                  kNavigatorPush(context, HomePage());
                                 },
                               ),
                             );
@@ -634,8 +636,10 @@ class CheckOut extends StatelessWidget {
                               builder: (context) => DialogConfirmOrder(
                                 onTap: () async {
                                   dbProviderFalse.deleteAllProduct();
-                                  kNavigatorPushAndRemoveUntil(
-                                      context, HomePage());
+                                  // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
+                                  //   builder: (context) => HomePage(),
+                                  // ), (route) => false);
+                                  kNavigatorPush(context, HomePage());
                                 },
                               ),
                             );

@@ -75,7 +75,7 @@ class ProductMScreen extends StatelessWidget {
                 String description = value.productM.data.description ?? '';
                 String sizePerUnit = value.productM.data.sizePerUnit ?? '';
                 bool isFavourited = value.productM.data.isFavourited ?? false;
-                String image = value.productM.data.images[0].imageUrl;
+                String image = value.productM.data.images[0].imageUrl??'';
                 String categoryName = value.productM.data.category.isEmpty
                     ? 'سيتم تصنيفه قريبا'
                     : value.productM.data.category.first.parent.name;

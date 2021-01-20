@@ -103,58 +103,9 @@ class _HomePageState extends State<HomePage>
                     ),
                   );
                 }).toList()
-              // SizedBox(
-              //   height: ScreenUtil().setHeight(5),
-              // ),
-              // Text(tabName[tabIconA.indexOf(e)],
-              //   style: TextStyle(
-              //       color: bottomIndex == tabIconA.indexOf(e)
-              //           ? kPinkLight
-              //           : kGrayText,
-              //   fontSize: ScreenUtil().setSp(10)
-              //
-              //   ),
-              // ),
+
              ),
           ),
-          // bottomNavigationBar: BottomAppBar(
-          //     shape: CircularNotchedRectangle(),
-          //     notchMargin: 6.0,
-          //     color: Colors.transparent,
-          //     elevation: 9.0,
-          //     clipBehavior: Clip.antiAlias,
-          //     child: Container(
-          //         height: ScreenUtil().setHeight(85),
-          //         decoration: BoxDecoration(color: Colors.white, boxShadow: [
-          //           BoxShadow(
-          //               blurRadius: 2, offset: Offset(-2, -2), color: Colors.grey[200])
-          //         ]),
-          //         child: Row(
-          //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //             children: [
-          //               Container(
-          //                   height: 50.0,
-          //                   width: MediaQuery.of(context).size.width / 2 - 40.0,
-          //                   child: IconButton(
-          //                       icon: Icon(
-          //                         FontAwesomeIcons.list,
-          //                         color: bottomIndex == 0
-          //                             ? Color(0xFFEF7532)
-          //                             : Color(0xFF676E79),
-          //                       ),
-          //                       onPressed: () {
-          //                       })),
-          //               Container(
-          //                   height: 50.0,
-          //                   width: MediaQuery.of(context).size.width / 2 - 40.0,
-          //                   child: IconButton(
-          //                       icon: Icon(Icons.shopping_basket,
-          //                           color: bottomIndex == 2
-          //                               ? Color(0xFFEF7532)
-          //                               : Color(0xFF676E79)),
-          //                       onPressed: () {
-          //                       })),
-          //             ]))),
         ),
       ),
     );

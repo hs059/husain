@@ -2,6 +2,7 @@ import 'package:beauty/components/widgets/myDivider.dart';
 import 'package:beauty/features/provider/apiProvider.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/appBarCart.dart';
 import 'package:beauty/features/ui/homePage/cart/widgets/containerCart.dart';
+import 'package:beauty/features/ui/homePage/profile/widgets/snapChat.dart';
 import 'package:beauty/features/ui/homePage/profile/widgets/webView.dart';
 import 'package:beauty/services/connectivity.dart';
 import 'package:beauty/value/colors.dart';
@@ -11,6 +12,7 @@ import 'package:beauty/value/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -41,50 +43,18 @@ class AboutUs extends StatelessWidget {
                           style: kProfile,
                         ),
                         trailing: Icon(Icons.arrow_forward_ios),
-                        onTap: () =>
-                          kNavigatorPush(
-                              context,
-                              WebSite(
-                                title: 'سياسة الخصوصية',
-                                link: Provider.of<ApiProvider>(context,
-                                        listen: false)
-                                    .privacyPolicy['data']['url'],
-                              )),
-
+                        onTap: () => kNavigatorPush(
+                            context,
+                            WebSite(
+                              title: 'سياسة الخصوصية',
+                              link: Provider.of<ApiProvider>(context,
+                                      listen: false)
+                                  .privacyPolicy['data']['url'],
+                            )),
                       ),
                       MyDivider(),
                       ListTile(
-                        leading: SvgPicture.asset(
-                          'assets/svg/termsBtn.svg',
-                          fit: BoxFit.contain,
-                        ),
-                        title: Text(
-                          'الأحكام والشروط',
-                          style: kProfile,
-                        ),
-                        trailing: Icon(Icons.arrow_forward_ios),
-                      ),
-                      // MyDivider(),
-                      // ListTile(
-                      //   onTap: () =>
-                      //     _launchSocial('fb://profile/100009400440404',
-                      //         'https://www.facebook.com/dorockxl'),
-                      //   leading: Image.asset(
-                      //     'assets/images/faceBookBtn.png',
-                      //     fit: BoxFit.contain,
-                      //     height: ScreenUtil().setHeight(35),
-                      //     width: ScreenUtil().setWidth(35),
-                      //   ),
-                      //   title: Text(
-                      //     'فيس بوك ',
-                      //     style: kProfile,
-                      //   ),
-                      //   trailing: Icon(Icons.arrow_forward_ios),
-                      // ),
-                      MyDivider(),
-                      ListTile(
-                        onTap: () =>
-                        launchURL('https://3beauty.net'),
+                        onTap: () => launchURL('https://3beauty.net'),
                         leading: Container(
                           height: ScreenUtil().setHeight(30),
                           width: ScreenUtil().setWidth(30),
@@ -96,7 +66,6 @@ class AboutUs extends StatelessWidget {
                           child: SvgPicture.asset(
                             'assets/svg/globe.svg',
                             fit: BoxFit.contain,
-
                             color: Colors.white,
                           ),
                         ),
@@ -108,9 +77,8 @@ class AboutUs extends StatelessWidget {
                       ),
                       MyDivider(),
                       ListTile(
-                        onTap: ()async {
-                          var url =
-                              'https://www.instagram.com/3ibeauty/';
+                        onTap: () async {
+                          var url = 'https://www.instagram.com/3ibeauty/';
 
                           if (await canLaunch(url)) {
                             await launch(
@@ -133,14 +101,34 @@ class AboutUs extends StatelessWidget {
                       ),
                       MyDivider(),
                       ListTile(
-                        onTap: () =>
-                          _launchSocial('https://twitter.com/threebeauty3', ''),
+                        onTap: () => _launchSocial(
+                            'https://twitter.com/threebeauty3', ''),
                         leading: SvgPicture.asset(
                           'assets/svg/twitter.svg',
                           fit: BoxFit.contain,
                         ),
                         title: Text(
                           'تويتر',
+                          style: kProfile,
+                        ),
+                        trailing: Icon(Icons.arrow_forward_ios),
+                      ),
+                      MyDivider(),
+                      ListTile(
+                        onTap: () => kNavigatorPush(context, SnapChat()),
+                        leading:
+                            Container(
+                              height: ScreenUtil().setHeight(30),
+                              width: ScreenUtil().setWidth(30),
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: kPinkLight,
+                              ),
+                                child: Icon(FontAwesomeIcons.snapchat,size: 20,color: Colors.white,),
+                            ),
+                        title: Text(
+                          'سناب شات',
                           style: kProfile,
                         ),
                         trailing: Icon(Icons.arrow_forward_ios),
@@ -166,6 +154,7 @@ class AboutUs extends StatelessWidget {
       await launch(fallbackUrl, forceSafariVC: false, forceWebView: false);
     }
   }
+
   launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
