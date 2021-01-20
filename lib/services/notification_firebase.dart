@@ -8,10 +8,11 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
-class NotificationFirebaseHelper {
-  BuildContext context;
 
-  NotificationFirebaseHelper(BuildContext context);
+class NotificationFirebaseHelper {
+
+
+  NotificationFirebaseHelper();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -26,7 +27,11 @@ class NotificationFirebaseHelper {
 
 
 
-  showNotification(String title, String body) async {
+  showNotification(String title, String body,  BuildContext context) async {
+    Future onSelectNotification(String id,) {
+      Provider.of<ApiProvider>(context,listen: false).getProductDetailsNNNN( int.parse(id));
+      kNavigatorPush(context, ProductMScreen());
+    }
     var initializationSettingsAndroid =
         AndroidInitializationSettings('flutter_devs');
     var initializationSettingsIOs = IOSInitializationSettings();
@@ -44,25 +49,22 @@ class NotificationFirebaseHelper {
     await flutterLocalNotificationsPlugin.show(0, title, body, platform,
         payload: 'Welcome to the Local Notification demo ');
   }
-  Future onSelectNotification(String id) {
-    Provider.of<ApiProvider>(context,listen: false).getProductDetails( int.parse(id));
-    kNavigatorPush(context, ProductMScreen());
-  }
-  void getMessage() {
+
+  void getMessage(  BuildContext context ) {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
         print('received message');
         showNotification(
-            message['notification']['title'], message['notification']['body']);
+            message['notification']['title'], message['notification']['body'],context);
         Logger().d(message);
       },
       onResume: (Map<String, dynamic> message) async {
-
+        kNavigatorPush(context, ProductMScreen());
         Logger().d('onResume');
         Logger().d(message);
         Logger().d(int.parse(message['data']['product_id']));
-        Provider.of<ApiProvider>(context,listen: false).getProductDetails( int.parse(message['data']['product_id']));
-        kNavigatorPush(context, ProductMScreen());
+        Provider.of<ApiProvider>(context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']));
+
         Logger().d(message);
 
       },

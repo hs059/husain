@@ -56,8 +56,8 @@ class _SplashState extends State<Splash> {
       ));
     });
 
-    NotificationFirebaseHelper(context).registerOnFirebase();
-    NotificationFirebaseHelper(context).getMessage();
+    NotificationFirebaseHelper().registerOnFirebase();
+    NotificationFirebaseHelper().getMessage(context);
   }
 
   @override

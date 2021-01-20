@@ -148,6 +148,14 @@ setSubCategoryNull(){
     Logger().d(productM.data.category.first.parent.name);
     notifyListeners();
   }
+  getProductDetailsNNNN(int id,) async {
+    Logger().d('getProductDetails');
+    setProductDetailsBool(true);
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+    setProductDetailsBool(false);
+    Logger().d(productM.data.category.first.parent.name);
+    notifyListeners();
+  }
 
   Future<productClass.ProductM> getProductDetailsSlider(int id) async {
     productClass.ProductM pro = await ApiRepository.apiRepository.getProductDetails(id);
