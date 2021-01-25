@@ -1,6 +1,7 @@
 import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:share/share.dart';
 import 'package:provider/provider.dart';
@@ -10,36 +11,29 @@ class DynamicLinkService {
 
   Future<void> retrieveDynamicLink(BuildContext context) async {
     try {
-
       final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
       final Uri deepLink = data?.link;
-
       if (deepLink != null) {
-        Logger().d('hmamamamam');
-        Logger().d(deepLink.path);
-        Provider.of<ApiProvider>(context, listen: false).getProductDetails(int.parse(deepLink.path.split('/').last));
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductMScreen()));
+        String id = deepLink.queryParameters['id'];
+        Logger().d(id);
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN(int.parse(id),Get.context);
       }
-
-      FirebaseDynamicLinks.instance.onLink(
-          onSuccess: (PendingDynamicLinkData dynamicLink) async {
-            Logger().d('qwqwf');
-            Logger().e(deepLink.path);
-            Logger().d(deepLink==null);
-            Provider.of<ApiProvider>(context, listen: false).getProductDetails(int.parse(deepLink.path.split('/').last));
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) => ProductMScreen()));
+      FirebaseDynamicLinks.instance.onLink(onSuccess: (PendingDynamicLinkData dynamicLink) async {
+        final Uri deepLink = dynamicLink?.link;
+        String id = deepLink.queryParameters['id'];
+        Logger().d(id);
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN(int.parse(id),Get.context);
       });
 
     } catch (e) {
       print(e.toString());
-      Logger().e(e);
     }
   }
-
   Future<Uri> createDynamicLink(String id) async {
+    Logger().d(id);
     final DynamicLinkParameters parameters = DynamicLinkParameters(
       uriPrefix: 'https://3beauty.page.link',
-      link: Uri.parse('https://3beauty.page.link/$id'),
+      link: Uri.parse('https://3beauty.page.link.com/?id=$id'),
       androidParameters: AndroidParameters(
         packageName: 'com.a7seen.beauty',
         minimumVersion: 1,
@@ -55,7 +49,7 @@ class DynamicLinkService {
     final ShortDynamicLink shortLink =
     await parameters.buildShortLink();
     url = shortLink.shortUrl;
-    Logger().d(url.toString());
+    Logger().d(dynamicUrl.toString());
     Share.share(url.toString(), subject: 'Look what I made!');
     return dynamicUrl;
   }

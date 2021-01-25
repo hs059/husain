@@ -201,7 +201,7 @@ class ApiClient {
     await initApi();
     FormData data = FormData.fromMap({
       "id": socialId,
-      "userName": 'hussein',
+      "userName": socialId,
       "displayName": displayName,
       "mobileNumber": mobileNumber,
       "email": email,

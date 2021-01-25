@@ -5,6 +5,7 @@ import 'package:beauty/value/navigator.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -27,11 +28,8 @@ class NotificationFirebaseHelper {
 
 
 
-  showNotification(String title, String body,  BuildContext context) async {
-    Future onSelectNotification(String id,) {
-      Provider.of<ApiProvider>(context,listen: false).getProductDetailsNNNN( int.parse(id));
-      kNavigatorPush(context, ProductMScreen());
-    }
+  showNotification(Map message) async {
+
     var initializationSettingsAndroid =
         AndroidInitializationSettings('flutter_devs');
     var initializationSettingsIOs = IOSInitializationSettings();
@@ -39,23 +37,25 @@ class NotificationFirebaseHelper {
         android: initializationSettingsAndroid, iOS: initializationSettingsIOs);
 
     flutterLocalNotificationsPlugin.initialize(initSetttings,
-        onSelectNotification: onSelectNotification
+        onSelectNotification: (String payload) async {
+
+          Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']),Get.context);
+        }
     );
     var android = new AndroidNotificationDetails(
         'id', 'channel ', 'description',
         priority: Priority.high, importance: Importance.max);
     var iOS = new IOSNotificationDetails();
     var platform = new NotificationDetails(android: android, iOS: iOS);
-    await flutterLocalNotificationsPlugin.show(0, title, body, platform,
+    await flutterLocalNotificationsPlugin.show(0, message['notification']['title'], message['notification']['body'], platform,
         payload: 'Welcome to the Local Notification demo ');
   }
 
   void getMessage(  BuildContext context ) {
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print('received message');
-        showNotification(
-            message['notification']['title'], message['notification']['body'],context);
+        print('onMessage message');
+        showNotification(message);
         Logger().d(message);
       },
       onResume: (Map<String, dynamic> message) async {
@@ -63,19 +63,15 @@ class NotificationFirebaseHelper {
         Logger().d('onResume');
         Logger().d(message);
         Logger().d(int.parse(message['data']['product_id']));
-        Provider.of<ApiProvider>(context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']));
-
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']),Get.context);
         Logger().d(message);
-
       },
       onLaunch: (Map<String, dynamic> message) async {
         Logger().d('onLaunch');
         Logger().d(message);
-        Provider.of<ApiProvider>(context,listen: false).getProductDetailsSearch(
-            int.parse(message['data']['product_id'])
-            , context);
-
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']),Get.context);
       },
     );
   }
+
 }

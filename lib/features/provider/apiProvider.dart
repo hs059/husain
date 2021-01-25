@@ -148,12 +148,13 @@ setSubCategoryNull(){
     Logger().d(productM.data.category.first.parent.name);
     notifyListeners();
   }
-  getProductDetailsNNNN(int id,) async {
+  getProductDetailsNNNN(int id,BuildContext context) async {
     Logger().d('getProductDetails');
     setProductDetailsBool(true);
+    kNavigatorPush(context, ProductMScreen());
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     setProductDetailsBool(false);
-    Logger().d(productM.data.category.first.parent.name);
+
     notifyListeners();
   }
 

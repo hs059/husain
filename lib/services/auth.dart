@@ -79,7 +79,7 @@ Future<Map> signInWithFacebook() async {
     try {
       // by default the login method has the next permissions ['email','public_profile']
       AccessToken accessToken = await FacebookAuth.instance
-          .login(permissions: ["email", "public_profile", "user_friends"]);
+          .login(permissions: ["email", "public_profile"]);
       Logger().d(accessToken.token);
       // get the user data
       final userData = await FacebookAuth.instance.getUserData();
