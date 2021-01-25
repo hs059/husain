@@ -13,8 +13,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 
@@ -22,8 +20,6 @@ import 'features/provider/apiProvider.dart';
 import 'features/provider/authProvider.dart';
 import 'features/provider/db_provider.dart';
 import 'features/provider/uiProvider.dart';
-
-import 'features/ui/homePage/cart/screens/addnewAddress.dart';
 import 'features/ui/homePage/homePage.dart';
 import 'features/ui/onboardingUI/screens/onboarding.dart';
 

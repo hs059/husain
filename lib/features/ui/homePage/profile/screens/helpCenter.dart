@@ -12,7 +12,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HelpCenter extends StatelessWidget {
-  String phone = '+9660503214127';
+  String phone = '+966503214172';
   String email = 'info@3beauty.net';
 
  @override
