@@ -18,7 +18,6 @@ import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 import 'dart:io' show Platform;
 
-import 'fatoorahTest.dart';
 import 'features/provider/apiProvider.dart';
 import 'features/provider/authProvider.dart';
 import 'features/provider/db_provider.dart';
