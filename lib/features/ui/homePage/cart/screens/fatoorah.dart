@@ -146,7 +146,7 @@ class _FatoorahState extends State<Fatoorah> {
                             Provider.of<ApiProvider>(context,listen: false).updateOrder();
                             Provider.of<DBProvider>(context, listen: false).deleteAllProduct();
                             tabControllerConstant.animateTo(0);
-                            kNavigatorPushAndRemoveUntil(
+                            kNavigatorPush(
                                 context, HomePage());
                     }else{
                       Get.snackbar('رسالة تحذير', 'هناك خطأ بإدخالك للبيانات');
