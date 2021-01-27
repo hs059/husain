@@ -11,6 +11,7 @@ import 'package:beauty/services/notification_firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:logger/logger.dart';
 import 'package:provider/provider.dart';
 
 import 'homePage/homePage.dart';
@@ -49,7 +50,8 @@ class _SplashState extends State<Splash> {
 
     var delay = Duration(seconds: 4);
     Future.delayed(delay, () {
-      Navigator.pushReplacement(context, MaterialPageRoute(
+      Logger().d(Provider.of<ApiProvider>(context,listen: false).flagDL);
+      Provider.of<ApiProvider>(context,listen: false).flagDL? Logger().d('aaa'):Navigator.pushReplacement(context, MaterialPageRoute(
         builder: (context) {
           return widget.screen;
         },

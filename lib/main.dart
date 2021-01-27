@@ -6,6 +6,7 @@ import 'package:beauty/services/sp_helper.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/string.dart';
 import 'package:flutter/services.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:flutter/material.dart';
@@ -108,16 +109,25 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     setVariables();
+    _timerLink = new Timer(
+      const Duration(milliseconds: 1000),
+          () {
+        _dynamicLinkService.retrieveDynamicLink(context);
+      },
+    );
 
   }
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
+      Logger().d('aaaaaaaaaaaaaaaaaaa');
       _timerLink = new Timer(
         const Duration(milliseconds: 1000),
             () {
-          _dynamicLinkService.retrieveDynamicLink(context);
+              Logger().d('kkkkkkaaaa');
+              Provider.of<ApiProvider>(context,listen: false).setOnResumed(true);
+              _dynamicLinkService.retrieveDynamicLink(context);
         },
       );
     }

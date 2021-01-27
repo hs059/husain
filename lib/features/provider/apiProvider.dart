@@ -12,6 +12,7 @@ import 'package:beauty/components/model/subCategoryModel.dart';
 import 'package:beauty/features/provider/uiProvider.dart';
 import 'package:beauty/features/repo/api_client.dart';
 import 'package:beauty/features/repo/api_repo.dart';
+import 'package:beauty/features/ui/homePage/homePage.dart';
 import 'package:beauty/features/ui/product/productMScreen.dart';
 import 'package:beauty/value/colors.dart';
 import 'package:beauty/value/constant.dart';
@@ -148,16 +149,44 @@ setSubCategoryNull(){
     Logger().d(productM.data.category.first.parent.name);
     notifyListeners();
   }
-  getProductDetailsNNNN(int id,BuildContext context) async {
+  getProductDetailsNotify(int id,BuildContext context) async {
     Logger().d('getProductDetails');
     setProductDetailsBool(true);
     kNavigatorPush(context, ProductMScreen());
     productM = await ApiRepository.apiRepository.getProductDetails(id);
     setProductDetailsBool(false);
-
+    notifyListeners();
+  }
+  getProductDetailsDlResume(int id,BuildContext context) async {
+    Logger().d('getProductDetails');
+    setProductDetailsBool(true);
+    setFlagDL(true);
+    kNavigatorPush(context, ProductMScreen());
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+    setProductDetailsBool(false);
+    notifyListeners();
+  }
+  getProductDetailsDLOut(int id,BuildContext context) async {
+    Logger().d('getProductDetails');
+    setProductDetailsBool(true);
+    setFlagDL(true);
+    kNavigatorPush(context, HomePage());
+    kNavigatorPush(context, ProductMScreen());
+    productM = await ApiRepository.apiRepository.getProductDetails(id);
+    setProductDetailsBool(false);
     notifyListeners();
   }
 
+  bool flagDL = false;
+  setFlagDL(bool value) {
+    flagDL = value;
+    notifyListeners();
+  }
+  bool onResumed = false;
+  setOnResumed(bool value) {
+    onResumed = value;
+    notifyListeners();
+  }
   Future<productClass.ProductM> getProductDetailsSlider(int id) async {
     productClass.ProductM pro = await ApiRepository.apiRepository.getProductDetails(id);
     return pro ;

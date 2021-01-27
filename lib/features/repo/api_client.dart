@@ -388,7 +388,7 @@ class ApiClient {
       await initApi();
       Response response =
           await dio.get(baseUrl + 'get_product?id=$id&user_id=$userId');
-      Logger().d(response.data);
+
       return response.data;
     } on DioError catch (e) {
       if (e.response.statusCode != 200) {

@@ -39,7 +39,7 @@ class NotificationFirebaseHelper {
     flutterLocalNotificationsPlugin.initialize(initSetttings,
         onSelectNotification: (String payload) async {
 
-          Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']),Get.context);
+          Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNotify( int.parse(message['data']['product_id']),Get.context);
         }
     );
     var android = new AndroidNotificationDetails(
@@ -59,17 +59,16 @@ class NotificationFirebaseHelper {
         Logger().d(message);
       },
       onResume: (Map<String, dynamic> message) async {
-        kNavigatorPush(context, ProductMScreen());
         Logger().d('onResume');
         Logger().d(message);
         Logger().d(int.parse(message['data']['product_id']));
-        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']),Get.context);
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNotify( int.parse(message['data']['product_id']),Get.context);
         Logger().d(message);
       },
       onLaunch: (Map<String, dynamic> message) async {
         Logger().d('onLaunch');
         Logger().d(message);
-        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN( int.parse(message['data']['product_id']),Get.context);
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsDLOut( int.parse(message['data']['product_id']),Get.context);
       },
     );
   }

@@ -14,15 +14,17 @@ class DynamicLinkService {
       final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
       final Uri deepLink = data?.link;
       if (deepLink != null) {
+        Logger().d('qazwdc');
         String id = deepLink.queryParameters['id'];
         Logger().d(id);
-        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN(int.parse(id),Get.context);
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsDLOut(int.parse(id),Get.context);
       }
       FirebaseDynamicLinks.instance.onLink(onSuccess: (PendingDynamicLinkData dynamicLink) async {
+        Logger().d('aaasdasdasd');
         final Uri deepLink = dynamicLink?.link;
         String id = deepLink.queryParameters['id'];
         Logger().d(id);
-        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsNNNN(int.parse(id),Get.context);
+        Provider.of<ApiProvider>(Get.context,listen: false).getProductDetailsDlResume(int.parse(id),Get.context);
       });
 
     } catch (e) {
