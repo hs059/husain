@@ -220,7 +220,7 @@ class ProductSubScreen extends StatelessWidget {
                   EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(15)),
               child: Column(
                 children: [
-                  BrandProduct(),
+                  // BrandProduct(),
                   ProductName(
                     name: name,
                     reviews: section

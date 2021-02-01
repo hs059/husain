@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   void initState() {
-    tabControllerConstant = TabController(length: 5, vsync: this, initialIndex: 0);
+    tabControllerConstant = TabController(length: 4, vsync: this, initialIndex: 0);
     tabControllerConstant.addListener(() {
       bottomIndex = tabControllerConstant.index;
       setState(() {});
@@ -70,7 +70,7 @@ class _HomePageState extends State<HomePage>
               Home(),
               Category(),
               Cart(),
-              Brands(),
+              // Brands(),
               ProfileScreen(),
             ],
           ),

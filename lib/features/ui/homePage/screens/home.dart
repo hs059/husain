@@ -100,11 +100,11 @@ class Home extends StatelessWidget {
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),
-              BrandSection(),
-
-              SizedBox(
-                height: ScreenUtil().setHeight(20),
-              ),
+              // BrandSection(),
+              //
+              // SizedBox(
+              //   height: ScreenUtil().setHeight(20),
+              // ),
               HomeSliderWidget(num: 2),
               SizedBox(
                 height: ScreenUtil().setHeight(30),

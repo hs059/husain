@@ -197,7 +197,7 @@ class ProductMScreen extends StatelessWidget {
                             horizontal: ScreenUtil().setWidth(15)),
                         child: Column(
                           children: [
-                            BrandProduct(),
+                            // BrandProduct(),
                             ProductName(
                               name: name,
                               reviews: reviews.length,

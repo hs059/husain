@@ -6,7 +6,7 @@ List<String> tabIconA = [
   'assets/svg/icon/homeIconA.svg',
   'assets/svg/icon/categoryA.svg' ,
   'assets/svg/icon/cartA.svg',
-  'assets/svg/icon/brandsA.svg',
+  // 'assets/svg/icon/brandsA.svg',
   'assets/svg/icon/profileA.svg',
 ];
 List<String> image = [
@@ -24,7 +24,7 @@ List<String>tabIconI = [
   'assets/svg/icon/homeIconI.svg',
   'assets/svg/icon/categoryI.svg' ,
   'assets/svg/icon/cartI.svg',
-  'assets/svg/icon/brandsI.svg',
+  // 'assets/svg/icon/brandsI.svg',
   'assets/svg/icon/profileI.svg',
 ];
 List<String>tabName = [

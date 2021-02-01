@@ -48,10 +48,10 @@ class ProductName extends StatelessWidget {
                 SizedBox(
                   width: ScreenUtil().setWidth(18),
                 ),
-                Text(
-                  '$reviews تعليقات ',
-                  style: kReviews,
-                ),
+                // Text(
+                //   '$reviews تعليقات ',
+                //   style: kReviews,
+                // ),
               ],
             ),
           ],
