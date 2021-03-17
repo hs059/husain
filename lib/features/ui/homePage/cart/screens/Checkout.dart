@@ -63,7 +63,7 @@ class CheckOut extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              apiProvider.addressSelected != null
+              apiProvider.addressSelected != null&&authProvider.showProfileModel!=null
                   ? CartAddressWidget(
                       address: apiProvider.addressSelected.fullAddress,
                       name: authProvider.showProfileModel.data.displayName,
@@ -91,11 +91,12 @@ class CheckOut extends StatelessWidget {
                                     element.defualtAddress == "true")
                                 .toList()
                             : [];
-                        if (deffult.isNotEmpty) {
+                        if (deffult.isNotEmpty&&authProvider
+                            .showProfileModel !=null) {
                           return CartAddressWidget(
                             address: deffult.first.fullAddress,
                             name: authProvider
-                                .showProfileModel.data.displayName,
+                                .showProfileModel.data.displayName??'',
                             phone: deffult.first.phone,
                             typeAddress: deffult.first.type == addressIcon[0]
                                 ? 1

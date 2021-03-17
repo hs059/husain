@@ -213,6 +213,7 @@ class AuthProvider extends ChangeNotifier {
   loginUser(BuildContext context) async {
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     Map map = await ApiClient.apiClient.loginUser(this.email, this.password);
+    Logger().d(map);
     Provider.of<UiProvider>(context, listen: false).toggleSpinner();
     if (map['code']) {
       isLogin = true;

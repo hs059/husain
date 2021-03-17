@@ -240,7 +240,7 @@ bool orderBool =false ;
 
   getAllOrder() async {
     myOrderModel = await ApiRepository.apiRepository.getAllOrder();
-
+    // Logger().d(myOrderModel.data);
     notifyListeners();
   }
 

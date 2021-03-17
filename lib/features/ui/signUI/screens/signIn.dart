@@ -194,8 +194,8 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               authProvider.submitlogin(formKeySignIn, context);
                               Provider.of<ApiProvider>(context, listen: false)
                                   .getAllFav();
-                              Provider.of<ApiProvider>(context, listen: false)
-                                  .getAllOrder();
+                              // Provider.of<ApiProvider>(context, listen: false)
+                              //     .getAllOrder();
 
                               tabControllerConstant.animateTo(0);
                             }),
@@ -244,9 +244,9 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                   Provider.of<ApiProvider>(context,
                                           listen: false)
                                       .getAllFav();
-                                  Provider.of<ApiProvider>(context,
-                                          listen: false)
-                                      .getAllOrder();
+                                  // Provider.of<ApiProvider>(context,
+                                  //         listen: false)
+                                  //     .getAllOrder();
                                 },
                                 child: Container(
                                   alignment: Alignment.center,
@@ -279,9 +279,9 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                         Provider.of<ApiProvider>(context,
                                                 listen: false)
                                             .getAllFav();
-                                        Provider.of<ApiProvider>(context,
-                                                listen: false)
-                                            .getAllOrder();
+                                        // Provider.of<ApiProvider>(context,
+                                        //         listen: false)
+                                        //     .getAllOrder();
                                       },
                                       child: Container(
                                         // padding: const EdgeInsets.all(5.0),
@@ -328,9 +328,9 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                                   Provider.of<ApiProvider>(context,
                                           listen: false)
                                       .getAllFav();
-                                  Provider.of<ApiProvider>(context,
-                                          listen: false)
-                                      .getAllOrder();
+                                  // Provider.of<ApiProvider>(context,
+                                  //         listen: false)
+                                  //     .getAllOrder();
                                 },
                                 child: Container(
                                   alignment: Alignment.center,

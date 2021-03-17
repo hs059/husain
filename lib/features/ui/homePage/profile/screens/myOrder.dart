@@ -48,7 +48,7 @@ class MyOrder extends StatelessWidget {
 
                   ],
                 );
-              }  else if(myOrders.data.isEmpty){
+              }  else if(myOrders.data.isEmpty||myOrders.data ==null ){
                 return Center(
                   child: Text(
                     'لا يوجد طلبات ',
