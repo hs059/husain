@@ -21,8 +21,9 @@ class Auth {
 
   Future<UserCredential> signInWithGoogle() async {
     // Trigger the authentication flow
-    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
+    await GoogleSignIn().signOut();
 
+    final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
     // Obtain the auth details from the request
     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
@@ -42,42 +43,10 @@ class Auth {
 
     return  userCredential;
   }
-
-
-  // Future<UserCredential> signInWithTwitter() async {
-  //   // Create a TwitterLogin instance
-  //   try {
-  //     final TwitterLogin twitterLogin = new TwitterLogin(
-  //       consumerKey: 'bsrsIrms09tBGoMGq4WkI1oUE',
-  //       consumerSecret:'HGh7K6V7xNteVGDnHQWA9KA2ggkgOfJ8qlChfVxFg6ohoCwb33',
-  //     );
-
-  //     // Trigger the sign-in flow
-  //     final TwitterLoginResult loginResult = await twitterLogin.authorize();
-  //     TwitterLoginStatus twitterLoginStatus = loginResult.status ;
-  //     Logger().d(twitterLoginStatus);
-
-  //     // Get the Logged In session
-  //     final TwitterSession twitterSession = loginResult.session;
-  //     Logger().e(twitterSession.token);
-  //     Logger().e(twitterSession.secret);
-  //     // Create a credential from the access token
-  //     final AuthCredential twitterAuthCredential =
-  //     TwitterAuthProvider.credential(accessToken: twitterSession.token, secret: twitterSession.secret);
-  //     Logger().e(  twitterAuthCredential.signInMethod);
-  //     // Once signed in, return the UserCredential
-  //     UserCredential userCredential  = await FirebaseAuth.instance.signInWithCredential(twitterAuthCredential);
-  //     Logger().e( await userCredential.user.getIdToken());
-
-  //     return userCredential;
-  //   }  catch (e) {
-  //     Get.snackbar('رسالة تحذير', 'هناك خطأ بالتسجيل باستخدام التويتر');
-  //   }
-  // }
-
 Future<Map> signInWithFacebook() async {
     try {
       // by default the login method has the next permissions ['email','public_profile']
+      await FacebookAuth.instance.logOut() ;
       AccessToken accessToken = await FacebookAuth.instance
           .login(permissions: ["email", "public_profile"]);
       Logger().d(accessToken.token);

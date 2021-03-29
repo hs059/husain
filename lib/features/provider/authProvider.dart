@@ -381,6 +381,7 @@ class AuthProvider extends ChangeNotifier {
     SPHelper.spHelper.setIsLogin(false);
     SPHelper.spHelper.setToken('');
     SPHelper.spHelper.setToken('');
+    await FirebaseAuth.instance.signOut();
     showProfileModel = null;
   }
 

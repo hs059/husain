@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "55748411856-612cgqrpt2v2qbak5nq0ctdpk4blqu1i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.a7seen.beauty",
+            "certificate_hash": "b54879481d4e00b28ab46a8bf41fcc90b0597c4c"
+          }
+        },
+        {
+          "client_id": "55748411856-hg3lpvo89sjq2p3d0qrukthsd6q38tsq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.a7seen.beauty",
+            "certificate_hash": "2fcf018128ad8519c5a3c54c680fca211b339995"
+          }
+        },
+        {
           "client_id": "55748411856-u1qgednabjp7m6ff4cccvqj622280fns.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

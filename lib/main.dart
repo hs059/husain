@@ -115,7 +115,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         _dynamicLinkService.retrieveDynamicLink(context);
       },
     );
-
   }
 
   @override

@@ -48,9 +48,9 @@ List sort = [
   'low_to_high',
   'high_to_low',
 ];
-List<String> paymentList = [
-  'الدفع أونلاين',
-  'الدفع عند الاستلام'
+List<String> riyadhList = [
+  'داخل الرياض 24 ريال',
+  'خارج الرياض 25 ريال',
 ];
 String home = 'assets/svg/home.svg';
 String work = 'assets/svg/work.svg';

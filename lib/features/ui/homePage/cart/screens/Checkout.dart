@@ -137,8 +137,6 @@ class CheckOut extends StatelessWidget {
                         }
                       },
                     ),
-
-              // DateAndTime(),
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: ScreenUtil().setHeight(15), vertical: 5),
@@ -498,7 +496,7 @@ class CheckOut extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'طريقة الدفع',
+                          'الشحن ',
                           style: kSectionText,
                         ),
                       ],
@@ -507,29 +505,38 @@ class CheckOut extends StatelessWidget {
                       height: ScreenUtil().setHeight(15),
                     ),
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         RadioListTile(
                           activeColor: kPinkLight,
-                          value: paymentList[0],
-                          groupValue: uiProvider.paymentGroup,
+                          value: riyadhList[0],
+                          groupValue: uiProvider.riyadhGroup,
                           onChanged: (value) {
-                            uiProviderFalse.setPaymentGroup(value);
+                            uiProviderFalse.setRiyadhGroup(value);
                           },
                           title: Text(
-                            paymentList[0],
+                            riyadhList[0],
                             style: kSectionText,
                           ),
                         ),
                         RadioListTile(
                           activeColor: kPinkLight,
-                          value: paymentList[1],
-                          groupValue: uiProvider.paymentGroup,
+                          value: riyadhList[1],
+                          groupValue: uiProvider.riyadhGroup,
                           onChanged: (value) {
-                            uiProviderFalse.setPaymentGroup(value);
+                            uiProviderFalse.setRiyadhGroup(value);
                           },
                           title: Text(
-                            paymentList[1],
+                            riyadhList[1],
                             style: kSectionText,
+                          ),
+                        ),
+                        Text(
+                          'يتم اضافة قيمة الشحن الى السعر الكلي ',
+                          style: kSectionText.copyWith(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 10.sp,
+                              color: kGray,
                           ),
                         ),
                       ],
@@ -548,7 +555,7 @@ class CheckOut extends StatelessWidget {
                             style: kSectionText,
                           ),
                           onTap: () {
-                            print(uiProvider.paymentGroup);
+                            print(uiProvider.riyadhGroup);
                           },
                         ),
                       ],
@@ -579,7 +586,7 @@ class CheckOut extends StatelessWidget {
                   style: kBtnText,
                 ),
                 onTap: () async {
-                  if (uiProvider.paymentGroup != null) {
+                  if (uiProvider.riyadhGroup != null) {
                     if (apiProvider.addressSelected != null) {
                       apiProviderFalse
                           .createOrder(
@@ -594,23 +601,23 @@ class CheckOut extends StatelessWidget {
                                 ).toJson())
                             .toList(),
                       );
-                      uiProvider.paymentGroup == paymentList[0]
+                      uiProvider.riyadhGroup == riyadhList[0]
                           ? kNavigatorPush(context,
-                              Fatoorah((prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
-                              dbProvider.totalPrize.toString():prizeCoupon.toString()),)
+                              Fatoorah(
+
+                                (prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
+                              (dbProvider.totalPrize+24).toString():(prizeCoupon+24).toString())
+
+                                ,)
                       )
-                          : showDialog(
-                              context: context,
-                              builder: (context) => DialogConfirmOrder(
-                                onTap: () async {
-                                  dbProviderFalse.deleteAllProduct();
-                                  // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                                  //   builder: (context) => HomePage(),
-                                  // ), (route) => false);
-                                  kNavigatorPush(context, HomePage());
-                                },
-                              ),
-                            );
+                          : kNavigatorPush(context,
+                          Fatoorah(
+
+                            (prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
+                            (dbProvider.totalPrize+25).toString():(prizeCoupon+25).toString())
+
+                            ,)
+                      );
                       apiProviderFalse.setInitialPrizeCoupon(false);
                     } else if (deffult.isNotEmpty) {
                       apiProviderFalse
@@ -626,44 +633,29 @@ class CheckOut extends StatelessWidget {
                                 ).toJson())
                             .toList(),
                       );
-                      uiProvider.paymentGroup == paymentList[0]
+                      uiProvider.riyadhGroup == riyadhList[0]
                           ? kNavigatorPush(context,
-                              Fatoorah(
-                                  prizeCoupon ==0.0 || prizeCoupon ==null||apiProvider.initialPrizeCoupon ==false?
-                                  dbProvider.totalPrize.toString():prizeCoupon.toString())
+                          Fatoorah(
+
+                            (prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
+                            (dbProvider.totalPrize+24).toString():(prizeCoupon+24).toString())
+
+                            ,)
                       )
-                          : showDialog(
-                              context: context,
-                              builder: (context) => DialogConfirmOrder(
-                                onTap: () async {
-                                  dbProviderFalse.deleteAllProduct();
-                                  // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(
-                                  //   builder: (context) => HomePage(),
-                                  // ), (route) => false);
-                                  kNavigatorPush(context, HomePage());
-                                },
-                              ),
-                            );
+                          : kNavigatorPush(context,
+                          Fatoorah(
+
+                            (prizeCoupon ==0.0 || prizeCoupon ==null ||apiProvider.initialPrizeCoupon ==false?
+                            (dbProvider.totalPrize+25).toString():(prizeCoupon+25).toString())
+
+                            ,)
+                      );
                       apiProviderFalse.setInitialPrizeCoupon(false);
                     } else {
-                      Fluttertoast.showToast(
-                          msg: 'أضف عنوان التوصيل',
-                          toastLength: Toast.LENGTH_SHORT,
-                          backgroundColor: Color(0xffDAA095).withOpacity(0.8),
-                          timeInSecForIosWeb: 1,
-                          gravity: ToastGravity.TOP,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
+                      customToast('أضف عنوان التوصيل');
                     }
                   } else {
-                    Fluttertoast.showToast(
-                        msg: 'اختر طريقة الدفع',
-                        toastLength: Toast.LENGTH_SHORT,
-                        backgroundColor: Color(0xffDAA095).withOpacity(0.8),
-                        timeInSecForIosWeb: 1,
-                        gravity: ToastGravity.TOP,
-                        textColor: Colors.white,
-                        fontSize: 16.0);
+                    customToast('اختر طريقة الدفع');
                   }
                 },
               ),
@@ -672,5 +664,15 @@ class CheckOut extends StatelessWidget {
         ),
       ),
     );
+  }
+  customToast(String title){
+    Fluttertoast.showToast(
+        msg: title,
+        toastLength: Toast.LENGTH_SHORT,
+        backgroundColor: Color(0xffDAA095).withOpacity(0.8),
+        timeInSecForIosWeb: 1,
+        gravity: ToastGravity.TOP,
+        textColor: Colors.white,
+        fontSize: 16.0);
   }
 }

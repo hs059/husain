@@ -48,9 +48,9 @@ class UiProvider extends ChangeNotifier {
     this.toggle = !toggle ;
     notifyListeners();
   }
-  String paymentGroup ;
-  setPaymentGroup(String value){
-    this.paymentGroup = value ;
+  String riyadhGroup ;
+  setRiyadhGroup(String value){
+    this.riyadhGroup = value ;
     notifyListeners();
   }
   String language ='en';
