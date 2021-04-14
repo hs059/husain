@@ -41,7 +41,7 @@ class DynamicLinkService {
         minimumVersion: 1,
       ),
       iosParameters: IosParameters(
-        bundleId:'com.a7seen.3beauty',
+        bundleId:'com.7aseen.threebeauty',
         minimumVersion: '1',
         appStoreId: '1545471952',
       ),
