@@ -45,7 +45,6 @@ dependencies:
   intl_phone_field:
   carousel_slider:
   url_launcher:
-  webview_flutter:
   share:
   geolocator: ^6.1.13
   geocoder:
