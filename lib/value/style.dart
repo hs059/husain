@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
 
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 TextStyle  kPrize = GoogleFonts.cairo(
   fontSize: ScreenUtil().setSp(13),
   color: Color(0xff707070),
@@ -66,7 +66,7 @@ TextStyle  kSubTitleSign = TextStyle(
 
 TextStyle  kBtnText = TextStyle(
   // fontFamily: 'SFUIText-Regular',
-      fontSize: ScreenUtil().setSp(16),
+      fontSize: 16.ssp,
       color: Colors.white,
 );
 TextStyle  kDiscount = TextStyle(

@@ -312,35 +312,43 @@ class _SignInState extends State<SignIn> with SingleTickerProviderStateMixin {
                               ],
                             ),
                           ),
-                          SizedBox(
-                            width: ScreenUtil().setWidth(30),
-                          ),
+
                           ////////google SignIn///////
-                          Transform(
-                            transform: Matrix4.translationValues(
-                                animation3.value * width, 0.0, 0.0),
-                            child: RotationTransition(
-                              turns: Tween(begin: 0.0, end: 1.0)
-                                  .animate(controller),
-                              child: GestureDetector(
-                                onTap: () async {
-                                  authProviderFalse.loginUsingGoogle(context);
-                                  Provider.of<ApiProvider>(context,
-                                          listen: false)
-                                      .getAllFav();
-                                  // Provider.of<ApiProvider>(context,
-                                  //         listen: false)
-                                  //     .getAllOrder();
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  height: ScreenUtil().setHeight(46),
-                                  child: SvgPicture.asset(
-                                    'assets/svg/btn.google.svg',
-                                    height: ScreenUtil().setHeight(46),
+                          Visibility(
+                            visible: Platform.isAndroid,
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: ScreenUtil().setWidth(30),
+                                ),
+                                Transform(
+                                  transform: Matrix4.translationValues(
+                                      animation3.value * width, 0.0, 0.0),
+                                  child: RotationTransition(
+                                    turns: Tween(begin: 0.0, end: 1.0)
+                                        .animate(controller),
+                                    child: GestureDetector(
+                                      onTap: () async {
+                                        authProviderFalse.loginUsingGoogle(context);
+                                        Provider.of<ApiProvider>(context,
+                                                listen: false)
+                                            .getAllFav();
+                                        // Provider.of<ApiProvider>(context,
+                                        //         listen: false)
+                                        //     .getAllOrder();
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: ScreenUtil().setHeight(46),
+                                        child: SvgPicture.asset(
+                                          'assets/svg/btn.google.svg',
+                                          height: ScreenUtil().setHeight(46),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
                           ),
                         ],

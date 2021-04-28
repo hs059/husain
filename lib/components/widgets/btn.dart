@@ -8,7 +8,8 @@ import 'package:get/get.dart';
 class Button extends StatelessWidget {
   final String text ;
   final Function onTap ;
-  Button({@required this.text,@required this.onTap});
+  final EdgeInsetsGeometry padding ;
+  Button({@required this.text,@required this.onTap, this.padding});
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -20,7 +21,7 @@ class Button extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         height: ScreenUtil().setHeight(45),
-        padding: EdgeInsets.symmetric(horizontal:5),
+        padding: padding??EdgeInsets.symmetric(horizontal:5),
         decoration: BoxDecoration(
           color: Color(0xffDAA095),
           borderRadius: BorderRadius.circular(6),

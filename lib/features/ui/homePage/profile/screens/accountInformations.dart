@@ -13,7 +13,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class AccountInformations extends StatelessWidget {
   GlobalKey<FormState> formAccountInformations = GlobalKey<FormState>();
   String phone ='00';
@@ -247,12 +247,13 @@ class AccountInformations extends StatelessWidget {
                             });
                       },
 
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
+                    child: Container(
+                      alignment: Alignment.center,
+
                       child: Text(
-                        'تعديل',
+                        'تعديل  ',
                         style: kSeeAll.copyWith(
-                          fontSize: ScreenUtil().setSp(18),
+                          fontSize: 18.ssp,
                         ),
                       ),
                     ),

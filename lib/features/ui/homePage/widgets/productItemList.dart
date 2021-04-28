@@ -172,6 +172,7 @@ class ProductItemList extends StatelessWidget {
                             child: Text(
                               title,
                               style: k15Black,
+                              maxLines: 2,
                             ),
                           ),
                           SizedBox(

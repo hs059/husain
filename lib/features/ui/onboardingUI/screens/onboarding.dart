@@ -84,6 +84,7 @@ class _OnboardingState extends State<Onboarding> {
                     SPHelper.spHelper.isSeenOnBoardingSet(true);
                   }
                 },
+                padding: EdgeInsets.zero,
               ),
               SizedBox(height: ScreenUtil().setHeight(55)),
               Row(
